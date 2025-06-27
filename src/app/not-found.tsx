@@ -12,31 +12,34 @@ const NotFoundPage = () => {
   const fullText = "NOTHING WAS FOUND";
 
   useEffect(() => {
-    const typeSpeed = isDeleting ? 50 : 120; // Faster deletion, slower typing
-    const pauseTime = isDeleting ? 1500 : 2500; // Pause after complete text
+    let timer: NodeJS.Timeout;
 
-    const timeout = setTimeout(() => {
-      if (!isDeleting && currentIndex < fullText.length) {
-        // Typing forward
+    const typeSpeed = isDeleting ? 50 : 120;
+    const pauseComplete = 1500;
+
+    if (!isDeleting && currentIndex < fullText.length) {
+      timer = setTimeout(() => {
         setDisplayText(fullText.slice(0, currentIndex + 1));
-        setCurrentIndex(currentIndex + 1);
-      } else if (!isDeleting && currentIndex === fullText.length) {
-        // Pause before deleting
-        setTimeout(() => setIsDeleting(true), pauseTime);
-      } else if (isDeleting && currentIndex > 0) {
-        // Deleting backward
+        setCurrentIndex((prev) => prev + 1);
+      }, typeSpeed);
+    } else if (!isDeleting && currentIndex === fullText.length) {
+      timer = setTimeout(() => {
+        setIsDeleting(true);
+      }, pauseComplete);
+    } else if (isDeleting && currentIndex > 0) {
+      timer = setTimeout(() => {
         setDisplayText(fullText.slice(0, currentIndex - 1));
-        setCurrentIndex(currentIndex - 1);
-      } else if (isDeleting && currentIndex === 0) {
-        // Start typing again
+        setCurrentIndex((prev) => prev - 1);
+      }, typeSpeed);
+    } else if (isDeleting && currentIndex === 0) {
+      timer = setTimeout(() => {
         setIsDeleting(false);
-      }
-    }, typeSpeed);
+      }, pauseComplete);
+    }
 
-    return () => clearTimeout(timeout);
+    return () => clearTimeout(timer);
   }, [currentIndex, isDeleting, fullText]);
 
-  // Smooth animation variants with reduced motion
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -56,16 +59,15 @@ const NotFoundPage = () => {
       opacity: 1,
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94], // Custom cubic-bezier for smoothness
+        ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
   };
 
-  const floatingElements = Array.from({ length: 6 }, (_, i) => i); // Reduced for performance
+  const floatingElements = Array.from({ length: 6 }, (_, i) => i);
 
   return (
     <div className="relative flex justify-center items-center flex-col text-center min-h-screen m-auto text-base-color bg-gradient-to-r from-gray-200 via-white to-gray-100 overflow-hidden">
-      {/* Optimized floating background elements */}
       {floatingElements.map((_, index) => (
         <motion.div
           key={index}
@@ -95,13 +97,10 @@ const NotFoundPage = () => {
           initial="hidden"
           animate="visible"
         >
-          {/* 404 Text with subtle animations */}
           <motion.div className="relative" variants={itemVariants}>
             <motion.h1
               className="text-[150px] font-extrabold text-secondary-color tracking-widest"
-              animate={{
-                scale: [1, 1.02, 1],
-              }}
+              animate={{ scale: [1, 1.02, 1] }}
               transition={{
                 duration: 4,
                 repeat: Infinity,
@@ -111,7 +110,6 @@ const NotFoundPage = () => {
               404
             </motion.h1>
 
-            {/* Smooth rotating badge */}
             <motion.div
               className="bg-primary-color border border-secondary-color text-secondary-color px-2 text-sm rounded absolute"
               style={{ top: "75%", left: "45%" }}
@@ -135,7 +133,6 @@ const NotFoundPage = () => {
             </motion.div>
           </motion.div>
 
-          {/* Main heading with smooth typewriter effect */}
           <motion.h3
             className="text-xl md:text-2xl lg:text-3xl mb-5 font-bold min-h-[2.5rem] flex items-center justify-center"
             variants={itemVariants}
@@ -156,7 +153,7 @@ const NotFoundPage = () => {
             </motion.span>
             <span className="inline-block relative">
               <motion.span
-                key={displayText} // Force re-render for smooth transitions
+                key={displayText}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.1 }}
@@ -165,9 +162,7 @@ const NotFoundPage = () => {
               </motion.span>
               <motion.span
                 className="inline-block w-0.5 h-6 bg-secondary-color ml-1 absolute"
-                animate={{
-                  opacity: [0, 1, 0],
-                }}
+                animate={{ opacity: [0, 1, 0] }}
                 transition={{
                   duration: 1,
                   repeat: Infinity,
@@ -177,25 +172,16 @@ const NotFoundPage = () => {
             </span>
           </motion.h3>
 
-          {/* Description with subtle breathing effect */}
           <motion.p
             className="text-base lg:text-xl font-semibold"
             variants={itemVariants}
-            animate={{
-              scale: [0.9, 1],
-            }}
-            transition={{
-              duration: 5,
-              ease: "easeInOut",
-            }}
+            animate={{ scale: [0.9, 1] }}
+            transition={{ duration: 5, ease: "easeInOut" }}
           >
-            <span>
-              The page you are looking for might have been removed had its name
-              changed or is temporarily unavailable.{" "}
-            </span>
+            The page you are looking for might have been removed, had its name
+            changed, or is temporarily unavailable.
           </motion.p>
 
-          {/* Ultra-smooth modern button */}
           <motion.div className="mt-5" variants={itemVariants}>
             <Link href="/">
               <motion.button
@@ -212,9 +198,8 @@ const NotFoundPage = () => {
                 }}
                 className="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-lg group hover:text-primary-color cursor-pointer"
               >
-                {/* Background sweep */}
                 <motion.span
-                  className="absolute w-0 group-hover:w-full h-full bg-secondary-color rounded-lg -z-10 left-0 top-0  transition-all duration-700 ease-in-out"
+                  className="absolute w-0 group-hover:w-full h-full bg-secondary-color rounded-lg -z-10 left-0 top-0 transition-all duration-700 ease-in-out"
                   layoutId="bg"
                 />
                 Back To Home
@@ -234,43 +219,24 @@ const NotFoundPage = () => {
         </motion.div>
       </Container>
 
-      {/* Optimized decorative elements */}
+      {/* Decorative elements */}
       <motion.div
         className="absolute top-20 left-20 w-6 h-6 border-2 border-secondary-color/20 rounded-full"
-        animate={{
-          rotate: 360,
-          scale: [1, 1.1, 1],
-        }}
+        animate={{ rotate: 360, scale: [1, 1.1, 1] }}
         transition={{
           rotate: { duration: 12, repeat: Infinity, ease: "linear" },
           scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
         }}
       />
-
       <motion.div
         className="absolute bottom-20 right-20 w-4 h-4 bg-secondary-color/15 rounded-full"
-        animate={{
-          y: [0, -30, 0],
-          opacity: [0.3, 0.8, 0.3],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+        animate={{ y: [0, -30, 0], opacity: [0.3, 0.8, 0.3] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
-
       <motion.div
         className="absolute top-1/2 left-10 w-8 h-0.5 bg-secondary-color/15 rounded"
-        animate={{
-          scaleX: [1, 1.3, 1],
-          opacity: [0.4, 0.8, 0.4],
-        }}
-        transition={{
-          duration: 3.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+        animate={{ scaleX: [1, 1.3, 1], opacity: [0.4, 0.8, 0.4] }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
       />
     </div>
   );
