@@ -7,30 +7,22 @@ const FAQGenerate = () => {
 
   const accordionsData = [
     {
-      title: "Is there a free trial available?",
+      title: "How does this platform work?",
       content:
-        "Yes, you can try us for free for 30 days. If you want, we’ll provide you with a free, personalized 30-minute onboarding call to get you up and running as soon as possible.",
+        "The platform connects you with photographers and videographers in your area. You choose someone you like, fill out a simple request form, and wait for them to confirm. Once the service is done and you confirm it, we send the money to the professional",
     },
     {
-      title: "Can I change my plan later?",
+      title: "Do I need to register to use the platform?",
       content:
         "Yes, of course! Please use the ‘Contact Us’ page on the website. A member of the team will then reach out and schedule your trip with one of our drivers.",
     },
     {
-      title: "What is your cancellation policy?",
+      title: "How does the payment work?",
       content: "Your cancellation details here...",
     },
     {
-      title: "Can other info be added to an invoice?",
+      title: "Do I need to agree to the rámcová zmluva?",
       content: "Your invoice details here...",
-    },
-    {
-      title: "How does billing work?",
-      content: "Your billing details here...",
-    },
-    {
-      title: "How do I change my account email?",
-      content: "Your account email details here...",
     },
   ];
 
@@ -39,6 +31,7 @@ const FAQGenerate = () => {
       {accordionsData.map((item, index) => (
         <Accordion
           key={index}
+          index={index}
           title={item.title}
           content={item.content}
           isOpen={activeIndex === index}

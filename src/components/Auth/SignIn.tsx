@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { Button, Checkbox, Form, Input, Typography } from "antd";
 import Link from "next/link";
@@ -20,7 +21,8 @@ const SignIn = () => {
   return (
     <div className="text-base-color">
       <Container>
-        <div className=" min-h-screen flex justify-center items-center">
+        <div></div>
+        {/* <div className=" min-h-screen flex justify-center items-center">
           <div className="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] mx-auto">
             <Image
               src={AllImages.logo}
@@ -29,7 +31,6 @@ const SignIn = () => {
               className="w-64 mx-auto"
               alt="logo"
             />
-            {/* -------- Sign In Page Header ------------ */}
             <div className="flex flex-col justify-center items-center">
               <div className="text-center mt-5 mb-8">
                 <h1 className="text-3xl sm:text-4xl font-semibold mb-4 text-secondary-color">
@@ -40,7 +41,6 @@ const SignIn = () => {
                 </p>
               </div>
             </div>
-            {/* -------- Form Start ------------ */}
 
             <Form
               layout="vertical"
@@ -129,7 +129,7 @@ const SignIn = () => {
               </span>{" "}
             </p>
           </div>
-        </div>
+        </div> */}
       </Container>
     </div>
   );

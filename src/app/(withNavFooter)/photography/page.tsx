@@ -1,7 +1,7 @@
 import React from "react";
 
 const page = () => {
-  return <div className="h-[300vh]"></div>;
+  return <div className="py-28"></div>;
 };
 
 export default page;

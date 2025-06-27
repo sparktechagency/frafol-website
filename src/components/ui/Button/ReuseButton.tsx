@@ -27,7 +27,7 @@ interface ReuseButtonProps {
 const variantStyles = {
   primary: "!bg-primary-color !text-base-color border !border-base-color ",
   secondary:
-    "!bg-secondary-color !text-base-color border !border-secondary-color",
+    "!bg-secondary-color !text-primary-color border !border-secondary-color",
   highlight: "!bg-base-color !text-primary-color border !border-primary-color",
   ghost:
     "!bg-primary-color/0 !text-lighter-color border  !border-primary-color/0 hover:!bg-base-color/40 hover:!text-primary-color hover:!border-base-color/40 transition-all duration-300 ease-in-out",

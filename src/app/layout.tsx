@@ -1,6 +1,6 @@
 import "@ant-design/v5-patch-for-react-19";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import NextTopLoader from "nextjs-toploader";
@@ -8,71 +8,16 @@ import { Toaster } from "sonner";
 import { ConfigProvider } from "antd";
 import { mainTheme } from "@/theme";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-plus-jakarta-sans",
 });
 
 export const metadata: Metadata = {
   title: "Frafol",
   description: "FRAFOL - FRAFOL",
 };
-
-// export const metadata = {
-//   title: "Havn",
-//   template: "%s - Havn",
-//   description: "Safe, Reliable, and Ethical Transportation at Your Fingertips.",
-//   keywords: ["Havn"],
-//   openGraph: {
-//     title: "Havn",
-//     description:
-//       "Safe, Reliable, and Ethical Transportation at Your Fingertips.",
-//     images: [
-//       {
-//         url: "./opengraph-image.png",
-//         width: 1920,
-//         height: 1080,
-//       },
-//     ],
-//     url: "https://havn-572.vercel.app/",
-//     type: "website",
-//     siteName: "Havn",
-//   },
-
-//   index: true,
-//   follow: true,
-//   googleBot: {
-//     index: true,
-//     follow: true,
-//     "max-video-preview": -1,
-//     "max-image-preview": "large",
-//     "max-snippet": -1,
-//   },
-
-//   twitter: {
-//     card: "summary_large_image",
-//     title: "Havn",
-//     description:
-//       "Safe, Reliable, and Ethical Transportation at Your Fingertips.",
-//     images: ["./opengraph-image.png"],
-//     creator: "@Havn",
-//   },
-
-//   robots: {
-//     index: true,
-//     follow: true,
-//     "max-video-preview": -1,
-//     "max-image-preview": "large",
-//     "max-snippet": -1,
-//   },
-
-//   metadataBase: new URL("https://havn-572.vercel.app/"),
-// };
 
 export default function RootLayout({
   children,
@@ -81,9 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${plusJakartaSans.variable} antialiased`}>
         <NextTopLoader
           color="#273D62"
           initialPosition={0.08}

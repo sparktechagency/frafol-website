@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useRouter } from "next/navigation";
 import Container from "../ui/Container";
@@ -22,7 +23,8 @@ const SignUp = () => {
   return (
     <div className="text-base-color">
       <Container>
-        <div className=" min-h-screen flex justify-center items-center">
+        <div></div>
+        {/* <div className=" min-h-screen flex justify-center items-center">
           <div className="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] mx-auto">
             <Image
               src={AllImages.logo}
@@ -31,7 +33,7 @@ const SignUp = () => {
               className="w-64 mx-auto"
               alt="logo"
             />
-            {/* -------- Sign In Page Header ------------ */}
+
             <div className="flex flex-col justify-center items-center">
               <div className="text-center mt-5">
                 <h1 className="text-2xl sm:text-3xl font-semibold mb-4 text-secondary-color">
@@ -39,7 +41,6 @@ const SignUp = () => {
                 </h1>
               </div>
             </div>
-            {/* -------- Form Start ------------ */}
 
             <Form
               layout="vertical"
@@ -174,7 +175,7 @@ const SignUp = () => {
               </span>{" "}
             </p>
           </div>
-        </div>
+        </div> */}
       </Container>
     </div>
   );

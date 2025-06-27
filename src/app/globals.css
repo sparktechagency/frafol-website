@@ -9,6 +9,10 @@
   }
 }
 
+:root {
+  --font-plus-jakarta-sans: "Plus Jakarta Sans", sans-serif;
+}
+
 @theme {
   --color-primary-color: #ffffff;
   --color-background-color: #efefef;
@@ -25,6 +29,7 @@
 
 html,
 body {
+  font-family: var(--font-plus-jakarta-sans);
   scroll-behavior: smooth;
   background-color: #ffffff;
 }
@@ -55,31 +60,31 @@ body {
 } */
 
 .swiper-pagination-bullet {
-  width: 15px !important;
-  height: 15px !important;
-  background-color: #ffb31f !important;
+  width: 10px !important;
+  height: 10px !important;
+  background-color: #ad2b08 !important;
 }
 
 .swiper-button-next:after,
 .swiper-rtl .swiper-button-prev:after {
-  color: #ffffff;
+  color: #ffb31f;
   padding: 8px 12px;
   font-size: 1.2rem !important;
   background-color: #ad2b08;
   border-radius: 100%;
   z-index: 100;
-  margin-right: 50px;
+  margin-right: 0px;
 }
 
 .swiper-button-prev:after,
 .swiper-rtl .swiper-button-next:after {
-  color: #ffffff;
+  color: #ffb31f;
   padding: 8px 12px;
   font-size: 1rem !important;
   background-color: #ad2b08;
   border-radius: 100%;
   z-index: 100;
-  margin-left: 30px;
+  margin-left: 0px;
 }
 
 /* Media query for screens larger than 768px */

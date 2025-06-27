@@ -199,10 +199,26 @@ const Navbar: React.FC = () => {
                   Sign In
                 </Link>
                 <Link href="/sign-up">
-                  <Button className="group flex items-center !py-4.5 !px-2.5 gap-1 border-2 !border-third-color !bg-third-color !text-secondary-color rounded-full">
-                    <p className="font-semibold text-lg">Join</p>
-                    <div className="bg-secondary-color p-0.5 rounded-full">
-                      <HiOutlineLogin className=" text-xl text-third-color" />
+                  <Button
+                    className={`group flex items-center !py-4 !px-1 gap-1 border-2 rounded-full ${
+                      scrolled
+                        ? "!border-primary-color !bg-primary-color !text-secondary-color "
+                        : "!border-secondary-color !bg-secondary-color !text-primary-color "
+                    }`}
+                  >
+                    <p className="font-semibold text-base">Join</p>
+                    <div
+                      className={`${
+                        scrolled ? "bg-secondary-color" : "bg-primary-color"
+                      } p-0.5 rounded-full`}
+                    >
+                      <HiOutlineLogin
+                        className={`text-lg ${
+                          scrolled
+                            ? "text-primary-color"
+                            : "text-secondary-color"
+                        }`}
+                      />
                     </div>
                   </Button>
                 </Link>

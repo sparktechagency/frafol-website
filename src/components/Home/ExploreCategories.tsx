@@ -5,17 +5,17 @@ import ExploreCategoryTab from "./ExploreCategoryTab";
 
 const ExploreCategories = () => {
   return (
-    <div className="py-20">
+    <section className="py-28">
       <Container>
         <SectionHeader
           title="Explore Categories"
           description="Frafol makes it easy to find and hire the perfect photographer or videographer for your project."
         />
-        <div className="mt-10">
+        <div className="mt-16">
           <ExploreCategoryTab />
         </div>
       </Container>
-    </div>
+    </section>
   );
 };
 
