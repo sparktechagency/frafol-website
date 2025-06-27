@@ -1,0 +1,61 @@
+export const mainTheme = {
+  // token: { fontFamily: "adineuePRO, __adineuePRO_Fallback" },
+  components: {
+    Form: {
+      colorError: "#E53935",
+    },
+    Checkbox: {
+      colorPrimary: "#ad2b08",
+      colorPrimaryHover: "#ad2b08",
+    },
+    Select: {
+      // colorTextQuaternary: "#ffffff",
+      colorBgContainer: "rgba(0,0,0,0)",
+      fontSize: 18,
+      optionSelectedColor: "#ffffff",
+      optionSelectedBg: "#efefef",
+      optionActiveBg: "#efefef",
+      optionActiveColor: "#efefef",
+      colorBorder: "#efefef",
+      colorBgElevated: "#efefef",
+      selectorBg: "#efefef",
+      colorText: "#ffffff",
+      colorTextPlaceholder: "#5d5d5d",
+      // activeOutlineColor: "#5d5d5d",
+      // activeBorderColor: "#5d5d5d",
+      hoverBorderColor: "#5d5d5d",
+    },
+    DatePicker: {
+      fontSize: 20,
+      colorBorder: "#efefef",
+      colorTextPlaceholder: "#efefef",
+    },
+    Upload: {
+      colorFillAlter: "rgba(0,0,0,0)",
+      colorBorder: "#5d5d5d",
+      colorBorderHover: "#5d5d5d",
+      colorText: "#5d5d5d",
+    },
+    Table: {
+      headerBg: "#b8c1c355",
+      colorBgContainer: "#FDFDFD",
+      colorText: "#262621",
+      borderColor: "#DFE1E3",
+      headerColor: "#262621",
+      fontSize: 18,
+      footerColor: "#FDFDFD",
+      // marginXXS: 4,
+      colorLinkActive: "#FDFDFD",
+      headerSplitColor: "#262621",
+    },
+    Pagination: {
+      itemActiveBg: "#ad2b08",
+      colorPrimary: "#F3F3F3",
+      colorPrimaryHover: "#F3F3F3",
+    },
+    Input: {
+      colorTextPlaceholder: "#5d5d5d ",
+      colorIcon: "#5d5d5d",
+    },
+  },
+};
