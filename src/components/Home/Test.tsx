@@ -16,7 +16,7 @@ const AntdFormDemo = () => {
   return (
     <div className="bg-[#202020] py-20">
       <Container>
-        <ReusableForm onSubmit={handleSubmit}>
+        <ReusableForm handleFinish={handleSubmit}>
           <ReuseUpload
             label="Profile Image"
             name="profileImage"
