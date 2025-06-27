@@ -13,11 +13,11 @@ import { TbLogout2 } from "react-icons/tb";
 import { HiOutlineLogin } from "react-icons/hi";
 
 const NavItems = [
-  { id: "1", name: "Home", route: "/" },
-  { id: "2", name: "About Us", route: "/about-us" },
-  { id: "1", name: "Explore", route: "/explore" },
-  { id: "1", name: "Saved", route: "/saved" },
-  { id: "1", name: "Pricing", route: "/pricing" },
+  { id: "1", name: "Photography", route: "/photography" },
+  { id: "2", name: "Videography", route: "/videography" },
+  { id: "1", name: "Marketplace", route: "/marketplace" },
+  { id: "1", name: "Forums", route: "/forums" },
+  { id: "1", name: "Workshops", route: "/workshops" },
 ];
 
 const Navbar: React.FC = () => {
@@ -64,9 +64,13 @@ const Navbar: React.FC = () => {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`z-[99999999] text-base-color ${
+      className={`z-[99999999]  ${
         scrolled ? " !shadow-md duration-300  py-3.5" : " duration-300 py-2.5"
-      } ${mobileMenuOpen || scrolled ? "bg-primary-color" : "bg-transparent"}`}
+      } ${
+        mobileMenuOpen || scrolled
+          ? "bg-secondary-color !text-primary-color"
+          : "bg-transparent !text-secondary-color"
+      }`}
     >
       <Container>
         <header className="text-base mx-auto  flex justify-between items-center z-[99999] ">
@@ -94,12 +98,8 @@ const Navbar: React.FC = () => {
                 {NavItems.map((navItem, i) => (
                   <li
                     key={i}
-                    className={`lg:mb-0 mb-5 cursor-pointer group relative hover:text-secondary-color transition-all font-bold duration-300 
-                      ${
-                        path === navItem.route
-                          ? "!text-secondary-color border-b-2 border-secondary-color"
-                          : "text-[#707070] border-b-2 border-transparent"
-                      }
+                    className={`lg:mb-0 mb-5 cursor-pointer group relative hover:text-third-color transition-all font-semibold duration-300 
+                      ${path === navItem.route ? "!text-third-color " : " "}
                       `}
                   >
                     <Link
@@ -120,17 +120,15 @@ const Navbar: React.FC = () => {
                 transition: "height 0.3s ease", // Smooth transition effect for height
               }}
               ref={navbarRef}
-              className="block lg:hidden bg-primary-color w-full lg:static absolute top-[52px] left-0 lg:bg-none transition-all duration-500 lg:z-0 -z-[9999] lg:border-none shadow-md"
+              className="block lg:hidden bg-secondary-color w-full lg:static absolute top-[52px] left-0 lg:bg-none transition-all duration-500 lg:z-0 -z-[9999] lg:border-none shadow-md"
             >
               <ul className="flex justify-end items-center gap-5 lg:flex-row flex-col lg:py-0 py-5">
                 {NavItems.map((navItem, i) => (
                   <li
                     key={i}
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className={`lg:mb-0 mb-0 cursor-pointer  group relative  transition-all duration-300 ${
-                      path === navItem.route
-                        ? "!text-secondary-color border-b-2 border-secondary-color"
-                        : "text-[#707070] border-b-2 border-transparent"
+                    className={`lg:mb-0 mb-0 cursor-pointer hover:text-third-color group relative  transition-all duration-300 ${
+                      path === navItem.route ? "!text-third-color " : " "
                     }`}
                   >
                     <Link
@@ -153,9 +151,9 @@ const Navbar: React.FC = () => {
                     <Link
                       onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                       href="/sign-in"
-                      className=" px-2 py-1 font-bold text-secondary-color rounded-full border-2 border-secondary-color mb-1"
+                      className=" px-2 py-1 text-primary-color rounded-full border-2 border-secondary-color mb-1"
                     >
-                      Log In
+                      Sign In
                     </Link>
                     <Link
                       onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -191,18 +189,20 @@ const Navbar: React.FC = () => {
                 </Button>
               </div>
             ) : (
-              <div className="w-full flex items-center gap-1">
+              <div className="w-full flex items-center gap-5">
                 <Link
                   href="/sign-in"
-                  className=" px-2 py-1 font-semibold text-secondary-color mt-0.5 "
+                  className={` "!text-lg px-2 py-1 font-semibold  mt-0.5 " ${
+                    scrolled ? "text-primary-color" : "text-secondary-color"
+                  } `}
                 >
                   Sign In
                 </Link>
                 <Link href="/sign-up">
-                  <Button className="group flex items-center !py-4 !px-2 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full">
-                    <p className="font-semibold">Sign Up</p>
-                    <div className="bg-primary-color p-0.5 rounded-full">
-                      <HiOutlineLogin className=" text-xl text-secondary-color" />
+                  <Button className="group flex items-center !py-4.5 !px-2.5 gap-1 border-2 !border-third-color !bg-third-color !text-secondary-color rounded-full">
+                    <p className="font-semibold text-lg">Join</p>
+                    <div className="bg-secondary-color p-0.5 rounded-full">
+                      <HiOutlineLogin className=" text-xl text-third-color" />
                     </div>
                   </Button>
                 </Link>
@@ -230,8 +230,8 @@ const Navbar: React.FC = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
-                  stroke="#2B4257"
-                  className="w-8 h-8"
+                  stroke="#ffffff"
+                  className="w-8 h-8 cursor-pointer"
                 >
                   <path
                     strokeLinecap="round"
@@ -247,8 +247,8 @@ const Navbar: React.FC = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
-                  stroke="#2B4257"
-                  className="w-8 h-8"
+                  stroke={mobileMenuOpen || scrolled ? "#ffffff" : "#ad2b08"}
+                  className="w-8 h-8 cursor-pointer"
                 >
                   <path
                     strokeLinecap="round"

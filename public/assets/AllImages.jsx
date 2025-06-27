@@ -9,10 +9,12 @@ import aboutusStory from "./images/aboutusStory.jpeg";
 import aboutUsBrife from "./images/aboutUsBrife.jpeg";
 import aboutusSubscription from "./images/aboutusSubscription.jpeg";
 
-import apartment1 from "./images/apartment1.jpeg";
-import apartment2 from "./images/apartment2.jpeg";
-import apartment3 from "./images/apartment3.jpeg";
-import apartment4 from "./images/apartment4.jpeg";
+import categoryimg1 from "./images/categoryimg1.png";
+import categoryimg2 from "./images/categoryimg2.png";
+import categoryimg3 from "./images/categoryimg3.png";
+import categoryimg4 from "./images/categoryimg4.jpg";
+import categoryimg5 from "./images/categoryimg5.jpg";
+import categoryimg6 from "./images/categoryimg6.png";
 
 // Icons
 import appleStore from "./icons/appleStore.png";
@@ -31,10 +33,12 @@ export const AllImages = {
   aboutusStory,
   aboutUsBrife,
   aboutusSubscription,
-  apartment1,
-  apartment2,
-  apartment3,
-  apartment4,
+  categoryimg1,
+  categoryimg2,
+  categoryimg3,
+  categoryimg4,
+  categoryimg5,
+  categoryimg6,
 };
 
 export const allIcons = {

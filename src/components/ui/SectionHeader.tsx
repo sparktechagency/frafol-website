@@ -1,4 +1,5 @@
 import React from "react";
+import AnimatedUnderline from "./Animation/AnimatedUnderline";
 
 interface SectionHeaderProps {
   title?: string;
@@ -18,12 +19,16 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
         </h2>
       )}
       {title && (
-        <h1 className="text-lg sm:text-xl lg:text-2xl text-white/75 font-semibold mb-4">
-          {title}
-        </h1>
+        <div className="mb-3">
+          {" "}
+          <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-secondary-color font-bold mb-2">
+            {title}
+          </h1>
+          <AnimatedUnderline className="mx-auto" />
+        </div>
       )}
       {description && (
-        <p className="text-sm sm:text-base lg:text-lg text-white/75 w-full sm:w-[90%] lg:w-[80%] xl:w-[65%] mx-auto">
+        <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-base-color w-full sm:w-[90%] lg:w-[80%] xl:w-[65%] mx-auto font-medium">
           {description}
         </p>
       )}
