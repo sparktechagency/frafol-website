@@ -8,6 +8,8 @@ import smartPhone from "./images/smartPhone.png";
 import aboutusStory from "./images/aboutusStory.jpeg";
 import aboutUsBrife from "./images/aboutUsBrife.jpeg";
 import aboutusSubscription from "./images/aboutusSubscription.jpeg";
+import marketBanner from "./images/marketBanner.png";
+import forum from "./images/forum.png";
 
 import categoryimg1 from "./images/categoryimg1.png";
 import categoryimg2 from "./images/categoryimg2.png";
@@ -28,6 +30,8 @@ import photographer3 from "./images/photographer3.png";
 import photographer4 from "./images/photographer4.png";
 
 import product from "./images/product.jpg";
+import product2 from "./images/product2.png";
+import product3 from "./images/product3.png";
 
 // Icons
 import appleStore from "./icons/appleStore.png";
@@ -46,6 +50,8 @@ export const AllImages = {
   aboutusStory,
   aboutUsBrife,
   aboutusSubscription,
+  marketBanner,
+  forum,
   categoryimg1,
   categoryimg2,
   categoryimg3,
@@ -63,6 +69,8 @@ export const AllImages = {
   photographer3,
   photographer4,
   product,
+  product2,
+  product3,
 };
 
 export const allIcons = {

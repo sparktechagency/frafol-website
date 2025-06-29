@@ -1,6 +1,6 @@
 import "@ant-design/v5-patch-for-react-19";
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import NextTopLoader from "nextjs-toploader";
@@ -8,10 +8,10 @@ import { Toaster } from "sonner";
 import { ConfigProvider } from "antd";
 import { mainTheme } from "@/theme";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const nunito = Nunito({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-plus-jakarta-sans",
+  variable: "--font-nunito",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${plusJakartaSans.variable} antialiased`}>
+      <body className={`${nunito.variable} antialiased`}>
         <NextTopLoader
           color="#273D62"
           initialPosition={0.08}

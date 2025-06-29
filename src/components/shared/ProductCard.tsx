@@ -3,12 +3,14 @@ import Image from "next/image";
 import React from "react";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { IoCartOutline } from "react-icons/io5";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: any;
 }
-
+const id = "cannon-465-sds-798-de";
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  console.log("product", product);
   return (
     <div className="h-full flex flex-col justify-between">
       <div className="overflow-hidden rounded-tl-lg rounded-tr-lg ">
@@ -16,25 +18,26 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           width={200}
           height={200}
           className="w-full h-72 object-cover hover:scale-105 transform-3d transition-transform duration-300 ease-in-out"
-          src={product.image}
-          quality={75}
+          src={product?.image}
           alt="product"
         />
       </div>
       <div className="mt-4 p-1">
-        <p className="text-sm sm:text-base lg:text-lg font-semibold text-secondary-color  mb-2">
-          {product.name}
-        </p>
+        <Link href={`/marketplace/${id}`}>
+          <p className="text-sm sm:text-base lg:text-lg font-semibold text-secondary-color  mb-2">
+            {product?.name}
+          </p>
+        </Link>
 
-        <p className=" mb-2">{product.description}</p>
+        <p className=" mb-2">{product?.description}</p>
         <p className=" mb-2">
-          Seller: <span className="font-medium">{product.seller}</span>
+          Seller: <span className="font-medium">{product?.seller}</span>
         </p>
         <p className=" mb-2">
-          Condition: <span className="font-medium">{product.condition}</span>
+          Condition: <span className="font-medium">{product?.condition}</span>
         </p>
         <span className="text-sm sm:text-lg lg:text-xl font-bold">
-          ${product.price}
+          ${product?.price}
         </span>
         <ReuseButton
           variant="secondary"
