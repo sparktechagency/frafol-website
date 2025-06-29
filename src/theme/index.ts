@@ -26,9 +26,15 @@ export const mainTheme = {
       hoverBorderColor: "#5d5d5d",
     },
     DatePicker: {
-      fontSize: 20,
-      colorBorder: "#efefef",
-      colorTextPlaceholder: "#efefef",
+      fontSize: 16,
+      colorTextPlaceholder: "#262621",
+      colorBgElevated: "#efefef",
+      colorText: "#262621",
+      colorTextHeading: "#262621",
+      colorTextDisabled: "#26262155",
+      colorIcon: "#262621",
+      colorIconHover: "#ad2b08",
+      colorPrimary: "#ad2b08",
     },
     Upload: {
       colorFillAlter: "rgba(0,0,0,0)",

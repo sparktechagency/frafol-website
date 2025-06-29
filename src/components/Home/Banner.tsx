@@ -4,7 +4,7 @@ import BannerSearch from "./BannerSearch";
 
 export default function Banner() {
   return (
-    <section className="h-screen w-full z-10 text-secondary-color flex justify-start items-center mx-auto">
+    <section className="h-screen w-full z-10 text-secondary-color flex justify-start items-center mx-auto bg-third-color">
       <Container>
         <div className="w-full flex flex-col justify-center items-center">
           <Revel>

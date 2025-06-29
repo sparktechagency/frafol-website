@@ -60,7 +60,7 @@ const ReuseInput = ({
             value={value}
             onChange={onChange}
             className={cn(
-              "!py-1.5 !px-3 !text-base !bg-primary-color border !border-primary-color !text-base-color rounded-lg",
+              "!py-1.5 !px-3 !text-base !bg-[#EFEFEF] border !border-[#EFEFEF] outline-none !ring-0 !text-base-color rounded-lg",
               inputClassName
             )}
             placeholder={placeholder}
@@ -71,7 +71,7 @@ const ReuseInput = ({
             value={value}
             onChange={onChange}
             className={cn(
-              "!py-1.5 !px-3 !text-base !bg-primary-color border !border-primary-color !text-base-color rounded-lg",
+              "!py-1.5 !px-3 !text-base !bg-[#EFEFEF] border !border-[#EFEFEF] outline-none !ring-0 !text-base-color rounded-lg",
               inputClassName
             )}
             rows={rows}
@@ -85,7 +85,7 @@ const ReuseInput = ({
             value={value}
             onChange={onChange}
             className={cn(
-              "!py-1.5 !px-3 !text-base !bg-primary-color border !border-primary-color !text-base-color rounded-lg",
+              "!py-1.5 !px-3 !text-base !bg-[#EFEFEF] border !border-[#EFEFEF] outline-none !ring-0 !text-base-color rounded-lg",
               inputClassName
             )}
             placeholder={placeholder}

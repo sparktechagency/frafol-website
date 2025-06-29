@@ -1,10 +1,10 @@
-import VideographerPage from "@/components/Videographer/VideographerPage";
+import VideographeyPage from "@/components/Videographey/VideographeyPage";
 import React from "react";
 
 const page = () => {
   return (
-    <div className="py-28">
-      <VideographerPage />
+    <div className="py-20">
+      <VideographeyPage />
     </div>
   );
 };

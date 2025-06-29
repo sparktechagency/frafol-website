@@ -19,7 +19,7 @@ const GalleryCard: React.FC<GalleryCardProps> = ({ gallery }) => {
       />
 
       <div className="opacity-0 group-hover:opacity-100 group-focus:opacity-100 absolute inset-0 bg-gradient-to-b from-[#0000001A] via-[#0000005A] to-[#000000AA] flex flex-col justify-end p-5 rounded-lg transition-all duration-300">
-        <p className="text-white/75 text-base sm:text-lg lg:text-xl font-semibold mb-3 cursor-pointer">
+        <p className="text-primary-color text-base sm:text-lg lg:text-xl font-semibold mb-3 cursor-pointer">
           {gallery?.name}
         </p>
       </div>

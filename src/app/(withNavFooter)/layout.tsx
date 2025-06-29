@@ -8,7 +8,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div>
       <div className="">
-        <div className="fixed top-0 z-50 w-full">
+        <div className="sticky top-0 z-50 w-full">
           <Navbar />
         </div>
         <div>{children}</div>

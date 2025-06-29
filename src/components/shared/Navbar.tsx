@@ -65,11 +65,11 @@ const Navbar: React.FC = () => {
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className={`z-[99999999]  ${
-        scrolled ? " !shadow-md duration-300  py-3.5" : " duration-300 py-2.5"
+        scrolled ? "  duration-300  py-3" : " duration-300 py-3"
       } ${
         mobileMenuOpen || scrolled
           ? "bg-secondary-color !text-primary-color"
-          : "bg-transparent !text-secondary-color"
+          : "bg-secondary-color !text-primary-color"
       }`}
     >
       <Container>
@@ -193,7 +193,7 @@ const Navbar: React.FC = () => {
                 <Link
                   href="/sign-in"
                   className={` "!text-lg px-2 py-1 font-semibold  mt-0.5 " ${
-                    scrolled ? "text-primary-color" : "text-secondary-color"
+                    scrolled ? "text-primary-color" : "text-primary-color"
                   } `}
                 >
                   Sign In
@@ -203,20 +203,18 @@ const Navbar: React.FC = () => {
                     className={`group flex items-center !py-4 !px-1 gap-1 border-2 rounded-full ${
                       scrolled
                         ? "!border-primary-color !bg-primary-color !text-secondary-color "
-                        : "!border-secondary-color !bg-secondary-color !text-primary-color "
+                        : "!border-primary-color !bg-primary-color !text-secondary-color "
                     }`}
                   >
                     <p className="font-semibold text-base">Join</p>
                     <div
                       className={`${
-                        scrolled ? "bg-secondary-color" : "bg-primary-color"
+                        scrolled ? "bg-secondary-color" : "bg-secondary-color"
                       } p-0.5 rounded-full`}
                     >
                       <HiOutlineLogin
                         className={`text-lg ${
-                          scrolled
-                            ? "text-primary-color"
-                            : "text-secondary-color"
+                          scrolled ? "text-primary-color" : "text-primary-color"
                         }`}
                       />
                     </div>
@@ -263,7 +261,7 @@ const Navbar: React.FC = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
-                  stroke={mobileMenuOpen || scrolled ? "#ffffff" : "#ad2b08"}
+                  stroke={mobileMenuOpen || scrolled ? "#ffffff" : "#ffffff"}
                   className="w-8 h-8 cursor-pointer"
                 >
                   <path
