@@ -5,7 +5,6 @@ import videographyData from "../../../../../public/data/videographyData";
 interface VideographyCategoryDetailsPageProps {
   params: { id: string };
 }
-
 const VideographyCategoryDetailsPage = ({
   params,
 }: VideographyCategoryDetailsPageProps) => {
