@@ -4,6 +4,7 @@ import React from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { GoCommentDiscussion } from "react-icons/go";
 import { BsFillEyeFill } from "react-icons/bs";
+import Link from "next/link";
 
 const ForumCard = ({ item }: { item: any }) => {
   return (
@@ -25,9 +26,11 @@ const ForumCard = ({ item }: { item: any }) => {
           </p>
         </div>
       </div>
-      <h1 className="text-secondary-color font-bold text-base sm:text-lg lg:text-xl xl:text-2xl mb-1">
-        {item?.title}
-      </h1>
+      <Link href={`/forums/${item?.id}`}>
+        <h1 className="text-secondary-color font-bold text-base sm:text-lg lg:text-xl xl:text-2xl mb-1">
+          {item?.title}
+        </h1>
+      </Link>
       <p className="text-base-color text-sm sm:text-xs lg:text-base xl:text-lg font-medium mb-1">
         {item?.description}
       </p>

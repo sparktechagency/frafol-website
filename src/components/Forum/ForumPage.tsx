@@ -20,8 +20,8 @@ type ForumPost = {
   view: number;
 };
 
-// ✅ Sample data
-const sampleData: ForumPost = {
+// ✅ Sample data without id (we'll inject it below)
+const sampleData: Omit<ForumPost, "id"> = {
   name: "Arisha",
   image: AllImages.dummyProfile?.src,
   time: 5,
@@ -33,8 +33,11 @@ const sampleData: ForumPost = {
   view: 200,
 };
 
-// ✅ Generate 12 dummy posts
-const forumPosts: ForumPost[] = Array.from({ length: 12 }, () => sampleData);
+// ✅ Generate 12 dummy posts with unique random IDs
+const forumPosts: ForumPost[] = Array.from({ length: 12 }, () => ({
+  id: crypto.randomUUID(),
+  ...sampleData,
+}));
 
 const ForumPage: React.FC = () => {
   return (

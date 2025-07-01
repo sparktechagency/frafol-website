@@ -1,15 +1,13 @@
+// app/(withNavFooter)/photography/[id]/page.tsx
+
 import React from "react";
-import photographerData from "../../../../../public/data/photographerData";
 import PhotographyCategoryDetails from "@/components/Photography/PhotographyCategoryDetails";
+import photographerData from "../../../../../public/data/photographerData";
 
-interface PhotographyCategoryDetailsPageProps {
-  params: { id: string };
-}
-
-const PhotographyCategoryDetailsPage = ({
-  params,
-}: PhotographyCategoryDetailsPageProps) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PhotographyCategoryDetailsPage = async ({ params }: { params: any }) => {
   const { id } = params;
+
   const data = photographerData.find((item) => item.id === id);
 
   return (

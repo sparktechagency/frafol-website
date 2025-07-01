@@ -10,7 +10,6 @@ interface ProductCardProps {
 }
 const id = "cannon-465-sds-798-de";
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  console.log("product", product);
   return (
     <div className="h-full flex flex-col justify-between">
       <div className="overflow-hidden rounded-tl-lg rounded-tr-lg ">
