@@ -9,6 +9,7 @@ import aboutusStory from "./images/aboutusStory.jpeg";
 import aboutUsBrife from "./images/aboutUsBrife.jpeg";
 import aboutusSubscription from "./images/aboutusSubscription.jpeg";
 import marketBanner from "./images/marketBanner.png";
+import workspaceBanner from "./images/workspaceBanner.png";
 import forum from "./images/forum.png";
 
 import categoryimg1 from "./images/categoryimg1.png";
@@ -33,6 +34,8 @@ import product from "./images/product.jpg";
 import product2 from "./images/product2.png";
 import product3 from "./images/product3.png";
 
+import workspace from "./images/workspace.png";
+
 // Icons
 import appleStore from "./icons/appleStore.png";
 import playstore from "./icons/playstore.png";
@@ -51,6 +54,7 @@ export const AllImages = {
   aboutUsBrife,
   aboutusSubscription,
   marketBanner,
+  workspaceBanner,
   forum,
   categoryimg1,
   categoryimg2,
@@ -71,6 +75,7 @@ export const AllImages = {
   product,
   product2,
   product3,
+  workspace,
 };
 
 export const allIcons = {
