@@ -11,6 +11,9 @@ import * as motion from "motion/react-client";
 import { useScroll, useMotionValueEvent } from "motion/react";
 import { TbLogout2 } from "react-icons/tb";
 import { HiOutlineLogin } from "react-icons/hi";
+import { IoMdCart } from "react-icons/io";
+import { GoBellFill } from "react-icons/go";
+import { AiFillMessage } from "react-icons/ai";
 
 const NavItems = [
   { id: "1", name: "Photography", route: "/photography" },
@@ -22,7 +25,7 @@ const NavItems = [
 
 const Navbar: React.FC = () => {
   const path = usePathname();
-  const userData = false;
+  const userData = true;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -170,6 +173,15 @@ const Navbar: React.FC = () => {
           <div className="lg:flex items-center gap-2 hidden">
             {userData ? (
               <div className="flex items-center gap-5">
+                <Link href="/message">
+                  <AiFillMessage className="text-2xl cursor-pointer" />
+                </Link>
+                <Link href="/notification">
+                  <GoBellFill className="text-2xl cursor-pointer" />
+                </Link>
+                <Link href="/cart">
+                  <IoMdCart className="text-2xl cursor-pointer" />
+                </Link>
                 <Link href="/profile">
                   <Image
                     src={AllImages.dummyProfile}
