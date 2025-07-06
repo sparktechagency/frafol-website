@@ -22,6 +22,7 @@ type TInputProps = {
   wrapperClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
+  formItemClassName?: string;
 };
 
 const ReuseInput = ({
@@ -41,6 +42,7 @@ const ReuseInput = ({
   wrapperClassName,
   labelClassName,
   inputClassName,
+  formItemClassName,
 }: TInputProps) => {
   return (
     <div className={cn(wrapperClassName)}>
@@ -52,7 +54,7 @@ const ReuseInput = ({
           {label}
         </Typography.Title>
       )}
-      <Form.Item name={name} rules={rules}>
+      <Form.Item name={name} rules={rules} className={cn(formItemClassName)}>
         {inputType === "password" ? (
           <Input.Password
             prefix={prefix}
