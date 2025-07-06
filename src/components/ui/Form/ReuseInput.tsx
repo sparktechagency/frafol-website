@@ -9,7 +9,7 @@ type TInputProps = {
   Typolevel?: 1 | 2 | 3 | 4 | 5;
   label?: React.ReactNode;
   name: string;
-  rules?: Rule[];
+  rules?: Rule[] | undefined;
   type?: string;
   placeholder: string;
   disabled?: boolean;
