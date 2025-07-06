@@ -1,0 +1,49 @@
+import React from "react";
+import { TfiEmail } from "react-icons/tfi";
+import { FiPhone } from "react-icons/fi";
+import { TfiLocationPin } from "react-icons/tfi";
+import ContactUsForm from "./ContactUsFrom";
+
+const ContactUs = () => {
+  return (
+    <div className="flex flex-col items-center justify-center w-full min-h-[84vh]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 w-full">
+        <div className="w-full h-full mb-10 lg:mb-0">
+          <div className="mb-5">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[45px] font-bold text-secondary-color mb-2">
+              Contact us
+            </h1>
+          </div>
+          <p className="text-lg sm:text-xl lg:text-2xl text-base-color mb-5">
+            Our expert will reach out to discuss your needs.
+          </p>
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <TfiEmail className="text-secondary-color text-base sm:text-lg lg:text-xl" />
+              <p className="text-base-color sm:text-lg lg:text-xl">
+                contact@frafol.com
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <FiPhone className="text-secondary-color text-base sm:text-lg lg:text-xl" />
+              <p className="text-base-color sm:text-lg lg:text-xl">
+                0123456789
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <TfiLocationPin className="text-secondary-color text-lg  sm:text-xl lg:text-2xl" />
+              <p className="text-base-color sm:text-lg lg:text-xl">
+                456 Example Road, London SW1A 1AA, UK
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="">
+          <ContactUsForm />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ContactUs;

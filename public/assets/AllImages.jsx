@@ -12,6 +12,19 @@ import marketBanner from "./images/marketBanner.png";
 import workspaceBanner from "./images/workspaceBanner.png";
 import forum from "./images/forum.png";
 
+import heyFafol1 from "./images/heyFafol1.png";
+import heyFafol2 from "./images/heyFafol2.png";
+import heyFafol3 from "./images/heyFafol3.png";
+import heyFafol4 from "./images/heyFafol4.png";
+import heyFafol5 from "./images/heyFafol5.png";
+import heyFafol6 from "./images/heyFafol6.png";
+
+import aboutUs1 from "./images/aboutUs1.jpg";
+import aboutUs2 from "./images/aboutUs2.jpg";
+import aboutUs3 from "./images/aboutUs3.jpg";
+import aboutUs4 from "./images/aboutUs4.jpg";
+import aboutUs5 from "./images/aboutUs5.jpg";
+
 import categoryimg1 from "./images/categoryimg1.png";
 import categoryimg2 from "./images/categoryimg2.png";
 import categoryimg3 from "./images/categoryimg3.png";
@@ -56,6 +69,17 @@ export const AllImages = {
   marketBanner,
   workspaceBanner,
   forum,
+  aboutUs1,
+  aboutUs2,
+  aboutUs3,
+  aboutUs4,
+  aboutUs5,
+  heyFafol1,
+  heyFafol2,
+  heyFafol3,
+  heyFafol4,
+  heyFafol5,
+  heyFafol6,
   categoryimg1,
   categoryimg2,
   categoryimg3,
