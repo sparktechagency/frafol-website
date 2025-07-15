@@ -4,10 +4,12 @@ import React from "react";
 import PhotographyCategoryDetails from "@/components/Photography/PhotographyCategoryDetails";
 import photographerData from "../../../../../public/data/photographerData";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PhotographyCategoryDetailsPage = async ({ params }: { params: any }) => {
-  const { id } = params;
-
+const PhotographyCategoryDetailsPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>; // Type params as a Promise
+}) => {
+  const { id } = await params; // Await the params to resolve the Promise
   const data = photographerData.find((item) => item.id === id);
 
   return (
