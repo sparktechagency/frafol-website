@@ -53,7 +53,7 @@ const ReuseDatePicker = ({
       )}
       <Form.Item name={name} rules={rules}>
         <DatePicker
-          suffixIcon={<CiCalendarDate className="text-[#D0D5DD]" />}
+          suffixIcon={<CiCalendarDate className="!text-secondary-color" />}
           value={value}
           onChange={(date, dateString) => {
             if (onChange) {

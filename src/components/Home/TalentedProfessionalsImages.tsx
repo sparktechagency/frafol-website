@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import Container from "../ui/Container";
 import SectionHeader from "../ui/SectionHeader";
-import GalleryCard from "../shared/GalleryCard";
 import { AllImages } from "../../../public/assets/AllImages";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import ImageGallery from "../ui/ImageGallery";
 
 const data = [
   {
@@ -65,13 +65,10 @@ const TalentedProfessionalsImages = () => {
       <Container>
         <SectionHeader title="From Our Talented Professionals" />
         <div className="mt-16">
-          <ResponsiveMasonry columnsCountBreakPoints={columnsCountBreakPoints}>
-            <Masonry gutter="10px">
-              {data?.map((item, index) => (
-                <GalleryCard key={index} gallery={item} />
-              ))}
-            </Masonry>
-          </ResponsiveMasonry>
+          <ImageGallery<any>
+            data={data}
+            columnsCountBreakPoints={columnsCountBreakPoints}
+          />
         </div>
       </Container>
     </section>

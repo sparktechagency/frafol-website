@@ -103,7 +103,7 @@ const ReuseTimePicker = ({
           }}
           disabled={disabled}
           className={cn(
-            "!py-1.5 !px-3 !text-lg !bg-primary-color border !border-primary-color !text-base-color rounded-lg w-full",
+            "!py-1.5 !px-3 !text-lg !bg-[#EFEFEF] border !border-[#EFEFEF]  !text-base-color rounded-lg w-full",
             className
           )}
           style={style}

@@ -1,18 +1,26 @@
 import React from "react";
 import AnimatedUnderline from "./Animation/AnimatedUnderline";
+import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
+  className?: string;
   title?: string;
   subTitle?: string;
   description?: string;
 }
 const SectionHeader: React.FC<SectionHeaderProps> = ({
+  className = "",
   subTitle,
   title,
   description,
 }) => {
   return (
-    <div className="flex flex-col justify-center items-center text-center mb-10">
+    <div
+      className={cn(
+        "flex flex-col justify-center items-center text-center mb-10",
+        className
+      )}
+    >
       {subTitle && (
         <h2 className="text-sm sm:text-base lg:text-lg text-secondary-color font-semibold mb-3">
           {subTitle}

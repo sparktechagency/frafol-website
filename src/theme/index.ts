@@ -25,14 +25,28 @@ export const mainTheme = {
       // activeBorderColor: "#5d5d5d",
       hoverBorderColor: "#5d5d5d",
     },
-    DatePicker: {
+    TimePicker: {
+      colorTextQuaternary: "#ad2b08",
       fontSize: 16,
       colorTextPlaceholder: "#262621",
       colorBgElevated: "#efefef",
       colorText: "#262621",
       colorTextHeading: "#262621",
       colorTextDisabled: "#26262155",
-      colorIcon: "#262621",
+      colorIcon: "#ad2b08",
+      colorIconHover: "#ad2b08",
+      colorPrimary: "#ad2b08",
+    },
+    DatePicker: {
+      colorTextQuaternary: "#ad2b08",
+
+      fontSize: 16,
+      colorTextPlaceholder: "#262621",
+      colorBgElevated: "#efefef",
+      colorText: "#262621",
+      colorTextHeading: "#262621",
+      colorTextDisabled: "#26262155",
+      colorIcon: "#ad2b08",
       colorIconHover: "#ad2b08",
       colorPrimary: "#ad2b08",
     },
@@ -62,6 +76,9 @@ export const mainTheme = {
     Input: {
       colorTextPlaceholder: "#5d5d5d ",
       colorIcon: "#5d5d5d",
+    },
+    Radio: {
+      colorPrimary: "#ad2b08",
     },
   },
 };

@@ -99,3 +99,24 @@ body {
     margin-left: 0px; /* Reset margin-left to 0px */
   }
 }
+
+/* Darken the Ant Design image preview mask */
+.ant-image-preview-root .ant-image-preview-mask {
+  background-color: rgba(0, 0, 0, 0.85) !important; /* darker */
+}
+
+.ant-image-preview-switch-left,
+.ant-image-preview-switch-right {
+  color: #ffffff !important;
+  background-color: #ad2b0855 !important;
+}
+.ant-image-preview-switch-left:hover,
+.ant-image-preview-switch-right:hover {
+  color: #ffffff !important;
+  background-color: #ad2b08 !important;
+}
+
+.ant-image-preview-close {
+  color: #ad2b08 !important;
+  background-color: #ffffff !important;
+}
