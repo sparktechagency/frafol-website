@@ -1,6 +1,18 @@
 export const mainTheme = {
   // token: { fontFamily: "adineuePRO, __adineuePRO_Fallback" },
   components: {
+    Menu: {
+      fontSize: 16,
+      iconSize: 24,
+      itemActiveBg: "#ad2b0899",
+      itemActiveColor: "#262621",
+      itemHoverColor: "#262621",
+      itemColor: "#262621",
+      itemSelectedBg: "#ad2b08",
+      itemSelectedColor: "#ffffff",
+      iconColor: "#262621",
+      subMenuItemBg: "#ffffff11",
+    },
     Form: {
       colorError: "#E53935",
     },

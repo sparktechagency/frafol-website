@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import Container from "@/components/ui/Container";
@@ -6,14 +7,41 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AllImages } from "../../../public/assets/AllImages";
 import { usePathname } from "next/navigation";
-import { Button } from "antd";
+import { Button, Dropdown, MenuProps } from "antd";
 import * as motion from "motion/react-client";
 import { useScroll, useMotionValueEvent } from "motion/react";
 import { TbLogout2 } from "react-icons/tb";
-import { HiOutlineLogin } from "react-icons/hi";
+import { HiOutlineLogin, HiOutlineSwitchHorizontal } from "react-icons/hi";
 import { IoMdCart } from "react-icons/io";
 import { GoBellFill } from "react-icons/go";
 import { AiFillMessage } from "react-icons/ai";
+import { MdOutlineDashboard } from "react-icons/md";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
+
+const notificationData = [
+  {
+    id: "1",
+    message: {
+      text: "You have a new message",
+      time: "Just now",
+    },
+  },
+  {
+    id: "2",
+    message: {
+      text: "You have a new message",
+      time: "Just now",
+    },
+  },
+  {
+    id: "3",
+    message: {
+      text: "You have a new message",
+      time: "Just now",
+    },
+  },
+];
 
 const NavItems = [
   { id: "1", name: "Photography", route: "/photography" },
@@ -21,6 +49,60 @@ const NavItems = [
   { id: "1", name: "Marketplace", route: "/marketplace" },
   { id: "1", name: "Forums", route: "/forums" },
   { id: "1", name: "Workshops", route: "/workshops" },
+];
+
+const notificationMenu = (
+  <div
+    className="flex flex-col gap-4 w-full text-center bg-white p-4 rounded-lg"
+    style={{ boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)" }}
+  >
+    {notificationData?.map((notification: any) => (
+      <div className="test-start" key={notification.id}>
+        <div className="flex items-center gap-2">
+          <div className="p-1 bg-secondary-color rounded-full w-fit h-fit">
+            <GoBellFill className="text-white cursor-pointer" />
+          </div>
+          <div className="flex flex-col items-start">
+            <p>{notification?.message?.text}</p>
+            <p className="text-gray-400">{notification?.message?.time}</p>
+          </div>
+        </div>
+      </div>
+    ))}
+    <Link
+      href={`/notifications`}
+      className="w-2/3 mx-auto !bg-secondary-color !text-primary-color rounded-xl h-8 py-1"
+    >
+      See More
+    </Link>
+  </div>
+);
+
+const items: MenuProps["items"] = [
+  {
+    key: "2",
+    label: <Link href="/dashboard/my-account/overview">Dashboard</Link>,
+    icon: <MdOutlineDashboard className="text-secondary-color !text-base" />,
+  },
+  {
+    key: "3",
+    label: <Link href="#">Switch Profile</Link>,
+    icon: (
+      <HiOutlineSwitchHorizontal className="text-secondary-color !text-base" />
+    ),
+  },
+  {
+    key: "4",
+    label: <Link href="#">Documents</Link>,
+    icon: <IoDocumentTextOutline className="text-secondary-color !text-base" />,
+  },
+  {
+    key: "5",
+    label: <Link href="#">Insurance</Link>,
+    icon: (
+      <RiMoneyDollarCircleLine className="text-secondary-color !text-base" />
+    ),
+  },
 ];
 
 const Navbar: React.FC = () => {
@@ -176,13 +258,30 @@ const Navbar: React.FC = () => {
                 <Link href="/message">
                   <AiFillMessage className="text-2xl cursor-pointer" />
                 </Link>
-                <Link href="/notification">
+
+                <Dropdown
+                  overlay={notificationMenu}
+                  trigger={["hover"]}
+                  // onOpenChange={(open: boolean) => {
+                  //   setOpen(open);
+                  // }}
+                  placement="bottomRight"
+                  className="cursor-pointer"
+                >
                   <GoBellFill className="text-2xl cursor-pointer" />
-                </Link>
+                </Dropdown>
                 <Link href="/cart">
                   <IoMdCart className="text-2xl cursor-pointer" />
                 </Link>
-                <Link href="/profile">
+                <Dropdown
+                  menu={{ items }}
+                  trigger={["hover"]}
+                  // onOpenChange={(open: boolean) => {
+                  //   setOpen(open);
+                  // }}
+                  placement="bottomRight"
+                  className="cursor-pointer"
+                >
                   <Image
                     src={AllImages.dummyProfile}
                     alt="profile_img"
@@ -191,7 +290,7 @@ const Navbar: React.FC = () => {
                     sizes="100vw"
                     className="xl:h-[35px] h-[30px] w-[30px] xl:w-[35px] rounded-full cursor-pointer border-2 border-[#2B4257]"
                   />
-                </Link>
+                </Dropdown>
 
                 <Button className="group flex items-center !py-4 !px-1 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full">
                   <p className="font-semibold">Logout</p>
