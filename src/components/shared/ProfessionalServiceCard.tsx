@@ -7,7 +7,7 @@ import { LuClock } from "react-icons/lu";
 import { BsCurrencyDollar } from "react-icons/bs";
 import ServiceCardBookNow from "../Professional/ServiceCardBookNow";
 
-const ProfessionalServiceCard = ({ data, openModal }: any) => {
+const ProfessionalServiceCard = ({ data }: any) => {
   return (
     <div className="p-1.5 rounded-xl border border-background-color">
       <Image
@@ -61,7 +61,7 @@ const ProfessionalServiceCard = ({ data, openModal }: any) => {
         </div>
 
         <div className="flex items-center gap-2 mt-5 justify-between">
-          <ServiceCardBookNow openModal={openModal} />
+          <ServiceCardBookNow />
         </div>
       </div>
     </div>

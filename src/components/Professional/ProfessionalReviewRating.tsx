@@ -25,16 +25,16 @@ const ProfessionalReviewRating = () => {
   return (
     <div className="flex flex-col lg:flex-row items-center  gap-8 w-full">
       {/* Left side: Rating breakdown */}
-      <div className=" space-y-2">
+      <div className=" space-y-2 w-full">
         <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-extrabold text-secondary-color">
           {totalRatings} Ratings
         </p>
         {ratings.map(({ star, count }) => (
           <div key={star} className="flex items-center gap-2 w-full">
-            <div className="text-xl sm:text-sm lg:text-base xl:text-lg font-semibold">
+            <div className="text-xs text-nowrap sm:text-sm lg:text-base xl:text-lg font-semibold">
               {star} Star
             </div>
-            <div className="w-[500px]">
+            <div className="w-full lg:w-[500px]">
               <Progress
                 size="default"
                 percent={getPercent(count)}
@@ -42,7 +42,7 @@ const ProfessionalReviewRating = () => {
                 strokeColor="#FACC15"
               />
             </div>
-            <div className="text-xl sm:text-sm lg:text-base xl:text-lg font-semibold">
+            <div className="text-xs text-nowrap sm:text-sm lg:text-base xl:text-lg font-semibold">
               ({count})
             </div>
           </div>

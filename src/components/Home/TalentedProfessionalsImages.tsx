@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
 import React from "react";
 import Container from "../ui/Container";
 import SectionHeader from "../ui/SectionHeader";

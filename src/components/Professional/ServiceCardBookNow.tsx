@@ -1,8 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import ReuseButton from "../ui/Button/ReuseButton";
+import ProfessionalServiceBookingModal from "../ui/Modal/Professional/ProfessionalServiceBookingModal";
 
-const ServiceCardBookNow = ({ openModal }: any) => {
+const ServiceCardBookNow = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const openModal = () => setIsModalVisible(true);
+
+  const handleCancel = () => setIsModalVisible(false);
   return (
     <>
       <ReuseButton
@@ -12,6 +18,10 @@ const ServiceCardBookNow = ({ openModal }: any) => {
       >
         Book Now
       </ReuseButton>
+      <ProfessionalServiceBookingModal
+        isModalVisible={isModalVisible}
+        handleCancel={handleCancel}
+      />
     </>
   );
 };

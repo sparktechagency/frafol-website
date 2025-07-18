@@ -50,7 +50,7 @@ const ProfessionalReviewsFiltre = () => {
             onClick={() =>
               setSelectedStar((prev) => (prev === star ? null : star))
             }
-            className={`flex items-center gap-1 px-3 py-1 rounded-full border text-sm font-medium cursor-pointer
+            className={`flex items-center gap-1 px-3 py-1 rounded-full border text-xs sm:text-sm lg:text-base font-medium cursor-pointer
               ${
                 selectedStar === star
                   ? "bg-yellow-400 text-white border-yellow-400"

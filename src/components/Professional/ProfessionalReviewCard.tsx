@@ -18,8 +18,8 @@ const ReviewCard = ({ review }: { review: any }) => {
   return (
     <div className="p-4 rounded-lg shadow-none hover:shadow-md transition">
       {/* Header */}
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col mb-2">
+        <div className="flex items-center gap-2 mb-2">
           <Image
             width={2000}
             height={2000}
@@ -34,7 +34,7 @@ const ReviewCard = ({ review }: { review: any }) => {
             · {review.date}
           </span>
         </div>
-        <Rate disabled defaultValue={review.rating} />
+        <Rate className="" disabled defaultValue={review.rating} />
       </div>
 
       {/* Content */}
