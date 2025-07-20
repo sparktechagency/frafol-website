@@ -4,6 +4,8 @@ import logo2 from "./logo/logo2.png";
 import herobanner1 from "./images/banner1.png";
 import dummyProfile from "./images/dummyProfile.jpg";
 import smartPhone from "./images/smartPhone.png";
+import male from "./images/male.png";
+import girl from "./images/female.png";
 
 import aboutusStory from "./images/aboutusStory.jpeg";
 import aboutUsBrife from "./images/aboutUsBrife.jpeg";
@@ -100,6 +102,8 @@ export const AllImages = {
   product2,
   product3,
   workspace,
+  male,
+  girl,
 };
 
 export const allIcons = {
