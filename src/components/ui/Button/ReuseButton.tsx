@@ -28,11 +28,11 @@ const variantStyles = {
   primary: "!bg-primary-color !text-base-color border !border-base-color ",
   secondary:
     "!bg-secondary-color !text-primary-color border !border-secondary-color",
-  highlight: "!bg-base-color !text-primary-color border !border-primary-color",
+  highlight: "!bg-transparent !text-base-color border !border-base-color",
   ghost:
     "!bg-primary-color/0 !text-lighter-color border  !border-primary-color/0 hover:!bg-base-color/40 hover:!text-primary-color hover:!border-base-color/40 transition-all duration-300 ease-in-out",
   outline: "!bg-transparent !text-base-color !border-base-color",
-  error: "!bg-error-color !text-base-color border !border-error-color w-auto",
+  error: "!bg-error !text-primary-color border !border-error w-auto",
 };
 
 const ReuseButton = ({

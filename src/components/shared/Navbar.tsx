@@ -80,8 +80,17 @@ const notificationMenu = (
 
 const items: MenuProps["items"] = [
   {
-    key: "2",
+    key: "1",
     label: <Link href="/dashboard/my-account/overview">Dashboard</Link>,
+    icon: <MdOutlineDashboard className="text-secondary-color !text-base" />,
+  },
+  {
+    key: "2",
+    label: (
+      <Link href="/dashboard/professional/overview">
+        Professional Dashboard
+      </Link>
+    ),
     icon: <MdOutlineDashboard className="text-secondary-color !text-base" />,
   },
   {

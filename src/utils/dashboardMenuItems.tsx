@@ -10,6 +10,14 @@ import workshop from "../../public/assets/svg/workshop.svg";
 import review from "../../public/assets/svg/review.svg";
 import profile from "../../public/assets/svg/profile.svg";
 
+// Profesional Dashboard Icons
+import event from "../../public/assets/svg/event.svg";
+import calendar from "../../public/assets/svg/calender.svg";
+import earning from "../../public/assets/svg/earning.svg";
+import gearOrder from "../../public/assets/svg/gearOrder.svg";
+import gearMarketplace from "../../public/assets/svg/gearMarketplace.svg";
+import packages from "../../public/assets/svg/packages.svg";
+
 export const useAdminPaths = () => {
   const pathname = usePathname();
 
@@ -146,7 +154,7 @@ export const useProfessionalPaths = () => {
       ),
       icon: (
         <Image
-          src={overview}
+          src={event}
           alt="icon"
           width={20}
           className="mr-2"
@@ -163,7 +171,7 @@ export const useProfessionalPaths = () => {
       label: <Link href="/dashboard/professional/calendar">Calendar</Link>,
       icon: (
         <Image
-          src={overview}
+          src={calendar}
           alt="icon"
           width={20}
           className="mr-2"
@@ -180,7 +188,7 @@ export const useProfessionalPaths = () => {
       label: <Link href="/dashboard/professional/earning">Earning</Link>,
       icon: (
         <Image
-          src={overview}
+          src={earning}
           alt="icon"
           width={20}
           className="mr-2"
@@ -197,12 +205,84 @@ export const useProfessionalPaths = () => {
       label: <Link href="/dashboard/professional/review">Review</Link>,
       icon: (
         <Image
-          src={overview}
+          src={review}
           alt="icon"
           width={20}
           className="mr-2"
           style={{
             filter: pathname.includes("/review")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "gear-order",
+      label: <Link href="/dashboard/professional/gear-order">Gear Order</Link>,
+      icon: (
+        <Image
+          src={gearOrder}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/gear-order")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "gear-marketPlace",
+      label: (
+        <Link href="/dashboard/professional/gear-marketPlace">
+          Gear MarketPlace
+        </Link>
+      ),
+      icon: (
+        <Image
+          src={gearMarketplace}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/gear-marketPlace")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "packages",
+      label: <Link href="/dashboard/professional/packages">Packages</Link>,
+      icon: (
+        <Image
+          src={packages}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/packages")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "workshop",
+      label: <Link href="/dashboard/professional/workshop">Workshop</Link>,
+      icon: (
+        <Image
+          src={workshop}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/workshop")
               ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
               : undefined,
           }}
