@@ -42,7 +42,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         type="text"
         placeholder={placeholder}
         onChange={handleSearch}
-        inputClassName="!bg-base-color !text-primary-color !border-base-color"
+        inputClassName="!bg-primary-color !text-base-color !border-[#E1E1E1]"
         prefix={<SearchOutlined className="text-[#667185] text-xl mr-2" />}
       />
     </div>

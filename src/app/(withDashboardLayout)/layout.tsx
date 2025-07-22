@@ -1,7 +1,10 @@
 "use client";
 import Navbar from "@/components/shared/Navbar";
 import getActiveKeys from "@/utils/activeKey";
-import { useAdminPaths } from "@/utils/dashboardMenuItems";
+import {
+  useAdminPaths,
+  useProfessionalPaths,
+} from "@/utils/dashboardMenuItems";
 import { Layout, Menu } from "antd";
 import { BarsOutlined } from "@ant-design/icons";
 import { Content, Header } from "antd/es/layout/layout";
@@ -11,14 +14,15 @@ import React, { useEffect } from "react";
 import { Toaster } from "sonner";
 
 const userRole = {
-  role: "user",
+  role: "professional",
 };
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const pathname = usePathname();
-  const defaultUrl = userRole?.role === "user" ? "/my-account" : "/";
+  const defaultUrl =
+    userRole?.role === "user" ? "/my-account" : "/professional";
   const normalizedPath = pathname.replace(defaultUrl, "");
 
   const [collapsed, setCollapsed] = React.useState(false);
@@ -42,13 +46,15 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const adminPaths = useAdminPaths();
+  const professionalPath = useProfessionalPaths();
 
   const activeKeys = getActiveKeys(normalizedPath);
   const menuItems =
     userRole?.role === "user"
       ? //   ? sidebarItemsGenerator(adminPaths, "admin")
         adminPaths
-      : [];
+      : // : sidebarItemsGenerator(professionalPath, "professional")
+        professionalPath;
 
   return (
     <div>

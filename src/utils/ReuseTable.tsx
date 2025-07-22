@@ -32,7 +32,6 @@ const ReuseTable: React.FC<ReuseTableProps<any>> = ({
 }) => {
   return (
     <Table
-      bordered
       loading={loading}
       columns={columns}
       dataSource={data}

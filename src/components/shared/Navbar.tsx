@@ -17,7 +17,7 @@ import { GoBellFill } from "react-icons/go";
 import { AiFillMessage } from "react-icons/ai";
 import { MdOutlineDashboard } from "react-icons/md";
 import { IoDocumentTextOutline } from "react-icons/io5";
-import { RiMoneyDollarCircleLine } from "react-icons/ri";
+// import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
 const notificationData = [
   {
@@ -96,13 +96,13 @@ const items: MenuProps["items"] = [
     label: <Link href="#">Documents</Link>,
     icon: <IoDocumentTextOutline className="text-secondary-color !text-base" />,
   },
-  {
-    key: "5",
-    label: <Link href="#">Insurance</Link>,
-    icon: (
-      <RiMoneyDollarCircleLine className="text-secondary-color !text-base" />
-    ),
-  },
+  // {
+  //   key: "5",
+  //   label: <Link href="#">Insurance</Link>,
+  //   icon: (
+  //     <RiMoneyDollarCircleLine className="text-secondary-color !text-base" />
+  //   ),
+  // },
 ];
 
 const Navbar: React.FC = () => {

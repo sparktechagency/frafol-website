@@ -1,0 +1,63 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import { useState } from "react";
+import { TransactionsData } from "../../../../../public/data/TransactionsData";
+import SearchInput from "@/components/ui/Form/ReuseSearchInput";
+import TransactionTable from "@/components/ui/Table/TransactionTable";
+import TransactionViewModal from "./TransactionViewModal";
+
+const EarningsPage = () => {
+  const data = TransactionsData;
+  const [page, setPage] = useState(1);
+  const [searchText, setSearchText] = useState("");
+  console.log(searchText);
+
+  const limit = 12;
+
+  const [isViewModalVisible, setIsViewModalVisible] = useState(false);
+  const [currentRecord, setCurrentRecord] = useState(null);
+
+  const showViewUserModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsViewModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsViewModalVisible(false);
+    setCurrentRecord(null);
+  };
+
+  return (
+    <div className=" bg-primary-color rounded-xl p-4 min-h-[90vh]">
+      <div className="flex justify-between items-center mx-3 py-2 mb-5">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl  font-bold mb-10">
+          Earning
+        </h1>
+        <div className="h-fit">
+          <SearchInput
+            placeholder="Search ..."
+            setSearch={setSearchText}
+            setPage={setPage}
+          />
+        </div>
+      </div>
+
+      <TransactionTable
+        data={data}
+        loading={false}
+        showViewModal={showViewUserModal}
+        setPage={setPage}
+        page={page}
+        total={data.length}
+        limit={limit}
+      />
+      <TransactionViewModal
+        isViewModalVisible={isViewModalVisible}
+        handleCancel={handleCancel}
+        currentRecord={currentRecord}
+      />
+    </div>
+  );
+};
+
+export default EarningsPage;

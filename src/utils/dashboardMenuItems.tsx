@@ -118,3 +118,115 @@ export const useAdminPaths = () => {
     },
   ];
 };
+export const useProfessionalPaths = () => {
+  const pathname = usePathname();
+
+  return [
+    {
+      key: "overview",
+      label: <Link href="/dashboard/professional/overview">Overview</Link>,
+      icon: (
+        <Image
+          src={overview}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/overview")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "event-orders",
+      label: (
+        <Link href="/dashboard/professional/event-orders">Event Orders</Link>
+      ),
+      icon: (
+        <Image
+          src={overview}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/event-orders")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "calendar",
+      label: <Link href="/dashboard/professional/calendar">Calendar</Link>,
+      icon: (
+        <Image
+          src={overview}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/calendar")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "earning",
+      label: <Link href="/dashboard/professional/earning">Earning</Link>,
+      icon: (
+        <Image
+          src={overview}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/earning")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "review",
+      label: <Link href="/dashboard/professional/review">Review</Link>,
+      icon: (
+        <Image
+          src={overview}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/review")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "profile-settings",
+      icon: (
+        <Image
+          src={profile}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/profile-settings")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+      label: (
+        <Link href="/dashboard/professional/profile-settings">Profile</Link>
+      ),
+    },
+  ];
+};
