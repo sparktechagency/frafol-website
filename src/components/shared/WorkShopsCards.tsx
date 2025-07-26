@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import React from "react";
 import { AllImages } from "../../../public/assets/AllImages";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LuClock } from "react-icons/lu";
-import { FaLink } from "react-icons/fa6";
+import { FaLink, FaLocationDot } from "react-icons/fa6";
 import { LuUsers } from "react-icons/lu";
 import ReuseButton from "../ui/Button/ReuseButton";
 
-const WorkShopsCards = () => {
+const WorkShopsCards = ({ openModal }: any) => {
   return (
     <div className="p-1.5 rounded-xl border border-background-color">
       <Image
@@ -46,6 +47,12 @@ const WorkShopsCards = () => {
           </p>
         </div>
         <div className="flex items-center gap-2 mt-1">
+          <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+          <p className="text-xs sm:text-sm lg:text-base font-semibold">
+            Online
+          </p>
+        </div>
+        <div className="flex items-center gap-2 mt-1">
           <FaLink className="text-secondary-color text-sm sm:text-base lg:text-lg" />
           <p className="text-xs sm:text-sm lg:text-base font-semibold">
             www.workshop.com
@@ -62,6 +69,7 @@ const WorkShopsCards = () => {
           <ReuseButton
             variant="secondary"
             className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
+            onClick={openModal}
           >
             Register Now
           </ReuseButton>

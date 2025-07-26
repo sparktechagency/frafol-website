@@ -72,7 +72,6 @@ const ProfessionalEditWorkshop = ({
             labelClassName="!font-semibold"
             rules={[{ required: true, message: "Time is required" }]}
             placeholder="Select Time"
-            format="h:mm a"
             disabled={!selectedDate}
           />
           <ReuseSelect
@@ -87,7 +86,7 @@ const ProfessionalEditWorkshop = ({
             ]}
           />
           <ReuseInput
-            name="location"
+            name="eventLocation"
             label="Event Location"
             placeholder="Enter Event Location"
             rules={[{ required: true, message: "Event Location is required" }]}
@@ -99,6 +98,12 @@ const ProfessionalEditWorkshop = ({
             label="Price"
             placeholder="Enter Price"
             rules={[{ required: true, message: "Price is required" }]}
+            labelClassName="!font-semibold"
+          />
+          <ReuseInput
+            name="VATAmount "
+            label="VAT Amount % (optional) "
+            placeholder="Enter VAT Amount"
             labelClassName="!font-semibold"
           />
 

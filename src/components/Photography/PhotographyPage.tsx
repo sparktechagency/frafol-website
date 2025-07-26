@@ -6,6 +6,7 @@ import ReuseInput from "../ui/Form/ReuseInput";
 import { FiSearch } from "react-icons/fi";
 import photographerData from "../../../public/data/photographerData";
 import Link from "next/link";
+import ReuseButton from "../ui/Button/ReuseButton";
 
 const PhotographyPage = () => {
   return (
@@ -32,6 +33,15 @@ const PhotographyPage = () => {
               </Link>
             ))}
           </div>
+        </div>
+        <div className="flex justify-center items-center !mt-10">
+          <ReuseButton
+            url="/professionals"
+            className="mt-10 w-fit mx-auto !text-sm sm:!text-base lg:!text-lg !py-4.5"
+            variant="secondary"
+          >
+            See All Photographers
+          </ReuseButton>
         </div>
       </Container>
     </div>

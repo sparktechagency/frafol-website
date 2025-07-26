@@ -47,12 +47,12 @@ const MarketPlaceDetailsPage = () => {
           >
             Add to Cart
           </ReuseButton>
-          <ReuseButton
+          {/* <ReuseButton
             className=" mt-5 !text-sm sm:!text-base lg:!text-lg !py-5 w-full !border-secondary-color !font-bold"
             variant="secondary"
           >
             Buy Now
-          </ReuseButton>
+          </ReuseButton> */}
           <div className="mt-10">
             {generalData.map((item, index) => (
               <ProductDetailAccordion

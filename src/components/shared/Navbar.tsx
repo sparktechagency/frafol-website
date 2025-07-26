@@ -17,6 +17,8 @@ import { GoBellFill } from "react-icons/go";
 import { AiFillMessage } from "react-icons/ai";
 import { MdOutlineDashboard } from "react-icons/md";
 import { IoDocumentTextOutline } from "react-icons/io5";
+import Cookies from "js-cookie";
+
 // import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
 const notificationData = [
@@ -95,7 +97,7 @@ const items: MenuProps["items"] = [
   },
   {
     key: "3",
-    label: <Link href="#">Switch Profile</Link>,
+    label: <div onClick={() => {}}>Switch Profile</div>,
     icon: (
       <HiOutlineSwitchHorizontal className="text-secondary-color !text-base" />
     ),
@@ -115,6 +117,7 @@ const items: MenuProps["items"] = [
 ];
 
 const Navbar: React.FC = () => {
+  Cookies.set("frafol_user", JSON.stringify({ role: "user" }));
   const path = usePathname();
   const userData = true;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -180,7 +183,7 @@ const Navbar: React.FC = () => {
                 width={1000}
                 height={1000}
                 sizes="100vw"
-                className="h-8 w-auto"
+                className="h-10 w-auto"
               />
             </Link>
           </div>

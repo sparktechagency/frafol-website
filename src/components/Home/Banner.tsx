@@ -5,6 +5,7 @@ import Container from "../ui/Container";
 import Revel from "../ui/Animation/Revel";
 import BannerSearch from "./BannerSearch";
 import { AllImages } from "../../../public/assets/AllImages";
+import Link from "next/link";
 
 export default function Banner() {
   return (
@@ -23,9 +24,11 @@ export default function Banner() {
         <div className="w-full grid grid-cols-1 lg:grid-cols-5 relative">
           <div className="hidden lg:flex flex-col items-center">
             <Image src={AllImages.girl} alt="Photographer" className="w-fit" />
-            <button className="mt-2 bg-secondary-color text-white text-xs sm:text-sm px-3 py-1 rounded-md">
-              Photographers
-            </button>
+            <Link href="/photography">
+              <button className="mt-2 bg-secondary-color text-white text-xs sm:text-sm px-3 py-1 rounded-md cursor-pointer">
+                Photographers
+              </button>
+            </Link>
           </div>
           <div className="text-center flex flex-col items-center justify-center col-span-3">
             <Revel>
@@ -47,9 +50,11 @@ export default function Banner() {
           </div>
           <div className="hidden lg:flex flex-col items-center">
             <Image src={AllImages.male} alt="Videographer" className="w-fit" />
-            <button className="mt-2 bg-secondary-color text-white text-xs sm:text-sm px-3 py-1 rounded-md">
-              Videographers
-            </button>
+            <Link href="/videography">
+              <button className="mt-2 bg-secondary-color text-white text-xs sm:text-sm px-3 py-1 rounded-md cursor-pointer">
+                Videographers
+              </button>
+            </Link>
           </div>
         </div>
         {/* <div className="absolute right-20 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center">

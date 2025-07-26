@@ -44,10 +44,10 @@ const ReportViewModal = ({
                 <span className="text-secondary-color">{"User"}</span>
               </div>
 
-              <div className="flex items-center  gap-2 mb-2">
+              {/* <div className="flex items-center  gap-2 mb-2">
                 <span className="font-medium">Email:</span>
                 <span>user@gmail.com</span>
-              </div>
+              </div> */}
 
               <div className="flex items-center  gap-2 mb-2">
                 <span className="font-medium">Rating :</span>

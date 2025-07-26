@@ -68,6 +68,12 @@ const GearMarketPlaceEditNewGear = ({
               labelClassName="!font-semibold"
             />
             <ReuseInput
+              name="VATAmount "
+              label="VAT Amount % (optional) "
+              placeholder="Enter VAT Amount"
+              labelClassName="!font-semibold"
+            />
+            <ReuseInput
               inputType="textarea"
               rows={4}
               name="description"

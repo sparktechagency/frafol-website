@@ -74,6 +74,12 @@ const ProfessionalEditPackageModal = ({
           rules={[{ required: true, message: "Package Price is required" }]}
           labelClassName="!font-semibold"
         />
+        <ReuseInput
+          name="VATAmount "
+          label="VAT Amount % (optional) "
+          placeholder="Enter VAT Amount"
+          labelClassName="!font-semibold"
+        />
 
         <ReuseSelect
           name="deliveryTime"

@@ -14,12 +14,14 @@ import React, { useEffect } from "react";
 import { Toaster } from "sonner";
 
 const userRole = {
-  role: "professional",
+  role: "user",
 };
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  // const userRole = JSON.parse(Cookies.get("frafol_user") || "{}");
+
   const pathname = usePathname();
   const defaultUrl =
     userRole?.role === "user" ? "/my-account" : "/professional";

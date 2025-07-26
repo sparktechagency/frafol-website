@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import ReusableForm from "../ui/Form/ReuseForm";
-import { Form } from "antd";
+import { Checkbox, Form } from "antd";
 import ReuseButton from "../ui/Button/ReuseButton";
 import ReuseInput from "../ui/Form/ReuseInput";
 import type { Rule } from "antd/es/form";
@@ -23,13 +23,25 @@ const inputFields: {
     rules: [{ required: true, message: "Name is required" }] as Rule[],
   },
   {
-    name: "shippingAddress",
-    label: "Shipping Address",
+    name: "street",
+    label: "Street",
     placeholder: "Placeholder",
     required: true,
-    rules: [
-      { required: true, message: "Shipping Address is required" },
-    ] as Rule[],
+    rules: [{ required: true, message: "Street is required" }] as Rule[],
+  },
+  {
+    name: "postCode",
+    label: "Post code",
+    placeholder: "Placeholder",
+    required: true,
+    rules: [{ required: true, message: "Post code is required" }] as Rule[],
+  },
+  {
+    name: "town",
+    label: "Town",
+    placeholder: "Placeholder",
+    required: true,
+    rules: [{ required: true, message: "Town is required" }] as Rule[],
   },
   {
     name: "mobileNumber",
@@ -48,19 +60,33 @@ const inputFields: {
       { type: "email", message: "Enter a valid email" },
     ] as Rule[],
   },
+];
+const otherFields: {
+  name: string;
+  label: string;
+  placeholder: string;
+  required?: boolean;
+  rules?: Rule[];
+  inputType?: "normal" | "password" | "textarea";
+}[] = [
   {
     name: "ico",
-    label: "IČO",
+    label: "IČO (Optional)",
     placeholder: "Placeholder",
   },
   {
     name: "dic",
-    label: "DIČ",
+    label: "DIČ (Optional)",
     placeholder: "Placeholder",
   },
   {
     name: "ic_dhp",
-    label: "IČ DHP",
+    label: "IČ DHP (Optional)",
+    placeholder: "Placeholder",
+  },
+  {
+    name: "companyAddress",
+    label: "Company Address (Optional)",
     placeholder: "Placeholder",
   },
   {
@@ -81,6 +107,19 @@ const CartDeliveryOption = () => {
     <ReusableForm handleFinish={handleSubmit} form={form}>
       <div className="">
         {inputFields.map((field) => (
+          <ReuseInput
+            key={field.name}
+            name={field.name}
+            label={field.label}
+            placeholder={field.placeholder}
+            rules={field.rules}
+            inputType={field.inputType}
+          />
+        ))}
+        <div className="mb-2">
+          <Checkbox>I am login as company</Checkbox>
+        </div>
+        {otherFields.map((field) => (
           <ReuseInput
             key={field.name}
             name={field.name}

@@ -48,9 +48,9 @@ const EventCreateOrderModal = ({
           />
           <ReuseInput
             name="vatAmount"
-            label="VAT Amount (%)"
+            label="VAT Amount (%) (Optional)"
             placeholder="Enter VAT Amount"
-            rules={[{ required: true, message: "VAT Amount is required" }]}
+            // rules={[{ required: true, message: "VAT Amount is required" }]}
             labelClassName="!font-semibold"
           />
         </div>

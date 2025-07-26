@@ -110,8 +110,13 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           </p>
         </div>
         {activeTab === "Delivered" ? (
-          <div className="mt-5">
-            <ReuseButton variant="secondary">Download Invoice</ReuseButton>
+          <div className="mt-5 flex flex-col items-center gap-5">
+            <ReuseButton variant="secondary" className="!w-fit">
+              Download Invoice With Client
+            </ReuseButton>
+            <ReuseButton variant="secondary" className="!w-fit">
+              Download Invoice with Admin
+            </ReuseButton>
           </div>
         ) : activeTab === "InProgress" ? (
           <div className="mt-5 flex gap-3 items-center justify-center flex-wrap">

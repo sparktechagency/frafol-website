@@ -76,7 +76,6 @@ const ProfessionalServiceBookingModal: React.FC<
             labelClassName="!font-semibold"
             rules={[{ required: true, message: "Time is required" }]}
             placeholder="Select Time"
-            format="h:mm a"
             disabled={!selectedDate}
           />
 

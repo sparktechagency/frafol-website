@@ -84,7 +84,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
               labelClassName="!font-semibold"
               rules={[{ required: true, message: "Time is required" }]}
               placeholder="Select Time"
-              format="h:mm a"
+              format="HH:mm"
               disabled={!selectedDate}
             />
             <ReuseSelect
@@ -93,11 +93,11 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
               labelClassName="!font-semibold"
               rules={[{ required: true, message: "Budget is required" }]}
               options={[
-                { value: "under500", label: "Under 500" },
-                { value: "500-1000", label: "$500-1000" },
-                { value: "1000-2000", label: "1000-2000" },
-                { value: "2000-5000", label: "2000-5000" },
-                { value: "over5000", label: "Over 5000" },
+                { value: "under500", label: "Under 500€" },
+                { value: "500-1000", label: "500€-1000€" },
+                { value: "1000-2000", label: "1000€-2000€" },
+                { value: "2000-5000", label: "2000€-5000€" },
+                { value: "over5000", label: "Over 5000€" },
               ]}
             />
             <ReuseSelect

@@ -58,7 +58,7 @@ const reviews = [
 
 const ProfessionalReviews = () => {
   return (
-    <div className="mt-16">
+    <div id="reviews" className="mt-16">
       <SectionHeader title="Reviews" className="mb-3" />
       <ProfessionalReviewRating />
       <ProfessionalReviewsFiltre />

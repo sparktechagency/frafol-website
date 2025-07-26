@@ -106,7 +106,7 @@ const inputStructure = [
     placeholder: "Enter your IČ DPH",
     labelClassName: "!font-medium",
     inputClassName: "!py-2 !w-full",
-    rules: [{ required: true, message: "IČ DPH is required" }],
+    // rules: [{ required: true, message: "IČ DPH is required" }],
     disable: false,
   },
 ];

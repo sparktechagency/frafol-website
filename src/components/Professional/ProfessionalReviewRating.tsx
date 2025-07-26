@@ -25,7 +25,7 @@ const ProfessionalReviewRating = () => {
   return (
     <div className="flex flex-col lg:flex-row items-center  gap-8 w-full">
       {/* Left side: Rating breakdown */}
-      <div className=" space-y-2 w-full">
+      <div className=" space-y-2">
         <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-extrabold text-secondary-color">
           {totalRatings} Ratings
         </p>

@@ -108,9 +108,9 @@ export default function Footer() {
                     <li>
                       <Link href="/about-us">About Us</Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link href="/helpful-documents">Helpful Documents</Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link href="#">Explore Categories</Link>
                     </li>
@@ -148,7 +148,7 @@ export default function Footer() {
 
             {/* Bottom Footer */}
             <div className="flex flex-col md:flex-row justify-between items-center mt-6 text-xs gap-4">
-              <p className="text-base sm:text-lg lg:text-xl text-primary-color ">
+              <p className="text-xs sm:text-sm lg:text-base  text-primary-color ">
                 © {currentYear} FRAFOL. All rights reserved.
               </p>
               <div className="flex gap-4 text-lg">

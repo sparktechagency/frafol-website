@@ -235,6 +235,25 @@ export const useProfessionalPaths = () => {
       ),
     },
     {
+      key: "my-workshop",
+      icon: (
+        <Image
+          src={workshop}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/my-workshop")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+      label: (
+        <Link href="/dashboard/professional/my-workshop">My Workshop</Link>
+      ),
+    },
+    {
       key: "gear-marketPlace",
       label: (
         <Link href="/dashboard/professional/gear-marketPlace">

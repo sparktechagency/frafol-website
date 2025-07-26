@@ -32,7 +32,7 @@ const ReuseTimePicker = ({
   disabled = false,
   className,
   style,
-  format = "h:mm a",
+  format = "HH:mm",
   placeholder = "Select time",
   labelClassName,
   wrapperClassName,

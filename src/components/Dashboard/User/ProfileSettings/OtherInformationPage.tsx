@@ -18,19 +18,13 @@ const OtherInformationPage = () => {
         <ReuseInput
           inputType="textarea"
           rows={4}
-          name="bankName"
-          label="Bank Name"
-          placeholder="Enter Bank Name"
-          rules={[{ required: true, message: "Bank Name is required" }]}
-          labelClassName="!font-semibold"
-        />
-        <ReuseInput
           name="biography"
           label="Biography"
           placeholder="Enter Biography"
           rules={[{ required: true, message: "Biography is required" }]}
           labelClassName="!font-semibold"
         />
+
         <ReuseInput
           name="hourlyRate"
           label="Hourly Rate"

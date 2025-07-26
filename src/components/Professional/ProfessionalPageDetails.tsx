@@ -11,6 +11,7 @@ import ProfessionalPageDetailsMyServices from "./ProfessionalPageDetailsMyServic
 import ProfessionalPageDetailsMyWork from "./ProfessionalPageDetailsMyWork";
 import ProfessionalPageDetailsBookSession from "./ProfessionalPageDetailsBookSession";
 import ProfessionalReviews from "./ProfessionalReviews";
+import Link from "next/link";
 
 const ProfessionalPageDetails = () => {
   return (
@@ -28,12 +29,15 @@ const ProfessionalPageDetails = () => {
             Marek Krajč
           </h2>
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold">
-            $200/hr
+            100€ - 500€
           </p>
-          <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium flex items-center gap-2">
-            <FaStar className="text-[#FFD700] text-sm sm:text-base lg:text-lg -mt-0.5" />{" "}
-            <span> 5.0 (124 Reviews)</span>
-          </p>
+          <Link href="#reviews">
+            {" "}
+            <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium flex items-center gap-2">
+              <FaStar className="text-[#FFD700] text-sm sm:text-base lg:text-lg -mt-0.5" />{" "}
+              <span> 5.0 (124 Reviews)</span>
+            </p>{" "}
+          </Link>
           <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium flex items-center gap-2">
             <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg -mt-0.5" />{" "}
             <span>Prešov</span>

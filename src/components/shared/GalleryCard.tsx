@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Image as AntdImage } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface GalleryCardProps {
@@ -17,7 +18,7 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
   arrayOfImages = false,
   photoView = false,
 }) => {
-  return (
+  const content = (
     <div className="relative group w-full">
       {photoView ? (
         <AntdImage
@@ -41,6 +42,15 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
             {gallery?.name}
           </p>
         </div>
+      )}
+    </div>
+  );
+  return (
+    <div>
+      {!showOnlyImage ? (
+        <Link href={"/professionals/user-1"}>{content}</Link>
+      ) : (
+        content
       )}
     </div>
   );
