@@ -1,6 +1,7 @@
 import logo from "./logo/logo.png";
 import logo2 from "./logo/logo2.png";
 
+import herobanner from "./images/banner.jpg";
 import herobanner1 from "./images/banner1.png";
 import dummyProfile from "./images/dummyProfile.jpg";
 import smartPhone from "./images/smartPhone.png";
@@ -62,6 +63,7 @@ import values from "./icons/values.png";
 export const AllImages = {
   logo,
   logo2,
+  herobanner,
   herobanner1,
   dummyProfile,
   smartPhone,
