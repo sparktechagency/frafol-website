@@ -1,6 +1,11 @@
 import logo from "./logo/logo.png";
 import logo2 from "./logo/logo2.png";
 
+import joinFrafol from "./images/joinFrafol.png";
+import signupuser from "./images/signup-user.png";
+import chooseRole from "./images/chooseRole.jpg";
+import personalInfo from "./images/personalInfo.png";
+
 import herobanner from "./images/banner.jpg";
 import herobanner1 from "./images/banner1.png";
 import dummyProfile from "./images/dummyProfile.jpg";
@@ -63,6 +68,12 @@ import values from "./icons/values.png";
 export const AllImages = {
   logo,
   logo2,
+
+  joinFrafol,
+  signupuser,
+  chooseRole,
+  personalInfo,
+
   herobanner,
   herobanner1,
   dummyProfile,
