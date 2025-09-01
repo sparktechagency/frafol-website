@@ -26,7 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${nunito.variable} antialiased`}>
+      <body
+        className={`${nunito.variable} antialiased`}
+        cz-shortcut-listen="true"
+      >
         <NextTopLoader
           color="#273D62"
           initialPosition={0.08}

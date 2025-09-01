@@ -17,7 +17,7 @@ const SignUpProfessionalOTPVerify = () => {
       if (window?.location?.pathname === "/sign-up/otp-verify") {
         router.push("/");
       } else {
-        router.push("/sign-up/professional/choose-specialization");
+        router.push("/");
       }
     }
   };

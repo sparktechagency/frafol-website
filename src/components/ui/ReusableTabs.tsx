@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 import React from "react";
 
 type Tab<T extends string> = {
@@ -12,6 +13,7 @@ type ReusableTabsProps<T extends string> = {
   activeTab: T;
   onTabChange: (tab: T) => void;
   align?: "left" | "center" | "right";
+  tabContentStyle?: string;
 };
 
 const ReusableTabs = <T extends string>({
@@ -19,6 +21,7 @@ const ReusableTabs = <T extends string>({
   activeTab,
   onTabChange,
   align = "center",
+  tabContentStyle = "",
 }: ReusableTabsProps<T>) => {
   const justifyClass =
     align === "left"
@@ -48,7 +51,7 @@ const ReusableTabs = <T extends string>({
         </div>
       </div>
 
-      <div className="mt-10">
+      <div className={cn("mt-10", tabContentStyle)}>
         {tabs.find((tab) => tab.value === activeTab)?.content}
       </div>
     </div>

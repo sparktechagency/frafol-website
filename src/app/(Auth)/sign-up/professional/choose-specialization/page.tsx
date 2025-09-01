@@ -6,7 +6,10 @@ import ChooseSpecialization from "@/components/Auth/ChooseSpecialization";
 const page = () => {
   return (
     <div>
-      <AuthSectionTemplate imageScr={AllImages.chooseRole} showLogo={false}>
+      <AuthSectionTemplate
+        imageScr={AllImages.signUpSpecialization}
+        showLogo={false}
+      >
         <ChooseSpecialization />
       </AuthSectionTemplate>
     </div>

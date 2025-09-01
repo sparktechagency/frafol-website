@@ -5,6 +5,9 @@ import joinFrafol from "./images/joinFrafol.png";
 import signupuser from "./images/signup-user.png";
 import chooseRole from "./images/chooseRole.jpg";
 import personalInfo from "./images/personalInfo.png";
+import signUpSpecialization from "./images/signUp-specialization.png";
+import legalInvoice from "./images/legal-invoice.jpg";
+import reviewDetails from "./images/review-details.jpg";
 
 import herobanner from "./images/banner.jpg";
 import herobanner1 from "./images/banner1.png";
@@ -73,6 +76,9 @@ export const AllImages = {
   signupuser,
   chooseRole,
   personalInfo,
+  signUpSpecialization,
+  legalInvoice,
+  reviewDetails,
 
   herobanner,
   herobanner1,
