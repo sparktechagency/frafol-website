@@ -1,14 +1,30 @@
 "use client";
-import { Button, Form, Input } from "antd";
+import { Form } from "antd";
 import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { TbLockFilled } from "react-icons/tb";
 import Container from "../ui/Container";
 import { useRouter } from "next/navigation";
+import { IoMdMail } from "react-icons/io";
+import ReuseInput from "../ui/Form/ReuseInput";
+import ReuseButton from "../ui/Button/ReuseButton";
 
 interface ForgotPasswordValues {
   email: string;
 }
+
+const inputStructure = [
+  {
+    name: "email",
+    type: "email",
+    inputType: "normal",
+    label: "Email",
+    placeholder: "Enter Email Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    prefix: <IoMdMail className="mr-1 !text-secondary-color" />,
+    rules: [{ required: true, message: "Email is required" }],
+  },
+];
 
 const ForgotPassword = () => {
   const router = useRouter();
@@ -37,31 +53,30 @@ const ForgotPassword = () => {
               className="bg-transparent w-full"
               onFinish={onFinish}
             >
-              <Form.Item
-                rules={[
-                  {
-                    required: true,
-                    message: "Email is Required",
-                  },
-                ]}
-                name="email"
-                className="text-base-color"
-              >
-                <Input
-                  placeholder="Enter your email"
-                  type="email"
-                  className="py-1.5 px-3 text-lg !bg-primary-color border !border-[#D0D5DD] text-base-color"
+              {inputStructure.map((input, index) => (
+                <ReuseInput
+                  key={index}
+                  name={input.name}
+                  Typolevel={5}
+                  inputType={input.inputType}
+                  type={input.type}
+                  prefix={input.prefix}
+                  label={input.label}
+                  placeholder={input.placeholder}
+                  labelClassName={input.labelClassName}
+                  inputClassName="!py-2.5"
+                  rules={input.rules}
                 />
-              </Form.Item>
+              ))}
 
               <Form.Item>
-                <Button
-                  type="primary"
-                  className="w-full py-5 border !border-secondary-color text-xl !text-primary-color !bg-secondary-color font-semibold rounded-2xl mt-4"
+                <ReuseButton
                   htmlType="submit"
+                  variant="secondary"
+                  className="mt-5"
                 >
-                  Send
-                </Button>
+                  Send OTP
+                </ReuseButton>
               </Form.Item>
             </Form>
 

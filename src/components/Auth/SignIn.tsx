@@ -1,28 +1,80 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { Button, Checkbox, Form, Input, Typography } from "antd";
+import { Checkbox, Form } from "antd";
 import Link from "next/link";
 import Container from "../ui/Container";
-import { allIcons, AllImages } from "../../../public/assets/AllImages";
+import { AllImages } from "../../../public/assets/AllImages";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { loginUser } from "@/services/AuthService";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { IoMdMail } from "react-icons/io";
+import { RiLockPasswordFill } from "react-icons/ri";
+import ReuseInput from "../ui/Form/ReuseInput";
+import ReuseButton from "../ui/Button/ReuseButton";
 
 interface SignInValues {
   email: string;
   password: string;
 }
 
+const inputStructure = [
+  {
+    name: "email",
+    type: "email",
+    inputType: "normal",
+    label: "Email",
+    placeholder: "Enter Email Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    prefix: <IoMdMail className="mr-1 !text-secondary-color" />,
+    rules: [{ required: true, message: "Email is required" }],
+  },
+  {
+    name: "password",
+    type: "password",
+    inputType: "password",
+    label: "Password",
+    placeholder: "Enter your password",
+    prefix: <RiLockPasswordFill className="mr-1 !text-secondary-color" />,
+    labelClassName: "!font-semibold !text-secondary-color",
+    rules: [{ required: true, message: "Password is required" }],
+  },
+];
+
 const SignIn = () => {
   const router = useRouter();
-  const onFinish = (values: SignInValues) => {
-    console.log("Received values of login form:", values);
-    router.push("/");
+  const onFinish = async (values: SignInValues) => {
+    // try {
+    //   const res = await loginUser(values);
+    //   // setIsLoading(true);
+    //   if (res?.success) {
+    //     toast.success(res?.message);
+    //     // if (redirect) {
+    //     //   router.push(redirect);
+    //     // } else {
+    //     //   router.push("/");
+    //     // }
+    //   } else {
+    //     toast.error(res?.message);
+    //   }
+    // } catch (err: any) {
+    //   toast.error(err);
+    // }
+    const res = await tryCatchWrapper(
+      loginUser,
+      { body: values },
+      "Signing in...",
+      "Signed in successfully!"
+    );
+    if (res?.success) {
+      router.push("/");
+    }
   };
   return (
     <div className="text-base-color">
       <Container>
         <div></div>
-        {/* <div className=" min-h-screen flex justify-center items-center">
+        <div className=" min-h-screen flex justify-center items-center">
           <div className="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] mx-auto">
             <Image
               src={AllImages.logo}
@@ -47,42 +99,21 @@ const SignIn = () => {
               className="bg-transparent w-full"
               onFinish={onFinish}
             >
-              <Typography.Title level={5} style={{ color: "#344054" }}>
-                Email
-              </Typography.Title>
-              <Form.Item
-                name="email"
-                className="text-base-color"
-                rules={[
-                  {
-                    required: true,
-                    message: "Email is Required",
-                  },
-                ]}
-              >
-                <Input
-                  placeholder="Enter your email"
-                  className="py-1.5 px-3 text-lg !bg-primary-color border !border-[#D0D5DD] text-base-color"
+              {inputStructure.map((input, index) => (
+                <ReuseInput
+                  key={index}
+                  name={input.name}
+                  Typolevel={5}
+                  inputType={input.inputType}
+                  type={input.type}
+                  prefix={input.prefix}
+                  label={input.label}
+                  placeholder={input.placeholder}
+                  labelClassName={input.labelClassName}
+                  inputClassName="!py-2.5"
+                  rules={input.rules}
                 />
-              </Form.Item>
-              <Typography.Title level={5} style={{ color: "#344054" }}>
-                Password
-              </Typography.Title>
-              <Form.Item
-                rules={[
-                  {
-                    required: true,
-                    message: "Password is Required",
-                  },
-                ]}
-                name="password"
-                className="text-base-color"
-              >
-                <Input.Password
-                  placeholder="Enter your password"
-                  className="py-1.5 px-3 text-lg !bg-primary-color border !border-[#D0D5DD] text-base-color"
-                />
-              </Form.Item>
+              ))}
 
               <div className="flex justify-between items-center mt-10">
                 <Checkbox className="">Remember me</Checkbox>
@@ -95,33 +126,21 @@ const SignIn = () => {
               </div>
 
               <Form.Item>
-                <Button
-                  type="primary"
-                  className="w-full py-5 border border-secondary-color hover:border-secondary-color text-xl text-primary-color bg-secondary-color hover:!bg-secondary-color font-semibold rounded-2xl mt-5"
+                <ReuseButton
                   htmlType="submit"
+                  variant="secondary"
+                  className="mt-5"
                 >
                   Sign In
-                </Button>
+                </ReuseButton>
               </Form.Item>
             </Form>
-            <Button
-              className="w-full flex items-center justify-center gap-2 py-4 px-4 text-lg !border !border-[#D0D5DD] !text-base-color !bg-transparent  rounded-lg"
-              icon={
-                <Image
-                  src={allIcons.google}
-                  alt="Google Icon"
-                  width={16}
-                  height={16}
-                />
-              }
-            >
-              Sign in with Google
-            </Button>
+
             <p className="text-center text-ellipsis mt-10">
               Don’t have an account?
               <span>
                 <Link
-                  href="/sign-up"
+                  href="/join"
                   className="text-secondary-color font-semibold underline ml-2"
                 >
                   Sign Up
@@ -129,7 +148,7 @@ const SignIn = () => {
               </span>{" "}
             </p>
           </div>
-        </div> */}
+        </div>
       </Container>
     </div>
   );

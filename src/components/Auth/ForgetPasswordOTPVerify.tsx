@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { IoMdMail } from "react-icons/io";
 
-const SignUpProfessionalOTPVerify = () => {
+const ForgetPasswordOTPVerify = () => {
   const router = useRouter();
   const [otp, setOtp] = useState("");
 
@@ -17,7 +17,7 @@ const SignUpProfessionalOTPVerify = () => {
       if (window?.location?.pathname === "/sign-up/otp-verify") {
         router.push("/");
       } else {
-        router.push("/");
+        router.push("/update-password");
       }
     }
   };
@@ -73,4 +73,4 @@ const SignUpProfessionalOTPVerify = () => {
     </div>
   );
 };
-export default SignUpProfessionalOTPVerify;
+export default ForgetPasswordOTPVerify;

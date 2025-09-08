@@ -228,8 +228,8 @@ const SignUpUser = () => {
 
   const onFinish = (values: any) => {
     console.log("Received values of login form:", values);
-    form.resetFields();
-    router.push("/sign-up/user/otp-verify");
+    // form.resetFields();
+    // router.push("/sign-up/user/otp-verify");
   };
   return (
     <div className=" flex flex-col gap-3 h-full w-full sm:w-3/4 mx-auto">

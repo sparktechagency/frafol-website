@@ -18,6 +18,9 @@ import { AiFillMessage } from "react-icons/ai";
 import { MdOutlineDashboard } from "react-icons/md";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import Cookies from "js-cookie";
+import { ISignInUser } from "@/types";
+import { decodedToken } from "@/utils/jwt";
+import { logout } from "@/services/AuthService";
 
 // import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
@@ -117,9 +120,10 @@ const items: MenuProps["items"] = [
 ];
 
 const Navbar: React.FC = () => {
-  Cookies.set("frafol_user", JSON.stringify({ role: "user" }));
+  const token = Cookies.get("frafolMainAccessToken");
+  const userData: ISignInUser | null = decodedToken(token || "");
+
   const path = usePathname();
-  const userData = true;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -153,6 +157,14 @@ const Navbar: React.FC = () => {
       setHeight(0); // Set to 0 when closed
     }
   }, [mobileMenuOpen]);
+
+  const handleLogOut = () => {
+    logout();
+    // setIsLoading(true);
+    // if (protectedRoutes.some((route) => pathname.match(route))) {
+    //   router.push("/");
+    // }
+  };
   return (
     <motion.div
       variants={{
@@ -265,7 +277,7 @@ const Navbar: React.FC = () => {
             </div>
           </nav>
           <div className="lg:flex items-center gap-2 hidden">
-            {userData ? (
+            {userData?.email ? (
               <div className="flex items-center gap-5">
                 <Link href="/message">
                   <AiFillMessage className="text-2xl cursor-pointer" />
@@ -304,7 +316,10 @@ const Navbar: React.FC = () => {
                   />
                 </Dropdown>
 
-                <Button className="group flex items-center !py-4 !px-1 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full">
+                <Button
+                  onClick={handleLogOut}
+                  className="group flex items-center !py-4 !px-1 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full"
+                >
                   <p className="font-semibold">Logout</p>
                   <div className="bg-primary-color p-1 rounded-full">
                     <TbLogout2 className=" text-lg text-secondary-color" />
@@ -321,7 +336,7 @@ const Navbar: React.FC = () => {
                 >
                   Sign In
                 </Link>
-                <Link href="/sign-up">
+                <Link href="/join">
                   <Button
                     className={`group flex items-center !py-4 !px-1 gap-1 border-2 rounded-full ${
                       scrolled
@@ -348,7 +363,7 @@ const Navbar: React.FC = () => {
           </div>
           {/* //*Icons */}
           <div className="lg:hidden select-none flex items-center gap-5">
-            {userData && (
+            {userData?.email && (
               <Link href="/profile">
                 <Image
                   src={AllImages.dummyProfile}

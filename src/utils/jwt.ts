@@ -2,5 +2,14 @@
 import { jwtDecode } from "jwt-decode";
 
 export const decodedToken = (token: string): any => {
-  return jwtDecode(token);
+  if (!token || token.split(".").length !== 3) {
+    return null; // Return null or throw an error if you prefer
+  }
+
+  try {
+    return jwtDecode(token);
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return null;
+  }
 };

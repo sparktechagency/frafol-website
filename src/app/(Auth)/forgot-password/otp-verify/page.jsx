@@ -1,10 +1,10 @@
-import OTPVerify from "@/components/Auth/OTPVerify";
+import ForgetPasswordOTPVerify from "@/components/Auth/ForgetPasswordOTPVerify";
 import React from "react";
 
 const page = () => {
   return (
     <div>
-      <OTPVerify />
+      <ForgetPasswordOTPVerify />
     </div>
   );
 };

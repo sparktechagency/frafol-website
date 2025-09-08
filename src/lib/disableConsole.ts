@@ -1,5 +1,5 @@
 export const disableConsole = () => {
-  if (process.env.NODE_ENV === "production" && typeof window !== "undefined") {
+  if (process.env.NODE_ENV === "production") {
     console.log = () => {};
     console.warn = () => {};
     console.error = () => {};

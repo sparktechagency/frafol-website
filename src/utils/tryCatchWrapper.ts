@@ -5,7 +5,8 @@ const tryCatchWrapper = async (
   asyncFunction: any,
   reqData?: any,
   toastLoadingMessage: string = "Processing...",
-  toastSuccessMessage?: string
+  toastSuccessMessage?: string,
+  toastErrorMessage: string = "Something went wrong! Please try again."
 ) => {
   const toastId = toast.loading(toastLoadingMessage, {
     duration: 2000,
@@ -21,9 +22,9 @@ const tryCatchWrapper = async (
       req = { params: reqData.params };
     }
 
-    const res = await asyncFunction(req).unwrap();
+    const res = await asyncFunction(req);
 
-    if (res.status === "Error") {
+    if (!res.success) {
       throw new Error(res.message);
     } else {
       if (toastSuccessMessage) {
@@ -44,14 +45,15 @@ const tryCatchWrapper = async (
   } catch (error: any) {
     toast.error(
       error?.data?.message ||
+        error?.message ||
         error?.error ||
-        "An error occurred during the process",
+        toastErrorMessage,
       {
         id: toastId,
         duration: 2000,
       }
     );
-    return undefined;
+    return { success: false, message: error };
   }
 };
 

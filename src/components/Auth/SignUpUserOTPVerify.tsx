@@ -17,7 +17,7 @@ const SignUpUserOTPVerify = () => {
       if (window?.location?.pathname === "/sign-up/otp-verify") {
         router.push("/");
       } else {
-        router.push("/update-password");
+        router.push("/");
       }
     }
   };
@@ -44,7 +44,7 @@ const SignUpUserOTPVerify = () => {
                 <div className="flex justify-center items-center">
                   <OTPInput
                     inputStyle="!w-[30px] h-[45px] md:!w-[70px] md:!h-[80px] text-[20px] sm:text-[30px] !bg-[#FFF6EC] border !border-[#FFF6EC]
-                      rounded-lg mr-[10px] sm:mr-[20px] !text-secondary-color focus:!outline-secondary-color"
+                      rounded-lg mr-[10px] sm:mr-[20px] !text-secondary-color focus:!outline-secondary-color !select-none"
                     value={otp}
                     onChange={setOtp}
                     numInputs={4}

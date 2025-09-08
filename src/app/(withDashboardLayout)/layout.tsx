@@ -11,7 +11,6 @@ import { Content, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { usePathname } from "next/navigation";
 import React, { useEffect } from "react";
-import { Toaster } from "sonner";
 
 const userRole = {
   role: "user",
@@ -117,7 +116,6 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
             </Content>
           </Layout>
         </Layout>
-        <Toaster />
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 import React from "react";
 // import Footer from "../../components/shared/Footer";
 import Navbar from "../../components/shared/Navbar";
-import { Toaster } from "sonner";
 import "@ant-design/v5-patch-for-react-19";
 import Footer from "@/components/shared/Footer";
 
@@ -14,7 +13,6 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         </div>
         <div>{children}</div>
         <Footer />
-        <Toaster />
       </div>
     </div>
   );

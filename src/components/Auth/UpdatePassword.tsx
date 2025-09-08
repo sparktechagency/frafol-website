@@ -1,13 +1,53 @@
 "use client";
-import { Button, Form, Input, Typography } from "antd";
+import { Form, FormInstance } from "antd";
 import Container from "../ui/Container";
 import { useRouter } from "next/navigation";
 import { IoMdUnlock } from "react-icons/io";
+import { RiLockPasswordFill } from "react-icons/ri";
+import ReuseInput from "../ui/Form/ReuseInput";
+import ReuseButton from "../ui/Button/ReuseButton";
 
 interface UpdatePasswordValues {
   password: string;
   confirmPassword: string;
 }
+
+const inputStructure = [
+  {
+    name: "password",
+    type: "password",
+    inputType: "password",
+    label: "Password",
+    placeholder: "Enter your password",
+    prefix: <RiLockPasswordFill className="mr-1 !text-secondary-color" />,
+    labelClassName: "!font-semibold !text-secondary-color",
+    rules: [{ required: true, message: "Password is required" }],
+  },
+  {
+    name: "confirmPassword",
+    type: "password",
+    inputType: "password",
+    label: "Confirm Password",
+    placeholder: "Confirm your password",
+    prefix: <RiLockPasswordFill className="mr-1 !text-secondary-color" />,
+    labelClassName: "!font-semibold !text-secondary-color",
+    rules: [
+      { required: true, message: "Confirm Password is required" },
+      ({
+        getFieldValue,
+      }: {
+        getFieldValue: FormInstance["getFieldValue"];
+      }) => ({
+        validator(_: unknown, value: string) {
+          if (!value || getFieldValue("password") === value) {
+            return Promise.resolve();
+          }
+          return Promise.reject(new Error("Password does not match!"));
+        },
+      }),
+    ],
+  },
+];
 
 const UpdatePassword = () => {
   const router = useRouter();
@@ -36,71 +76,30 @@ const UpdatePassword = () => {
               className="bg-transparent w-full"
               onFinish={onFinish}
             >
-              <Typography.Title
-                level={5}
-                className="text-start"
-                style={{ color: "#344054" }}
-              >
-                New Password
-              </Typography.Title>
-              <Form.Item
-                rules={[
-                  {
-                    required: true,
-                    message: "New Password is Required",
-                  },
-                ]}
-                name="password"
-                className="text-base-color"
-              >
-                <Input.Password
-                  placeholder="Enter new password"
-                  className="py-1.5 px-3 text-lg !bg-primary border !border-[#D0D5DD] text-base-color"
+              {inputStructure.map((input, index) => (
+                <ReuseInput
+                  key={index}
+                  name={input.name}
+                  Typolevel={5}
+                  inputType={input.inputType}
+                  type={input.type}
+                  prefix={input.prefix}
+                  label={input.label}
+                  placeholder={input.placeholder}
+                  labelClassName={input.labelClassName}
+                  inputClassName="!py-2.5"
+                  rules={input.rules}
                 />
-              </Form.Item>
-              <Typography.Title
-                level={5}
-                className="text-start"
-                style={{ color: "#344054" }}
-              >
-                Confirm Password
-              </Typography.Title>
-              <Form.Item
-                name="confirmPassword"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please confirm your new password!",
-                  },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue("password") === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(
-                        new Error(
-                          "The two passwords that you entered do not match!"
-                        )
-                      );
-                    },
-                  }),
-                ]}
-                className="text-base-color"
-              >
-                <Input.Password
-                  placeholder="Enter your password"
-                  className="py-1.5 px-3 text-lg !bg-primary border !border-[#D0D5DD] text-base-color"
-                />
-              </Form.Item>
+              ))}
 
               <Form.Item>
-                <Button
-                  type="primary"
-                  className="w-full py-5 border !border-secondary-color text-xl !text-primary !bg-secondary-color font-semibold rounded-2xl mt-4"
+                <ReuseButton
                   htmlType="submit"
+                  variant="secondary"
+                  className="mt-5"
                 >
-                  Reset password
-                </Button>
+                  Reset Password
+                </ReuseButton>
               </Form.Item>
             </Form>
           </div>
