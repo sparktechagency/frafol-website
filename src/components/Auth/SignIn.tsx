@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { Checkbox, Form } from "antd";
 import Link from "next/link";
@@ -80,12 +79,12 @@ const SignIn = () => {
               src={AllImages.logo}
               width={500}
               height={500}
-              className="w-64 mx-auto"
+              className="w-80 mx-auto"
               alt="logo"
             />
             <div className="flex flex-col justify-center items-center">
               <div className="text-center mt-5 mb-8">
-                <h1 className="text-3xl sm:text-4xl font-semibold mb-4 text-secondary-color">
+                <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-secondary-color">
                   Sign In
                 </h1>
                 <p className="text-lg sm:text-xl mb-2 text-[#667085]">

@@ -6,6 +6,8 @@ import { IoMdUnlock } from "react-icons/io";
 import { RiLockPasswordFill } from "react-icons/ri";
 import ReuseInput from "../ui/Form/ReuseInput";
 import ReuseButton from "../ui/Button/ReuseButton";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { changePassword } from "@/services/AuthService";
 
 interface UpdatePasswordValues {
   password: string;
@@ -14,7 +16,7 @@ interface UpdatePasswordValues {
 
 const inputStructure = [
   {
-    name: "password",
+    name: "newPassword",
     type: "password",
     inputType: "password",
     label: "Password",
@@ -39,7 +41,7 @@ const inputStructure = [
         getFieldValue: FormInstance["getFieldValue"];
       }) => ({
         validator(_: unknown, value: string) {
-          if (!value || getFieldValue("password") === value) {
+          if (!value || getFieldValue("newPassword") === value) {
             return Promise.resolve();
           }
           return Promise.reject(new Error("Password does not match!"));
@@ -50,10 +52,19 @@ const inputStructure = [
 ];
 
 const UpdatePassword = () => {
+  const [form] = Form.useForm();
   const router = useRouter();
-  const onFinish = (values: UpdatePasswordValues) => {
-    console.log("Received values of update form:", values);
-    router.push("/sign-in");
+  const onFinish = async (values: UpdatePasswordValues) => {
+    const res = await tryCatchWrapper(
+      changePassword,
+      { body: values },
+      "Resetting Password...",
+      "Password reset successfully!"
+    );
+    if (res?.success) {
+      form.resetFields();
+      router.push("/sign-in");
+    }
   };
 
   return (
@@ -72,6 +83,7 @@ const UpdatePassword = () => {
             </div>
             {/* -------- Form Start ------------ */}
             <Form
+              form={form}
               layout="vertical"
               className="bg-transparent w-full"
               onFinish={onFinish}

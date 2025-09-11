@@ -6,10 +6,11 @@ import ReuseInput from "../ui/Form/ReuseInput";
 import { useRouter } from "next/navigation";
 import { Form } from "antd";
 import ReuseButton from "../ui/Button/ReuseButton";
+import Cookies from "js-cookie";
 
 const inputStructure = [
   {
-    name: "bio",
+    name: "about",
     type: "text",
     inputType: "textarea",
     label: "About You / Biography",
@@ -19,8 +20,8 @@ const inputStructure = [
   },
   {
     name: "hourlyRate",
-    type: "text",
-    inputType: "normal",
+    type: "number",
+    inputType: "number",
     label: "Hourly Rate",
     placeholder: "Enter Hourly Rate",
     labelClassName: "!font-semibold !text-secondary-color",
@@ -32,8 +33,21 @@ const AdditionalInformation = () => {
   const router = useRouter();
   const [form] = Form.useForm();
 
+  const storedInformation = Cookies.get("information");
+
+  const parseData = JSON.parse(storedInformation || "{}");
+
+  if (storedInformation) {
+    form.setFieldsValue({
+      about: parseData.about,
+      hourlyRate: parseData.hourlyRate,
+    });
+  }
+
   const onFinish = (values: any) => {
-    console.log("Received values of login form:", values);
+    Cookies.set("information", JSON.stringify({ ...parseData, ...values }), {
+      expires: 1,
+    });
     form.resetFields();
     router.push("/sign-up/professional/legal-invoice");
   };

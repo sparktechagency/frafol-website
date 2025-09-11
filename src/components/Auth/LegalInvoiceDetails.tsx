@@ -6,6 +6,7 @@ import ReuseInput from "../ui/Form/ReuseInput";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { Form, Typography } from "antd";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const BusinessInputStructure = [
   {
@@ -36,7 +37,7 @@ const BusinessInputStructure = [
     rules: [{ required: true, message: "DIČ is required" }],
   },
   {
-    name: "icdph",
+    name: "ic_dph",
     type: "text",
     inputType: "normal",
     label: "IČ DPH",
@@ -47,7 +48,7 @@ const BusinessInputStructure = [
 ];
 const AddressInputStructure = [
   {
-    name: "street",
+    name: "address",
     type: "text",
     inputType: "normal",
     label: "Street Address",
@@ -79,8 +80,24 @@ const LegalInvoiceDetails = () => {
   const router = useRouter();
   const [form] = Form.useForm();
 
+  const storedInformation = Cookies.get("information");
+
+  const parseData = JSON.parse(storedInformation || "{}");
+
+  form.setFieldsValue({
+    companyName: parseData.companyName,
+    ico: parseData.ico,
+    dic: parseData.dic,
+    ic_dph: parseData.ic_dph,
+    address: parseData.address,
+    town: parseData.town,
+    country: parseData.country,
+  });
+
   const onFinish = (values: any) => {
-    console.log("Received values of login form:", values);
+    Cookies.set("information", JSON.stringify({ ...parseData, ...values }), {
+      expires: 1,
+    });
     form.resetFields();
     router.push("/sign-up/professional/review-details");
   };

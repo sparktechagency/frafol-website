@@ -15,6 +15,8 @@ import { FaAddressCard, FaUser } from "react-icons/fa6";
 import { HiLocationMarker } from "react-icons/hi";
 import { IoMdMail } from "react-icons/io";
 import { useState } from "react";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { registerUser } from "@/services/AuthService";
 
 const userInputStructure = [
   {
@@ -28,7 +30,7 @@ const userInputStructure = [
     rules: [{ required: true, message: "Name is required" }],
   },
   {
-    name: "streetAddress",
+    name: "address",
     type: "text",
     inputType: "normal",
     label: "Street Address",
@@ -124,7 +126,7 @@ const companyInputStructure = [
     rules: [{ required: true, message: "Email is required" }],
   },
   {
-    name: "streetAddress",
+    name: "address",
     type: "text",
     inputType: "normal",
     label: "Street Address",
@@ -174,7 +176,7 @@ const companyInputStructure = [
     rules: [{ required: true, message: "DIČ is required" }],
   },
   {
-    name: "icdph",
+    name: "ic_dph",
     type: "text",
     inputType: "normal",
     label: "IČ DPH",
@@ -226,8 +228,24 @@ const SignUpUser = () => {
 
   const [type, setType] = useState<"user" | "company">("user");
 
-  const onFinish = (values: any) => {
-    console.log("Received values of login form:", values);
+  const onFinish = async (values: any) => {
+    const data = {
+      ...values,
+      role: type,
+      newsLetterSub: values?.newsLetterSub ? true : false,
+    };
+
+    const res = await tryCatchWrapper(
+      registerUser,
+      { body: data },
+      "Creating account...",
+      "OTP sent To your email!"
+    );
+    if (res?.success) {
+      form.resetFields();
+      router.push("/sign-up/user/otp-verify");
+    }
+
     // form.resetFields();
     // router.push("/sign-up/user/otp-verify");
   };
@@ -287,7 +305,46 @@ const SignUpUser = () => {
                 rules={input.rules}
               />
             ))}
+        {/* Agree to rámcová zmluva contract Checkbox */}
+        <Form.Item
+          name="acceptTerms"
+          valuePropName="checked"
+          rules={[
+            {
+              validator: (_, value) =>
+                value
+                  ? Promise.resolve()
+                  : Promise.reject(
+                      new Error("Should accept with rámcová zmluva contract")
+                    ),
+            },
+          ]}
+        >
+          <Checkbox
+          // onChange={(e) => handleCheckboxChange(e, "contractAgreement")}
+          >
+            <div>
+              <p className="text-sm sm:text-base lg:text-lg font-semibold">
+                Agree to{" "}
+                <span className="text-secondary-color underline">
+                  rámcová zmluva
+                </span>{" "}
+                contract
+              </p>
+            </div>
+          </Checkbox>
+        </Form.Item>
 
+        {/* Subscribe to newsletter Checkbox */}
+        <Form.Item name="newsLetterSub" valuePropName="checked">
+          <Checkbox>
+            <div>
+              <p className="text-sm sm:text-base lg:text-lg font-semibold">
+                Subscribe to newsletter (optional)
+              </p>
+            </div>
+          </Checkbox>
+        </Form.Item>
         <div className="flex justify-end items-end w-full mt-5">
           <ReuseButton
             htmlType="submit"

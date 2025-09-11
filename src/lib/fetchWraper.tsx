@@ -14,7 +14,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
     // Add the Authorization header to the request
     const headers = {
       ...options.headers,
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `${accessToken}`,
     };
 
     // Make the request

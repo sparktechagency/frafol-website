@@ -1,8 +1,9 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ReusableTabs from "../ui/ReusableTabs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReuseButton from "../ui/Button/ReuseButton";
+import Cookies from "js-cookie";
 
 const specializationOptions = {
   photography: [
@@ -24,23 +25,89 @@ const specializationOptions = {
 };
 
 const ChooseSpecialization = () => {
+  const storedInformation = Cookies.get("information");
+  const parseData = JSON.parse(storedInformation || "{}");
+
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"photography" | "videography">(
-    "photography"
+  const searchParams = useSearchParams();
+
+  const activeTab = searchParams.get("tab") as "photography" | "videography";
+
+  const [
+    selectedPhotographySpecializations,
+    setSelectedPhotographySpecializations,
+  ] = useState<string[]>(
+    parseData?.photographerSpecializations || [] // Initialize with existing photographer specialization
+  );
+  const [
+    selectedVideographySpecializations,
+    setSelectedVideographySpecializations,
+  ] = useState<string[]>(
+    parseData?.videographerSpecializations || [] // Initialize with existing videographer specialization
   );
 
-  const [selectedSpecializations, setSelectedSpecializations] = useState<
-    string[]
-  >([]);
-
-  const handleSpecializationClick = (specialization: string) => {
-    setSelectedSpecializations(
-      (prev) =>
-        prev.includes(specialization)
-          ? prev.filter((item) => item !== specialization) // Remove if already selected
-          : [...prev, specialization] // Add if not selected
+  useEffect(() => {
+    // Ensure state is updated with stored data when component mounts
+    setSelectedPhotographySpecializations(
+      parseData?.photographerSpecializations || []
     );
+    setSelectedVideographySpecializations(
+      parseData?.videographerSpecializations || []
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSpecializationClick = (
+    specialization: string,
+    type: "photography" | "videography"
+  ) => {
+    if (type === "photography") {
+      setSelectedPhotographySpecializations(
+        (prev) =>
+          prev.includes(specialization)
+            ? prev.filter((item) => item !== specialization) // Remove if already selected
+            : [...prev, specialization] // Add if not selected
+      );
+    } else if (type === "videography") {
+      setSelectedVideographySpecializations(
+        (prev) =>
+          prev.includes(specialization)
+            ? prev.filter((item) => item !== specialization) // Remove if already selected
+            : [...prev, specialization] // Add if not selected
+      );
+    }
   };
+
+  const handleSubmit = () => {
+    const updatedInformation =
+      parseData.role === "photographer"
+        ? {
+            photographerSpecializations: selectedPhotographySpecializations,
+            videographerSpecializations: [],
+          }
+        : parseData.role === "videographer"
+        ? {
+            photographerSpecializations: [],
+            videographerSpecializations: selectedVideographySpecializations,
+          }
+        : {
+            photographerSpecializations: selectedPhotographySpecializations,
+            videographerSpecializations: selectedVideographySpecializations,
+          };
+
+    console.log(updatedInformation);
+    Cookies.set(
+      "information",
+      JSON.stringify({ ...parseData, ...updatedInformation }),
+      {
+        expires: 1,
+      }
+    );
+    router.push("/sign-up/professional/additional-information");
+  };
+
+  const isPhotographyDisabled = parseData.role === "videographer";
+  const isVideographyDisabled = parseData.role === "photographer";
 
   return (
     <div className="flex flex-col justify-center gap-3 h-full w-full sm:w-3/4 mx-auto">
@@ -56,47 +123,52 @@ const ChooseSpecialization = () => {
         <ReusableTabs<"photography" | "videography">
           align="left"
           activeTab={activeTab}
-          onTabChange={setActiveTab}
           tabs={[
             {
               label: "Photography",
               value: "photography",
+              disabled: isPhotographyDisabled,
               content: (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {specializationOptions?.photography.map((item, index) => (
                     <div
                       key={index}
-                      className={` text-sm sm:text-base lg:text-lg font-bold w-full py-2 px-3 rounded  cursor-pointer ${
-                        selectedSpecializations.includes(item)
+                      className={`text-sm sm:text-base lg:text-lg font-bold w-full py-2 px-3 rounded cursor-pointer ${
+                        selectedPhotographySpecializations.includes(item)
                           ? "bg-secondary-color text-primary-color"
                           : "bg-background-color text-base-color"
                       }`}
-                      onClick={() => handleSpecializationClick(item)}
+                      onClick={() =>
+                        handleSpecializationClick(item, "photography")
+                      }
                     >
                       {item}
                     </div>
-                  ))}{" "}
+                  ))}
                 </div>
               ),
             },
             {
               label: "Videography",
               value: "videography",
+              disabled: isVideographyDisabled,
               content: (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {specializationOptions?.videography.map((item, index) => (
                     <div
                       key={index}
-                      className={` text-sm sm:text-base lg:text-lg font-bold w-full py-2 px-3 rounded cursor-pointer ${
-                        selectedSpecializations.includes(item)
+                      className={`text-sm sm:text-base lg:text-lg font-bold w-full py-2 px-3 rounded cursor-pointer ${
+                        selectedVideographySpecializations.includes(item)
                           ? "bg-secondary-color text-primary-color"
                           : "bg-background-color text-base-color"
                       }`}
-                      onClick={() => handleSpecializationClick(item)}
+                      onClick={() =>
+                        handleSpecializationClick(item, "videography")
+                      }
                     >
                       {item}
                     </div>
-                  ))}{" "}
+                  ))}
                 </div>
               ),
             },
@@ -108,9 +180,7 @@ const ChooseSpecialization = () => {
         <ReuseButton
           variant="secondary"
           className="!w-fit !text-[10px] sm:!text-xs lg:!text-sm !px-5 !py-2.5"
-          onClick={() =>
-            router.push("/sign-up/professional/additional-information")
-          }
+          onClick={handleSubmit}
         >
           Continue
         </ReuseButton>
@@ -118,4 +188,5 @@ const ChooseSpecialization = () => {
     </div>
   );
 };
+
 export default ChooseSpecialization;

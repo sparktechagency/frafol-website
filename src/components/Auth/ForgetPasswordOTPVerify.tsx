@@ -6,22 +6,33 @@ import Container from "../ui/Container";
 import { useRouter } from "next/navigation";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { IoMdMail } from "react-icons/io";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { forgetPasswordOtp, resendOtp } from "@/services/AuthService";
 
 const ForgetPasswordOTPVerify = () => {
   const router = useRouter();
   const [otp, setOtp] = useState("");
 
-  const handleOTPSubmit = () => {
-    if (otp.length === 4) {
-      console.log("OTP:", otp);
-      if (window?.location?.pathname === "/sign-up/otp-verify") {
-        router.push("/");
-      } else {
-        router.push("/update-password");
-      }
+  const handleOTPSubmit = async () => {
+    const res = await tryCatchWrapper(
+      forgetPasswordOtp,
+      { body: { otp } },
+      "Verifying...",
+      "Verified successfully!"
+    );
+    if (res?.success) {
+      router.push("/update-password");
     }
   };
 
+  const handleResendOtp = async () => {
+    await tryCatchWrapper(
+      resendOtp,
+      { body: { purpose: "forget-password" } },
+      "wait a moment...",
+      "OTP sent successfully!"
+    );
+  };
   return (
     <div className="text-base-color">
       <Container>
@@ -63,7 +74,10 @@ const ForgetPasswordOTPVerify = () => {
             </Form>
             <div className="flex justify-center gap-2 py-1 mt-5">
               <p>Didn’t receive code?</p>
-              <p className="!text-secondary-color !underline font-semibold cursor-pointer">
+              <p
+                onClick={handleResendOtp}
+                className="!text-secondary-color !underline font-semibold cursor-pointer"
+              >
                 Click to resend
               </p>
             </div>

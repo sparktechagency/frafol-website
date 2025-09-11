@@ -8,13 +8,26 @@ import ReusableForm from "../ui/Form/ReuseForm";
 import { Form } from "antd";
 import ReuseSelect from "../ui/Form/ReuseSelect";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const ChooseRole = () => {
   const router = useRouter();
   const [form] = Form.useForm(); // Corrected initialization of the form
 
+  const storedInformation = Cookies.get("information");
+
+  const parseData = JSON.parse(storedInformation || "{}");
+
+  if (storedInformation) {
+    form.setFieldsValue({
+      role: parseData.role,
+    });
+  }
+
   const onFinish = (values: any) => {
-    console.log("Form values:", values);
+    Cookies.set("information", JSON.stringify({ ...parseData, ...values }), {
+      expires: 1,
+    });
     form.resetFields();
     router.push("/sign-up/professional/personal-information");
   };

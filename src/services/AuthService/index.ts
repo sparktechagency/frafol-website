@@ -4,31 +4,109 @@
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 
-export const registerUser = async (userData: any) => {
+export const registerUser = async (
+  req = {
+    body: {},
+    params: {},
+  }
+) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/users/create`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req.body),
+      }
+    );
     const result = await res.json();
 
     if (result.success) {
-      (await cookies()).set("frafolMainAccessToken", result.data.accessToken, {
+      (await cookies()).set("frafolSignUpToken", result.data, {
         path: "/",
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+        expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
       });
-      (await cookies()).set(
-        "frafolMainRefreshToken",
-        result?.data?.refreshToken,
-        {
-          path: "/",
-          expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        }
-      );
     }
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const registerUserOtp = async (
+  req = {
+    body: {},
+    params: {},
+  }
+) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/users/create-user-verify-otp`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: (await cookies()).get("frafolSignUpToken")!.value,
+        },
+        body: JSON.stringify(req.body),
+      }
+    );
+    const result = await res.json();
+
+    if (result.success) {
+      (await cookies()).delete("frafolSignUpToken");
+    }
+
+    console.log(result);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+type ResendOtpBody = {
+  purpose?: string;
+  [key: string]: any;
+};
+
+export const resendOtp = async (
+  req: {
+    body: ResendOtpBody;
+    params?: any;
+  } = {
+    body: {},
+    params: {},
+  }
+) => {
+  console.log(req.body);
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/otp/resend-otp`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          token:
+            req?.body?.purpose === "email-verification"
+              ? (await cookies()).get("frafolSignUpToken")!.value
+              : (await cookies()).get("frafolForgetToken")!.value,
+        },
+        body: JSON.stringify(req.body),
+      }
+    );
+    const result = await res.json();
+
+    // if (result.success) {
+    //   (await cookies()).set("frafolSignUpToken", result.data, {
+    //     path: "/",
+    //     expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
+    //   });
+    // }
+
+    console.log(result);
 
     return result;
   } catch (error: any) {
@@ -53,24 +131,132 @@ export const loginUser = async (
 
     const result = await res.json();
 
+    console.log(result);
+
     if (result?.success) {
+      const threeMonths = 1000 * 60 * 60 * 24 * 30 * 3; // 3 months in milliseconds
+
       (await cookies()).set(
         "frafolMainAccessToken",
         result?.data?.accessToken,
         {
           path: "/",
-          expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+          expires: new Date(Date.now() + threeMonths),
         }
       );
+
       (await cookies()).set(
         "frafolMainRefreshToken",
         result?.data?.refreshToken,
         {
           path: "/",
-          expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+          expires: new Date(Date.now() + threeMonths),
         }
       );
     }
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const forgetPassword = async (
+  req = {
+    body: {},
+    params: {},
+  }
+) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/forgot-password-otpByEmail`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req.body),
+      }
+    );
+    const result = await res.json();
+
+    if (result.success) {
+      (await cookies()).set("frafolForgetToken", result.data?.forgetToken, {
+        path: "/",
+        expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
+      });
+    }
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const forgetPasswordOtp = async (
+  req = {
+    body: {},
+    params: {},
+  }
+) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/forgot-password-otp-match`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          token: (await cookies()).get("frafolForgetToken")!.value,
+        },
+        body: JSON.stringify(req.body),
+      }
+    );
+    const result = await res.json();
+
+    if (result.success) {
+      (await cookies()).delete("frafolForgetToken");
+      (await cookies()).set(
+        "forgetOtpMatchToken",
+        result.data?.forgetOtpMatchToken,
+        {
+          path: "/",
+          expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
+        }
+      );
+    }
+
+    console.log(result);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const changePassword = async (
+  req = {
+    body: {},
+    params: {},
+  }
+) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/forgot-password-reset`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          token: (await cookies()).get("forgetOtpMatchToken")!.value,
+        },
+        body: JSON.stringify(req.body),
+      }
+    );
+    const result = await res.json();
+
+    if (result.success) {
+      (await cookies()).delete("forgetOtpMatchToken");
+    }
+
+    console.log(result);
 
     return result;
   } catch (error: any) {
@@ -92,6 +278,7 @@ export const getCurrentUser = async () => {
 
 export const logout = async () => {
   (await cookies()).delete("frafolMainAccessToken");
+  (await cookies()).delete("frafolMainRefreshToken");
 };
 
 export const getNewToken = async () => {

@@ -5,43 +5,70 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import { useRouter } from "next/navigation";
 import ReusableForm from "../ui/Form/ReuseForm";
 import { Checkbox, Form } from "antd";
-
-const details = [
-  {
-    label: "Name",
-    value: "John Doe",
-  },
-  {
-    label: "Email",
-    value: "johndoe@me.com",
-  },
-  {
-    label: "Role",
-    value: "Professional",
-  },
-  {
-    label: "Location",
-    value: "New York, USA",
-  },
-  {
-    label: "Specializations",
-    value: "Wedding Photographer",
-  },
-];
+import Cookies from "js-cookie";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { registerUser } from "@/services/AuthService";
 
 const ReviewDetailsAndSubmit = () => {
   const router = useRouter();
   const [form] = Form.useForm();
+
+  const storedInformation = Cookies.get("information");
+
+  const parseData = JSON.parse(storedInformation || "{}");
+
+  const details = [
+    {
+      label: "Name",
+      value: parseData.name || "",
+    },
+    {
+      label: "Email",
+      value: parseData.email || "",
+    },
+    {
+      label: "Role",
+      value: parseData.role || "",
+    },
+    {
+      label: "Location",
+      value: `${parseData.address || ""}, ${parseData.town || ""}, ${
+        parseData.country || ""
+      }`,
+    },
+    {
+      label: "Specializations",
+      value:
+        parseData?.role === "photographer"
+          ? parseData.photographerSpecializations.join(", ")
+          : parseData?.role === "videographer"
+          ? parseData.videographerSpecializations.join(", ")
+          : parseData?.role === "both" &&
+            [
+              ...parseData.photographerSpecializations,
+              ...parseData.videographerSpecializations,
+            ].join(", "),
+    },
+  ];
 
   const onFinish = async () => {
     try {
       // Validate all fields
       const values = await form.validateFields();
 
-      // If validation passes, proceed with the form submission
-      console.log("Received values of login form:", values);
-      form.resetFields(); // Reset form fields after submission
-      router.push("/sign-up/professional/otp-verify"); // Navigate to the next page
+      const data = { ...parseData, ...values };
+
+      const res = await tryCatchWrapper(
+        registerUser,
+        { body: data },
+        "Creating account...",
+        "OTP sent To your email!"
+      );
+      if (res?.success) {
+        Cookies.remove("information");
+        form.resetFields();
+        router.push("/sign-up/professional/otp-verify");
+      }
     } catch (error) {
       // If validation fails, error will be caught here
       console.log("Form validation failed:", error);
@@ -63,7 +90,9 @@ const ReviewDetailsAndSubmit = () => {
         {details.map((detail, index) => (
           <div
             key={index}
-            className="flex flex-col justify-start items-start gap-1"
+            className={`flex flex-col justify-start items-start gap-1 ${
+              index === 4 ? "sm:col-span-2" : ""
+            }`}
           >
             <p className="text-xs sm:text-sm lg:text-base font-semibold">
               {detail.label}
@@ -77,7 +106,7 @@ const ReviewDetailsAndSubmit = () => {
 
       <ReusableForm handleFinish={onFinish} form={form}>
         <Form.Item
-          name="termsAndConditions"
+          name="acceptTerms"
           valuePropName="checked"
           rules={[
             {
@@ -91,18 +120,18 @@ const ReviewDetailsAndSubmit = () => {
           ]}
         >
           <Checkbox
-          // onChange={(e) => handleCheckboxChange(e, "termsAndConditions")}
+          // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
           >
             <div>
               <p className="text-sm sm:text-base lg:text-lg font-semibold">
                 Agree to terms and conditions
               </p>
               <p className="text-xs sm:text-sm lg:text-base">
-                By creating an account, you agree to our
+                By creating an account, you agree to our{" "}
                 <span className="text-secondary-color underline">
                   Terms of Service
-                </span>
-                and
+                </span>{" "}
+                and{" "}
                 <span className="text-secondary-color underline">
                   Privacy Policy.
                 </span>
@@ -113,7 +142,7 @@ const ReviewDetailsAndSubmit = () => {
 
         {/* Agree to rámcová zmluva contract Checkbox */}
         <Form.Item
-          name="contractAgreement"
+          name="ramcuvaAgree"
           valuePropName="checked"
           rules={[
             {
@@ -127,7 +156,7 @@ const ReviewDetailsAndSubmit = () => {
           ]}
         >
           <Checkbox
-          // onChange={(e) => handleCheckboxChange(e, "contractAgreement")}
+          // onChange={(e) => handleCheckboxChange(e, "ramcuvaAgree")}
           >
             <div>
               <p className="text-sm sm:text-base lg:text-lg font-semibold">
@@ -142,7 +171,7 @@ const ReviewDetailsAndSubmit = () => {
         </Form.Item>
 
         {/* Subscribe to newsletter Checkbox */}
-        <Form.Item name="newsletter" valuePropName="checked">
+        <Form.Item name="newsLetterSub" valuePropName="checked">
           <Checkbox>
             <div>
               <p className="text-sm sm:text-base lg:text-lg font-semibold">

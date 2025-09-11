@@ -8,6 +8,7 @@ import ReusableForm from "../ui/Form/ReuseForm";
 import ReuseInput from "../ui/Form/ReuseInput";
 import { FaUser } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
+import Cookies from "js-cookie";
 
 const inputStructure = [
   {
@@ -69,11 +70,39 @@ const inputStructure = [
 const PersonalInformation = () => {
   const router = useRouter();
   const [form] = Form.useForm();
+  const storedInformation = Cookies.get("information");
+
+  const parseData = JSON.parse(storedInformation || "{}");
+
+  form.setFieldsValue({
+    name: parseData.name,
+    email: parseData.email,
+    password: parseData.password,
+    confirmPassword: parseData.password,
+  });
 
   const onFinish = (values: any) => {
     console.log("Received values of login form:", values);
+
+    const personalInfo = {
+      name: values.name,
+      email: values.email,
+      password: values.confirmPassword,
+    };
+
+    Cookies.set(
+      "information",
+      JSON.stringify({ ...parseData, ...personalInfo }),
+      {
+        expires: 1,
+      }
+    );
     form.resetFields();
-    router.push("/sign-up/professional/choose-specialization");
+    router.push(
+      `/sign-up/professional/choose-specialization?tab=${
+        parseData?.role === "videographer" ? "videography" : "photography"
+      }`
+    );
   };
   return (
     <div className=" flex flex-col justify-center gap-3 h-full w-full sm:w-3/4 mx-auto">

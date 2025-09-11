@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { IoMdMail } from "react-icons/io";
 import ReuseInput from "../ui/Form/ReuseInput";
 import ReuseButton from "../ui/Button/ReuseButton";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { forgetPassword } from "@/services/AuthService";
 
 interface ForgotPasswordValues {
   email: string;
@@ -27,10 +29,19 @@ const inputStructure = [
 ];
 
 const ForgotPassword = () => {
+  const [form] = Form.useForm();
   const router = useRouter();
-  const onFinish = (values: ForgotPasswordValues) => {
-    console.log("Received values of forgot form:", values);
-    router.push("/forgot-password/otp-verify");
+  const onFinish = async (values: ForgotPasswordValues) => {
+    const res = await tryCatchWrapper(
+      forgetPassword,
+      { body: values },
+      "wait a moment...",
+      "OTP sent To your email!"
+    );
+    if (res?.success) {
+      form.resetFields();
+      router.push("/forgot-password/otp-verify");
+    }
   };
   return (
     <div className="text-base-color">
@@ -51,6 +62,7 @@ const ForgotPassword = () => {
             <Form
               layout="vertical"
               className="bg-transparent w-full"
+              form={form}
               onFinish={onFinish}
             >
               {inputStructure.map((input, index) => (

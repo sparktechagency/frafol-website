@@ -21,6 +21,7 @@ import Cookies from "js-cookie";
 import { ISignInUser } from "@/types";
 import { decodedToken } from "@/utils/jwt";
 import { logout } from "@/services/AuthService";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
 // import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
@@ -83,45 +84,11 @@ const notificationMenu = (
   </div>
 );
 
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: <Link href="/dashboard/my-account/overview">Dashboard</Link>,
-    icon: <MdOutlineDashboard className="text-secondary-color !text-base" />,
-  },
-  {
-    key: "2",
-    label: (
-      <Link href="/dashboard/professional/overview">
-        Professional Dashboard
-      </Link>
-    ),
-    icon: <MdOutlineDashboard className="text-secondary-color !text-base" />,
-  },
-  {
-    key: "3",
-    label: <div onClick={() => {}}>Switch Profile</div>,
-    icon: (
-      <HiOutlineSwitchHorizontal className="text-secondary-color !text-base" />
-    ),
-  },
-  {
-    key: "4",
-    label: <Link href="#">Documents</Link>,
-    icon: <IoDocumentTextOutline className="text-secondary-color !text-base" />,
-  },
-  // {
-  //   key: "5",
-  //   label: <Link href="#">Insurance</Link>,
-  //   icon: (
-  //     <RiMoneyDollarCircleLine className="text-secondary-color !text-base" />
-  //   ),
-  // },
-];
-
 const Navbar: React.FC = () => {
   const token = Cookies.get("frafolMainAccessToken");
   const userData: ISignInUser | null = decodedToken(token || "");
+
+  console.log(userData);
 
   const path = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -157,6 +124,44 @@ const Navbar: React.FC = () => {
       setHeight(0); // Set to 0 when closed
     }
   }, [mobileMenuOpen]);
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label:
+        userData?.role === "user" || userData?.role === "company" ? (
+          <Link href="/dashboard/my-account/overview">Dashboard</Link>
+        ) : userData?.role === "photographer" ||
+          userData?.role === "videographer" ||
+          userData?.role === "both" ? (
+          <Link href="/dashboard/professional/overview">Dashboard</Link>
+        ) : (
+          <Link href="/">Dashboard</Link>
+        ),
+      icon: <MdOutlineDashboard className="text-secondary-color !text-base" />,
+    },
+    {
+      key: "2",
+      label: <div onClick={() => {}}>Switch Profile</div>,
+      icon: (
+        <HiOutlineSwitchHorizontal className="text-secondary-color !text-base" />
+      ),
+    },
+    {
+      key: "3",
+      label: <Link href="#">Documents</Link>,
+      icon: (
+        <IoDocumentTextOutline className="text-secondary-color !text-base" />
+      ),
+    },
+    {
+      key: "4",
+      label: <Link href="#">Insurance</Link>,
+      icon: (
+        <RiMoneyDollarCircleLine className="text-secondary-color !text-base" />
+      ),
+    },
+  ];
 
   const handleLogOut = () => {
     logout();

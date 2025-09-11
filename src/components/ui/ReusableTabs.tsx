@@ -1,17 +1,18 @@
 "use client";
 import { cn } from "@/lib/utils";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 type Tab<T extends string> = {
   label: string;
   value: T;
+  disabled?: boolean;
   content: React.ReactNode;
 };
 
 type ReusableTabsProps<T extends string> = {
   tabs: Tab<T>[];
   activeTab: T;
-  onTabChange: (tab: T) => void;
   align?: "left" | "center" | "right";
   tabContentStyle?: string;
 };
@@ -19,16 +20,32 @@ type ReusableTabsProps<T extends string> = {
 const ReusableTabs = <T extends string>({
   tabs,
   activeTab,
-  onTabChange,
   align = "center",
   tabContentStyle = "",
 }: ReusableTabsProps<T>) => {
+  const searchParams = useSearchParams();
+  const pathName = usePathname();
+  const router = useRouter();
+  const { replace } = router;
+
   const justifyClass =
     align === "left"
       ? "justify-start"
       : align === "right"
       ? "justify-end"
       : "justify-center";
+
+  const handleTabChange = (value: string) => {
+    const text = value;
+    const params = new URLSearchParams(searchParams);
+    if (text) {
+      params.set("tab", text);
+    } else {
+      params.delete("tab");
+    }
+
+    replace(`${pathName}?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <div>
@@ -37,8 +54,9 @@ const ReusableTabs = <T extends string>({
           {tabs.map((tab) => (
             <button
               key={tab.value}
-              onClick={() => onTabChange(tab.value)}
-              className={`px-4 py-1.5 rounded-md font-medium text-sm sm:text-base transition-all duration-300 cursor-pointer
+              disabled={tab.disabled || false}
+              onClick={() => handleTabChange(tab.value)}
+              className={`px-4 py-1.5 rounded-md font-medium text-sm sm:text-base transition-all duration-300  disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer
                 ${
                   activeTab === tab.value
                     ? "bg-[#a13200] text-white"
