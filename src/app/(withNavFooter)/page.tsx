@@ -7,11 +7,15 @@ import Marketplace from "@/components/Home/Marketplace";
 import TalentedProfessionalsImages from "@/components/Home/TalentedProfessionalsImages";
 import Testimonial from "@/components/Home/Testimonial";
 
-const HomePage = () => {
+const HomePage = ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   return (
     <main className="">
       <Banner />
-      <ExploreCategories />
+      <ExploreCategories searchParams={searchParams} />
       <FeaturedProfessionals />
       <HowItWorks />
       <Marketplace />

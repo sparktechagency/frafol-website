@@ -1,8 +1,5 @@
 "use client";
 import React from "react";
-import ExplorePhotographyCategory from "./ExplorePhotographyCategory";
-import ExploreVideographyCategory from "./ExploreVideographyCategory";
-
 const ExploreCategoryTab = () => {
   const [activeTab, setActiveTab] = React.useState<
     "photography" | "videography"
@@ -34,8 +31,8 @@ const ExploreCategoryTab = () => {
         </div>
       </div>
       <div className="mt-10">
-        {activeTab === "photography" && <ExplorePhotographyCategory />}
-        {activeTab === "videography" && <ExploreVideographyCategory />}
+        {activeTab === "photography" && <div></div>}
+        {activeTab === "videography" && <div></div>}
       </div>
     </div>
   );

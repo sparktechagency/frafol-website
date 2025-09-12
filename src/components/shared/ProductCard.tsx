@@ -1,15 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import React from "react";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { IoCartOutline } from "react-icons/io5";
 import Link from "next/link";
+import { IGear } from "@/types";
+import { getServerUrl } from "@/helpers/config/envConfig";
 
 interface ProductCardProps {
-  product: any;
+  product: IGear;
 }
-const id = "cannon-465-sds-798-de";
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const serverUrl = getServerUrl();
+
   return (
     <div className="h-full flex flex-col justify-between">
       <div className="overflow-hidden rounded-tl-lg rounded-tr-lg ">
@@ -17,12 +19,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           width={200}
           height={200}
           className="w-full h-72 object-cover hover:scale-105 transform-3d transition-transform duration-300 ease-in-out"
-          src={product?.image}
+          src={serverUrl + product?.gallery[0]}
           alt="product"
         />
       </div>
       <div className="mt-4 p-1">
-        <Link href={`/marketplace/${id}`}>
+        <Link href={`/marketplace/${product?._id}`}>
           <p className="text-sm sm:text-base lg:text-lg font-semibold text-secondary-color  mb-2">
             {product?.name}
           </p>
@@ -30,7 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         <p className=" mb-2">{product?.description}</p>
         <p className=" mb-2">
-          Seller: <span className="font-medium">{product?.seller}</span>
+          Seller: <span className="font-medium">{product?.authorId?.name}</span>
         </p>
         <p className=" mb-2">
           Condition: <span className="font-medium">{product?.condition}</span>
