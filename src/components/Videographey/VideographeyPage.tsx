@@ -1,14 +1,30 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import SectionHeader from "../ui/SectionHeader";
 import CategoryCard from "../shared/CategoryCard";
 import Container from "../ui/Container";
-import ReuseInput from "../ui/Form/ReuseInput";
-import { FiSearch } from "react-icons/fi";
-import videographyData from "../../../public/data/videographyData";
 import Link from "next/link";
 import ReuseButton from "../ui/Button/ReuseButton";
+import { fetchWithAuth } from "@/lib/fetchWraper";
+import TagTypes from "@/helpers/config/TagTypes";
+import { ICategory } from "@/types";
+import PhotographyPageSearch from "../Photography/PhotographyPageSearch";
 
-const VideographeyPage = () => {
+const VideographeyPage = async ({ searchParams }: { searchParams: any }) => {
+  const params = await searchParams;
+  const search = params?.search || "";
+  const res = await fetchWithAuth(`/category/type/videoGraphy`, {
+    next: {
+      tags: [TagTypes.category],
+    },
+  });
+  const data = await res.json();
+  const categories: ICategory[] = data?.data;
+
+  const filteredCategories = categories.filter((category) => {
+    return category?.title?.toLowerCase().includes(search?.toLowerCase());
+  });
+
   return (
     <div className="">
       <Container>
@@ -18,17 +34,11 @@ const VideographeyPage = () => {
         />
         <div className="mt-16">
           <div className="flex justify-end mb-3">
-            <ReuseInput
-              prefix={<FiSearch className="text-base-color size-4.5" />}
-              name="search"
-              inputClassName="!bg-background-color !rounded-lg !text-base-color !border-none !shadow-none text-lg font-semibold !w-96 !py-2.5"
-              placeholder="Search"
-              type="text"
-            />
+            <PhotographyPageSearch />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-5">
-            {videographyData.map((item, index) => (
-              <Link key={index} href={`/videography/${item?.id}`}>
+            {filteredCategories?.map((item, index) => (
+              <Link key={index} href={`/videography/${item?._id}`}>
                 <CategoryCard item={item} />
               </Link>
             ))}

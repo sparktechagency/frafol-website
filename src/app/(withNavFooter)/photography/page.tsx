@@ -1,10 +1,14 @@
 import PhotographyPage from "@/components/Photography/PhotographyPage";
 import React from "react";
 
-const page = () => {
+const page = ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   return (
     <div className="py-20">
-      <PhotographyPage />
+      <PhotographyPage searchParams={searchParams} />
     </div>
   );
 };
