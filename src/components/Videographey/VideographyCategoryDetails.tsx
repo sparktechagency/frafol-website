@@ -6,6 +6,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import FeaturedProfessionalsCard from "../shared/FeaturedProfessionalsCard";
 import { AllImages } from "../../../public/assets/AllImages";
 import VideographyCategorySeacrhFiltre from "./VideographyCategorySeacrhFiltre";
+import { getServerUrl } from "@/helpers/config/envConfig";
 
 const professionals = [
   {
@@ -138,10 +139,18 @@ const professionals = [
   },
 ];
 
-const VideographyCategoryDetails = ({ data }: any) => {
+const VideographyCategoryDetails = ({
+  data,
+}: {
+  data: { id: string; title: string | string[]; src: string | string[] };
+}) => {
+  const serverUrl: string = getServerUrl() || "";
   return (
     <main className="pb-20">
-      <SectionBanner image={data.image} title={data.name} />
+      <SectionBanner
+        image={data?.src ? serverUrl + data?.src : AllImages.dummyCover?.src}
+        title={data?.title as string}
+      />
 
       <Container>
         <div className="mt-10 flex flex-col lg:flex-row justify-between lg:items-center gap-5">

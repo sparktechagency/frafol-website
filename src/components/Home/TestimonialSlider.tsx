@@ -39,7 +39,7 @@ const TestimonialSlider = ({ data }: { data: ITestimonial[] }) => {
       modules={[EffectFade, Pagination, Autoplay]}
       className="mySwiper"
     >
-      {data.map((item, index) => (
+      {data?.map((item, index) => (
         <SwiperSlide key={index}>
           <TestimonialCard testimonial={item} />
         </SwiperSlide>

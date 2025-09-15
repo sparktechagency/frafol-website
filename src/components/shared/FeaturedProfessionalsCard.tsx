@@ -36,12 +36,14 @@ const FeaturedProfessionalsCard: React.FC<FeaturedProfessionalsCardProps> = ({
             <h3 className="text-secondary-color text-sm sm:text-base lg:text-lg font-bold">
               {item?.name}
             </h3>
-            <div className="flex items-center gap-1">
-              <FaStar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-              <p className="text-secondary-color text-sm sm:text-base lg:text-lg">
-                {item?.totalReview}
-              </p>
-            </div>
+            {item?.totalReview > 0 && (
+              <div className="flex items-center gap-1">
+                <FaStar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+                <p className="text-secondary-color text-sm sm:text-base lg:text-lg">
+                  {item?.totalReview}
+                </p>
+              </div>
+            )}
           </div>
           <p className="text-base-color text-xs lg:text-sm font-medium mt-1">
             {item?.role === "both"

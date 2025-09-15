@@ -7,10 +7,6 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
   try {
     const accessToken = await getAuthToken();
 
-    if (!accessToken) {
-      throw new Error("No access token available");
-    }
-
     // Add the Authorization header to the request
     const headers = {
       ...options.headers,

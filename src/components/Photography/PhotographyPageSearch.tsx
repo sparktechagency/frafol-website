@@ -25,7 +25,7 @@ const PhotographyPageSearch = () => {
     }
 
     replace(`${pathName}?${params.toString()}`, { scroll: false });
-  }, 100);
+  }, 200);
 
   function debounce<T extends (...args: any[]) => void>(
     this: void, // Explicitly type `this` as `void`

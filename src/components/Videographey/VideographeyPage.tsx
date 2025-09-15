@@ -38,15 +38,19 @@ const VideographeyPage = async ({ searchParams }: { searchParams: any }) => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-5">
             {filteredCategories?.map((item, index) => (
-              <Link key={index} href={`/videography/${item?._id}`}>
+              <Link
+                key={index}
+                href={`/videography/${item?._id}?title=${item?.title}&src=${item?.image}`}
+              >
                 <CategoryCard item={item} />
               </Link>
             ))}
           </div>
         </div>
+
         <div className="flex justify-center items-center !mt-10">
           <ReuseButton
-            url="/professionals"
+            url="/professionals?role=videographer"
             className="mt-10 w-fit mx-auto !text-sm sm:!text-base lg:!text-lg !py-4.5"
             variant="secondary"
           >

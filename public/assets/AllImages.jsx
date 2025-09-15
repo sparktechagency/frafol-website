@@ -1,5 +1,7 @@
 import logo from "./logo/logo.png";
 import logo2 from "./logo/logo2.png";
+import dummyCover from "./images/defaultCover.png";
+import dummyProfile from "./images/dummyProfile.jpg";
 
 import joinFrafol from "./images/joinFrafol.png";
 import signupuser from "./images/signup-user.png";
@@ -11,7 +13,6 @@ import reviewDetails from "./images/review-details.jpg";
 
 import herobanner from "./images/banner.jpg";
 import herobanner1 from "./images/banner1.png";
-import dummyProfile from "./images/dummyProfile.jpg";
 import smartPhone from "./images/smartPhone.png";
 import male from "./images/male.png";
 import girl from "./images/female.png";
@@ -71,6 +72,8 @@ import values from "./icons/values.png";
 export const AllImages = {
   logo,
   logo2,
+  dummyProfile,
+  dummyCover,
 
   joinFrafol,
   signupuser,
@@ -82,7 +85,6 @@ export const AllImages = {
 
   herobanner,
   herobanner1,
-  dummyProfile,
   smartPhone,
   aboutusStory,
   aboutUsBrife,

@@ -39,7 +39,7 @@ const FeaturedProfessionalSlider = ({ data }: { data: IProfessional[] }) => {
       modules={[EffectFade, Navigation, Autoplay]}
       className="mySwiper"
     >
-      {data.map((item, index) => (
+      {data?.map((item, index) => (
         <SwiperSlide key={index}>
           <FeaturedProfessionalsCard item={item} />
         </SwiperSlide>

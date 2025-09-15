@@ -23,7 +23,7 @@ const MarketPlaceTab: React.FC = () => {
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <div
           key={category}
           onClick={() => setActiveTab(category)}

@@ -24,7 +24,7 @@ const SectionBanner: React.FC<SectionBannerProps> = ({
           height={2000}
           src={image}
           alt="banner-image"
-          className="w-full h-full object-cover object-left"
+          className="!w-full h-full object-cover object-left"
         />
 
         <div className="absolute inset-0 bg-gradient-to-b from-[#0000008A] via-[#0000008A] to-[#0000009A]"></div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Container from "../ui/Container";
 import SectionHeader from "../ui/SectionHeader";
 // import ExploreCategoryTab from "./ExploreCategoryTab";
@@ -8,6 +8,7 @@ import ReusableTabs from "../ui/ReusableTabs";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { ICategory } from "@/types";
+import { FadeLoader } from "react-spinners";
 
 const ExploreCategories = async ({
   searchParams,
@@ -43,13 +44,33 @@ const ExploreCategories = async ({
               {
                 label: "Photography",
                 value: "photoGraphy",
-                content: <ExplorePhotographyCategory categories={categories} />,
+                content: (
+                  <Suspense
+                    fallback={
+                      <div className="py-40 w-full flex justify-center items-center">
+                        <FadeLoader color="#ad2b08" />
+                      </div>
+                    }
+                  >
+                    <ExplorePhotographyCategory categories={categories} />
+                  </Suspense>
+                ),
               },
 
               {
                 label: "Videography",
                 value: "videoGraphy",
-                content: <ExploreVideographyCategory categories={categories} />,
+                content: (
+                  <Suspense
+                    fallback={
+                      <div className="py-40 w-full flex justify-center items-center">
+                        <FadeLoader color="#ad2b08" />
+                      </div>
+                    }
+                  >
+                    <ExploreVideographyCategory categories={categories} />
+                  </Suspense>
+                ),
               },
             ]}
             tabContentStyle="mt-5"

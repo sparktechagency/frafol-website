@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Container from "../ui/Container";
 import Revel from "../ui/Animation/Revel";
