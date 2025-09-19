@@ -1,10 +1,9 @@
 import Image from "next/image";
 import React from "react";
-import ReuseButton from "../ui/Button/ReuseButton";
-import { IoCartOutline } from "react-icons/io5";
 import Link from "next/link";
 import { IGear } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
+import AddToCardButton from "../ui/AddToCardButton";
 
 interface ProductCardProps {
   product: IGear;
@@ -40,13 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <span className="text-sm sm:text-lg lg:text-xl font-bold">
           ${product?.price}
         </span>
-        <ReuseButton
-          variant="secondary"
-          className="!px-6 !py-5 mt-4 flex justify-center items-center gap-2"
-        >
-          <IoCartOutline className="text-2xl" />
-          <p>Add To Cart</p>
-        </ReuseButton>
+        <AddToCardButton gear={product} />
       </div>
     </div>
   );

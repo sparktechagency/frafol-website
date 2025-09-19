@@ -1,18 +1,13 @@
 "use client";
 import React from "react";
-import { AllImages } from "../../../public/assets/AllImages";
 import Image from "next/image";
+import { getServerUrl } from "@/helpers/config/envConfig";
+import { AllImages } from "../../../public/assets/AllImages";
 
-const images = [
-  { id: 1, image: AllImages?.product },
-  { id: 2, image: AllImages?.product2 },
-  { id: 3, image: AllImages?.product3 },
-  { id: 4, image: AllImages?.product },
-];
-
-const MarketPlaceImageTab = () => {
+const MarketPlaceImageTab = ({ images }: { images: string[] }) => {
   const [selectedImage, setSelectedImage] = React.useState(images[0]);
 
+  const serverurl = getServerUrl();
   return (
     <div className="flex gap-4">
       <div className="flex flex-col gap-2">
@@ -20,11 +15,11 @@ const MarketPlaceImageTab = () => {
           <Image
             width={80}
             height={80}
-            key={item.id}
-            src={item.image}
-            alt="product thumbnail"
+            key={item}
+            src={item ? serverurl + item : AllImages.dummyCover?.src}
+            alt="product"
             className={`object-cover cursor-pointer border-2 rounded-md ${
-              item.id === selectedImage.id
+              item === selectedImage
                 ? "border-secondary-color"
                 : "border-transparent"
             }`}
@@ -35,13 +30,18 @@ const MarketPlaceImageTab = () => {
 
       <div className="flex-1">
         <Image
-          key={selectedImage.id} // <-- Force remount & reload on change
-          width={800}
-          height={800}
-          src={selectedImage.image}
+          key={selectedImage} // <-- Force remount & reload on change
+          width={1000}
+          height={1000}
+          src={
+            selectedImage
+              ? serverurl + selectedImage
+              : AllImages.dummyCover?.src
+          }
           alt="selected product"
-          className="w-full h-[500px] object-cover "
-          priority
+          className="w-[90%] h-auto object-cover "
+          fetchPriority="high"
+          loading="lazy"
         />
       </div>
     </div>

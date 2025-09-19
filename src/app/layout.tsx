@@ -7,6 +7,7 @@ import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "sonner";
 import { ConfigProvider } from "antd";
 import { mainTheme } from "@/theme";
+import Providers from "@/providers/Providers";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -45,10 +46,12 @@ export default function RootLayout({
           zIndex={1600}
           showAtBottom={false}
         />
-        <Toaster position="top-center" richColors />
-        <AntdRegistry>
-          <ConfigProvider theme={mainTheme}>{children}</ConfigProvider>
-        </AntdRegistry>
+        <Providers>
+          <Toaster position="top-center" richColors />
+          <AntdRegistry>
+            <ConfigProvider theme={mainTheme}>{children}</ConfigProvider>
+          </AntdRegistry>
+        </Providers>
       </body>
     </html>
   );

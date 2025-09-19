@@ -1,10 +1,14 @@
 import MarketPlace from "@/components/MarketPlace/MarketPlacePage";
 import React from "react";
 
-const MarketPlacePage = () => {
+const MarketPlacePage = ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   return (
     <main>
-      <MarketPlace />
+      <MarketPlace searchParams={searchParams} />
     </main>
   );
 };

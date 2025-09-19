@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { Suspense } from "react";
 import SectionBanner from "../ui/SectionBanner";
 import Container from "../ui/Container";
 import ProductCard from "../shared/ProductCard";
@@ -9,17 +10,28 @@ import MarketPlaceSeacrhFiltre from "./MarketPlaceSeacrhFiltre";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { IGear } from "@/types";
+import PaginationSection from "../shared/PaginationSection";
 
 // Let's generate 12 dummy entries (mock data like a boss 😎)
 
-const MarketPlace = async () => {
-  const res = await fetchWithAuth(`/marketPlace?limit=4`, {
-    next: {
-      tags: [TagTypes.gear],
-    },
-  });
+const MarketPlace = async ({ searchParams }: { searchParams: any }) => {
+  const params = await searchParams;
+  const search = params?.search || "";
+
+  const page = params?.page || 1;
+  const limit = 12;
+
+  const res = await fetchWithAuth(
+    `/marketPlace?page=${page}&limit=${limit}&searchTerm=${search}`,
+    {
+      next: {
+        tags: [TagTypes.gear],
+      },
+    }
+  );
   const data = await res.json();
   const gear: IGear[] = data?.data?.result;
+  const totalData = data?.data?.meta?.total;
   return (
     <main className="pb-20">
       <SectionBanner
@@ -43,6 +55,16 @@ const MarketPlace = async () => {
             {gear.map((item, index) => (
               <ProductCard key={index} product={item} />
             ))}
+          </div>
+
+          <div className="mt-16 flex justify-center items-center">
+            <Suspense fallback={<div>Loading...</div>}>
+              <PaginationSection
+                page={page}
+                limit={limit}
+                totalData={totalData}
+              />
+            </Suspense>
           </div>
         </div>
       </Container>

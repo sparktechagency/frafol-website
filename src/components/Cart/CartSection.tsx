@@ -1,37 +1,20 @@
+"use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Container from "../ui/Container";
 import CartCard from "./CartProductCards";
 import CartDeliveryOption from "./CartDeliveryOption";
-
-const cartData = [
-  {
-    name: "Canon EOS 80D DSLR Camera",
-    price: 1049,
-    condition: "New",
-    seller: "John Doe",
-  },
-  {
-    name: "Canon EOS 80D DSLR Camera",
-    price: 1049,
-    condition: "New",
-    seller: "John Doe",
-  },
-  {
-    name: "Canon EOS 80D DSLR Camera",
-    price: 1049,
-    condition: "New",
-    seller: "John Doe",
-  },
-  {
-    name: "Canon EOS 80D DSLR Camera",
-    price: 1049,
-    condition: "New",
-    seller: "John Doe",
-  },
-];
+import { useAppSelector } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
+import { selectTotalPrice } from "@/redux/features/cart/cartSlice";
 
 const CartSection = () => {
+  const subTotal = useAppSelector(selectTotalPrice);
+
+  const cartProducts = useAppSelector(
+    (state: RootState) => state.cart.products
+  );
+
   return (
     <Container>
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 text-base-color items-baseline">
@@ -43,11 +26,11 @@ const CartSection = () => {
               </h2>
 
               <div className="w-fit py-1 px-2 rounded-full bg-secondary-color text-primary-color font-semibold">
-                2
+                {cartProducts?.length}
               </div>
             </div>
             <div className="flex flex-col gap-4 p-2 overflow-y-auto ">
-              {cartData.map((product: any, index: number) => (
+              {cartProducts.map((product: any, index: number) => (
                 <CartCard key={index} product={product} />
               ))}
             </div>
@@ -60,7 +43,7 @@ const CartSection = () => {
           <div className=" py-5 w-full space-y-4 border-y border-base-color/30 mb-5">
             <div className="flex justify-between">
               <span className="font-bold">Sub Total: </span>
-              <span className="font-bold">$549.00</span>
+              <span className="font-bold">${subTotal}</span>
             </div>
             <div className="flex justify-between">
               <span className="font-bold">Service Charge: </span>

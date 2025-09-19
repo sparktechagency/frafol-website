@@ -1,52 +1,60 @@
 import React from "react";
-import ReuseButton from "../ui/Button/ReuseButton";
 import ProductDetailAccordion from "../ui/ProductDetailAccordion";
 import MarketPlaceImageTab from "./MarketPlaceImageTab";
+import { IGear } from "@/types";
+import AddToCardButton from "../ui/AddToCardButton";
 
-const generalData = [
-  {
-    title: "Details",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.",
-  },
-  {
-    title: "Shipping",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.​",
-  },
-];
-
-const MarketPlaceDetailsPage = () => {
+const MarketPlaceDetailsPage = ({ data }: { data: IGear }) => {
+  const generalData = [
+    {
+      title: "Details",
+      content: data?.extraInformation,
+    },
+    {
+      title: "Shipping",
+      content: (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {data?.shippingCompany?.map((item, i) => {
+            return (
+              <div key={i} className="bg-zinc-200 p-4 rounded-lg">
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl ">
+                  {item?.name}
+                  {" - "}
+                  <span className="text-secondary-color font-bold">
+                    ${item?.price}
+                  </span>
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      ),
+    },
+  ];
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 min-h-[90vh]">
       <div>
-        <MarketPlaceImageTab />
+        <MarketPlaceImageTab images={data?.gallery} />
       </div>
-      <div className="space-y-1 lg:space-y-2">
+      <div className="space-y-1 lg:space-y-2 ">
         <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extrabold">
-          Canon EOS 5D Mark IV
+          {data?.name}
         </h1>
         <h3 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold">
-          $1499.99
+          ${data?.price}
         </h3>
         <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl mt-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          varius enim in eros elementum tristique. Duis cursus, mi quis viverra
-          ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
+          {data?.description}
         </p>
         <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold mt-4">
-          Seller: <span className="font-bold"> John Doe</span>
+          Seller: <span className="font-bold"> {data?.authorId?.name}</span>
         </p>
         <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold mt-4">
-          Condition: <span className="font-bold"> New</span>
+          Condition:{" "}
+          <span className="font-bold capitalize"> {data?.condition}</span>
         </p>
         <div className="flex flex-col w-full mt-10">
-          <ReuseButton
-            variant="outline"
-            className=" !text-sm sm:!text-base lg:!text-lg !py-5 w-full !border-secondary-color !text-secondary-color !font-bold"
-          >
-            Add to Cart
-          </ReuseButton>
+          <AddToCardButton gear={data} />
           {/* <ReuseButton
             className=" mt-5 !text-sm sm:!text-base lg:!text-lg !py-5 w-full !border-secondary-color !font-bold"
             variant="secondary"

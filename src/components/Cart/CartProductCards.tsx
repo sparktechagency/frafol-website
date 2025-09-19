@@ -4,13 +4,27 @@
 import Image from "next/image";
 import { AllImages } from "../../../public/assets/AllImages";
 import { MdDelete } from "react-icons/md";
+import { getServerUrl } from "@/helpers/config/envConfig";
+import { IGear } from "@/types";
+import { useAppDispatch } from "@/redux/hooks";
+import { removeFromCart } from "@/redux/features/cart/cartSlice";
 
-const CartCard = ({ product }: { product: any }) => {
+const CartCard = ({ product }: { product: IGear }) => {
+  const dispatch = useAppDispatch();
+  const serverUrl = getServerUrl();
+
+  const handleRemove = (id: string) => {
+    dispatch(removeFromCart(id));
+  };
   return (
     <div className="py-2 flex justify-between items-center gap-5 ">
       <div className="flex gap-2 items-center">
         <Image
-          src={AllImages?.product}
+          src={
+            product?.gallery?.[0]
+              ? serverUrl + product?.gallery?.[0]
+              : AllImages?.dummyCover?.src
+          }
           alt="product"
           width={2000}
           height={2000}
@@ -33,15 +47,17 @@ const CartCard = ({ product }: { product: any }) => {
             <p className="text-xs sm:text-sm lg:text-base font-semibold">
               Seller:
             </p>
-            <p className="text-xs sm:text-sm lg:text-base">{product?.seller}</p>
+            <p className="text-xs sm:text-sm lg:text-base">
+              {product?.authorId?.name}
+            </p>
           </div>
           <h2 className="text-xs sm:text-sm lg:text-base mb-2">
-            Price: <span className="font-semibold">{product?.price}</span>
+            Price: <span className="font-semibold">${product?.price}</span>
           </h2>
         </div>
       </div>
       <MdDelete
-        onClick={() => {}}
+        onClick={() => handleRemove(product?._id)}
         className="size-4 sm:size-5 lg:size-6 cursor-pointer text-error "
       />
     </div>
