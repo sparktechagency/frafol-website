@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./features/cart/cartSlice"; // Import your auth slice
+import sidebarReducer from "./features/sidebar/sidebarSlice"; // Import your auth slice
 import { baseApi } from "./api/baseApi";
 import { persistStore, persistReducer } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
@@ -38,7 +39,7 @@ const storage =
 const persistConfig = {
   key: "frafol_main",
   storage,
-  whitelist: ["auth", "cart"], // Persist only the `auth` slice (for accessToken)
+  whitelist: ["auth", "cart", "sidebar"], // Persist only the `auth` slice (for accessToken)
   blacklist: ["baseApi"], // Do not persist the `baseApi` slice
 };
 
@@ -46,6 +47,7 @@ const persistConfig = {
 const rootReducer = {
   [baseApi.reducerPath]: baseApi.reducer,
   cart: cartReducer, // Persisted auth reducer
+  sidebar: sidebarReducer,
   // gallery: galleryReducer,
 };
 

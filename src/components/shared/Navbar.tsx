@@ -96,12 +96,16 @@ const Navbar: React.FC = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
 
+  const isDashboard = path.includes("dashboard");
+  console.log("isDashboard", isDashboard);
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious();
     if (
       previous !== undefined &&
       latest > previous &&
       latest > 150 &&
+      !isDashboard &&
       !mobileMenuOpen
     ) {
       setHidden(true);
