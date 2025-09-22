@@ -8,7 +8,8 @@ import "swiper/css/pagination";
 import { ITestimonial } from "@/types/testimonial.type";
 import TestimonialCard from "./TestimonialCard";
 
-const TestimonialSlider = ({ data }: { data: ITestimonial[] }) => {
+const TestimonialSlider = ({ data = [] }: { data: ITestimonial[] }) => {
+  console.log("data in slider", data);
   return (
     <Swiper
       slidesPerView={1}

@@ -11,24 +11,26 @@ import Sider from "antd/es/layout/Sider";
 import { usePathname } from "next/navigation";
 import React from "react";
 import SidebarCollapsedIcon from "./SidebarCollapsedIcon";
-
-const userRole = {
-  role: "user",
-};
+import { ISignInUser } from "@/types";
+import { decodedToken } from "@/utils/jwt";
+import Cookies from "js-cookie";
 
 const SideBar = () => {
+  const token = Cookies.get("frafolMainAccessToken");
+  const userData: ISignInUser | null = decodedToken(token || "");
   const isCollapsed = useAppSelector(selectIsCollapsed);
 
   const pathname = usePathname();
   const defaultUrl =
-    userRole?.role === "user" ? "/my-account" : "/professional";
+    userData?.role === "user" ? "/my-account" : "/professional";
+
   const normalizedPath = pathname.replace(defaultUrl, "");
 
   const adminPaths = useAdminPaths();
   const professionalPath = useProfessionalPaths();
 
   const activeKeys = getActiveKeys(normalizedPath);
-  const menuItems = userRole?.role === "user" ? adminPaths : professionalPath;
+  const menuItems = userData?.role === "user" ? adminPaths : professionalPath;
 
   return (
     <Sider

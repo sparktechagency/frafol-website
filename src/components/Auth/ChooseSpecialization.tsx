@@ -4,27 +4,20 @@ import ReusableTabs from "../ui/ReusableTabs";
 import { useEffect, useState } from "react";
 import ReuseButton from "../ui/Button/ReuseButton";
 import Cookies from "js-cookie";
+import { ICategory } from "@/types";
 
-const specializationOptions = {
-  photography: [
-    "Wedding Photography",
-    "Family Photography",
-    "Portrait Photography",
-    "Event Photography",
-    "Product Photography",
-    "Fashion Photography",
-  ],
-  videography: [
-    "Wedding Videography",
-    "Event Videography",
-    "Documentary Videography",
-    "Corporate Videography",
-    "Music Video Production",
-    "Real Estate Videography",
-  ],
-};
+const ChooseSpecialization = ({ categories }: { categories: ICategory[] }) => {
+  const specializationOptions = {
+    photography:
+      categories?.[0]?.type === "photoGraphy"
+        ? categories.map((cat) => cat.title)
+        : [],
+    videography:
+      categories?.[0]?.type === "videoGraphy"
+        ? categories.map((cat) => cat.title)
+        : [],
+  };
 
-const ChooseSpecialization = () => {
   const storedInformation = Cookies.get("information");
   const parseData = JSON.parse(storedInformation || "{}");
 
