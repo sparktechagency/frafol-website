@@ -97,7 +97,6 @@ const Navbar: React.FC = () => {
   const { scrollY } = useScroll();
 
   const isDashboard = path.includes("dashboard");
-  console.log("isDashboard", isDashboard);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious();

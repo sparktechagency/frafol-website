@@ -8,30 +8,24 @@ import DeleteModal from "@/components/ui/Modal/DeleteModal";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import GearMarketPlaceAddNewGear from "./GearMarketPlaceAddNewGear";
 import GearMarketPlaceEditNewGear from "./GearMarketPlaceEditNewGear";
+import { ICategory, IGear } from "@/types";
+import { FaPlus } from "react-icons/fa6";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { deleteGear } from "@/services/GearService/GearServiceApi";
 
-const GearMarketplacePage = () => {
-  const itemData = Array.from({ length: 20 }).map((_, index) => ({
-    key: index + 1,
-    id: 1223 + index,
-    image: "/camera.png", // place a camera image in /public or replace with a URL
-    name: "Canon Camera",
-    category: index % 3 === 0 ? "Camera" : index % 3 === 1 ? "Tripod" : "Lens",
-    price: "$200",
-    condition: index % 2 === 0 ? "New" : "Used",
-    status: index % 4 === 3 ? "Sold Out" : "In Stock",
-    shippingCompany: "DHL",
-    shippingPrice: "$40",
-    approvalStatus:
-      index % 3 === 0 ? "Approved" : index % 3 === 1 ? "Pending" : "Approved",
-  }));
-
-  const [page, setPage] = useState(1);
-
-  const [searchText, setSearchText] = useState("");
-  console.log("Search Text:", searchText);
-
-  const limit = 12;
-
+const GearMarketplacePage = ({
+  page,
+  limit,
+  categories,
+  myGears,
+  totalData,
+}: {
+  page: number;
+  limit: number;
+  categories: ICategory[];
+  myGears: IGear[];
+  totalData: number;
+}) => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -64,6 +58,23 @@ const GearMarketplacePage = () => {
     setIsViewModalVisible(true);
   };
 
+  const handleDelete = async (record: IGear) => {
+    // Implement delete functionality here
+    if (record) {
+      const res = await tryCatchWrapper(
+        deleteGear,
+        { params: record?._id },
+        "Deleting Gear...",
+        "Gear deleted successfully!",
+        "Something went wrong! Please try again."
+      );
+
+      if (res?.success) {
+        handleCancel();
+      }
+    }
+  };
+
   return (
     <div>
       <div className=" min-h-[80vh] rounded-xl px-4">
@@ -72,31 +83,27 @@ const GearMarketplacePage = () => {
             <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-5">
               Gear Marketplace
             </h1>
-            <SearchInput
-              placeholder="Search ..."
-              setSearch={setSearchText}
-              setPage={setPage}
-            />
+            <ReuseButton
+              variant="secondary"
+              className="!w-fit"
+              onClick={showAddModal}
+            >
+              <FaPlus className="mr-2" />
+              Add Gear
+            </ReuseButton>
           </div>
         </div>
         <div className="flex justify-end mb-5">
-          <ReuseButton
-            variant="secondary"
-            className="!w-fit"
-            onClick={showAddModal}
-          >
-            Add Gear
-          </ReuseButton>
+          <SearchInput placeholder="Search ..." />
         </div>
         <GearMarketPlaceTable
-          data={itemData}
+          data={myGears}
           loading={false}
           showViewModal={showViewUserModal}
           showEditModal={showEditModal}
           showDeleteModal={showDeleteModal}
-          setPage={setPage}
           page={page}
-          total={itemData?.length}
+          total={totalData}
           limit={limit}
         />
         <GearMarketViewModal
@@ -107,17 +114,19 @@ const GearMarketplacePage = () => {
         <GearMarketPlaceAddNewGear
           isAddModalVisible={isAddModalVisible}
           handleCancel={handleCancel}
+          categories={categories}
         />
         <GearMarketPlaceEditNewGear
           isEditModalVisible={isEditModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
+          categories={categories}
         />
         <DeleteModal
           isDeleteModalVisible={isDeleteModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
-          handleDelete={() => {}}
+          handleDelete={handleDelete}
         />
       </div>
     </div>

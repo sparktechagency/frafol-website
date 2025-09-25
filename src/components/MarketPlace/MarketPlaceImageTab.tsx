@@ -7,6 +7,10 @@ import { AllImages } from "../../../public/assets/AllImages";
 const MarketPlaceImageTab = ({ images }: { images: string[] }) => {
   const [selectedImage, setSelectedImage] = React.useState(images[0]);
 
+  React.useEffect(() => {
+    setSelectedImage(images[0]);
+  }, [images]);
+
   const serverurl = getServerUrl();
   return (
     <div className="flex gap-4">

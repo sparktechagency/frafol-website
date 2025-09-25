@@ -4,20 +4,62 @@ import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
 import ReuseSelect from "@/components/ui/Form/ReuseSelect";
 import ReuseUpload from "@/components/ui/Form/ReuseUpload";
+import { addNewGear } from "@/services/GearService/GearServiceApi";
+import { ICategory } from "@/types";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { Form, Modal } from "antd";
 import React from "react";
 
 const GearMarketPlaceAddNewGear = ({
   isAddModalVisible,
   handleCancel,
+  categories,
 }: {
   isAddModalVisible: boolean;
   handleCancel: () => void;
+  categories: ICategory[];
 }) => {
   const [form] = Form.useForm();
 
-  const onSubmit = (values: any) => {
-    console.log(values);
+  const onSubmit = async (values: any) => {
+    const formData = new FormData();
+
+    const data = {
+      name: values.name,
+      categoryId: values.categoryId,
+      price: Number(values.price),
+      description: values.description,
+      condition: values.condition,
+      shippingCompany: {
+        name: values.shippingCompany,
+        price: Number(values.shippingPrice),
+      },
+      vatAmount: values.VATAmount || 0,
+      extraInformation: values.extraInformation || "",
+    };
+
+    formData.append("data", JSON.stringify(data));
+
+    if (values.image) {
+      values?.image?.forEach((file: any) => {
+        formData.append("gallery", file?.originFileObj);
+      });
+    }
+
+    const res = await tryCatchWrapper(
+      addNewGear,
+      { body: formData },
+      "Adding new gear...",
+      "New gear added successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    // console.log("Add New Gear Response:", res);
+
+    if (res?.success) {
+      form.resetFields();
+      handleCancel();
+    }
   };
   return (
     <Modal
@@ -45,29 +87,29 @@ const GearMarketPlaceAddNewGear = ({
               labelClassName="!font-semibold"
             />
             <ReuseSelect
-              name="category"
+              name="categoryId"
               label="Product Category"
               placeholder="Select Category"
               rules={[{ required: true, message: "Category is required" }]}
               labelClassName="!font-semibold"
-              options={[
-                { label: "Camera", value: "camera" },
-                { label: "Lens", value: "lens" },
-                { label: "Tripod", value: "tripod" },
-                { label: "Lighting", value: "lighting" },
-              ]}
+              options={categories?.map((category) => ({
+                label: category?.title,
+                value: category?._id,
+              }))}
             />
             <ReuseInput
               name="price"
               label="Item Price"
               placeholder="Enter Item Price"
+              type="number"
               rules={[{ required: true, message: "Item Price is required" }]}
               labelClassName="!font-semibold"
             />
             <ReuseInput
-              name="VATAmount "
+              name="VATAmount"
               label="VAT Amount % (optional) "
               placeholder="Enter VAT Amount"
+              type="number"
               labelClassName="!font-semibold"
             />
             <ReuseInput
@@ -102,6 +144,7 @@ const GearMarketPlaceAddNewGear = ({
             <ReuseInput
               name="shippingPrice"
               label="Shipping Price"
+              type="number"
               placeholder="Enter Shipping Price"
               rules={[
                 { required: true, message: "Shipping Price is required" },
@@ -115,7 +158,7 @@ const GearMarketPlaceAddNewGear = ({
               name="image"
               buttonText="Upload Image"
               accept="image/png, image/jpeg"
-              maxCount={1}
+              maxCount={5}
               labelClassName="!font-semibold"
             />
             <ReuseInput

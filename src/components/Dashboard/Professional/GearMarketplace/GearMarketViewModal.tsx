@@ -1,25 +1,23 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "antd";
-import Image from "next/image";
-import { AllImages } from "../../../../../public/assets/AllImages";
+import { IGear } from "@/types";
+import MarketPlaceImageTab from "@/components/MarketPlace/MarketPlaceImageTab";
 
 interface GearMarketViewModalProps {
   isViewModalVisible: boolean;
   handleCancel: () => void;
-  currentRecord: any | null;
+  currentRecord: IGear | null;
 }
 const GearMarketViewModal: React.FC<GearMarketViewModalProps> = ({
   isViewModalVisible,
   handleCancel,
   currentRecord,
 }) => {
-  console.log(`Current Record in Modal:`, currentRecord);
   return (
     <Modal
       open={isViewModalVisible}
       onCancel={handleCancel}
       footer={null}
-      className="lg:!w-[600px]"
+      className="lg:!w-[1000px]"
     >
       <div className="p-5 text-[#1a1a1a]">
         <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-5">
@@ -27,21 +25,74 @@ const GearMarketViewModal: React.FC<GearMarketViewModalProps> = ({
         </h3>
 
         <div>
-          <Image
-            src={AllImages?.product}
-            alt="Item"
-            className="rounded h-40 w-auto mb-4"
-          />
-          <div className="mb-3">
-            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold mb-2">
-              {`${currentRecord?.name} - (${currentRecord?.condition})`}
-            </p>
-            <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium">
-              {currentRecord?.category}
-            </p>
-            <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium">
-              {currentRecord?.price}
-            </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="p-2 rounded border border-[#E1E1E1]">
+              <h3 className="text-xs sm:text-sm lg:text-base xl:text-lg font-bold mb-5">
+                Gear Information
+              </h3>
+
+              <div>
+                <h4 className="text-xs sm:text-sm lg:text-base font-medium mb-1">
+                  Product Name
+                </h4>
+                <p className="text-xs sm:text-sm lg:text-base bg-zinc-100 p-2 rounded mb-5">
+                  {currentRecord?.name}
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-xs sm:text-sm lg:text-base font-medium mb-1">
+                  Product Category
+                </h4>
+                <p className="text-xs sm:text-sm lg:text-base bg-zinc-100 p-2 rounded mb-5">
+                  {currentRecord?.categoryId?.title}
+                </p>
+              </div>
+              <div>
+                <h4 className="text-xs sm:text-sm lg:text-base font-medium mb-1">
+                  Product Price
+                </h4>
+                <p className="text-xs sm:text-sm lg:text-base bg-zinc-100 p-2 rounded mb-5">
+                  €{currentRecord?.price}
+                </p>
+              </div>
+              <div>
+                <h4 className="text-xs sm:text-sm lg:text-base font-medium mb-1">
+                  Condition
+                </h4>
+                <p className="text-xs sm:text-sm lg:text-base bg-zinc-100 p-2 rounded mb-5">
+                  {currentRecord?.condition}
+                </p>
+              </div>
+              <div>
+                <h4 className="text-xs sm:text-sm lg:text-base font-medium mb-1">
+                  Shipping Details
+                </h4>
+                <p className="text-xs sm:text-sm lg:text-base bg-zinc-100 p-2 rounded mb-5">
+                  {currentRecord?.shippingCompany?.name} - €
+                  {currentRecord?.shippingCompany?.price}
+                </p>
+              </div>
+              <div>
+                <h4 className="text-xs sm:text-sm lg:text-base font-medium mb-1">
+                  Description
+                </h4>
+                <p className="text-xs sm:text-sm lg:text-base bg-zinc-100 p-2 rounded mb-5">
+                  {currentRecord?.description}
+                </p>
+              </div>
+            </div>
+            <div className="p-2 rounded border border-[#E1E1E1]">
+              <MarketPlaceImageTab images={currentRecord?.gallery || []} />
+              <div>
+                <h4 className="text-xs sm:text-sm lg:text-base font-medium mb-1 mt-5">
+                  Extra Information
+                </h4>
+                <p className="text-xs sm:text-sm lg:text-base bg-zinc-100 p-2 rounded mb-5">
+                  {currentRecord?.extraInformation}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

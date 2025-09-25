@@ -4,8 +4,9 @@ import { Space, Tooltip } from "antd";
 import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
 import Image from "next/image";
-import { AllImages } from "../../../../public/assets/AllImages";
 import { MdDelete, MdEdit } from "react-icons/md";
+import { getServerUrl } from "@/helpers/config/envConfig";
+import { AllImages } from "../../../../public/assets/AllImages";
 
 // Define the type for the props
 interface GearMarketPlaceTableProps {
@@ -14,10 +15,9 @@ interface GearMarketPlaceTableProps {
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showDeleteModal: (record: any) => void; // Optional function to handle adding a new item
   showEditModal: (record: any) => void; // Optional function to handle editing
-  setPage?: (page: number) => void; // Function to handle pagination
-  page?: number;
-  total?: number;
-  limit?: number;
+  page: number;
+  total: number;
+  limit: number;
 }
 
 const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
@@ -26,28 +26,30 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
   showViewModal,
   showDeleteModal,
   showEditModal,
-  setPage,
   page,
   total,
   limit,
 }) => {
+  const serverUrl = getServerUrl();
   const columns = [
     {
       title: "ID",
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "_id",
+      key: "_id",
+      render: (_: unknown, __: unknown, index: number) =>
+        page * limit - limit + index + 1,
     },
     {
       title: "Item Image",
-      dataIndex: "image",
-      key: "image",
-      render: () => (
+      dataIndex: "gallery",
+      key: "gallery",
+      render: (text: string[]) => (
         <Image
-          src={AllImages?.product}
+          src={text?.[0] ? serverUrl + text[0] : AllImages.dummyCover?.src}
           alt="Item"
           width={50}
           height={50}
-          className="rounded"
+          className="rounded w-10 h-10 object-cover"
         />
       ),
     },
@@ -58,8 +60,8 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
     },
     {
       title: "Item Category",
-      dataIndex: "category",
-      key: "category",
+      dataIndex: ["categoryId", "title"],
+      key: "categoryId",
     },
     {
       title: "Item Price",
@@ -70,6 +72,7 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       title: "Condition",
       dataIndex: "condition",
       key: "condition",
+      render: (text: string) => <span className="capitalize">{text}</span>,
     },
     {
       title: "Status",
@@ -87,12 +90,12 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
     },
     {
       title: "Shipping Company",
-      dataIndex: "shippingCompany",
+      dataIndex: ["shippingCompany", "name"],
       key: "shippingCompany",
     },
     {
       title: "Shipping Price",
-      dataIndex: "shippingPrice",
+      dataIndex: ["shippingCompany", "price"],
       key: "shippingPrice",
     },
     {
@@ -101,8 +104,12 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       key: "approvalStatus",
       render: (status: string) => (
         <span
-          className={`text-sm font-semibold ${
-            status === "Approved" ? "text-green-600" : "text-yellow-500"
+          className={`text-sm font-semibold capitalize ${
+            status === "approved"
+              ? "text-green-600"
+              : status === "rejected"
+              ? "text-red-500"
+              : "text-yellow-500"
           }`}
         >
           {status}
@@ -150,11 +157,10 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       columns={columns}
       data={data}
       loading={loading}
-      setPage={setPage}
       total={total}
       limit={limit}
       page={page}
-      keyValue={"email"}
+      keyValue={"_id"}
     />
   );
 };

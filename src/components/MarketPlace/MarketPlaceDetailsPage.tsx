@@ -14,19 +14,15 @@ const MarketPlaceDetailsPage = ({ data }: { data: IGear }) => {
       title: "Shipping",
       content: (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {data?.shippingCompany?.map((item, i) => {
-            return (
-              <div key={i} className="bg-zinc-200 p-4 rounded-lg">
-                <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl ">
-                  {item?.name}
-                  {" - "}
-                  <span className="text-secondary-color font-bold">
-                    ${item?.price}
-                  </span>
-                </p>
-              </div>
-            );
-          })}
+          <div className="bg-zinc-200 p-4 rounded-lg">
+            <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl ">
+              {data?.shippingCompany?.name}
+              {" - "}
+              <span className="text-secondary-color font-bold">
+                ${data?.shippingCompany?.price}
+              </span>
+            </p>
+          </div>
         </div>
       ),
     },

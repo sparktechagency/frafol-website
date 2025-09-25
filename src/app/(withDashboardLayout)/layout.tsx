@@ -18,7 +18,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
           <SideBar />
           <Layout className="!bg-[#F9FAFB]">
             <Header
-              className="!m-0 !py-0 !px-2 !w-full"
+              className="!m-0 !py-0 !px-4 !w-fit lg:!sticky lg:!top-16 lg:!z-50 !bg-[#F9FAFB]"
               style={{
                 background: "#F9FAFB",
                 position: "sticky",
@@ -30,7 +30,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
               <SidebarCollapsedIcon />
             </Header>
             <Content>
-              <div className=" px-2 xl:px-5 py-4 xl:py-5 min-h-[200vh]">
+              <div className="min-h-[86vh] w-[90%] mx-auto !pb-10">
                 {children}
               </div>
             </Content>

@@ -5,8 +5,10 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["images.unsplash.com", "10.10.10.32"],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
+  experimental: {
+    serverActions: {
+      bodySizeLimit: 10 * 1024 * 1024, // 10 MB in bytes
+    },
   },
 };
 

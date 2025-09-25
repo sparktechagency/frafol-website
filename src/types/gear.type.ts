@@ -23,7 +23,7 @@ interface IGear {
   description: string;
   condition: "new" | "used"; // You can use union types if there are specific conditions
   gallery: string[]; // Array of image URLs
-  shippingCompany: IGearShippingCompany[];
+  shippingCompany: IGearShippingCompany;
   extraInformation: string;
   approvalStatus: "approved" | "pending" | "rejected"; // Union type for status
   isDeleted: boolean;

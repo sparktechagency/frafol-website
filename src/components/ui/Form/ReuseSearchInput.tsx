@@ -2,26 +2,34 @@
 import React, { ChangeEvent } from "react";
 import ReuseInput from "./ReuseInput";
 import { SearchOutlined } from "@ant-design/icons";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface SearchInputProps {
   placeholder: string;
-  setSearch: (value: string) => void;
-  setPage: (page: number) => void;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({
-  placeholder,
-  setSearch,
-  setPage,
-}) => {
+const SearchInput: React.FC<SearchInputProps> = ({ placeholder }) => {
+  const searchParams = useSearchParams();
+  const pathName = usePathname();
+  const router = useRouter();
+  const { replace } = router;
+
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setPage(1);
     debounceSearch(e.target.value);
   };
 
   const debounceSearch = debounce((value: string) => {
-    setSearch(value);
-  }, 500);
+    const text = value;
+    const params = new URLSearchParams(searchParams);
+    if (text) {
+      params.set("search", text);
+      params.set("page", "1");
+    } else {
+      params.delete("search");
+    }
+
+    replace(`${pathName}?${params.toString()}`, { scroll: false });
+  }, 200);
 
   function debounce<T extends (...args: any[]) => void>(
     this: void, // Explicitly type `this` as `void`
@@ -34,7 +42,6 @@ const SearchInput: React.FC<SearchInputProps> = ({
       timeout = setTimeout(() => func(...args), wait); // Use spread operator for arguments
     };
   }
-
   return (
     <div className="flex gap-4 items-center">
       <ReuseInput
