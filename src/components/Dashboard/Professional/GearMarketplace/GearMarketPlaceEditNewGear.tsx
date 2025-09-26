@@ -192,6 +192,13 @@ const GearMarketPlaceEditNewGear = ({
               accept="image/png, image/jpeg"
               maxCount={5}
               labelClassName="!font-semibold"
+              rules={[
+                {
+                  required:
+                    currentRecord?.gallery?.length === deletedImages?.length,
+                  message: "Image is required",
+                },
+              ]}
             />
             <div className="my-4 flex gap-1 flex-wrap items-start justify-start">
               {finalGallery?.map((img: string, index: number) => (

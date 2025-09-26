@@ -64,7 +64,7 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       key: "categoryId",
     },
     {
-      title: "Item Price",
+      title: "Item Price (€)",
       dataIndex: "price",
       key: "price",
     },
@@ -74,27 +74,27 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       key: "condition",
       render: (text: string) => <span className="capitalize">{text}</span>,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status: string) => (
-        <span
-          className={`text-sm font-medium ${
-            status === "In Stock" ? "text-blue-600" : "text-red-500"
-          }`}
-        >
-          {status}
-        </span>
-      ),
-    },
+    // {
+    //   title: "Status",
+    //   dataIndex: "status",
+    //   key: "status",
+    //   render: (status: string) => (
+    //     <span
+    //       className={`text-sm font-medium ${
+    //         status === "In Stock" ? "text-blue-600" : "text-red-500"
+    //       }`}
+    //     >
+    //       {status}
+    //     </span>
+    //   ),
+    // },
     {
       title: "Shipping Company",
       dataIndex: ["shippingCompany", "name"],
       key: "shippingCompany",
     },
     {
-      title: "Shipping Price",
+      title: "Shipping Price (€)",
       dataIndex: ["shippingCompany", "price"],
       key: "shippingPrice",
     },
@@ -107,12 +107,16 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
           className={`text-sm font-semibold capitalize ${
             status === "approved"
               ? "text-green-600"
-              : status === "rejected"
+              : status === "cancelled"
               ? "text-red-500"
               : "text-yellow-500"
           }`}
         >
-          {status}
+          {status === "approved"
+            ? "Approved"
+            : status === "cancelled"
+            ? "Rejected"
+            : "Pending"}
         </span>
       ),
     },

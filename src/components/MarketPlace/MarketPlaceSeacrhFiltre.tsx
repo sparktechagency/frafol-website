@@ -8,6 +8,7 @@ import { Typography } from "antd";
 import ReuseButton from "../ui/Button/ReuseButton";
 import ReuseSelect from "../ui/Form/ReuseSelect";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import ReusableForm from "../ui/Form/ReuseForm";
 
 const MarketPlaceSeacrhFiltre = () => {
   const searchParams = useSearchParams();
@@ -55,6 +56,28 @@ const MarketPlaceSeacrhFiltre = () => {
       setHeight(0);
     }
   }, [filter]);
+
+  const handleFinish = (values: any) => {
+    const params = new URLSearchParams(searchParams);
+    if (values.min) {
+      params.set("min", values.min);
+    } else {
+      params.delete("min");
+    }
+    if (values.max) {
+      params.set("max", values.max);
+    } else {
+      params.delete("max");
+    }
+    if (values.condition) {
+      params.set("condition", values.condition);
+    } else {
+      params.delete("condition");
+    }
+    replace(`${pathName}?${params.toString()}`, { scroll: false });
+
+    setFilter(false);
+  };
   return (
     <div>
       <ReuseInput
@@ -81,38 +104,7 @@ const MarketPlaceSeacrhFiltre = () => {
           }}
           className="absolute top-0 w-full bg-primary-color rounded-md shadow"
         >
-          <div className="w-full p-4">
-            <ReuseSelect
-              name="category"
-              label="Category"
-              placeholder="Category"
-              options={[
-                {
-                  value: "Cameras",
-                  label: "Cameras",
-                },
-                {
-                  value: "Lenses",
-                  label: "Lenses",
-                },
-                {
-                  value: "Tripods",
-                  label: "Tripods",
-                },
-                {
-                  value: "Gimbals",
-                  label: "Gimbals",
-                },
-                {
-                  value: "Lights",
-                  label: "Lights",
-                },
-                {
-                  value: "Audio",
-                  label: "Audio",
-                },
-              ]}
-            />
+          <ReusableForm handleFinish={handleFinish} className="w-full !p-4">
             <Typography.Title
               level={5}
               className="!text-base-color !font-normal"
@@ -129,22 +121,27 @@ const MarketPlaceSeacrhFiltre = () => {
               placeholder="Condition"
               options={[
                 {
+                  value: "all",
+                  label: "All",
+                },
+                {
                   value: "New",
                   label: "New",
                 },
                 {
-                  value: "Used",
+                  value: "used",
                   label: "Used",
                 },
               ]}
             />
             <ReuseButton
+              htmlType="submit"
               variant="secondary"
               className="w-full !text-sm sm:!text-sm lg:!text-base"
             >
               Apply Filters
             </ReuseButton>
-          </div>
+          </ReusableForm>
         </div>
       </div>
     </div>
