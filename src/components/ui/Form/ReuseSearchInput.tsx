@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import ReuseInput from "./ReuseInput";
 import { SearchOutlined } from "@ant-design/icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Form } from "antd";
 
 interface SearchInputProps {
   placeholder: string;
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({ placeholder }) => {
+  const [form] = Form.useForm();
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const router = useRouter();
@@ -42,16 +44,27 @@ const SearchInput: React.FC<SearchInputProps> = ({ placeholder }) => {
       timeout = setTimeout(() => func(...args), wait); // Use spread operator for arguments
     };
   }
+
+  useEffect(() => {
+    const text = searchParams.get("search");
+    if (text) {
+      form.setFieldsValue({ search: text });
+    } else {
+      form.resetFields();
+    }
+  }, [searchParams, form]);
   return (
     <div className="flex gap-4 items-center">
-      <ReuseInput
-        name="search"
-        type="text"
-        placeholder={placeholder}
-        onChange={handleSearch}
-        inputClassName="!bg-primary-color !text-base-color !border-[#E1E1E1]"
-        prefix={<SearchOutlined className="text-[#667185] text-xl mr-2" />}
-      />
+      <Form form={form}>
+        <ReuseInput
+          name="search"
+          type="text"
+          placeholder={placeholder}
+          onChange={handleSearch}
+          inputClassName="!bg-primary-color !text-base-color !border-[#E1E1E1]"
+          prefix={<SearchOutlined className="text-[#667185] text-xl mr-2" />}
+        />
+      </Form>
     </div>
   );
 };

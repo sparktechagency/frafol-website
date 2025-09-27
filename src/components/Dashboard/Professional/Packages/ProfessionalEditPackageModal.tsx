@@ -4,23 +4,101 @@ import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
 import ReuseSelect from "@/components/ui/Form/ReuseSelect";
 import ReuseUpload from "@/components/ui/Form/ReuseUpload";
+import { getServerUrl } from "@/helpers/config/envConfig";
+import { IPackage, ISignInUser } from "@/types";
 import { Form, Modal } from "antd";
+import Image from "next/image";
 import React from "react";
+import { AllImages } from "../../../../../public/assets/AllImages";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { updatePackage } from "@/services/PackageService/PackageServiceApi";
 
 const ProfessionalEditPackageModal = ({
   isEditModalVisible,
   handleCancel,
   currentRecord,
+  userData,
 }: {
   isEditModalVisible: boolean;
   handleCancel: () => void;
-  currentRecord: any | null;
+  currentRecord: IPackage | null;
+  userData: ISignInUser;
 }) => {
-  console.log(`Current Record in Edit Modal:`, currentRecord);
+  const serverUrl = getServerUrl();
+
   const [form] = Form.useForm();
 
-  const onSubmit = (values: any) => {
-    console.log(values);
+  const categoryOptions =
+    userData?.role === "both"
+      ? [
+          {
+            label: "Photography",
+            value: "photography",
+          },
+          {
+            label: "Videography",
+            value: "videography",
+          },
+        ]
+      : userData?.role === "photographer"
+      ? [
+          {
+            label: "Photography",
+            value: "photography",
+          },
+        ]
+      : userData?.role === "videographer"
+      ? [
+          {
+            label: "Videography",
+            value: "videography",
+          },
+        ]
+      : [];
+
+  React.useEffect(() => {
+    if (currentRecord) {
+      form.setFieldsValue({
+        title: currentRecord?.title,
+        description: currentRecord?.description,
+        price: currentRecord?.price,
+        category: currentRecord?.category,
+        duration: currentRecord?.duration,
+        vatAmount: currentRecord?.vatAmount,
+      });
+    }
+  }, [currentRecord, form]);
+
+  const onSubmit = async (values: any) => {
+    const formData = new FormData();
+
+    const data = {
+      title: values.title,
+      description: values.description,
+      price: Number(values.price),
+      category: values.category,
+      vatAmount: Number(values.vatAmount) || 0,
+      duration: Number(values.duration),
+    };
+
+    formData.append("data", JSON.stringify(data));
+
+    if (values?.image?.[0]?.originFileObj) {
+      formData.append("image", values?.image?.[0]?.originFileObj);
+    }
+
+    const res = await tryCatchWrapper(
+      updatePackage,
+      { body: formData, params: currentRecord?._id },
+      "Adding new package...",
+      "Package added successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    if (res?.success) {
+      form.resetFields();
+      handleCancel();
+    }
   };
   return (
     <Modal
@@ -57,41 +135,42 @@ const ProfessionalEditPackageModal = ({
         />
 
         <ReuseSelect
-          name="role"
+          name="category"
           label="Select Category"
           placeholder="Select Category"
           rules={[{ required: true, message: "Category is required" }]}
           labelClassName="!font-semibold"
-          options={[
-            { label: "Photography", value: "photography" },
-            { label: "Videography", value: "videography" },
-          ]}
+          options={categoryOptions}
         />
         <ReuseInput
           name="price"
           label="Package Price"
           placeholder="Enter Package Price"
+          type="number"
           rules={[{ required: true, message: "Package Price is required" }]}
           labelClassName="!font-semibold"
         />
         <ReuseInput
-          name="VATAmount "
+          name="vatAmount"
           label="VAT Amount % (optional) "
           placeholder="Enter VAT Amount"
+          type="number"
           labelClassName="!font-semibold"
         />
-
         <ReuseSelect
-          name="deliveryTime"
+          name="duration"
           label="Delivery Time (Weekly)"
           placeholder="Select Delivery Time"
           rules={[{ required: true, message: "Delivery Time is required" }]}
           labelClassName="!font-semibold"
           options={[
-            { label: "1", value: "1 Week" },
-            { label: "2", value: "2 Weeks" },
-            { label: "3", value: "3 Weeks" },
-            { label: "4", value: "4 Weeks" },
+            { label: "1 Week", value: 7 },
+            { label: "2 Weeks", value: 14 },
+            { label: "3 Weeks", value: 21 },
+            { label: "4 Weeks", value: 28 },
+            { label: "5 Weeks", value: 35 },
+            { label: "6 Weeks", value: 42 },
+            { label: "7 Weeks", value: 49 },
           ]}
         />
 
@@ -103,6 +182,20 @@ const ProfessionalEditPackageModal = ({
           maxCount={1}
           labelClassName="!font-semibold"
         />
+
+        <div>
+          <p>Current Image:</p>
+          <Image
+            src={
+              (currentRecord?.thumbnailImage &&
+                serverUrl + currentRecord?.thumbnailImage) ||
+              AllImages.dummyCover.src
+            }
+            width={100}
+            height={100}
+            alt="image"
+          />
+        </div>
 
         <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
           Update Package

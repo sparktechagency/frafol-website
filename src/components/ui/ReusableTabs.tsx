@@ -15,6 +15,7 @@ type ReusableTabsProps<T extends string> = {
   tabs: Tab<T>[];
   activeTab: T;
   align?: "left" | "center" | "right";
+  resetPage?: boolean;
   tabContentStyle?: string;
 };
 
@@ -22,6 +23,7 @@ const ReusableTabs = <T extends string>({
   tabs,
   activeTab,
   align = "center",
+  resetPage = false,
   tabContentStyle = "",
 }: ReusableTabsProps<T>) => {
   const tabRowRef = useRef<HTMLDivElement | null>(null);
@@ -66,6 +68,10 @@ const ReusableTabs = <T extends string>({
     const params = new URLSearchParams(searchParams);
     if (text) {
       params.set("tab", text);
+      if (resetPage) {
+        params.set("page", "1");
+        params.delete("search");
+      }
     } else {
       params.delete("tab");
     }

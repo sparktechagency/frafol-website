@@ -1,38 +1,50 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import SearchInput from "@/components/ui/Form/ReuseSearchInput";
 import DeleteModal from "@/components/ui/Modal/DeleteModal";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import ProfessionalAddNewPackageModal from "./ProfessionalAddNewPackageModal";
 import ProfessionalEditPackageModal from "./ProfessionalEditPackageModal";
 import ProfessionalPackageCard from "./ProfessionalPackageCard";
 import ReusableTabs from "@/components/ui/ReusableTabs";
+import PaginationSection from "@/components/shared/PaginationSection";
+import { IPackage, ISignInUser } from "@/types";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { deletePackage } from "@/services/PackageService/PackageServiceApi";
 
-const PackagesPage = () => {
-  const [activeTab, setActiveTab] = useState<"Active" | "Pending">("Active");
-
-  const [page, setPage] = useState(1);
-
-  const [searchText, setSearchText] = useState("");
-
-  const limit = 12;
+const PackagesPage = ({
+  tab,
+  searchText,
+  page,
+  limit,
+  packages,
+  totalData,
+  userData,
+}: {
+  tab: string;
+  searchText: string;
+  page: number;
+  limit: number;
+  packages: IPackage[];
+  totalData: number;
+  userData: ISignInUser;
+}) => {
   console.log("Search Text:", searchText, "Page:", page, "Limit:", limit);
 
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [currentRecord, setCurrentRecord] = useState<any | null>(null);
+  const [currentRecord, setCurrentRecord] = useState<IPackage | null>(null);
 
   const showAddModal = () => {
     setIsAddModalVisible(true);
   };
-  const showEditModal = (record: any) => {
+  const showEditModal = (record: IPackage) => {
     setIsEditModalVisible(true);
     setCurrentRecord(record);
   };
 
-  const showDeleteModal = (record: any) => {
+  const showDeleteModal = (record: IPackage) => {
     setIsDeleteModalVisible(true);
     setCurrentRecord(record);
   };
@@ -44,6 +56,25 @@ const PackagesPage = () => {
     setCurrentRecord(null);
   };
 
+  console.log("currentRecord", currentRecord);
+
+  const handleDelete = async (record: IPackage) => {
+    if (record) {
+      console.log("record", record?._id);
+      const res = await tryCatchWrapper(
+        deletePackage,
+        { params: record?._id },
+        "Deleting Package...",
+        "Package deleted successfully!",
+        "Something went wrong! Please try again."
+      );
+
+      if (res?.success) {
+        handleCancel();
+      }
+    }
+  };
+
   return (
     <div>
       <div className=" w-full p-4   rounded-tl-xl rounded-tr-xl">
@@ -51,68 +82,80 @@ const PackagesPage = () => {
           <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-5">
             Packages
           </h1>
-          <SearchInput
-            placeholder="Search ..."
-            setSearch={setSearchText}
-            setPage={setPage}
-          />
+          <ReuseButton
+            variant="secondary"
+            className="!w-fit"
+            onClick={showAddModal}
+          >
+            Add New Package
+          </ReuseButton>
         </div>
       </div>
       <div className="flex justify-end mb-5">
-        <ReuseButton
-          variant="secondary"
-          className="!w-fit"
-          onClick={showAddModal}
-        >
-          Add New Package
-        </ReuseButton>
+        <SearchInput placeholder="Search ..." />
       </div>
       <ReusableTabs
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
+        activeTab={tab}
+        resetPage={true}
         align="left"
         tabs={[
           {
             label: "Active",
-            value: "Active",
+            value: "approved",
             content: (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <ProfessionalPackageCard
-                  showDeleteModal={showDeleteModal}
-                  showEditModal={showEditModal}
-                />
+                {packages?.map((item) => (
+                  <ProfessionalPackageCard
+                    key={item._id}
+                    item={item}
+                    showDeleteModal={showDeleteModal}
+                    showEditModal={showEditModal}
+                  />
+                ))}
               </div>
             ),
           },
           {
             label: "Pending",
-            value: "Pending",
+            value: "pending",
             content: (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <ProfessionalPackageCard
-                  showDeleteModal={showDeleteModal}
-                  showEditModal={showEditModal}
-                />
+                {packages?.map((item) => (
+                  <ProfessionalPackageCard
+                    key={item._id}
+                    item={item}
+                    showDeleteModal={showDeleteModal}
+                    showEditModal={showEditModal}
+                  />
+                ))}
               </div>
             ),
           },
         ]}
       />
 
+      <div className="mt-16 flex justify-center items-center">
+        <Suspense fallback={<div>Loading...</div>}>
+          <PaginationSection page={page} limit={limit} totalData={totalData} />
+        </Suspense>
+      </div>
+
       <ProfessionalAddNewPackageModal
         isAddModalVisible={isAddModalVisible}
         handleCancel={handleCancel}
+        userData={userData}
       />
       <ProfessionalEditPackageModal
         isEditModalVisible={isEditModalVisible}
         handleCancel={handleCancel}
         currentRecord={currentRecord}
+        userData={userData}
       />
       <DeleteModal
         isDeleteModalVisible={isDeleteModalVisible}
         handleCancel={handleCancel}
         currentRecord={currentRecord}
-        handleDelete={() => {}}
+        handleDelete={handleDelete}
       />
     </div>
   );

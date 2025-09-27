@@ -4,13 +4,14 @@ import React, { ChangeEvent, useEffect, useRef } from "react";
 import ReuseInput from "../ui/Form/ReuseInput";
 import { FiSearch } from "react-icons/fi";
 import { IoFilter } from "react-icons/io5";
-import { Typography } from "antd";
+import { Form, Typography } from "antd";
 import ReuseButton from "../ui/Button/ReuseButton";
 import ReuseSelect from "../ui/Form/ReuseSelect";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ReusableForm from "../ui/Form/ReuseForm";
 
 const MarketPlaceSeacrhFiltre = () => {
+  const [form] = Form.useForm();
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const router = useRouter();
@@ -24,6 +25,15 @@ const MarketPlaceSeacrhFiltre = () => {
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     debounceSearch(e.target.value);
   };
+
+  useEffect(() => {
+    form.setFieldsValue({
+      min: searchParams.get("min"),
+      max: searchParams.get("max"),
+      category: searchParams.get("category"),
+      search: searchParams.get("search"),
+    });
+  }, [searchParams, form]);
 
   const debounceSearch = debounce((value: string) => {
     const text = value;
@@ -78,72 +88,98 @@ const MarketPlaceSeacrhFiltre = () => {
 
     setFilter(false);
   };
+  const HandleReset = () => {
+    const params = new URLSearchParams(searchParams);
+
+    form.resetFields();
+
+    params.delete("search");
+    params.delete("min");
+    params.delete("max");
+    params.delete("condition");
+
+    replace(`${pathName}?${params.toString()}`, { scroll: false });
+
+    setFilter(false);
+  };
   return (
     <div>
-      <ReuseInput
-        prefix={<FiSearch className="text-base-color size-5" />}
-        suffix={
-          <IoFilter
-            onClick={() => setFilter((prev) => !prev)}
-            className="text-secondary-color size-5 cursor-pointer"
-          />
-        }
-        onChange={handleSearch}
-        name="search"
-        inputClassName="!bg-background-color !rounded-lg !text-base-color !border-none !shadow-none text-lg font-semibold !w-full lg:!w-96 !py-2.5"
-        placeholder="Search"
-        type="text"
-      />
-      <div className="relative -mt-5 z-20">
-        <div
-          ref={inputRef}
-          style={{
-            height: `${height}px`,
-            overflow: "hidden",
-            transition: "height 0.5s ease",
-          }}
-          className="absolute top-0 w-full bg-primary-color rounded-md shadow"
-        >
-          <ReusableForm handleFinish={handleFinish} className="w-full !p-4">
-            <Typography.Title
-              level={5}
-              className="!text-base-color !font-normal"
-            >
-              Price Range
-            </Typography.Title>
-            <div className="flex items-center gap-3">
-              <ReuseInput name="min" placeholder="Min" type="text" />
-              <ReuseInput name="max" placeholder="Max" type="text" />
-            </div>
-            <ReuseSelect
-              name="condition"
-              label="Condition"
-              placeholder="Condition"
-              options={[
-                {
-                  value: "all",
-                  label: "All",
-                },
-                {
-                  value: "New",
-                  label: "New",
-                },
-                {
-                  value: "used",
-                  label: "Used",
-                },
-              ]}
+      <ReusableForm
+        form={form}
+        handleFinish={handleFinish}
+        className="w-full !p-0"
+      >
+        <ReuseInput
+          prefix={<FiSearch className="text-base-color size-5" />}
+          suffix={
+            <IoFilter
+              onClick={() => setFilter((prev) => !prev)}
+              className="text-secondary-color size-5 cursor-pointer"
             />
-            <ReuseButton
-              htmlType="submit"
-              variant="secondary"
-              className="w-full !text-sm sm:!text-sm lg:!text-base"
-            >
-              Apply Filters
-            </ReuseButton>
-          </ReusableForm>
+          }
+          onChange={handleSearch}
+          name="search"
+          inputClassName="!bg-background-color !rounded-lg !text-base-color !border-none !shadow-none text-lg font-semibold !w-full lg:!w-96 !py-2.5"
+          placeholder="Search"
+          type="text"
+        />
+        <div className="relative -mt-5 z-20 ">
+          <div
+            ref={inputRef}
+            style={{
+              height: `${height}px`,
+              overflow: "hidden",
+              transition: "height 0.5s ease",
+            }}
+            className="absolute top-0 w-full bg-primary-color rounded-md shadow"
+          >
+            <div className=" !p-4">
+              <Typography.Title
+                level={5}
+                className="!text-base-color !font-normal"
+              >
+                Price Range
+              </Typography.Title>
+              <div className="flex items-center gap-3">
+                <ReuseInput name="min" placeholder="Min" type="text" />
+                <ReuseInput name="max" placeholder="Max" type="text" />
+              </div>
+              <ReuseSelect
+                name="condition"
+                label="Condition"
+                placeholder="Condition"
+                options={[
+                  {
+                    value: "all",
+                    label: "All",
+                  },
+                  {
+                    value: "New",
+                    label: "New",
+                  },
+                  {
+                    value: "used",
+                    label: "Used",
+                  },
+                ]}
+              />
+              <p
+                className="cursor-pointer text-secondary-color text-end mb-5 font-semibold !text-sm sm:!text-sm lg:!text-base"
+                onClick={HandleReset}
+              >
+                Reset
+              </p>
+              <ReuseButton
+                htmlType="submit"
+                variant="secondary"
+                className="w-full !text-sm sm:!text-sm lg:!text-base"
+              >
+                Apply Filters
+              </ReuseButton>
+            </div>
+          </div>
         </div>
-      </div>
+      </ReusableForm>
     </div>
   );
 };
