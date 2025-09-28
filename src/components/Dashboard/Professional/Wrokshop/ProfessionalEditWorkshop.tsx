@@ -1,14 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import dayjs from "dayjs";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import ReuseDatePicker from "@/components/ui/Form/ReuseDatePicker";
 import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
 import ReuseTimePicker from "@/components/ui/Form/ReuseTimePicker";
 import { Form, Modal } from "antd";
-import React, { useState } from "react";
-import type { Dayjs } from "dayjs";
+import React, { useEffect, useState } from "react";
 import ReuseSelect from "@/components/ui/Form/ReuseSelect";
 import ReuseUpload from "@/components/ui/Form/ReuseUpload";
+import { IWorkshop } from "@/types";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { updateWrokshop } from "@/services/WorkshopService/WorkshopServiceApi";
+import Image from "next/image";
+import { AllImages } from "../../../../../public/assets/AllImages";
+import { getServerUrl } from "@/helpers/config/envConfig";
 
 const ProfessionalEditWorkshop = ({
   isEditModalVisible,
@@ -17,15 +23,69 @@ const ProfessionalEditWorkshop = ({
 }: {
   isEditModalVisible: boolean;
   handleCancel: () => void;
-  currentRecord: any | null;
+  currentRecord: IWorkshop | null;
 }) => {
-  console.log(`Current Record in Edit Modal:`, currentRecord);
+  const serverUrl = getServerUrl();
   const [form] = Form.useForm();
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+  const [selectedDate, setSelectedDate] = useState<IWorkshop | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
 
-  const onSubmit = (values: any) => {
-    console.log("Submitted Values:", values);
+  useEffect(() => {
+    if (currentRecord) {
+      // Ensure both date and time are properly converted to Dayjs
+      const date = currentRecord?.date ? dayjs(currentRecord?.date) : null;
+      const time = currentRecord?.time ? dayjs(currentRecord?.time) : null;
+
+      form.setFieldsValue({
+        title: currentRecord?.title,
+        // Ensure date and time are valid before setting them
+        date: date,
+        time: time,
+        locationType: currentRecord?.locationType,
+        location: currentRecord?.location,
+        workshopLink: currentRecord?.workshopLink,
+        price: currentRecord?.price,
+        description: currentRecord?.description,
+        vatAmount: currentRecord?.vatAmount,
+      });
+    }
+  }, [currentRecord, form]);
+
+  const onSubmit = async (values: any) => {
+    const formData = new FormData();
+
+    const data = {
+      title: values.title,
+      date: values.date,
+      time: values.time,
+      locationType: values.locationType,
+      location: values.location,
+      workshopLink: values.workshopLink,
+      price: Number(values.price),
+      description: values.description,
+      vatAmount: Number(values.vatAmount) || 0,
+    };
+
+    formData.append("data", JSON.stringify(data));
+
+    if (values?.image?.[0]?.originFileObj) {
+      formData.append("image", values?.image?.[0]?.originFileObj);
+    }
+
+    const res = await tryCatchWrapper(
+      updateWrokshop,
+      { body: formData, params: currentRecord?._id },
+      "Adding new package...",
+      "Package added successfully!",
+      "Something went wrong! Please try again."
+    );
+    console.log("res", res);
+    if (res?.success) {
+      form.resetFields();
+      handleCancel();
+    }
   };
+
   return (
     <Modal
       open={isEditModalVisible}
@@ -67,7 +127,7 @@ const ProfessionalEditWorkshop = ({
 
           <ReuseTimePicker
             name="time"
-            date={selectedDate ? selectedDate.toISOString() : null}
+            date={selectedDate as any}
             label="Event Time"
             labelClassName="!font-semibold"
             rules={[{ required: true, message: "Time is required" }]}
@@ -75,23 +135,42 @@ const ProfessionalEditWorkshop = ({
             disabled={!selectedDate}
           />
           <ReuseSelect
-            name="location"
+            name="locationType"
             label="Select Location"
             placeholder="Select Location"
             rules={[{ required: true, message: "Location is required" }]}
+            value={selectedLocation}
             labelClassName="!font-semibold"
             options={[
-              { label: "online", value: "Online" },
+              { label: "Online", value: "online" },
               { label: "Offline", value: "offline" },
             ]}
+            onChange={(value) => {
+              setSelectedLocation(value);
+            }}
           />
-          <ReuseInput
-            name="eventLocation"
-            label="Event Location"
-            placeholder="Enter Event Location"
-            rules={[{ required: true, message: "Event Location is required" }]}
-            labelClassName="!font-semibold"
-          />
+          {selectedLocation === "offline" ? (
+            <ReuseInput
+              name="location"
+              label="Event Location"
+              placeholder="Enter Event Location"
+              rules={[
+                { required: true, message: "Event Location is required" },
+              ]}
+              labelClassName="!font-semibold"
+            />
+          ) : (
+            <ReuseInput
+              name="workshopLink"
+              label="Online Link"
+              placeholder="Enter Online Link"
+              type="url"
+              rules={[
+                { required: true, message: "Event Location is required" },
+              ]}
+              labelClassName="!font-semibold"
+            />
+          )}
 
           <ReuseInput
             name="price"
@@ -99,12 +178,15 @@ const ProfessionalEditWorkshop = ({
             placeholder="Enter Price"
             rules={[{ required: true, message: "Price is required" }]}
             labelClassName="!font-semibold"
+            type="number"
           />
+
           <ReuseInput
-            name="VATAmount "
+            name="vatAmount"
             label="VAT Amount % (optional) "
             placeholder="Enter VAT Amount"
             labelClassName="!font-semibold"
+            type="number"
           />
 
           <ReuseInput
@@ -124,6 +206,19 @@ const ProfessionalEditWorkshop = ({
             maxCount={1}
             labelClassName="!font-semibold"
           />
+
+          <div>
+            <p>Current Image:</p>
+            <Image
+              src={
+                (currentRecord?.image && serverUrl + currentRecord?.image) ||
+                AllImages.dummyCover.src
+              }
+              width={100}
+              height={100}
+              alt="image"
+            />
+          </div>
 
           <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
             Update Workshop

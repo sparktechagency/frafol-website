@@ -154,7 +154,7 @@ const MarketPlaceSeacrhFiltre = () => {
                     label: "All",
                   },
                   {
-                    value: "New",
+                    value: "new",
                     label: "New",
                   },
                   {

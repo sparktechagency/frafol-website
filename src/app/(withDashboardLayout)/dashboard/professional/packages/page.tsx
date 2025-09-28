@@ -34,8 +34,6 @@ const page = async ({
 
   const packages: IPackage[] = data?.data?.result || [];
 
-  console.log("packages", packages);
-
   return (
     <PackagesPage
       tab={activeTab}

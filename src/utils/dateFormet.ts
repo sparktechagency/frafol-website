@@ -28,3 +28,9 @@ export const formetDateAndTime = (date: string | Date | undefined): string => {
 
   return messageDate.format("MMM DD YYYY hh:mm A"); // Fixed: used "MMM DD YYYY"
 };
+
+export const formetTime = (date: string | Date | undefined): string => {
+  const messageDate = dayjs(date);
+
+  return messageDate.format("HH:mm"); // 24-hour format
+};

@@ -3,45 +3,56 @@
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import SearchInput from "@/components/ui/Form/ReuseSearchInput";
 import DeleteModal from "@/components/ui/Modal/DeleteModal";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 
 import ReusableTabs from "@/components/ui/ReusableTabs";
 import ProfessionalWorkshopCard from "./ProfessionalWorkshopCard";
 import ProfessionalAddNewWorkshop from "./ProfessionalAddNewWorkshop";
 import ProfessionalEditWorkshop from "./ProfessionalEditWorkshop";
 import ProfessionalViewParticipentModal from "./ProfessionalViewParticipentModal";
+import { IWorkshop } from "@/types";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { deleteWrokshop } from "@/services/WorkshopService/WorkshopServiceApi";
+import PaginationSection from "@/components/shared/PaginationSection";
 
-const ProfessionalWorkshopPage = () => {
-  const [activeTab, setActiveTab] = useState<"Active" | "Pending">("Active");
-
-  const [page, setPage] = useState(1);
-
-  const [searchText, setSearchText] = useState("");
-
-  const limit = 12;
+const ProfessionalWorkshopPage = ({
+  tab,
+  searchText,
+  page,
+  limit,
+  workshops,
+  totalData,
+}: {
+  tab: string;
+  searchText: string;
+  page: number;
+  limit: number;
+  workshops: IWorkshop[];
+  totalData: number;
+}) => {
   console.log("Search Text:", searchText, "Page:", page, "Limit:", limit);
 
-  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isViewParticipantModalVisible, setIsViewParticipantModalVisible] =
     useState(false);
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [currentRecord, setCurrentRecord] = useState<any | null>(null);
+  const [currentRecord, setCurrentRecord] = useState<IWorkshop | null>(null);
+
+  const showViewParticipantModal = (record: IWorkshop) => {
+    setCurrentRecord(record);
+    setIsViewParticipantModalVisible(true);
+  };
 
   const showAddModal = () => {
     setIsAddModalVisible(true);
   };
-  const showEditModal = (record: any) => {
+  const showEditModal = (record: IWorkshop) => {
     setIsEditModalVisible(true);
     setCurrentRecord(record);
   };
 
-  const showViewParticipantModal = (record: any) => {
-    setIsViewParticipantModalVisible(true);
-    setCurrentRecord(record);
-  };
-
-  const showDeleteModal = (record: any) => {
+  const showDeleteModal = (record: IWorkshop) => {
     setIsDeleteModalVisible(true);
     setCurrentRecord(record);
   };
@@ -54,6 +65,25 @@ const ProfessionalWorkshopPage = () => {
     setCurrentRecord(null);
   };
 
+  console.log("currentRecord", currentRecord);
+
+  const handleDelete = async (record: IWorkshop) => {
+    if (record) {
+      console.log("record", record?._id);
+      const res = await tryCatchWrapper(
+        deleteWrokshop,
+        { params: record?._id },
+        "Deleting Package...",
+        "Package deleted successfully!",
+        "Something went wrong! Please try again."
+      );
+
+      if (res?.success) {
+        handleCancel();
+      }
+    }
+  };
+
   return (
     <div>
       <div className=" w-full p-4   rounded-tl-xl rounded-tr-xl">
@@ -61,11 +91,7 @@ const ProfessionalWorkshopPage = () => {
           <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-5">
             Workshops
           </h1>
-          <SearchInput
-            placeholder="Search ..."
-            setSearch={setSearchText}
-            setPage={setPage}
-          />
+          <SearchInput placeholder="Search ..." />
         </div>
       </div>
       <div className="flex justify-end mb-5">
@@ -78,37 +104,52 @@ const ProfessionalWorkshopPage = () => {
         </ReuseButton>
       </div>
       <ReusableTabs
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
+        activeTab={tab}
+        resetPage={true}
         align="left"
         tabs={[
           {
             label: "Active",
-            value: "Active",
+            value: "approved",
             content: (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <ProfessionalWorkshopCard
-                  showDeleteModal={showDeleteModal}
-                  showEditModal={showEditModal}
-                  showViewParticipantModal={showViewParticipantModal}
-                />
+                {workshops?.map((workshop: IWorkshop) => (
+                  <ProfessionalWorkshopCard
+                    key={workshop._id}
+                    workshop={workshop}
+                    showDeleteModal={showDeleteModal}
+                    showEditModal={showEditModal}
+                    showViewParticipantModal={showViewParticipantModal}
+                  />
+                ))}
               </div>
             ),
           },
           {
             label: "Pending",
-            value: "Pending",
+            value: "pending",
             content: (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <ProfessionalWorkshopCard
-                  showDeleteModal={showDeleteModal}
-                  showEditModal={showEditModal}
-                />
+                {workshops?.map((workshop: IWorkshop) => (
+                  <ProfessionalWorkshopCard
+                    key={workshop._id}
+                    workshop={workshop}
+                    showDeleteModal={showDeleteModal}
+                    showEditModal={showEditModal}
+                    showViewParticipantModal={showViewParticipantModal}
+                  />
+                ))}
               </div>
             ),
           },
         ]}
       />
+
+      <div className="mt-16 flex justify-center items-center">
+        <Suspense fallback={<div>Loading...</div>}>
+          <PaginationSection page={page} limit={limit} totalData={totalData} />
+        </Suspense>
+      </div>
 
       <ProfessionalAddNewWorkshop
         isAddModalVisible={isAddModalVisible}
@@ -123,7 +164,7 @@ const ProfessionalWorkshopPage = () => {
         isDeleteModalVisible={isDeleteModalVisible}
         handleCancel={handleCancel}
         currentRecord={currentRecord}
-        handleDelete={() => {}}
+        handleDelete={handleDelete}
       />
       <ProfessionalViewParticipentModal
         isViewModalVisible={isViewParticipantModalVisible}
