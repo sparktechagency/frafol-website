@@ -48,6 +48,8 @@ const ProfessionalEditWorkshop = ({
         description: currentRecord?.description,
         vatAmount: currentRecord?.vatAmount,
       });
+
+      setSelectedLocation(currentRecord?.locationType);
     }
   }, [currentRecord, form]);
 

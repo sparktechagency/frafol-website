@@ -35,10 +35,12 @@ const ProfessionalPackageCard = ({
           className="w-full h-60 sm:h-40 lg:h-52 xl:h-60 object-cover rounded-lg "
         />
         <div className="flex items-center justify-between gap-2 absolute top-2  w-full px-2">
-          {item?.vatAmount > 0 && (
+          {item?.vatAmount > 0 ? (
             <span className="text-xs sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full ">
               VAT Included: {item?.vatAmount}%
             </span>
+          ) : (
+            <span></span>
           )}
           <div
             onClick={() => showDeleteModal(item)}

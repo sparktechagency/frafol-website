@@ -97,7 +97,7 @@ const ProfessionalWorkshopCard = ({
           <div className="flex items-center gap-2 mt-1">
             <FaLink className="text-secondary-color text-sm sm:text-base lg:text-lg" />
             <Link
-              href={"https://" + workshop?.workshopLink}
+              href={workshop?.workshopLink}
               target="_blank"
               className="text-xs sm:text-sm lg:text-base font-semibold !text-secondary-color"
             >

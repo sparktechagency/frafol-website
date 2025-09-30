@@ -7,65 +7,91 @@ import { LuClock } from "react-icons/lu";
 import { FaLink, FaLocationDot } from "react-icons/fa6";
 import { LuUsers } from "react-icons/lu";
 import ReuseButton from "../ui/Button/ReuseButton";
+import { IWorkshop } from "@/types";
+import { getServerUrl } from "@/helpers/config/envConfig";
+import { formatDate, formetTime } from "@/utils/dateFormet";
 
-const WorkShopsCards = ({ openModal }: any) => {
+const WorkShopsCards = ({
+  data,
+  openModal,
+}: {
+  data: IWorkshop;
+  openModal: () => void;
+}) => {
+  const serverUrl = getServerUrl();
   return (
     <div className="p-1.5 rounded-xl border border-background-color">
       <Image
         width={1000}
         height={1000}
-        src={AllImages?.workspace}
+        src={data?.image ? serverUrl + data?.image : AllImages?.dummyCover}
         alt="workspace"
         className="w-full h-80 sm:h-60 lg:h-72 xl:h-80 object-cover rounded-lg "
       />
       <div className="px-1">
         <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3">
-          Advanced Portrait Photography Workshop
+          {data?.title}
         </p>
         <div className="flex items-center gap-2 mt-3">
           <Image
             width={1000}
             height={1000}
-            src={AllImages?.dummyProfile}
-            alt="user"
+            src={
+              data?.authorId?.profileImage
+                ? serverUrl + data?.authorId?.profileImage
+                : AllImages?.dummyProfile
+            }
+            alt={data?.authorId?.name || "Profile Image"}
             className="w-8 h-8 object-cover rounded-full "
           />
           <p className="text-xs sm:text-sm lg:text-base font-bold">
-            Marek Krajč
+            {data?.authorId?.name}
           </p>
         </div>
         <div className="flex items-center gap-2 mt-2">
           <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
           <p className="text-xs sm:text-sm lg:text-base font-semibold">
-            12.12.2023
+            {formatDate(data?.date)}
           </p>
         </div>
         <div className="flex items-center gap-2 mt-1">
           <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
           <p className="text-xs sm:text-sm lg:text-base font-semibold">
-            10:00 - 12:00
+            {formetTime(data?.time)}
           </p>
         </div>
         <div className="flex items-center gap-2 mt-1">
           <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
           <p className="text-xs sm:text-sm lg:text-base font-semibold">
-            Online
+            {data?.locationType}
           </p>
         </div>
-        <div className="flex items-center gap-2 mt-1">
-          <FaLink className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-          <p className="text-xs sm:text-sm lg:text-base font-semibold">
-            www.workshop.com
-          </p>
-        </div>
+        {data?.locationType === "online" ? (
+          <div className="flex items-center gap-2 mt-1">
+            <FaLink className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+              www.workshop.com
+            </p>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2 mt-1">
+            <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+              {data?.location}
+            </p>
+          </div>
+        )}
+
         <div className="flex items-center gap-2 mt-1">
           <LuUsers className="text-secondary-color text-sm sm:text-base lg:text-lg" />
           <p className="text-xs sm:text-sm lg:text-base font-semibold">
-            10 participants
+            {data?.maxParticipant} participants
           </p>
         </div>
         <div className="flex items-center gap-2 mt-5 justify-between">
-          <p className="text-base sm:text-lg lg:text-xl font-semibold">$200</p>
+          <p className="text-base sm:text-lg lg:text-xl font-semibold">
+            {data?.price}€
+          </p>
           <ReuseButton
             variant="secondary"
             className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
