@@ -8,140 +8,11 @@ import FeaturedProfessionalsCard from "../shared/FeaturedProfessionalsCard";
 import { AllImages } from "../../../public/assets/AllImages";
 import { getServerUrl } from "@/helpers/config/envConfig";
 
-const professionals = [
-  {
-    image: AllImages.photographer1,
-    name: "Peter Novák",
-    price: "200",
-    rating: "5.0",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer2,
-    name: "Lucia Kováčová",
-    price: "250",
-    rating: "4.7",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer3,
-    name: "Tomáš Varga",
-    price: "180",
-    rating: "4.5",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer4,
-    name: "Veronika Čechová",
-    price: "100",
-    rating: "4.0",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer2,
-    name: "Lucia Kováčová",
-    price: "250",
-    rating: "4.7",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer1,
-    name: "Peter Novák",
-    price: "200",
-    rating: "5.0",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer3,
-    name: "Tomáš Varga",
-    price: "180",
-    rating: "4.5",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer4,
-    name: "Veronika Čechová",
-    price: "100",
-    rating: "4.0",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer1,
-    name: "Peter Novák",
-    price: "200",
-    rating: "5.0",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer2,
-    name: "Lucia Kováčová",
-    price: "250",
-    rating: "4.7",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer3,
-    name: "Tomáš Varga",
-    price: "180",
-    rating: "4.5",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer4,
-    name: "Veronika Čechová",
-    price: "100",
-    rating: "4.0",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer2,
-    name: "Lucia Kováčová",
-    price: "250",
-    rating: "4.7",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer1,
-    name: "Peter Novák",
-    price: "200",
-    rating: "5.0",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer3,
-    name: "Tomáš Varga",
-    price: "180",
-    rating: "4.5",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-  {
-    image: AllImages.photographer4,
-    name: "Veronika Čechová",
-    price: "100",
-    rating: "4.0",
-    profession: "Photographer",
-    address: "New York, NY",
-  },
-];
-
 const PhotographyCategoryDetails = ({
+  categories,
   data,
 }: {
+  categories: any[];
   data: { id: string; title: string | string[]; src: string | string[] };
 }) => {
   const serverUrl: string = getServerUrl() || "";
@@ -165,7 +36,7 @@ const PhotographyCategoryDetails = ({
           <PhotographyCategorySeacrhFiltre />
         </div>
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {professionals.map((item, index) => (
+          {categories?.map((item, index) => (
             <FeaturedProfessionalsCard key={index} item={item} />
           ))}
         </div>

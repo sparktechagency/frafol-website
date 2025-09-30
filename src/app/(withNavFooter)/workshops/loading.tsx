@@ -1,7 +1,7 @@
 import Container from "@/components/ui/Container";
-import ProductCardSkeleton from "@/components/ui/Skeletons/ProductCardSkeleton";
 import SearchSkeleton from "@/components/ui/Skeletons/SearchSkeleton";
 import SectionBannerSkeleton from "@/components/ui/Skeletons/SectionBannerSkeleton";
+import WorkshopCardSkeleton from "@/components/ui/Skeletons/WorkshopCardSkeleton";
 
 const SkeletonLoader = () => {
   return (
@@ -19,7 +19,7 @@ const SkeletonLoader = () => {
           {/* Grid Skeleton */}
           <div className="py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
             {[...Array(4)].map((_, index) => (
-              <ProductCardSkeleton key={index} />
+              <WorkshopCardSkeleton key={index} />
             ))}
           </div>
           {/* Footer Skeleton (if needed) */}

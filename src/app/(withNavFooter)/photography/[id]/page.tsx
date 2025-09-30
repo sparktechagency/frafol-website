@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // app/(withNavFooter)/photography/[id]/page.tsx
 
 import React from "react";
 import PhotographyCategoryDetails from "@/components/Photography/PhotographyCategoryDetails";
+import { fetchWithAuth } from "@/lib/fetchWraper";
+import TagTypes from "@/helpers/config/TagTypes";
 
 const PhotographyCategoryDetailsPage = async ({
   params,
@@ -13,19 +16,36 @@ const PhotographyCategoryDetailsPage = async ({
   const { id } = await params; // Await the params to resolve the Promise
   const paramsData = await searchParams;
 
-  const title = paramsData?.title || "";
-  const src = paramsData?.src || "";
+  const role = (paramsData?.role as string) || "";
+  const title = (paramsData?.title as string) || "";
+  const src = (paramsData?.src as string) || "";
 
-  const data: { id: string; title: string | string[]; src: string | string[] } =
+  const data: {
+    id: string;
+    role: string;
+    title: string;
+    src: string;
+  } = {
+    id,
+    role,
+    title,
+    src,
+  };
+
+  const res = await fetchWithAuth(
+    `/users/professionalsByCategory?role=${role}&categoryType=${title}`,
     {
-      id,
-      title,
-      src,
-    };
-
+      next: {
+        tags: [TagTypes.category],
+        revalidate: 0,
+      },
+    }
+  );
+  const resdata = await res.json();
+  const categories: any[] = resdata?.data?.result;
   return (
     <div>
-      <PhotographyCategoryDetails data={data} />
+      <PhotographyCategoryDetails categories={categories} data={data} />
     </div>
   );
 };
