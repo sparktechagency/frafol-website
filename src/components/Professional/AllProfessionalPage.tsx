@@ -16,7 +16,7 @@ import PaginationSection from "../shared/PaginationSection";
 
 const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const params = await searchParams;
-  const search = params?.search;
+  const search = params?.search || "";
   const role =
     params?.role === "videographer"
       ? "videographer"

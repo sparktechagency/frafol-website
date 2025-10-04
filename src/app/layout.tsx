@@ -1,9 +1,7 @@
 import "@ant-design/v5-patch-for-react-19";
-import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "sonner";
 import { ConfigProvider } from "antd";
 import { mainTheme } from "@/theme";
@@ -15,9 +13,56 @@ const nunito = Nunito({
   variable: "--font-nunito",
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Frafol",
-  description: "FRAFOL - FRAFOL",
+  template: "%s - Frafol",
+  description:
+    "Find skilled photographers and videographers, check their portfolios, and book your next shoot easily",
+  keywords: ["Frafol"],
+  openGraph: {
+    title: "Frafol",
+    description:
+      "Find skilled photographers and videographers, check their portfolios, and book your next shoot easily",
+    images: [
+      {
+        url: "./opengraph-image.png",
+        width: 1920,
+        height: 1080,
+      },
+    ],
+    url: "https://frafol-website.vercel.app/",
+    type: "website",
+    siteName: "Frafol",
+  },
+
+  index: true,
+  follow: true,
+  googleBot: {
+    index: true,
+    follow: true,
+    "max-video-preview": -1,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Frafol",
+    description:
+      "Find skilled photographers and videographers, check their portfolios, and book your next shoot easily.",
+    images: ["./opengraph-image.png"],
+    creator: "@Frafol",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    "max-video-preview": -1,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+  },
+
+  metadataBase: new URL("https://frafol-website.vercel.app/"),
 };
 
 export default function RootLayout({
@@ -31,21 +76,6 @@ export default function RootLayout({
         className={`${nunito.variable} antialiased`}
         cz-shortcut-listen="true"
       >
-        <NextTopLoader
-          color="#273D62"
-          initialPosition={0.08}
-          crawlSpeed={200}
-          height={3}
-          crawl={true}
-          showSpinner={true}
-          easing="ease-in-out"
-          speed={200}
-          shadow="0 0 10px #273D62,0 0 5px #273D62"
-          template='<div className="bar" role="bar"><div className="peg"></div></div> 
-  <div className="spinner" role="spinner"><div className="spinner-icon"></div></div>'
-          zIndex={1600}
-          showAtBottom={false}
-        />
         <Providers>
           <Toaster position="top-center" richColors />
           <AntdRegistry>

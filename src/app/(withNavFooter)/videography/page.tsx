@@ -1,6 +1,10 @@
 import VideographeyPage from "@/components/Videographey/VideographeyPage";
 import React from "react";
 
+export const metadata = {
+  title: "Frafol - Videography",
+};
+
 const page = ({
   searchParams,
 }: {

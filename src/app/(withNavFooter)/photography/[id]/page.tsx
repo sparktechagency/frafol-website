@@ -19,6 +19,7 @@ const PhotographyCategoryDetailsPage = async ({
   const role = (paramsData?.role as string) || "";
   const title = (paramsData?.title as string) || "";
   const src = (paramsData?.src as string) || "";
+  const search = (paramsData?.search as string) || "";
 
   const data: {
     id: string;
@@ -33,7 +34,7 @@ const PhotographyCategoryDetailsPage = async ({
   };
 
   const res = await fetchWithAuth(
-    `/users/professionalsByCategory?role=${role}&categoryType=${title}`,
+    `/users/professionalsByCategory?role=${role}&categoryType=${title}&searchTerm=${search}`,
     {
       next: {
         tags: [TagTypes.category],

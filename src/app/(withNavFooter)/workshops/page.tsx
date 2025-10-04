@@ -7,6 +7,10 @@ import TagTypes from "@/helpers/config/TagTypes";
 import { IWorkshop } from "@/types";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 
+export const metadata = {
+  title: "Frafol - Workshops",
+};
+
 const page = async ({
   searchParams,
 }: {

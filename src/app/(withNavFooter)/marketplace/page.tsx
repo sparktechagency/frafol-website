@@ -1,6 +1,10 @@
 import MarketPlace from "@/components/MarketPlace/MarketPlacePage";
 import React from "react";
 
+export const metadata = {
+  title: "Frafol - Photography",
+};
+
 const MarketPlacePage = ({
   searchParams,
 }: {
