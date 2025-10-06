@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { getServerUrl } from "@/helpers/config/envConfig";
 import { Image as AntdImage } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,27 +13,31 @@ interface GalleryCardProps {
   previewGroup?: boolean;
 }
 
-const GalleryCard: React.FC<GalleryCardProps> = ({
+const GalleryCard = ({
   gallery,
   showOnlyImage = false,
   arrayOfImages = false,
   photoView = false,
-}) => {
+}: GalleryCardProps) => {
+  const serverUrl = getServerUrl();
+
   const content = (
     <div className="relative group w-full">
       {photoView ? (
         <AntdImage
-          src={arrayOfImages ? gallery?.src : gallery?.image?.src}
-          alt={gallery?.name || "gallery Image"}
+          src={arrayOfImages ? serverUrl + gallery : gallery?.image}
+          alt={gallery?.name ? gallery?.name : gallery || "gallery Image"}
           className="w-full h-full object-cover rounded-lg"
         />
       ) : (
         <Image
           width={2000}
           height={2000}
-          src={arrayOfImages ? gallery : gallery.image}
-          alt={gallery?.name || "gallery Image"}
+          src={arrayOfImages ? serverUrl + gallery : gallery?.image}
+          alt={gallery?.name ? gallery?.name : gallery || "gallery Image"}
           className="w-full h-full object-cover rounded-lg"
+          fetchPriority="high"
+          priority={true}
         />
       )}
 
@@ -48,7 +53,7 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
   return (
     <div>
       {!showOnlyImage ? (
-        <Link href={"/professionals/user-1"}>{content}</Link>
+        <Link href={`/professionals/${gallery?.id}`}>{content}</Link>
       ) : (
         content
       )}

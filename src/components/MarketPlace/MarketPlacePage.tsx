@@ -11,6 +11,7 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { ICategory, IGear } from "@/types";
 import PaginationSection from "../shared/PaginationSection";
+import NoResultFound from "../shared/NoResultFound";
 
 // Let's generate 12 dummy entries (mock data like a boss 😎)
 
@@ -67,7 +68,9 @@ const MarketPlace = async ({ searchParams }: { searchParams: any }) => {
           </div>
           <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-5">
             {gear?.length <= 0 ? (
-              <h2>No results found</h2>
+              <div className="py-20 sm:col-span-2 lg:col-span-3 xl:col-span-4">
+                <NoResultFound />
+              </div>
             ) : (
               gear?.map((item, index) => (
                 <ProductCard key={index} product={item} />
@@ -76,13 +79,15 @@ const MarketPlace = async ({ searchParams }: { searchParams: any }) => {
           </div>
 
           <div className="mt-16 flex justify-center items-center">
-            <Suspense fallback={<div>Loading...</div>}>
-              <PaginationSection
-                page={page}
-                limit={limit}
-                totalData={totalData}
-              />
-            </Suspense>
+            {totalData !== 0 && (
+              <Suspense fallback={<div>Loading...</div>}>
+                <PaginationSection
+                  page={page}
+                  limit={limit}
+                  totalData={totalData}
+                />
+              </Suspense>
+            )}
           </div>
         </div>
       </Container>

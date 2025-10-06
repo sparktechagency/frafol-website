@@ -9,6 +9,7 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { ICategory } from "@/types";
 import PhotographyPageSearch from "./PhotographyPageSearch";
+import NoResultFound from "../shared/NoResultFound";
 
 const PhotographyPage = async ({ searchParams }: { searchParams: any }) => {
   const params = await searchParams;
@@ -34,16 +35,22 @@ const PhotographyPage = async ({ searchParams }: { searchParams: any }) => {
         />
         <div className="mt-16">
           <PhotographyPageSearch />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-5">
-            {filteredCategories?.map((item, index) => (
-              <Link
-                key={index}
-                href={`/photography/${item?._id}?role=photographer&title=${item?.title}&src=${item?.image}`}
-              >
-                <CategoryCard item={item} />
-              </Link>
-            ))}
-          </div>
+          {filteredCategories?.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-5">
+              {filteredCategories?.map((item, index) => (
+                <Link
+                  key={index}
+                  href={`/photography/${item?._id}?role=photographer&title=${item?.title}&src=${item?.image}`}
+                >
+                  <CategoryCard item={item} />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="py-20 sm:col-span-2 lg:col-span-3 xl:col-span-4">
+              <NoResultFound />
+            </div>
+          )}
         </div>
         <div className="flex justify-center items-center !mt-10">
           <ReuseButton

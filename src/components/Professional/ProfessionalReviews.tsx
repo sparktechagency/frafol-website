@@ -4,6 +4,7 @@ import ProfessionalReviewRating from "./ProfessionalReviewRating";
 import ProfessionalReviewsFiltre from "./ProfessionalReviewsFiltre";
 import { AllImages } from "../../../public/assets/AllImages";
 import ReviewCard from "./ProfessionalReviewCard";
+import { IProfessionalUser } from "@/types";
 
 const reviews = [
   {
@@ -56,11 +57,15 @@ const reviews = [
   },
 ];
 
-const ProfessionalReviews = () => {
+const ProfessionalReviews = ({
+  professionalUser,
+}: {
+  professionalUser: IProfessionalUser;
+}) => {
   return (
     <div id="reviews" className="mt-16">
       <SectionHeader title="Reviews" className="mb-3" />
-      <ProfessionalReviewRating />
+      <ProfessionalReviewRating professionalUser={professionalUser} />
       <ProfessionalReviewsFiltre />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mt-10">
         {reviews.map((review, idx) => (

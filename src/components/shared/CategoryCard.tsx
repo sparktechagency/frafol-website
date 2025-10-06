@@ -19,6 +19,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item }) => {
         src={serverUrl + item?.image || AllImages.dummyProfile}
         alt={item?.title || "Category Image"}
         className="w-full !h-[360px] object-cover rounded-lg"
+        fetchPriority="high"
+        priority={true}
       />
 
       <div className=" absolute inset-0 bg-gradient-to-b from-[#00000066] via-[#0000005A] to-[#000000AA] flex flex-col justify-end p-3 rounded-lg transition-all duration-300">

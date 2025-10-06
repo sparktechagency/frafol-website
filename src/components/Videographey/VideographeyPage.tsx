@@ -9,6 +9,7 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { ICategory } from "@/types";
 import PhotographyPageSearch from "../Photography/PhotographyPageSearch";
+import NoResultFound from "../shared/NoResultFound";
 
 const VideographeyPage = async ({ searchParams }: { searchParams: any }) => {
   const params = await searchParams;
@@ -36,16 +37,23 @@ const VideographeyPage = async ({ searchParams }: { searchParams: any }) => {
           <div className="flex justify-end mb-3">
             <PhotographyPageSearch />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-5">
-            {filteredCategories?.map((item, index) => (
-              <Link
-                key={index}
-                href={`/videography/${item?._id}?role=videographer&title=${item?.title}&src=${item?.image}`}
-              >
-                <CategoryCard item={item} />
-              </Link>
-            ))}
-          </div>
+
+          {filteredCategories?.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 items-stretch gap-5">
+              {filteredCategories?.map((item, index) => (
+                <Link
+                  key={index}
+                  href={`/videography/${item?._id}?role=videographer&title=${item?.title}&src=${item?.image}`}
+                >
+                  <CategoryCard item={item} />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="py-20 ">
+              <NoResultFound />
+            </div>
+          )}
         </div>
 
         <div className="flex justify-center items-center !mt-10">

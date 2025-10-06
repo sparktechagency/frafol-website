@@ -7,6 +7,7 @@ import PhotographyCategorySeacrhFiltre from "./PhotographyCategorySeacrhFiltre";
 import FeaturedProfessionalsCard from "../shared/FeaturedProfessionalsCard";
 import { AllImages } from "../../../public/assets/AllImages";
 import { getServerUrl } from "@/helpers/config/envConfig";
+import NoResultFound from "../shared/NoResultFound";
 
 const PhotographyCategoryDetails = ({
   categories,
@@ -35,11 +36,17 @@ const PhotographyCategoryDetails = ({
           </ReuseButton>
           <PhotographyCategorySeacrhFiltre />
         </div>
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {categories?.map((item, index) => (
-            <FeaturedProfessionalsCard key={index} item={item} />
-          ))}
-        </div>
+        {categories?.length > 0 ? (
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {categories?.map((item, index) => (
+              <FeaturedProfessionalsCard key={index} item={item} />
+            ))}
+          </div>
+        ) : (
+          <div className="py-20">
+            <NoResultFound title="No Photographer Available" />
+          </div>
+        )}
       </Container>
     </main>
   );

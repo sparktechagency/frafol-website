@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Container from "../ui/Container";
 import SectionHeader from "../ui/SectionHeader";
@@ -7,52 +6,64 @@ import ImageGallery from "../ui/ImageGallery";
 
 const data = [
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg1,
+    image: AllImages.categoryimg1?.src,
   },
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg2,
+    image: AllImages.categoryimg2?.src,
   },
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg3,
+    image: AllImages.categoryimg3?.src,
   },
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg4,
+    image: AllImages.categoryimg4?.src,
   },
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg5,
+    image: AllImages.categoryimg5?.src,
   },
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg6,
+    image: AllImages.categoryimg6?.src,
   },
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg7,
+    image: AllImages.categoryimg7?.src,
   },
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg8,
+    image: AllImages.categoryimg8?.src,
   },
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg9,
+    image: AllImages.categoryimg9?.src,
   },
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg10,
+    image: AllImages.categoryimg10?.src,
   },
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg11,
+    image: AllImages.categoryimg11?.src,
   },
   {
+    id: "68d0e59de28c1fc356b4916b",
     name: "Mária Černáková",
-    image: AllImages.categoryimg12,
+    image: AllImages.categoryimg12?.src,
   },
 ];
 
@@ -64,7 +75,7 @@ const TalentedProfessionalsImages = () => {
       <Container>
         <SectionHeader title="From Our Talented Professionals" />
         <div className="mt-16">
-          <ImageGallery<any>
+          <ImageGallery<{ id: string; name: string; image: string }>
             data={data}
             columnsCountBreakPoints={columnsCountBreakPoints}
           />

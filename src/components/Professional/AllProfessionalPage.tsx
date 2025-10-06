@@ -13,6 +13,7 @@ import TagTypes from "@/helpers/config/TagTypes";
 import { IProfessional } from "@/types";
 import PhotographyPageSearch from "../Photography/PhotographyPageSearch";
 import PaginationSection from "../shared/PaginationSection";
+import NoResultFound from "../shared/NoResultFound";
 
 const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const params = await searchParams;
@@ -50,12 +51,15 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
         <div className="mt-16">
           <PhotographyPageSearch />
         </div>
-
-        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {professionals?.map((item, index) => (
-            <FeaturedProfessionalsCard key={index} item={item} />
-          ))}
-        </div>
+        {professionals?.length > 0 ? (
+          <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {professionals?.map((item, index) => (
+              <FeaturedProfessionalsCard key={index} item={item} />
+            ))}
+          </div>
+        ) : (
+          <NoResultFound />
+        )}
 
         <div className="mt-16 flex justify-center items-center">
           <Suspense fallback={<div>Loading...</div>}>
