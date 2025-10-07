@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import SectionHeader from "../ui/SectionHeader";
 import ProfessionalReviewRating from "./ProfessionalReviewRating";
@@ -5,6 +6,8 @@ import ProfessionalReviewsFiltre from "./ProfessionalReviewsFiltre";
 import { AllImages } from "../../../public/assets/AllImages";
 import ReviewCard from "./ProfessionalReviewCard";
 import { IProfessionalUser } from "@/types";
+import { fetchWithAuth } from "@/lib/fetchWraper";
+import TagTypes from "@/helpers/config/TagTypes";
 
 const reviews = [
   {
@@ -57,11 +60,25 @@ const reviews = [
   },
 ];
 
-const ProfessionalReviews = ({
+const ProfessionalReviews = async ({
   professionalUser,
+  sort,
+  rating,
 }: {
   professionalUser: IProfessionalUser;
+  sort: string;
+  rating: string;
 }) => {
+  const res = await fetchWithAuth(
+    `/review/service-provider/${professionalUser?._id}?sort=${sort}&rating=${rating}`,
+    {
+      next: {
+        tags: [TagTypes.prfessional],
+      },
+    }
+  );
+  const data = await res.json();
+  const reviewss: any = data?.data;
   return (
     <div id="reviews" className="mt-16">
       <SectionHeader title="Reviews" className="mb-3" />

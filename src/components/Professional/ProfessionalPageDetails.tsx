@@ -17,8 +17,12 @@ import { getServerUrl } from "@/helpers/config/envConfig";
 
 const ProfessionalPageDetails = ({
   professionalUser,
+  sort,
+  rating,
 }: {
   professionalUser: IProfessionalUser;
+  sort: string;
+  rating: string;
 }) => {
   const serverUrl = getServerUrl();
   return (
@@ -89,7 +93,11 @@ const ProfessionalPageDetails = ({
         <ProfessionalPageDetailsMyServices
           packages={professionalUser?.package}
         />
-        <ProfessionalReviews professionalUser={professionalUser} />
+        <ProfessionalReviews
+          professionalUser={professionalUser}
+          sort={sort}
+          rating={rating}
+        />
       </Container>
     </main>
   );
