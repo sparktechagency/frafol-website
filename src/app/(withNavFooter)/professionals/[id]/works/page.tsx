@@ -10,13 +10,14 @@ const page = async ({
   params: Promise<{ id: string }>; // Type params as a Promise
 }) => {
   const { id } = await params; // Await the params to resolve the Promise
-  const res = await fetchWithAuth(`/users/${id}`, {
+  const res = await fetchWithAuth(`/users/gallery/${id}`, {
     next: {
       tags: [TagTypes.prfessional],
     },
   });
   const data = await res.json();
   const professionalUser: IProfessionalUser = data?.data;
+
   return <ProfessionalAllImages id={id} professionalUser={professionalUser} />;
 };
 

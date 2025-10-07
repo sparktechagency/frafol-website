@@ -179,3 +179,17 @@ body {
 .ant-menu-submenu-selected .ant-menu-item-selected .ant-menu-item-icon {
   color: #ad2b08 !important;
 } */
+
+.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+  background-color: #ad2b08 !important;
+  color: #ffffff !important;
+}
+
+.ant-picker-now-btn {
+  color: #ad2b08 !important;
+}
+
+.ant-picker-ok button {
+  background-color: #ad2b08 !important;
+  color: #ffffff !important;
+}
