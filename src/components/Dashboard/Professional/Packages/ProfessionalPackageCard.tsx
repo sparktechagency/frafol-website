@@ -8,6 +8,7 @@ import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { MdDelete } from "react-icons/md";
 import { IPackage } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
+import { IoCalendarOutline } from "react-icons/io5";
 
 const ProfessionalPackageCard = ({
   item,
@@ -64,7 +65,7 @@ const ProfessionalPackageCard = ({
 
         <div className="flex flex-col gap-1 mt-3">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-0.5">
+            <div className="flex items-center gap-1">
               <BsCurrencyDollar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
               <p className="text-xs sm:text-sm lg:text-base font-semibold">
                 Price:
@@ -73,14 +74,23 @@ const ProfessionalPackageCard = ({
             <p className="text-xs sm:text-sm lg:text-base">{item?.price}€</p>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-0.5">
+            <div className="flex items-center gap-1">
               <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
               <p className="text-xs sm:text-sm lg:text-base font-semibold">
                 Duration:
               </p>
             </div>
+            <p className="text-xs sm:text-sm lg:text-base">{item?.duration}</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1">
+              <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+              <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                Delivery Time:
+              </p>
+            </div>
             <p className="text-xs sm:text-sm lg:text-base">
-              {item?.duration / 7} Week
+              {item?.deliveryTime / 7} Week
             </p>
           </div>
         </div>

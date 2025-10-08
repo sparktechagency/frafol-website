@@ -12,7 +12,8 @@ interface IPackage {
   price: number;
   category: string;
   vatAmount: number;
-  duration: number;
+  duration: string;
+  deliveryTime: number;
   approvalStatus: string;
   isDeleted: boolean;
   thumbnailImage: string;

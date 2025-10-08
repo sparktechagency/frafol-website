@@ -7,7 +7,7 @@ import ReuseUpload from "@/components/ui/Form/ReuseUpload";
 import { addNewPackage } from "@/services/PackageService/PackageServiceApi";
 import { ISignInUser } from "@/types";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
-import { Form, Modal } from "antd";
+import { Form, Modal, Typography } from "antd";
 import React from "react";
 
 const ProfessionalAddNewPackageModal = ({
@@ -47,7 +47,6 @@ const ProfessionalAddNewPackageModal = ({
         ]
       : [];
 
-  console.log("userData", userData);
   const [form] = Form.useForm();
 
   const onSubmit = async (values: any) => {
@@ -59,8 +58,11 @@ const ProfessionalAddNewPackageModal = ({
       price: Number(values.price),
       category: values.category,
       vatAmount: Number(values.vatAmount) || 0,
-      duration: Number(values.duration),
+      deliveryTime: Number(values.deliveryTime),
+      duration: `${Number(values.durationUnit)} ${values.durationType}`,
     };
+
+    console.log("data", data);
 
     formData.append("data", JSON.stringify(data));
 
@@ -139,7 +141,7 @@ const ProfessionalAddNewPackageModal = ({
           labelClassName="!font-semibold"
         />
         <ReuseSelect
-          name="duration"
+          name="deliveryTime"
           label="Delivery Time (Weekly)"
           placeholder="Select Delivery Time"
           rules={[{ required: true, message: "Delivery Time is required" }]}
@@ -154,6 +156,33 @@ const ProfessionalAddNewPackageModal = ({
             { label: "7 Weeks", value: 49 },
           ]}
         />
+
+        <Typography.Title
+          level={5}
+          className="!font-semibold !text-base-color !mt-4"
+        >
+          Duration
+        </Typography.Title>
+
+        <div className="grid grid-cols-2 gap-4">
+          <ReuseInput
+            name="durationUnit"
+            placeholder="Enter Duration"
+            type="number"
+            rules={[{ required: true, message: "Duration is required" }]}
+          />
+          <ReuseSelect
+            name="durationType"
+            placeholder="Select Duration Type"
+            rules={[{ required: true, message: "Duration Type is required" }]}
+            options={[
+              { label: "Weeks", value: "Weeks" },
+              { label: "Days", value: "Days" },
+              { label: "Hours", value: "Hours" },
+              { label: "Months", value: "Months" },
+            ]}
+          />
+        </div>
 
         <ReuseUpload
           label="Upload Image"

@@ -6,7 +6,7 @@ import ReuseSelect from "@/components/ui/Form/ReuseSelect";
 import ReuseUpload from "@/components/ui/Form/ReuseUpload";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { IPackage, ISignInUser } from "@/types";
-import { Form, Modal } from "antd";
+import { Form, Modal, Typography } from "antd";
 import Image from "next/image";
 import React from "react";
 import { AllImages } from "../../../../../public/assets/AllImages";
@@ -58,13 +58,17 @@ const ProfessionalEditPackageModal = ({
 
   React.useEffect(() => {
     if (currentRecord) {
+      const durationUnit = currentRecord?.duration.split(" ")[0];
+      const durationType = currentRecord?.duration.split(" ")[1];
       form.setFieldsValue({
         title: currentRecord?.title,
         description: currentRecord?.description,
         price: currentRecord?.price,
         category: currentRecord?.category,
-        duration: currentRecord?.duration,
+        deliveryTime: currentRecord?.deliveryTime,
         vatAmount: currentRecord?.vatAmount,
+        durationUnit: durationUnit,
+        durationType: durationType,
       });
     }
   }, [currentRecord, form]);
@@ -78,7 +82,8 @@ const ProfessionalEditPackageModal = ({
       price: Number(values.price),
       category: values.category,
       vatAmount: Number(values.vatAmount) || 0,
-      duration: Number(values.duration),
+      deliveryTime: Number(values.deliveryTime),
+      duration: `${Number(values.durationUnit)} ${values.durationType}`,
     };
 
     formData.append("data", JSON.stringify(data));
@@ -158,7 +163,7 @@ const ProfessionalEditPackageModal = ({
           labelClassName="!font-semibold"
         />
         <ReuseSelect
-          name="duration"
+          name="deliveryTime"
           label="Delivery Time (Weekly)"
           placeholder="Select Delivery Time"
           rules={[{ required: true, message: "Delivery Time is required" }]}
@@ -173,6 +178,33 @@ const ProfessionalEditPackageModal = ({
             { label: "7 Weeks", value: 49 },
           ]}
         />
+
+        <Typography.Title
+          level={5}
+          className="!font-semibold !text-base-color !mt-4"
+        >
+          Duration
+        </Typography.Title>
+
+        <div className="grid grid-cols-2 gap-4">
+          <ReuseInput
+            name="durationUnit"
+            placeholder="Enter Duration"
+            type="number"
+            rules={[{ required: true, message: "Duration is required" }]}
+          />
+          <ReuseSelect
+            name="durationType"
+            placeholder="Select Duration Type"
+            rules={[{ required: true, message: "Duration Type is required" }]}
+            options={[
+              { label: "Weeks", value: "Weeks" },
+              { label: "Days", value: "Days" },
+              { label: "Hours", value: "Hours" },
+              { label: "Months", value: "Months" },
+            ]}
+          />
+        </div>
 
         <ReuseUpload
           label="Upload Image"

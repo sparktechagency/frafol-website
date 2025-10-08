@@ -11,6 +11,7 @@ import PaginationSection from "@/components/shared/PaginationSection";
 import { IPackage, ISignInUser } from "@/types";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { deletePackage } from "@/services/PackageService/PackageServiceApi";
+import NoResultFound from "@/components/shared/NoResultFound";
 
 const PackagesPage = ({
   tab,
@@ -102,34 +103,50 @@ const PackagesPage = ({
           {
             label: "Active",
             value: "approved",
-            content: (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {packages?.map((item) => (
-                  <ProfessionalPackageCard
-                    key={item._id}
-                    item={item}
-                    showDeleteModal={showDeleteModal}
-                    showEditModal={showEditModal}
+            content:
+              packages?.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {packages?.map((item) => (
+                    <ProfessionalPackageCard
+                      key={item._id}
+                      item={item}
+                      showDeleteModal={showDeleteModal}
+                      showEditModal={showEditModal}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="py-10">
+                  <NoResultFound
+                    title="No Active Packages"
+                    description="create a new package or show all pending packages on pending tab"
                   />
-                ))}
-              </div>
-            ),
+                </div>
+              ),
           },
           {
             label: "Pending",
             value: "pending",
-            content: (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {packages?.map((item) => (
-                  <ProfessionalPackageCard
-                    key={item._id}
-                    item={item}
-                    showDeleteModal={showDeleteModal}
-                    showEditModal={showEditModal}
+            content:
+              packages?.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {packages?.map((item) => (
+                    <ProfessionalPackageCard
+                      key={item._id}
+                      item={item}
+                      showDeleteModal={showDeleteModal}
+                      showEditModal={showEditModal}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="py-10">
+                  <NoResultFound
+                    title="No Pending Packages"
+                    description="create a new package or show all packages on active tab"
                   />
-                ))}
-              </div>
-            ),
+                </div>
+              ),
           },
         ]}
       />

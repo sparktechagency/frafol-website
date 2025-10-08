@@ -14,8 +14,8 @@ const page = async ({
   const { id } = await params;
   const paramsData = await searchParams;
 
-  const sort = (paramsData?.sort as string) || "";
-  const rating = (paramsData?.rating as string) || "";
+  const sort = (paramsData?.sort as string) || "newest";
+  const rating = (paramsData?.rating as string) || "5";
 
   const res = await fetchWithAuth(`/users/${id}`, {
     next: {

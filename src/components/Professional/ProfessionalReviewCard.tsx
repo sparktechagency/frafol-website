@@ -1,19 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import { getServerUrl } from "@/helpers/config/envConfig";
+import { IReview } from "@/types";
+import { formatDateTime } from "@/utils/dateFormet";
 import { Rate } from "antd";
 import Image from "next/image";
 import { useState } from "react";
+import { AllImages } from "../../../public/assets/AllImages";
 
-const ReviewCard = ({ review }: { review: any }) => {
+const ReviewCard = ({ review }: { review: IReview }) => {
+  const serverUrl = getServerUrl();
   const [expanded, setExpanded] = useState(false);
 
   const toggleReadMore = () => setExpanded((prev) => !prev);
 
   const maxChars = 150;
-  const isLong = review.content.length > maxChars;
+  const isLong = review.message.length > maxChars;
   const displayText = expanded
-    ? review.content
-    : review.content.slice(0, maxChars) + (isLong ? "..." : "");
+    ? review.message
+    : review.message.slice(0, maxChars) + (isLong ? "..." : "");
 
   return (
     <div className="p-4 rounded-lg shadow-none hover:shadow-md transition">
@@ -25,16 +30,20 @@ const ReviewCard = ({ review }: { review: any }) => {
             height={2000}
             alt="avatar"
             className="rounded-full w-6 sm:w-8 lg:w-10  h-6 sm:h-8 lg:h-10  object-cover"
-            src={review.avatar}
+            src={
+              review?.userId?.profileImage
+                ? serverUrl + review?.userId?.profileImage
+                : AllImages.dummyProfile
+            }
           />
           <div className="text-xs sm:text-sm lg:text-base xl:text-lg font-semibold">
-            {review.name}
+            {review?.userId?.name}
           </div>
           <span className="text-xs sm:text-sm lg:text-base font-light">
-            · {review.date}
+            · {formatDateTime(review?.createdAt)}
           </span>
         </div>
-        <Rate className="" disabled defaultValue={review.rating} />
+        <Rate className="" disabled value={review.rating} />
       </div>
 
       {/* Content */}

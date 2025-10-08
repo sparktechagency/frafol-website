@@ -6,6 +6,7 @@ import { BsCurrencyDollar } from "react-icons/bs";
 import ServiceCardBookNow from "../Professional/ServiceCardBookNow";
 import { IPackage } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
+import { LuClock } from "react-icons/lu";
 
 const ProfessionalServiceCard = ({ data }: { data: IPackage }) => {
   const serverUrl = getServerUrl();
@@ -54,14 +55,23 @@ const ProfessionalServiceCard = ({ data }: { data: IPackage }) => {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
+              <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+              <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                Duration:
+              </p>
+            </div>
+            <p className="text-xs sm:text-sm lg:text-base">{data?.duration}</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1">
               <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
               <p className="text-xs sm:text-sm lg:text-base font-semibold">
                 Delivery Time:
               </p>
             </div>
             <p className="text-xs sm:text-sm lg:text-base">
-              {data.duration / 7} Weeks
+              {data?.deliveryTime / 7} Week
             </p>
           </div>
         </div>
