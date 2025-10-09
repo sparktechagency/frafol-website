@@ -2,6 +2,7 @@ export * from "./auth.type";
 export * from "./category.type";
 export * from "./professional.type";
 export * from "./package.type";
+export * from "./eventOrder.type";
 export * from "./review.type";
 export * from "./gear.type";
 export * from "./workshop.type";

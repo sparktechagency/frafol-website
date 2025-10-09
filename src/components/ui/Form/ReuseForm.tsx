@@ -9,7 +9,7 @@ type ReusableFormProps = {
   children: ReactNode;
   defaultValues?: any;
   className?: string;
-  handleFinish: (values: Record<string, any>) => void;
+  handleFinish: (values: any) => void;
   onValuesChange?: (changedValues: any, allValues: any) => void; // ✅ new
 };
 

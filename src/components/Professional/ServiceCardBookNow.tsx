@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import ReuseButton from "../ui/Button/ReuseButton";
 import ProfessionalServiceBookingModal from "../ui/Modal/Professional/ProfessionalServiceBookingModal";
+import { IPackage } from "@/types";
 
-const ServiceCardBookNow = () => {
+const ServiceCardBookNow = ({ packageData }: { packageData: IPackage }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const openModal = () => setIsModalVisible(true);
@@ -21,6 +22,7 @@ const ServiceCardBookNow = () => {
       <ProfessionalServiceBookingModal
         isModalVisible={isModalVisible}
         handleCancel={handleCancel}
+        packageData={packageData}
       />
     </>
   );

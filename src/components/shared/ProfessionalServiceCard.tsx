@@ -76,7 +76,7 @@ const ProfessionalServiceCard = ({ data }: { data: IPackage }) => {
           </div>
         </div>
         <div className="flex items-center gap-2 mt-5 justify-between">
-          <ServiceCardBookNow />
+          <ServiceCardBookNow packageData={data} />
         </div>
       </div>
     </div>

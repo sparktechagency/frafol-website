@@ -2,6 +2,7 @@ const TagTypes = {
   category: "CATEGORY",
   prfessional: "PROFESSIONAL",
   package: "PACKAGE",
+  eventOrder: "EVENT_ORDER",
   workshop: "WORKSHOP",
   gear: "GEAR",
   testimonial: "TESTIMONIAL",

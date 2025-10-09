@@ -15,7 +15,6 @@ import NoResultFound from "@/components/shared/NoResultFound";
 
 const PackagesPage = ({
   tab,
-  searchText,
   page,
   limit,
   packages,
@@ -23,15 +22,12 @@ const PackagesPage = ({
   userData,
 }: {
   tab: string;
-  searchText: string;
   page: number;
   limit: number;
   packages: IPackage[];
   totalData: number;
   userData: ISignInUser;
 }) => {
-  console.log("Search Text:", searchText, "Page:", page, "Limit:", limit);
-
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
@@ -151,11 +147,17 @@ const PackagesPage = ({
         ]}
       />
 
-      <div className="mt-16 flex justify-center items-center">
-        <Suspense fallback={<div>Loading...</div>}>
-          <PaginationSection page={page} limit={limit} totalData={totalData} />
-        </Suspense>
-      </div>
+      {totalData > 0 && (
+        <div className="mt-16 flex justify-center items-center">
+          <Suspense fallback={<div>Loading...</div>}>
+            <PaginationSection
+              page={page}
+              limit={limit}
+              totalData={totalData}
+            />
+          </Suspense>
+        </div>
+      )}
 
       <ProfessionalAddNewPackageModal
         isAddModalVisible={isAddModalVisible}

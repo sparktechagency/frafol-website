@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Form, Modal } from "antd";
@@ -9,20 +8,42 @@ import ReuseInput from "../../Form/ReuseInput";
 import ReuseButton from "../../Button/ReuseButton";
 import ReuseDatePicker from "../../Form/ReuseDatePicker";
 import ReuseTimePicker from "../../Form/ReuseTimePicker";
+import { ICreateEventOrder, IPackage } from "@/types";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { createEventOrder } from "@/services/EventOrderService/EventOrderServiceApi";
 
 interface ProfessionalServiceBookingModalProps {
   isModalVisible: boolean;
   handleCancel: () => void;
+  packageData: IPackage;
 }
 
 const ProfessionalServiceBookingModal: React.FC<
   ProfessionalServiceBookingModalProps
-> = ({ isModalVisible, handleCancel }) => {
+> = ({ isModalVisible, handleCancel, packageData }) => {
   const [form] = Form.useForm();
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
 
-  const onSubmit = (values: any) => {
-    console.log("Submitted Values:", values);
+  const onSubmit = async (values: ICreateEventOrder) => {
+    const data = {
+      orderType: "direct",
+      packageId: packageData?._id,
+      location: values.location,
+      time: values.time,
+      date: values.date,
+    };
+    const res = await tryCatchWrapper(
+      createEventOrder,
+      { body: data },
+      "Adding new package...",
+      "Package added successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    if (res?.success) {
+      form.resetFields();
+      handleCancel();
+    }
   };
 
   return (

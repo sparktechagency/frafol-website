@@ -22,11 +22,14 @@ const page = async ({
   const searchText = params?.search || "";
   const limit = 12;
 
-  const res = await fetchWithAuth(`/package/my?approvalStatus=${activeTab}`, {
-    next: {
-      tags: [TagTypes.package],
-    },
-  });
+  const res = await fetchWithAuth(
+    `/package/my?approvalStatus=${activeTab}&page=${page}&limit=${limit}&searchTerm=${searchText}`,
+    {
+      next: {
+        tags: [TagTypes.package],
+      },
+    }
+  );
 
   const data = await res.json();
 
@@ -37,7 +40,6 @@ const page = async ({
   return (
     <PackagesPage
       tab={activeTab}
-      searchText={searchText as string}
       page={page}
       limit={limit}
       packages={packages}

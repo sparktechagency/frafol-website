@@ -36,11 +36,11 @@ const FeaturedProfessionalsCard: React.FC<FeaturedProfessionalsCardProps> = ({
             <h3 className="text-secondary-color text-sm sm:text-base lg:text-lg font-bold">
               {item?.name}
             </h3>
-            {item?.totalReview > 0 && (
+            {item?.averageRating > 0 && (
               <div className="flex items-center gap-1">
                 <FaStar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
                 <p className="text-secondary-color text-sm sm:text-base lg:text-lg">
-                  {item?.totalReview}
+                  {item?.averageRating}
                 </p>
               </div>
             )}
