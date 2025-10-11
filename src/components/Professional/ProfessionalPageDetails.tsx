@@ -12,10 +12,12 @@ import ProfessionalPageDetailsMyWork from "./ProfessionalPageDetailsMyWork";
 import ProfessionalPageDetailsBookSession from "./ProfessionalPageDetailsBookSession";
 import ProfessionalReviews from "./ProfessionalReviews";
 import Link from "next/link";
-import { IProfessionalUser } from "@/types";
+import { IProfessionalUser, IProfile } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
+import { fetchWithAuth } from "@/lib/fetchWraper";
+import TagTypes from "@/helpers/config/TagTypes";
 
-const ProfessionalPageDetails = ({
+const ProfessionalPageDetails = async ({
   professionalUser,
   sort,
   rating,
@@ -25,6 +27,17 @@ const ProfessionalPageDetails = ({
   rating: string;
 }) => {
   const serverUrl = getServerUrl();
+
+  const res = await fetchWithAuth("/users/my-profile", {
+    next: {
+      tags: [TagTypes.profile],
+    },
+  });
+
+  const data = await res.json();
+
+  const myData: IProfile = data?.data;
+
   return (
     <main className="pb-20 pt-16">
       <Container>
@@ -69,16 +82,35 @@ const ProfessionalPageDetails = ({
             <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg -mt-0.5" />{" "}
             <span>{professionalUser?.address}</span>
           </p>
-          <div className="flex items-center gap-2">
-            <ReuseButton
-              variant="secondary"
-              className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
-              url="/message"
-            >
-              <AiFillMessage /> Contact
-            </ReuseButton>
-            <ProfessionalPageDetailsBookSession />
-          </div>
+          {myData?.role === "user" ? (
+            <div className="flex items-center gap-2">
+              <ReuseButton
+                variant="secondary"
+                className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
+                url="/message"
+              >
+                <AiFillMessage /> Contact
+              </ReuseButton>
+              <ProfessionalPageDetailsBookSession
+                myData={myData}
+                professionalUser={professionalUser}
+              />
+            </div>
+          ) : myData?.role === "company" ? (
+            <div className="flex items-center gap-2">
+              <ReuseButton
+                variant="secondary"
+                className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
+                url="/message"
+              >
+                <AiFillMessage /> Contact
+              </ReuseButton>
+              <ProfessionalPageDetailsBookSession
+                myData={myData}
+                professionalUser={professionalUser}
+              />
+            </div>
+          ) : null}
         </div>
         <div className="mt-16">
           <SectionHeader title="About Me" className="mb-3" />
@@ -92,6 +124,7 @@ const ProfessionalPageDetails = ({
         />
         <ProfessionalPageDetailsMyServices
           packages={professionalUser?.package}
+          myData={myData}
         />
         <ProfessionalReviews
           professionalUser={professionalUser}

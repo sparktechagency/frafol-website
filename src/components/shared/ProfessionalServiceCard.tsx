@@ -4,11 +4,17 @@ import { AllImages } from "../../../public/assets/AllImages";
 import { IoCalendarOutline } from "react-icons/io5";
 import { BsCurrencyDollar } from "react-icons/bs";
 import ServiceCardBookNow from "../Professional/ServiceCardBookNow";
-import { IPackage } from "@/types";
+import { IPackage, IProfile } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { LuClock } from "react-icons/lu";
 
-const ProfessionalServiceCard = ({ data }: { data: IPackage }) => {
+const ProfessionalServiceCard = ({
+  data,
+  myData,
+}: {
+  data: IPackage;
+  myData: IProfile;
+}) => {
   const serverUrl = getServerUrl();
 
   return (
@@ -51,7 +57,7 @@ const ProfessionalServiceCard = ({ data }: { data: IPackage }) => {
                 Price:
               </p>
             </div>
-            <p className="text-xs sm:text-sm lg:text-base">{data.price} </p>
+            <p className="text-xs sm:text-sm lg:text-base">{data.mainPrice} </p>
           </div>
 
           <div className="flex items-center gap-3">
@@ -75,9 +81,15 @@ const ProfessionalServiceCard = ({ data }: { data: IPackage }) => {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2 mt-5 justify-between">
-          <ServiceCardBookNow packageData={data} />
-        </div>
+        {myData?.role === "user" ? (
+          <div className="flex items-center gap-2 mt-5 justify-between">
+            <ServiceCardBookNow packageData={data} />
+          </div>
+        ) : myData?.role === "company" ? (
+          <div className="flex items-center gap-2 mt-5 justify-between">
+            <ServiceCardBookNow packageData={data} />
+          </div>
+        ) : null}
       </div>
     </div>
   );

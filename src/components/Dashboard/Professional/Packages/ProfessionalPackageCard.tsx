@@ -71,7 +71,9 @@ const ProfessionalPackageCard = ({
                 Price:
               </p>
             </div>
-            <p className="text-xs sm:text-sm lg:text-base">{item?.price}€</p>
+            <p className="text-xs sm:text-sm lg:text-base">
+              {item?.mainPrice}€
+            </p>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">

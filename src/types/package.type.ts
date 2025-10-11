@@ -10,6 +10,7 @@ interface IPackage {
   title: string;
   description: string;
   price: number;
+  mainPrice: number;
   category: string;
   vatAmount: number;
   duration: string;

@@ -36,7 +36,7 @@ const ProfessionalServiceBookingModal: React.FC<
       createEventOrder,
       { body: data },
       "Adding new package...",
-      "Package added successfully!",
+      "Order Placed successfully!",
       "Something went wrong! Please try again."
     );
 

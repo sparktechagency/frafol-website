@@ -37,6 +37,17 @@ const page = async ({
 
   const packages: IPackage[] = data?.data?.result || [];
 
+  const serviceChargeRes = await fetchWithAuth(`/commissionSetup`, {
+    next: {
+      tags: [TagTypes.package],
+    },
+  });
+
+  const serviceChargeData = await serviceChargeRes.json();
+  const serviceCharge: number = serviceChargeData?.data?.photoVideoGrapy;
+
+  console.log("serviceCharge", serviceCharge);
+
   return (
     <PackagesPage
       tab={activeTab}
@@ -45,6 +56,7 @@ const page = async ({
       packages={packages}
       totalData={totalData}
       userData={userData}
+      serviceCharge={serviceCharge}
     />
   );
 };

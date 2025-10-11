@@ -3,8 +3,15 @@ import React from "react";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { IoCameraOutline } from "react-icons/io5";
 import ProfessionalBookingModal from "../ui/Modal/Professional/ProfessionalBookingModal";
+import { IProfessionalUser, IProfile } from "@/types";
 
-const ProfessionalPageDetailsBookSession = () => {
+const ProfessionalPageDetailsBookSession = ({
+  myData,
+  professionalUser,
+}: {
+  myData: IProfile;
+  professionalUser: IProfessionalUser;
+}) => {
   const [isBookModalOpen, setIsBookModalOpen] = React.useState(false);
 
   const openBookModal = () => setIsBookModalOpen(true);
@@ -22,6 +29,8 @@ const ProfessionalPageDetailsBookSession = () => {
       <ProfessionalBookingModal
         isModalVisible={isBookModalOpen}
         handleCancel={handleCancle}
+        myData={myData}
+        professionalUser={professionalUser}
       />
     </>
   );

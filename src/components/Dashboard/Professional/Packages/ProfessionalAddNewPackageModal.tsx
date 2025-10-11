@@ -8,16 +8,18 @@ import { addNewPackage } from "@/services/PackageService/PackageServiceApi";
 import { ISignInUser } from "@/types";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { Form, Modal, Typography } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 
 const ProfessionalAddNewPackageModal = ({
   isAddModalVisible,
   handleCancel,
   userData,
+  serviceCharge,
 }: {
   isAddModalVisible: boolean;
   handleCancel: () => void;
   userData: ISignInUser;
+  serviceCharge: number;
 }) => {
   const categoryOptions =
     userData?.role === "both"
@@ -48,6 +50,16 @@ const ProfessionalAddNewPackageModal = ({
       : [];
 
   const [form] = Form.useForm();
+  const priceValue = Form.useWatch("price", form) || 0;
+
+  useEffect(() => {
+    const serviceChagePercentage = serviceCharge / 100;
+
+    const mainPriceValue =
+      Number(priceValue) + Number(priceValue) * serviceChagePercentage;
+
+    form.setFieldValue("mainPrice", mainPriceValue);
+  }, [form, priceValue, serviceCharge]);
 
   const onSubmit = async (values: any) => {
     const formData = new FormData();
@@ -56,6 +68,7 @@ const ProfessionalAddNewPackageModal = ({
       title: values.title,
       description: values.description,
       price: Number(values.price),
+      mainPrice: Number(values?.mainPrice),
       category: values.category,
       vatAmount: Number(values.vatAmount) || 0,
       deliveryTime: Number(values.deliveryTime),
@@ -129,6 +142,15 @@ const ProfessionalAddNewPackageModal = ({
           name="price"
           label="Package Price"
           placeholder="Enter Package Price"
+          type="number"
+          rules={[{ required: true, message: "Package Price is required" }]}
+          labelClassName="!font-semibold"
+        />
+        <ReuseInput
+          name="mainPrice"
+          label="Package Price After Adding Service Fee"
+          placeholder="Enter Package Price"
+          disabled
           type="number"
           rules={[{ required: true, message: "Package Price is required" }]}
           labelClassName="!font-semibold"

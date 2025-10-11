@@ -1,4 +1,5 @@
 const TagTypes = {
+  profile: "Profile",
   category: "CATEGORY",
   prfessional: "PROFESSIONAL",
   package: "PACKAGE",

@@ -20,6 +20,7 @@ interface ICreateEventOrder {
   ICO?: string; // Optional: Only for 'custom' orders with a company
   DIC?: string; // Optional: Only for 'custom' orders with a company
   IC_DPH?: string; // Optional: Only for 'custom' orders with a company
+  description?: string;
 }
 
 export type { ICreateEventOrder };

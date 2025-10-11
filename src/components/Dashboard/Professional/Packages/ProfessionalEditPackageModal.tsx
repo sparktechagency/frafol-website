@@ -18,15 +18,19 @@ const ProfessionalEditPackageModal = ({
   handleCancel,
   currentRecord,
   userData,
+  serviceCharge,
 }: {
   isEditModalVisible: boolean;
   handleCancel: () => void;
   currentRecord: IPackage | null;
   userData: ISignInUser;
+  serviceCharge: number;
 }) => {
   const serverUrl = getServerUrl();
 
   const [form] = Form.useForm();
+  const priceValue = Form.useWatch("price", form) || 0;
+  console.log(priceValue);
 
   const categoryOptions =
     userData?.role === "both"
@@ -73,6 +77,15 @@ const ProfessionalEditPackageModal = ({
     }
   }, [currentRecord, form]);
 
+  React.useEffect(() => {
+    const serviceChagePercentage = serviceCharge / 100;
+
+    const mainPriceValue =
+      Number(priceValue) + Number(priceValue) * serviceChagePercentage;
+
+    form.setFieldValue("mainPrice", mainPriceValue);
+  }, [form, priceValue, serviceCharge]);
+
   const onSubmit = async (values: any) => {
     const formData = new FormData();
 
@@ -80,6 +93,7 @@ const ProfessionalEditPackageModal = ({
       title: values.title,
       description: values.description,
       price: Number(values.price),
+      mainPrice: Number(values?.mainPrice),
       category: values.category,
       vatAmount: Number(values.vatAmount) || 0,
       deliveryTime: Number(values.deliveryTime),
@@ -108,7 +122,10 @@ const ProfessionalEditPackageModal = ({
   return (
     <Modal
       open={isEditModalVisible}
-      onCancel={handleCancel}
+      onCancel={() => {
+        handleCancel();
+        form.resetFields();
+      }}
       footer={null}
       centered
       className="lg:!w-[1000px]"
@@ -151,6 +168,15 @@ const ProfessionalEditPackageModal = ({
           name="price"
           label="Package Price"
           placeholder="Enter Package Price"
+          type="number"
+          rules={[{ required: true, message: "Package Price is required" }]}
+          labelClassName="!font-semibold"
+        />
+        <ReuseInput
+          name="mainPrice"
+          label="Package Price After Adding Service Fee"
+          placeholder="Enter Package Price"
+          disabled
           type="number"
           rules={[{ required: true, message: "Package Price is required" }]}
           labelClassName="!font-semibold"

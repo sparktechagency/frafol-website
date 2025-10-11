@@ -1,4 +1,5 @@
 export * from "./auth.type";
+export * from "./profile.type";
 export * from "./category.type";
 export * from "./professional.type";
 export * from "./package.type";
