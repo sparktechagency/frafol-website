@@ -9,7 +9,16 @@ import DeleteModal from "@/components/ui/Modal/DeleteModal";
 import AccountCredentialPage from "./AccountCredentialPage";
 import OtherInformationPage from "./OtherInformationPage";
 
-const ProfileSettingsPage = () => {
+const ProfileSettingsPage = ({
+  activeTab,
+}: {
+  activeTab:
+    | "profile"
+    | "portfolio"
+    | "accountCredentials"
+    | "otherInformation"
+    | "changePassword";
+}) => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any>(null);
 
@@ -23,19 +32,11 @@ const ProfileSettingsPage = () => {
     setCurrentRecord(null);
   };
 
-  const [activeTab, setActiveTab] = useState<
-    | "profile"
-    | "portfolio"
-    | "accountCredentials"
-    | "otherInformation"
-    | "changePassword"
-  >("profile");
   return (
     <div>
       <div className="mt-10">
         <ReusableTabs
           activeTab={activeTab}
-          onTabChange={setActiveTab}
           align="left"
           tabs={[
             {

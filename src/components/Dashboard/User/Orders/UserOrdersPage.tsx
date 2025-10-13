@@ -15,13 +15,12 @@ import UserCurrentGearOrder from "./UserCurrentGearOrder";
 import UserConfirmGearOrder from "./UserConfirmGearOrder";
 import UserDeliveriedGearOrder from "./UserDeliveriedGearOrder";
 import UserCancleGearOrder from "./UserCancleGearOrder";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const UserOrdersPage = () => {
-  const [orderType, setOrderType] = useState<"photography" | "gear">(
-    "photography"
-  );
-
-  type PhotographyTabs =
+const UserOrdersPage = ({
+  activeTab,
+}: {
+  activeTab:
     | "currentOrder"
     | "toConfirm"
     | "delivered"
@@ -29,12 +28,35 @@ const UserOrdersPage = () => {
     | "orderOffer"
     | "myOffers"
     | "cancelled";
-
-  type GearTabs = "currentOrder";
-
-  const [activeTab, setActiveTab] = useState<PhotographyTabs | GearTabs>(
-    "currentOrder"
+}) => {
+  const searchParams = useSearchParams();
+  const pathName = usePathname();
+  const router = useRouter();
+  const { replace } = router;
+  const [orderType, setOrderType] = useState<"photography" | "gear">(
+    "photography"
   );
+
+  // type PhotographyTabs =
+  //   | "currentOrder"
+  //   | "toConfirm"
+  //   | "delivered"
+  //   | "pending"
+  //   | "orderOffer"
+  //   | "myOffers"
+  //   | "cancelled";
+
+  // type GearTabs = "currentOrder";
+
+  // const [activeTab, setActiveTab] = useState<PhotographyTabs | GearTabs>(
+  //   "currentOrder"
+  // );
+  const handleOrderTypeChange = (value: "photography" | "gear") => {
+    setOrderType(value);
+    const params = new URLSearchParams(searchParams);
+    params.delete("tab");
+    replace(`${pathName}?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <div>
@@ -51,7 +73,7 @@ const UserOrdersPage = () => {
               { value: "photography", label: "Photography" },
               { value: "gear", label: "Gear" },
             ]}
-            onChange={(value) => setOrderType(value)}
+            onChange={(value) => handleOrderTypeChange(value)}
           />
         </Form>
       </div>
@@ -60,7 +82,7 @@ const UserOrdersPage = () => {
         <div className="mt-10">
           <ReusableTabs
             activeTab={activeTab}
-            onTabChange={setActiveTab}
+            // onTabChange={setActiveTab}
             align="left"
             tabs={[
               {
@@ -105,7 +127,6 @@ const UserOrdersPage = () => {
         <div className="mt-10">
           <ReusableTabs
             activeTab={activeTab}
-            onTabChange={setActiveTab}
             align="left"
             tabs={[
               {

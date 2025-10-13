@@ -6,7 +6,11 @@ import ReusableTabs from "@/components/ui/ReusableTabs";
 import React, { useState } from "react";
 import DeleteModal from "@/components/ui/Modal/DeleteModal";
 
-const MyAccountProfile = () => {
+const MyAccountProfile = ({
+  activeTab,
+}: {
+  activeTab: "profile" | "changePassword";
+}) => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any>(null);
 
@@ -15,15 +19,11 @@ const MyAccountProfile = () => {
     setCurrentRecord(null);
   };
 
-  const [activeTab, setActiveTab] = useState<"profile" | "changePassword">(
-    "profile"
-  );
   return (
     <div>
       <div className="mt-10">
         <ReusableTabs
           activeTab={activeTab}
-          onTabChange={setActiveTab}
           align="left"
           tabs={[
             {

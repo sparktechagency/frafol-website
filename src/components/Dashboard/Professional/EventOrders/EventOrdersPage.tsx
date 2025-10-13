@@ -7,11 +7,11 @@ import EventOrdersOverview from "./EventOrdersOverview";
 import ReusableTabs from "@/components/ui/ReusableTabs";
 import EventCreateOrderModal from "./EventCreateOrderModal";
 
-const EventOrdersPage = () => {
-  const [activeTab, setActiveTab] = useState<
-    "Delivered" | "InProgress" | "Upcoming" | "Pending" | "Cancelled"
-  >("Delivered");
-
+const EventOrdersPage = ({
+  activeTab,
+}: {
+  activeTab: "Delivered" | "InProgress" | "Upcoming" | "Pending" | "Cancelled";
+}) => {
   const ordersData = Array.from({ length: 20 }).map((_, index) => ({
     key: index + 1,
     orderId: 1223,
@@ -67,7 +67,6 @@ const EventOrdersPage = () => {
         <div className="mt-10">
           <ReusableTabs
             activeTab={activeTab}
-            onTabChange={setActiveTab}
             align="left"
             tabs={[
               {
