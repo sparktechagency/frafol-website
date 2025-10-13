@@ -3,7 +3,7 @@ import React from "react";
 import { AllImages } from "../../../public/assets/AllImages";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LuClock } from "react-icons/lu";
-import { FaLink, FaLocationDot } from "react-icons/fa6";
+import { FaLocationDot } from "react-icons/fa6";
 import { LuUsers } from "react-icons/lu";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { IWorkshop } from "@/types";
@@ -61,18 +61,11 @@ const WorkShopsCards = ({
         </div>
         <div className="flex items-center gap-2 mt-1">
           <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-          <p className="text-xs sm:text-sm lg:text-base font-semibold">
+          <p className="text-xs sm:text-sm lg:text-base font-semibold capitalize">
             {data?.locationType}
           </p>
         </div>
-        {data?.locationType === "online" ? (
-          <div className="flex items-center gap-2 mt-1">
-            <FaLink className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-            <p className="text-xs sm:text-sm lg:text-base font-semibold">
-              www.workshop.com
-            </p>
-          </div>
-        ) : (
+        {data?.locationType !== "online" && (
           <div className="flex items-center gap-2 mt-1">
             <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
             <p className="text-xs sm:text-sm lg:text-base font-semibold">

@@ -14,6 +14,7 @@ type TUploadProps = {
   buttonText?: string;
   accept?: string;
   maxCount?: number;
+  multiple?: boolean;
   children?: React.ReactNode;
   wrapperClassName?: string;
   labelClassName?: string;
@@ -28,6 +29,7 @@ const ReuseUpload = ({
   buttonText = "Upload",
   accept = "image/*",
   maxCount = 1,
+  multiple = false,
   children = (
     <div className="!w-full min-w-[300px] lg:min-w-[410px] border-dashed border-2 border-secondary-color rounded-md min-h-[200px] flex flex-col items-center justify-center gap-2">
       <TbCloudUpload className="size-5 text-secondary-color" />
@@ -71,6 +73,7 @@ const ReuseUpload = ({
             }, 1000);
           }}
           maxCount={maxCount}
+          multiple={multiple}
           accept={accept}
           listType="picture"
           className={cn(uploadClassName)}

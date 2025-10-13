@@ -57,8 +57,9 @@ const ProfessionalPageDetails = async ({
             {professionalUser?.name}
           </h2>
 
-          <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold">
-            Hourly Rate: {professionalUser?.hourlyRate}€
+          <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-semibold">
+            Hourly Rate: {professionalUser?.minHourlyRate}€ -{" "}
+            {professionalUser?.maxHourlyRate}€
           </p>
           <p className=" text-xs sm:text-sm lg:text-base xl:text-lg text-secondary-color font-medium mt-1">
             {professionalUser?.role === "both"
@@ -110,7 +111,17 @@ const ProfessionalPageDetails = async ({
                 professionalUser={professionalUser}
               />
             </div>
-          ) : null}
+          ) : (
+            <div className="flex items-center gap-2">
+              <ReuseButton
+                variant="secondary"
+                className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
+                url="/message"
+              >
+                <AiFillMessage /> Contact
+              </ReuseButton>
+            </div>
+          )}
         </div>
         <div className="mt-16">
           <SectionHeader title="About Me" className="mb-3" />

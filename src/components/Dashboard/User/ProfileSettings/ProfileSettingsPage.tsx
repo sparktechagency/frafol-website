@@ -1,37 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import ChangePassword from "@/components/shared/ChangePassword";
 import EditProfile from "@/components/shared/EditProfile";
 import ReusableTabs from "@/components/ui/ReusableTabs";
-import React, { useState } from "react";
+import React from "react";
 import PortfolioPage from "./PortfolioPage";
-import DeleteModal from "@/components/ui/Modal/DeleteModal";
 import AccountCredentialPage from "./AccountCredentialPage";
 import OtherInformationPage from "./OtherInformationPage";
+import { IProfile } from "@/types";
 
 const ProfileSettingsPage = ({
   activeTab,
+  myData,
 }: {
   activeTab:
     | "profile"
     | "portfolio"
     | "accountCredentials"
-    | "otherInformation"
+    | "availability"
     | "changePassword";
+  myData: IProfile;
 }) => {
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [currentRecord, setCurrentRecord] = useState<any>(null);
-
-  const showDeleteModal = (record: any) => {
-    setIsDeleteModalVisible(true);
-    setCurrentRecord(record);
-  };
-
-  const handleCancel = () => {
-    setIsDeleteModalVisible(false);
-    setCurrentRecord(null);
-  };
-
   return (
     <div>
       <div className="mt-10">
@@ -42,21 +30,21 @@ const ProfileSettingsPage = ({
             {
               label: "Edit Profile",
               value: "profile",
-              content: <EditProfile />,
+              content: <EditProfile myData={myData} />,
             },
             {
               label: "Portfolio",
               value: "portfolio",
-              content: <PortfolioPage showDeleteModal={showDeleteModal} />, // Placeholder for portfolio content
+              content: <PortfolioPage myData={myData} />, // Placeholder for portfolio content
             },
             {
               label: "Account Credentials",
               value: "accountCredentials",
-              content: <AccountCredentialPage />, // Placeholder for account credentials content
+              content: <AccountCredentialPage myData={myData} />, // Placeholder for account credentials content
             },
             {
-              label: "Other Information",
-              value: "otherInformation",
+              label: "Availability",
+              value: "availability",
               content: <OtherInformationPage />, // Placeholder for other information content
             },
             {
@@ -65,14 +53,6 @@ const ProfileSettingsPage = ({
               content: <ChangePassword />,
             },
           ]}
-        />
-        <DeleteModal
-          handleDelete={() => {
-            console.log("Delete action for:", currentRecord);
-          }}
-          currentRecord={currentRecord}
-          isDeleteModalVisible={isDeleteModalVisible}
-          handleCancel={handleCancel}
         />
       </div>
     </div>

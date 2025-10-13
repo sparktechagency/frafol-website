@@ -1,4 +1,7 @@
 interface IProfileId {
+  bankName: string;
+  accountNumber: string;
+  routingNumber: string;
   _id: string;
   about: string;
   acceptTerms: boolean;
@@ -17,16 +20,22 @@ interface IProfile {
   email: string;
   profileImage: string;
   role: string;
+  phone: string;
   switchRole: string;
   address: string;
   town: string;
   country: string;
   hourlyRate: number;
+  maxHourlyRate: number;
+  minHourlyRate: number;
   ico: string;
   dic: string;
   ic_dph: string;
   rating: number;
-  specializations: string[];
+  photographerSpecializations: string[];
+  videographerSpecializations: string[];
+  gallery: string[];
+  unAvailability: string[];
   newsLetterSub: boolean;
   isBlocked: boolean;
   isDeleted: boolean;

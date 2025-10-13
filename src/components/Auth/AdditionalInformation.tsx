@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import ReusableForm from "../ui/Form/ReuseForm";
@@ -19,13 +18,22 @@ const inputStructure = [
     rules: [{ required: true, message: "Bio is required" }],
   },
   {
-    name: "hourlyRate",
+    name: "minHourlyRate",
     type: "number",
     inputType: "number",
-    label: "Hourly Rate",
-    placeholder: "Enter Hourly Rate",
+    label: "Min Hourly Rate",
+    placeholder: "Enter Min Hourly Rate",
     labelClassName: "!font-semibold !text-secondary-color",
-    rules: [{ required: true, message: "Hourly Rate is required" }],
+    rules: [{ required: true, message: "Min Hourly Rate is required" }],
+  },
+  {
+    name: "maxHourlyRate",
+    type: "number",
+    inputType: "number",
+    label: "Max Hourly Rate",
+    placeholder: "Enter Max Hourly Rate",
+    labelClassName: "!font-semibold !text-secondary-color",
+    rules: [{ required: true, message: "Max Hourly Rate is required" }],
   },
 ];
 
@@ -40,12 +48,23 @@ const AdditionalInformation = () => {
   if (storedInformation) {
     form.setFieldsValue({
       about: parseData.about,
-      hourlyRate: parseData.hourlyRate,
+      minHourlyRate: parseData.minHourlyRate,
+      maxHourlyRate: parseData.maxHourlyRate,
     });
   }
 
-  const onFinish = (values: any) => {
-    Cookies.set("information", JSON.stringify({ ...parseData, ...values }), {
+  const onFinish = (values: {
+    about: string;
+    minHourlyRate: number;
+    maxHourlyRate: number;
+  }) => {
+    const data = {
+      ...parseData,
+      about: values.about,
+      minHourlyRate: Number(values.minHourlyRate),
+      maxHourlyRate: Number(values.maxHourlyRate),
+    };
+    Cookies.set("information", JSON.stringify(data), {
       expires: 1,
     });
     form.resetFields();

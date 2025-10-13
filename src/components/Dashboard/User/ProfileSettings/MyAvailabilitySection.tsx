@@ -1,4 +1,3 @@
-// components/EventCalendar.tsx
 "use client";
 
 import {
@@ -11,18 +10,34 @@ import {
   addDays,
   isSameMonth,
   isSameDay,
+  isBefore,
 } from "date-fns";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-// import ReuseButton from "@/components/ui/Button/ReuseButton";
+import ReuseButton from "@/components/ui/Button/ReuseButton";
 
 const upcomingEventDates = [new Date(2025, 4, 6), new Date(2025, 4, 24)]; // May 6 and 24, 2025
 
 const MyAvailabilitySection = () => {
-  const [currentMonth, setCurrentMonth] = useState(new Date(2025, 4, 1)); // May 2025
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+  const [selectedDatesMessage, setSelectedDatesMessage] = useState<string>("");
 
   const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
   const prevMonth = () => setCurrentMonth(addMonths(currentMonth, -1));
+
+  const handleDateSelect = (date: Date) => {
+    const today = new Date();
+    if (isBefore(date, today)) {
+      return;
+    }
+
+    setSelectedDates((prev) =>
+      prev.some((d) => isSameDay(d, date))
+        ? prev.filter((d) => !isSameDay(d, date))
+        : [...prev, date]
+    );
+  };
 
   const renderHeader = () => (
     <div className="flex justify-between items-center mb-4">
@@ -66,13 +81,18 @@ const MyAvailabilitySection = () => {
         const cloneDay = day;
 
         const isEvent = upcomingEventDates.some((d) => isSameDay(d, cloneDay));
+        const isSelected = selectedDates.some((d) => isSameDay(d, cloneDay));
+        const isPastDate = isBefore(cloneDay, new Date());
 
         days.push(
           <div
             key={day.toString()}
-            className={`text-sm h-10 w-10 flex items-center justify-center mx-auto rounded-full
+            onClick={() => !isPastDate && handleDateSelect(cloneDay)}
+            className={`text-sm h-10 w-10 flex items-center justify-center mx-auto rounded-full cursor-pointer
               ${!isSameMonth(day, monthStart) ? "text-gray-400" : ""}
               ${isEvent ? "bg-red-700 text-white font-semibold" : ""}
+              ${isSelected ? "bg-blue-500 text-white" : ""}
+              ${isPastDate ? "text-gray-300 cursor-not-allowed" : ""}
             `}
           >
             {formattedDate}
@@ -91,28 +111,38 @@ const MyAvailabilitySection = () => {
     return <div>{rows}</div>;
   };
 
+  const handleUpdate = () => {
+    // Format the selected dates into a readable message
+
+    console.log(selectedDates);
+    setSelectedDatesMessage(
+      `You have selected the following dates: ${selectedDates}`
+    );
+  };
+
   return (
-    <div className=" bg-white rounded-lg  p-4">
+    <div className="bg-white rounded-lg p-4">
       <h2 className="text-center text-red-800 font-semibold mb-2 text-base sm:text-lg lg:text-xl xl:text-2xl ">
         My Availability
       </h2>
       {renderHeader()}
       {renderDays()}
       {renderCells()}
-      {/* <div className="flex justify-start gap-5 mt-4 items-center">
+      <div className="mt-10">
         <ReuseButton
-          variant="primary"
-          className="flex items-center gap-2 w-fit"
-        >
-          Cancel
-        </ReuseButton>
-        <ReuseButton
+          htmlType="submit"
           variant="secondary"
-          className="flex items-center gap-2 w-fit"
+          className="mt-2"
+          onClick={handleUpdate}
         >
-          Apply
+          Update
         </ReuseButton>
-      </div> */}
+        {selectedDatesMessage && (
+          <div className="mt-4 text-green-600 font-semibold">
+            {selectedDatesMessage}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -173,6 +173,10 @@ const ChooseSpecialization = ({ categories }: { categories: ICategory[] }) => {
         <ReuseButton
           variant="secondary"
           className="!w-fit !text-[10px] sm:!text-xs lg:!text-sm !px-5 !py-2.5"
+          disabled={
+            selectedPhotographySpecializations.length === 0 &&
+            selectedVideographySpecializations.length === 0
+          }
           onClick={handleSubmit}
         >
           Continue

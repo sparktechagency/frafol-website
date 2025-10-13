@@ -5,11 +5,14 @@ import EditProfile from "@/components/shared/EditProfile";
 import ReusableTabs from "@/components/ui/ReusableTabs";
 import React, { useState } from "react";
 import DeleteModal from "@/components/ui/Modal/DeleteModal";
+import { IProfile } from "@/types";
 
 const MyAccountProfile = ({
   activeTab,
+  myData,
 }: {
   activeTab: "profile" | "changePassword";
+  myData: IProfile;
 }) => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any>(null);
@@ -29,7 +32,7 @@ const MyAccountProfile = ({
             {
               label: "Edit Profile",
               value: "profile",
-              content: <EditProfile />,
+              content: <EditProfile myData={myData} />,
             },
             {
               label: "Change Password",

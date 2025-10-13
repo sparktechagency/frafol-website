@@ -2,14 +2,38 @@
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
+import { updateProfile } from "@/services/ProfileService/ProfileServiceApi";
+import { IProfile } from "@/types";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { Form } from "antd";
 import React from "react";
 
-const AccountCredentialPage = () => {
+const AccountCredentialPage = ({ myData }: { myData: IProfile }) => {
   const [form] = Form.useForm();
 
-  const onSubmit = (values: any) => {
-    console.log("Submitted Values:", values);
+  React.useEffect(() => {
+    form.setFieldsValue({
+      bankName: myData?.profileId?.bankName,
+      accountNumber: myData?.profileId?.accountNumber,
+      routingNumber: myData?.profileId?.routingNumber,
+    });
+  }, [form, myData]);
+
+  const onSubmit = async (values: { [key: string]: any }) => {
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(values));
+
+    const res = await tryCatchWrapper(
+      updateProfile,
+      { body: formData },
+      "Updating Account Information...",
+      "Account Information updated successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    if (res?.success) {
+      form.resetFields();
+    }
   };
   return (
     <div className="p-5 text-base-color">

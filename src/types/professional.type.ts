@@ -22,6 +22,8 @@ interface IProfessionalUser {
   role: string;
   address: string;
   hourlyRate: number;
+  maxHourlyRate: number;
+  minHourlyRate: number;
   totalReview: number;
   totalReviews: number;
   averageRating: number;
@@ -40,6 +42,8 @@ interface IProfessional {
   town: string;
   country: string;
   hourlyRate: number;
+  maxHourlyRate: number;
+  minHourlyRate: number;
   averageRating: number;
   totalReview: number;
 }
