@@ -51,15 +51,22 @@ const ProfessionalAddNewPackageModal = ({
 
   const [form] = Form.useForm();
   const priceValue = Form.useWatch("price", form) || 0;
+  const vatAmountValue = Form.useWatch("vatAmount", form) || 0;
 
   useEffect(() => {
     const serviceChagePercentage = serviceCharge / 100;
+    const vatAmountPercentage = vatAmountValue / 100;
+
+    const totalServiceCharge = Number(priceValue) * serviceChagePercentage;
+    const totalVatAmount = Number(priceValue) * vatAmountPercentage;
 
     const mainPriceValue =
-      Number(priceValue) + Number(priceValue) * serviceChagePercentage;
+      Number(priceValue) + totalServiceCharge + totalVatAmount;
+
+    console.log("mainPriceValue", mainPriceValue);
 
     form.setFieldValue("mainPrice", mainPriceValue);
-  }, [form, priceValue, serviceCharge]);
+  }, [form, priceValue, serviceCharge, vatAmountValue]);
 
   const onSubmit = async (values: any) => {
     const formData = new FormData();
@@ -119,7 +126,6 @@ const ProfessionalAddNewPackageModal = ({
           rules={[{ required: true, message: "Title is required" }]}
           labelClassName="!font-semibold"
         />
-
         <ReuseInput
           inputType="textarea"
           rows={4}
@@ -129,7 +135,6 @@ const ProfessionalAddNewPackageModal = ({
           rules={[{ required: true, message: "Description is required" }]}
           labelClassName="!font-semibold mt-4"
         />
-
         <ReuseSelect
           name="category"
           label="Select Category"
@@ -147,19 +152,19 @@ const ProfessionalAddNewPackageModal = ({
           labelClassName="!font-semibold"
         />
         <ReuseInput
+          name="vatAmount"
+          label="VAT Amount % (optional) "
+          placeholder="Enter VAT Amount"
+          type="number"
+          labelClassName="!font-semibold"
+        />
+        <ReuseInput
           name="mainPrice"
           label="Package Price After Adding Service Fee"
           placeholder="Enter Package Price"
           disabled
           type="number"
           rules={[{ required: true, message: "Package Price is required" }]}
-          labelClassName="!font-semibold"
-        />
-        <ReuseInput
-          name="vatAmount"
-          label="VAT Amount % (optional) "
-          placeholder="Enter VAT Amount"
-          type="number"
           labelClassName="!font-semibold"
         />
         <ReuseSelect
@@ -178,14 +183,12 @@ const ProfessionalAddNewPackageModal = ({
             { label: "7 Weeks", value: 49 },
           ]}
         />
-
         <Typography.Title
           level={5}
           className="!font-semibold !text-base-color !mt-4"
         >
           Duration
         </Typography.Title>
-
         <div className="grid grid-cols-2 gap-4">
           <ReuseInput
             name="durationUnit"
@@ -205,7 +208,6 @@ const ProfessionalAddNewPackageModal = ({
             ]}
           />
         </div>
-
         <ReuseUpload
           label="Upload Image"
           name="image"
@@ -214,7 +216,6 @@ const ProfessionalAddNewPackageModal = ({
           maxCount={1}
           labelClassName="!font-semibold"
         />
-
         <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
           Add Package
         </ReuseButton>
