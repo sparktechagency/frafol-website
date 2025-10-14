@@ -9,6 +9,7 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import { IWorkshop } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { formatDate, formetTime } from "@/utils/dateFormet";
+import { useUser } from "@/context/UserContext";
 
 const WorkShopsCards = ({
   data,
@@ -18,6 +19,7 @@ const WorkShopsCards = ({
   openModal: () => void;
 }) => {
   const serverUrl = getServerUrl();
+  const userData = useUser();
   return (
     <div className="p-1.5 rounded-xl border border-background-color flex flex-col justify-between">
       <div>
@@ -87,13 +89,15 @@ const WorkShopsCards = ({
         <p className="text-base sm:text-lg lg:text-xl font-semibold">
           {data?.mainPrice}€
         </p>
-        <ReuseButton
-          variant="secondary"
-          className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
-          onClick={openModal}
-        >
-          Register Now
-        </ReuseButton>
+        {userData?.user?.userId !== data?.authorId?._id && (
+          <ReuseButton
+            variant="secondary"
+            className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
+            onClick={openModal}
+          >
+            Register Now
+          </ReuseButton>
+        )}
       </div>
     </div>
   );

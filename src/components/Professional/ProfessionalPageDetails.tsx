@@ -12,10 +12,11 @@ import ProfessionalPageDetailsMyWork from "./ProfessionalPageDetailsMyWork";
 import ProfessionalPageDetailsBookSession from "./ProfessionalPageDetailsBookSession";
 import ProfessionalReviews from "./ProfessionalReviews";
 import Link from "next/link";
-import { IProfessionalUser, IProfile } from "@/types";
+import { IProfessionalUser, IProfile, ISignInUser } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
+import { getCurrentUser } from "@/services/AuthService";
 
 const ProfessionalPageDetails = async ({
   professionalUser,
@@ -26,6 +27,7 @@ const ProfessionalPageDetails = async ({
   sort: string;
   rating: string;
 }) => {
+  const userData: ISignInUser = await getCurrentUser();
   const serverUrl = getServerUrl();
 
   const res = await fetchWithAuth("/users/my-profile", {
@@ -112,15 +114,17 @@ const ProfessionalPageDetails = async ({
               />
             </div>
           ) : (
-            <div className="flex items-center gap-2">
-              <ReuseButton
-                variant="secondary"
-                className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
-                url="/message"
-              >
-                <AiFillMessage /> Contact
-              </ReuseButton>
-            </div>
+            userData?.userId !== professionalUser?._id && (
+              <div className="flex items-center gap-2">
+                <ReuseButton
+                  variant="secondary"
+                  className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
+                  url="/message"
+                >
+                  <AiFillMessage /> Contact
+                </ReuseButton>
+              </div>
+            )
           )}
         </div>
         <div className="mt-16">
