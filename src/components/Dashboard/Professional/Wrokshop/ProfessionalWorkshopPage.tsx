@@ -22,6 +22,7 @@ const ProfessionalWorkshopPage = ({
   limit,
   workshops,
   totalData,
+  serviceCharge,
 }: {
   tab: string;
   searchText: string;
@@ -29,6 +30,7 @@ const ProfessionalWorkshopPage = ({
   limit: number;
   workshops: IWorkshop[];
   totalData: number;
+  serviceCharge: number;
 }) => {
   console.log("Search Text:", searchText, "Page:", page, "Limit:", limit);
 
@@ -154,11 +156,13 @@ const ProfessionalWorkshopPage = ({
       <ProfessionalAddNewWorkshop
         isAddModalVisible={isAddModalVisible}
         handleCancel={handleCancel}
+        serviceCharge={serviceCharge}
       />
       <ProfessionalEditWorkshop
         isEditModalVisible={isEditModalVisible}
         handleCancel={handleCancel}
         currentRecord={currentRecord}
+        serviceCharge={serviceCharge}
       />
       <DeleteModal
         isDeleteModalVisible={isDeleteModalVisible}

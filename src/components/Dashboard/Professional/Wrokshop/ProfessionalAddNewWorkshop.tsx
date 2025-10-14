@@ -5,7 +5,7 @@ import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
 import ReuseTimePicker from "@/components/ui/Form/ReuseTimePicker";
 import { Form, Modal } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { Dayjs } from "dayjs";
 import ReuseSelect from "@/components/ui/Form/ReuseSelect";
 import ReuseUpload from "@/components/ui/Form/ReuseUpload";
@@ -15,13 +15,31 @@ import { addNewWrokshop } from "@/services/WorkshopService/WorkshopServiceApi";
 const ProfessionalAddNewWorkshop = ({
   isAddModalVisible,
   handleCancel,
+  serviceCharge,
 }: {
   isAddModalVisible: boolean;
   handleCancel: () => void;
+  serviceCharge: number;
 }) => {
   const [form] = Form.useForm();
+  const priceValue = Form.useWatch("price", form) || 0;
+  const vatAmountValue = Form.useWatch("vatAmount", form) || 0;
+
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+
+  useEffect(() => {
+    const serviceChagePercentage = serviceCharge / 100;
+    const vatAmountPercentage = vatAmountValue / 100;
+
+    const totalServiceCharge = Number(priceValue) * serviceChagePercentage;
+    const totalVatAmount = Number(priceValue) * vatAmountPercentage;
+
+    const mainPriceValue =
+      Number(priceValue) + totalServiceCharge + totalVatAmount;
+
+    form.setFieldValue("mainPrice", Number(mainPriceValue?.toFixed(2)));
+  }, [form, priceValue, serviceCharge, vatAmountValue]);
 
   const onSubmit = async (values: any) => {
     const formData = new FormData();
@@ -34,6 +52,7 @@ const ProfessionalAddNewWorkshop = ({
       location: values.location,
       workshopLink: values.workshopLink,
       price: Number(values.price),
+      mainPrice: Number(values.mainPrice),
       description: values.description,
       vatAmount: Number(values.vatAmount) || 0,
     };
@@ -47,8 +66,8 @@ const ProfessionalAddNewWorkshop = ({
     const res = await tryCatchWrapper(
       addNewWrokshop,
       { body: formData },
-      "Adding new package...",
-      "Package added successfully!",
+      "Adding new workshop...",
+      "Workshop added successfully!",
       "Something went wrong! Please try again."
     );
     console.log("res", res);
@@ -161,6 +180,16 @@ const ProfessionalAddNewWorkshop = ({
           />
 
           <ReuseInput
+            name="mainPrice"
+            label="Package Price After Adding Service Fee and VAT"
+            placeholder="Enter Package Price"
+            disabled
+            type="number"
+            rules={[{ required: true, message: "Package Price is required" }]}
+            labelClassName="!font-semibold"
+          />
+
+          <ReuseInput
             inputType="textarea"
             rows={4}
             name="description"
@@ -179,7 +208,7 @@ const ProfessionalAddNewWorkshop = ({
           />
 
           <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
-            Update Workshop
+            Add Workshop
           </ReuseButton>
         </ReusableForm>
       </div>

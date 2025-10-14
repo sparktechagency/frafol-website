@@ -120,7 +120,7 @@ const ProfessionalWorkshopCard = ({
         </div>
         <div className="flex items-center gap-2 mt-5 justify-between">
           <p className="text-base sm:text-lg lg:text-xl font-semibold">
-            {workshop?.price}€
+            {workshop?.mainPrice}€
           </p>
           <ReuseButton
             onClick={() => showViewParticipantModal(workshop)}

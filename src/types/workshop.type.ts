@@ -17,6 +17,7 @@ interface IWorkshop {
   location: string;
   workshopLink: string;
   price: number;
+  mainPrice: number;
   description: string;
   image: string;
   maxParticipant: number;

@@ -19,12 +19,14 @@ const GearMarketplacePage = ({
   categories,
   myGears,
   totalData,
+  serviceCharge,
 }: {
   page: number;
   limit: number;
   categories: ICategory[];
   myGears: IGear[];
   totalData: number;
+  serviceCharge: number;
 }) => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -115,12 +117,14 @@ const GearMarketplacePage = ({
           isAddModalVisible={isAddModalVisible}
           handleCancel={handleCancel}
           categories={categories}
+          serviceCharge={serviceCharge}
         />
         <GearMarketPlaceEditNewGear
           isEditModalVisible={isEditModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
           categories={categories}
+          serviceCharge={serviceCharge}
         />
         <DeleteModal
           isDeleteModalVisible={isDeleteModalVisible}

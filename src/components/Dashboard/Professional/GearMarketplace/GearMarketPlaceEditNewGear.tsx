@@ -18,14 +18,18 @@ const GearMarketPlaceEditNewGear = ({
   handleCancel,
   currentRecord,
   categories,
+  serviceCharge,
 }: {
   isEditModalVisible: boolean;
   handleCancel: () => void;
   currentRecord: any | null;
   categories: ICategory[];
+  serviceCharge: number;
 }) => {
   const serverUrl = getServerUrl();
   const [form] = Form.useForm();
+  const priceValue = Form.useWatch("price", form) || 0;
+  const vatAmountValue = Form.useWatch("VATAmount", form) || 0;
 
   const [deletedImages, setDeletedImages] = React.useState<string[]>([]);
 
@@ -42,6 +46,7 @@ const GearMarketPlaceEditNewGear = ({
         name: currentRecord?.name,
         categoryId: currentRecord?.categoryId?._id,
         price: currentRecord?.price,
+        mainPrice: currentRecord?.mainPrice,
         description: currentRecord?.description,
         condition: currentRecord?.condition,
         shippingCompany: currentRecord?.shippingCompany?.name,
@@ -52,6 +57,19 @@ const GearMarketPlaceEditNewGear = ({
     }
   }, [currentRecord, form]);
 
+  React.useEffect(() => {
+    const serviceChagePercentage = serviceCharge / 100;
+    const vatAmountPercentage = vatAmountValue / 100;
+
+    const totalServiceCharge = Number(priceValue) * serviceChagePercentage;
+    const totalVatAmount = Number(priceValue) * vatAmountPercentage;
+
+    const mainPriceValue =
+      Number(priceValue) + totalServiceCharge + totalVatAmount;
+
+    form.setFieldValue("mainPrice", Number(mainPriceValue?.toFixed(2)));
+  }, [form, priceValue, serviceCharge, vatAmountValue]);
+
   const onSubmit = async (values: any) => {
     const formData = new FormData();
 
@@ -59,6 +77,7 @@ const GearMarketPlaceEditNewGear = ({
       name: values.name,
       categoryId: values.categoryId,
       price: Number(values.price),
+      mainPrice: Number(values.mainPrice),
       description: values.description,
       condition: values.condition,
       shippingCompany: {
@@ -142,6 +161,15 @@ const GearMarketPlaceEditNewGear = ({
               label="VAT Amount % (optional) "
               placeholder="Enter VAT Amount"
               type="number"
+              labelClassName="!font-semibold"
+            />
+            <ReuseInput
+              name="mainPrice"
+              label="Package Price After Adding Service Fee and VAT"
+              placeholder="Enter Package Price"
+              disabled
+              type="number"
+              rules={[{ required: true, message: "Package Price is required" }]}
               labelClassName="!font-semibold"
             />
             <ReuseInput

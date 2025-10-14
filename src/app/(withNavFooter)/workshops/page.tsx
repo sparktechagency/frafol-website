@@ -20,7 +20,7 @@ const page = async ({
 
   const page = Number(params?.page) || 1;
   const searchText = params?.search || "";
-  const limit = 1;
+  const limit = 12;
 
   const res = await fetchWithAuth(
     `/workshop?page=${page}&limit=${limit}&searchTerm=${searchText}`,
@@ -37,7 +37,6 @@ const page = async ({
 
   const workshops: IWorkshop[] = data?.data?.result || [];
 
-  console.log("workshops", workshops);
   return (
     <main>
       <SectionBanner image={AllImages.workspaceBanner?.src} title="Workshops" />

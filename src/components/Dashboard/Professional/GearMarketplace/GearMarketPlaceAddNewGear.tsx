@@ -8,28 +8,45 @@ import { addNewGear } from "@/services/GearService/GearServiceApi";
 import { ICategory } from "@/types";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { Form, Modal } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 
 const GearMarketPlaceAddNewGear = ({
   isAddModalVisible,
   handleCancel,
   categories,
+  serviceCharge,
 }: {
   isAddModalVisible: boolean;
   handleCancel: () => void;
   categories: ICategory[];
+  serviceCharge: number;
 }) => {
   const [form] = Form.useForm();
+  const priceValue = Form.useWatch("price", form) || 0;
+  const vatAmountValue = Form.useWatch("VATAmount", form) || 0;
+
+  useEffect(() => {
+    const serviceChagePercentage = serviceCharge / 100;
+    const vatAmountPercentage = vatAmountValue / 100;
+
+    const totalServiceCharge = Number(priceValue) * serviceChagePercentage;
+    const totalVatAmount = Number(priceValue) * vatAmountPercentage;
+
+    const mainPriceValue =
+      Number(priceValue) + totalServiceCharge + totalVatAmount;
+
+    form.setFieldValue("mainPrice", Number(mainPriceValue?.toFixed(2)));
+  }, [form, priceValue, serviceCharge, vatAmountValue]);
 
   const onSubmit = async (values: any) => {
     const formData = new FormData();
-
     const data = {
       name: values.name,
       categoryId: values.categoryId,
       price: Number(values.price),
       description: values.description,
       condition: values.condition,
+      mainPrice: Number(values.mainPrice),
       shippingCompany: {
         name: values.shippingCompany,
         price: Number(values.shippingPrice),
@@ -110,6 +127,15 @@ const GearMarketPlaceAddNewGear = ({
               label="VAT Amount % (optional) "
               placeholder="Enter VAT Amount"
               type="number"
+              labelClassName="!font-semibold"
+            />
+            <ReuseInput
+              name="mainPrice"
+              label="Package Price After Adding Service Fee and VAT"
+              placeholder="Enter Package Price"
+              disabled
+              type="number"
+              rules={[{ required: true, message: "Package Price is required" }]}
               labelClassName="!font-semibold"
             />
             <ReuseInput

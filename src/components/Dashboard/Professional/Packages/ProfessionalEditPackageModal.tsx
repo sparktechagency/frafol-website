@@ -30,7 +30,7 @@ const ProfessionalEditPackageModal = ({
 
   const [form] = Form.useForm();
   const priceValue = Form.useWatch("price", form) || 0;
-  console.log(priceValue);
+  const vatAmountValue = Form.useWatch("vatAmount", form) || 0;
 
   const categoryOptions =
     userData?.role === "both"
@@ -68,6 +68,7 @@ const ProfessionalEditPackageModal = ({
         title: currentRecord?.title,
         description: currentRecord?.description,
         price: currentRecord?.price,
+        mainPrice: currentRecord?.mainPrice,
         category: currentRecord?.category,
         deliveryTime: currentRecord?.deliveryTime,
         vatAmount: currentRecord?.vatAmount,
@@ -79,12 +80,16 @@ const ProfessionalEditPackageModal = ({
 
   React.useEffect(() => {
     const serviceChagePercentage = serviceCharge / 100;
+    const vatAmountPercentage = vatAmountValue / 100;
+
+    const totalServiceCharge = Number(priceValue) * serviceChagePercentage;
+    const totalVatAmount = Number(priceValue) * vatAmountPercentage;
 
     const mainPriceValue =
-      Number(priceValue) + Number(priceValue) * serviceChagePercentage;
+      Number(priceValue) + totalServiceCharge + totalVatAmount;
 
-    form.setFieldValue("mainPrice", mainPriceValue);
-  }, [form, priceValue, serviceCharge]);
+    form.setFieldValue("mainPrice", Number(mainPriceValue?.toFixed(2)));
+  }, [form, priceValue, serviceCharge, vatAmountValue]);
 
   const onSubmit = async (values: any) => {
     const formData = new FormData();
@@ -173,19 +178,19 @@ const ProfessionalEditPackageModal = ({
           labelClassName="!font-semibold"
         />
         <ReuseInput
-          name="mainPrice"
-          label="Package Price After Adding Service Fee"
-          placeholder="Enter Package Price"
-          disabled
-          type="number"
-          rules={[{ required: true, message: "Package Price is required" }]}
-          labelClassName="!font-semibold"
-        />
-        <ReuseInput
           name="vatAmount"
           label="VAT Amount % (optional) "
           placeholder="Enter VAT Amount"
           type="number"
+          labelClassName="!font-semibold"
+        />
+        <ReuseInput
+          name="mainPrice"
+          label="Package Price After Adding Service Fee and VAT"
+          placeholder="Enter Package Price"
+          disabled
+          type="number"
+          rules={[{ required: true, message: "Package Price is required" }]}
           labelClassName="!font-semibold"
         />
         <ReuseSelect

@@ -63,9 +63,7 @@ const ProfessionalAddNewPackageModal = ({
     const mainPriceValue =
       Number(priceValue) + totalServiceCharge + totalVatAmount;
 
-    console.log("mainPriceValue", mainPriceValue);
-
-    form.setFieldValue("mainPrice", mainPriceValue);
+    form.setFieldValue("mainPrice", Number(mainPriceValue?.toFixed(2)));
   }, [form, priceValue, serviceCharge, vatAmountValue]);
 
   const onSubmit = async (values: any) => {
@@ -160,7 +158,7 @@ const ProfessionalAddNewPackageModal = ({
         />
         <ReuseInput
           name="mainPrice"
-          label="Package Price After Adding Service Fee"
+          label="Package Price After Adding Service Fee and VAT"
           placeholder="Enter Package Price"
           disabled
           type="number"

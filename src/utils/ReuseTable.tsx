@@ -26,7 +26,7 @@ const ReuseTable: React.FC<ReuseTableProps<any>> = ({
   total,
   limit,
   page,
-  scroll = { x: true },
+  scroll = { x: "max-content" },
   onChange,
   keyValue,
 }) => {

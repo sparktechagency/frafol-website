@@ -20,13 +20,18 @@ const ProfessionalEditWorkshop = ({
   isEditModalVisible,
   handleCancel,
   currentRecord,
+  serviceCharge,
 }: {
   isEditModalVisible: boolean;
   handleCancel: () => void;
   currentRecord: IWorkshop | null;
+  serviceCharge: number;
 }) => {
   const serverUrl = getServerUrl();
   const [form] = Form.useForm();
+  const priceValue = Form.useWatch("price", form) || 0;
+  const vatAmountValue = Form.useWatch("vatAmount", form) || 0;
+
   const [selectedDate, setSelectedDate] = useState<IWorkshop | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
 
@@ -45,6 +50,7 @@ const ProfessionalEditWorkshop = ({
         location: currentRecord?.location,
         workshopLink: currentRecord?.workshopLink,
         price: currentRecord?.price,
+        mainPrice: currentRecord?.mainPrice,
         description: currentRecord?.description,
         vatAmount: currentRecord?.vatAmount,
       });
@@ -52,6 +58,19 @@ const ProfessionalEditWorkshop = ({
       setSelectedLocation(currentRecord?.locationType);
     }
   }, [currentRecord, form]);
+
+  useEffect(() => {
+    const serviceChagePercentage = serviceCharge / 100;
+    const vatAmountPercentage = vatAmountValue / 100;
+
+    const totalServiceCharge = Number(priceValue) * serviceChagePercentage;
+    const totalVatAmount = Number(priceValue) * vatAmountPercentage;
+
+    const mainPriceValue =
+      Number(priceValue) + totalServiceCharge + totalVatAmount;
+
+    form.setFieldValue("mainPrice", Number(mainPriceValue?.toFixed(2)));
+  }, [form, priceValue, serviceCharge, vatAmountValue]);
 
   const onSubmit = async (values: any) => {
     const formData = new FormData();
@@ -64,6 +83,7 @@ const ProfessionalEditWorkshop = ({
       location: values.location,
       workshopLink: values.workshopLink,
       price: Number(values.price),
+      mainPrice: Number(values.mainPrice),
       description: values.description,
       vatAmount: Number(values.vatAmount) || 0,
     };
@@ -189,6 +209,16 @@ const ProfessionalEditWorkshop = ({
             placeholder="Enter VAT Amount"
             labelClassName="!font-semibold"
             type="number"
+          />
+
+          <ReuseInput
+            name="mainPrice"
+            label="Package Price After Adding Service Fee and VAT"
+            placeholder="Enter Package Price"
+            disabled
+            type="number"
+            rules={[{ required: true, message: "Package Price is required" }]}
+            labelClassName="!font-semibold"
           />
 
           <ReuseInput

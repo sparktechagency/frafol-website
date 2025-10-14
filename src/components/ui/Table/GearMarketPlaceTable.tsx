@@ -38,6 +38,7 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       key: "_id",
       render: (_: unknown, __: unknown, index: number) =>
         page * limit - limit + index + 1,
+      fixed: "left",
     },
     {
       title: "Item Image",
@@ -52,11 +53,13 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
           className="rounded w-10 h-10 object-cover"
         />
       ),
+      fixed: "left",
     },
     {
       title: "Item Name",
       dataIndex: "name",
       key: "name",
+      fixed: "left",
     },
     {
       title: "Item Category",
@@ -67,7 +70,21 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       title: "Item Price (€)",
       dataIndex: "price",
       key: "price",
+      align: "center",
     },
+    {
+      title: "VAT Amount (%)",
+      dataIndex: "vatAmount",
+      key: "vatAmount",
+      align: "center",
+    },
+    {
+      title: "Item Price After Adding Service Charges & VAT (€)",
+      dataIndex: "mainPrice",
+      key: "mainPrice",
+      align: "center",
+    },
+
     {
       title: "Condition",
       dataIndex: "condition",

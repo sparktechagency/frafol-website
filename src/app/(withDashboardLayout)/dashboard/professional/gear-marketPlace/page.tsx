@@ -35,6 +35,15 @@ const page = async ({
   const categories: ICategory[] = gearData?.data || [];
   const myGears: IGear[] = data?.data?.result || [];
 
+  const serviceChargeRes = await fetchWithAuth(`/commissionSetup`, {
+    next: {
+      tags: [TagTypes.package],
+    },
+  });
+
+  const serviceChargeData = await serviceChargeRes.json();
+  const serviceCharge: number = serviceChargeData?.data?.gearOrders;
+
   return (
     <GearMarketplacePage
       page={page}
@@ -42,6 +51,7 @@ const page = async ({
       categories={categories}
       myGears={myGears}
       totalData={totalData}
+      serviceCharge={serviceCharge}
     />
   );
 };

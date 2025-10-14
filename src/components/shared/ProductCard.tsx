@@ -55,7 +55,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               <span className="font-medium">{product?.condition}</span>
             </p>
             <span className="text-sm sm:text-lg lg:text-xl font-bold">
-              {product?.price}€
+              {product?.mainPrice}€
             </span>
           </div>
         </div>

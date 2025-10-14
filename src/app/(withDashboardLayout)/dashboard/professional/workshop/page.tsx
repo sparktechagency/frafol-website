@@ -31,7 +31,14 @@ const page = async ({
 
   const workshops: IWorkshop[] = data?.data?.result || [];
 
-  console.log("workshops", workshops);
+  const serviceChargeRes = await fetchWithAuth(`/commissionSetup`, {
+    next: {
+      tags: [TagTypes.package],
+    },
+  });
+
+  const serviceChargeData = await serviceChargeRes.json();
+  const serviceCharge: number = serviceChargeData?.data?.workShop;
 
   return (
     <ProfessionalWorkshopPage
@@ -41,6 +48,7 @@ const page = async ({
       limit={limit}
       workshops={workshops}
       totalData={totalData}
+      serviceCharge={serviceCharge}
     />
   );
 };

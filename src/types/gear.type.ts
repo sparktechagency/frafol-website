@@ -20,6 +20,7 @@ interface IGear {
   categoryId: IGearCategory;
   name: string;
   price: number;
+  mainPrice: number;
   description: string;
   condition: "new" | "used"; // You can use union types if there are specific conditions
   gallery: string[]; // Array of image URLs
