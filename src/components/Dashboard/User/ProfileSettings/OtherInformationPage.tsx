@@ -1,10 +1,11 @@
 import React from "react";
 import MyAvailabilitySection from "./MyAvailabilitySection";
+import { IProfile } from "@/types";
 
-const OtherInformationPage = () => {
+const OtherInformationPage = ({ myData }: { myData: IProfile }) => {
   return (
     <div>
-      <MyAvailabilitySection />
+      <MyAvailabilitySection myData={myData} />
     </div>
   );
 };

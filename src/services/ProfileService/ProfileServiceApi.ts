@@ -43,3 +43,24 @@ export const updateGallery = async (
     return Error(error);
   }
 };
+
+export const updateUnavailableDates = async (
+  req = { body: FormData, params: {} }
+) => {
+  console.log("Request Body", req.body);
+  try {
+    const res = await fetchWithAuth(`/users/setUnAvailability`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req.body),
+    });
+    const result = await res.json();
+    revalidateTag(TagTypes.profile);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

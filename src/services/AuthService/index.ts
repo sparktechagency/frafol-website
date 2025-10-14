@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { fetchWithAuth } from "@/lib/fetchWraper";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 
@@ -295,6 +296,35 @@ export const getNewToken = async () => {
     );
 
     return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const changeUserPassword = async (
+  req = {
+    body: {},
+    params: {},
+  }
+) => {
+  try {
+    const res = await fetchWithAuth(`/auth/change-password`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req.body),
+    });
+    const result = await res.json();
+
+    if (result.success) {
+      (await cookies()).delete("frafolMainAccessToken");
+      (await cookies()).delete("frafolMainRefreshToken");
+    }
+
+    console.log(result);
+
+    return result;
   } catch (error: any) {
     return Error(error);
   }

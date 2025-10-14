@@ -16,7 +16,7 @@ const ProfileSettingsPage = ({
     | "profile"
     | "portfolio"
     | "accountCredentials"
-    | "availability"
+    | "unavailability"
     | "changePassword";
   myData: IProfile;
 }) => {
@@ -43,9 +43,9 @@ const ProfileSettingsPage = ({
               content: <AccountCredentialPage myData={myData} />, // Placeholder for account credentials content
             },
             {
-              label: "Availability",
-              value: "availability",
-              content: <OtherInformationPage />, // Placeholder for other information content
+              label: "Unavailability",
+              value: "unavailability",
+              content: <OtherInformationPage myData={myData} />, // Placeholder for other information content
             },
             {
               label: "Change Password",

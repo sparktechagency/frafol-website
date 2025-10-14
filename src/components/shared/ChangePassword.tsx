@@ -3,6 +3,9 @@ import { Form, FormInstance } from "antd";
 import ReusableForm from "../ui/Form/ReuseForm";
 import ReuseInput from "../ui/Form/ReuseInput";
 import ReuseButton from "../ui/Button/ReuseButton";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { changeUserPassword } from "@/services/AuthService";
+import { useRouter } from "next/navigation";
 
 const inputStructure = [
   {
@@ -55,6 +58,7 @@ const inputStructure = [
 ];
 
 const ChangePassword = () => {
+  const router = useRouter();
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
@@ -62,20 +66,20 @@ const ChangePassword = () => {
       oldPassword: values.currentPassword,
       newPassword: values.confirmNewPassword,
     };
-    console.log(data);
 
-    // const res = await tryCatchWrapper(
-    //   updatePassword,
-    //   { body: data },
-    //   "Changing Password..."
-    // );
-    // if (res.statusCode === 200) {
-    //   Cookies.remove("forkprint_accessToken");
-    //   Cookies.remove("forkprint_userData");
+    const res = await tryCatchWrapper(
+      changeUserPassword,
+      {
+        body: data,
+      },
+      "Changing Password...",
+      "Password Changed Successfully!",
+      "Something went wrong! Please try again."
+    );
 
-    //   window.location.href = "/sign-in";
-    //   window.location.reload();
-    // }
+    if (res?.success) {
+      router?.push("/sign-in");
+    }
   };
   return (
     <div className="lg:w-[70%] mt-20">

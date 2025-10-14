@@ -15,7 +15,7 @@ const page = async ({
       | "profile"
       | "portfolio"
       | "accountCredentials"
-      | "availability"
+      | "unavailability"
       | "changePassword") || "profile";
 
   const res = await fetchWithAuth("/users/my-profile", {

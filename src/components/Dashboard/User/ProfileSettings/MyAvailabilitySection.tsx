@@ -12,16 +12,24 @@ import {
   isSameDay,
   isBefore,
 } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { updateUnavailableDates } from "@/services/ProfileService/ProfileServiceApi";
+import { IProfile } from "@/types";
 
-const upcomingEventDates = [new Date(2025, 4, 6), new Date(2025, 4, 24)]; // May 6 and 24, 2025
-
-const MyAvailabilitySection = () => {
+const MyAvailabilitySection = ({ myData }: { myData: IProfile }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
-  const [selectedDatesMessage, setSelectedDatesMessage] = useState<string>("");
+  const [selectedDates, setSelectedDates] = useState<string[]>([]);
+
+  console.log("myData in MyAvailabilitySection", myData?.unAvailability);
+
+  useEffect(() => {
+    if (myData?.unAvailability) {
+      setSelectedDates(myData?.unAvailability);
+    }
+  }, [myData?.unAvailability]);
 
   const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
   const prevMonth = () => setCurrentMonth(addMonths(currentMonth, -1));
@@ -32,10 +40,14 @@ const MyAvailabilitySection = () => {
       return;
     }
 
-    setSelectedDates((prev) =>
-      prev.some((d) => isSameDay(d, date))
-        ? prev.filter((d) => !isSameDay(d, date))
-        : [...prev, date]
+    // Format the date to "yyyy-MM-dd"
+    const formattedDate = format(date, "yyyy-MM-dd");
+
+    setSelectedDates(
+      (prev) =>
+        prev.some((d) => d === formattedDate)
+          ? prev.filter((d) => d !== formattedDate) // Remove the date if already selected
+          : [...prev, formattedDate] // Add the date if not selected
     );
   };
 
@@ -80,7 +92,6 @@ const MyAvailabilitySection = () => {
         formattedDate = format(day, "d");
         const cloneDay = day;
 
-        const isEvent = upcomingEventDates.some((d) => isSameDay(d, cloneDay));
         const isSelected = selectedDates.some((d) => isSameDay(d, cloneDay));
         const isPastDate = isBefore(cloneDay, new Date());
 
@@ -90,8 +101,7 @@ const MyAvailabilitySection = () => {
             onClick={() => !isPastDate && handleDateSelect(cloneDay)}
             className={`text-sm h-10 w-10 flex items-center justify-center mx-auto rounded-full cursor-pointer
               ${!isSameMonth(day, monthStart) ? "text-gray-400" : ""}
-              ${isEvent ? "bg-red-700 text-white font-semibold" : ""}
-              ${isSelected ? "bg-blue-500 text-white" : ""}
+              ${isSelected ? "bg-red-700 text-white" : ""}
               ${isPastDate ? "text-gray-300 cursor-not-allowed" : ""}
             `}
           >
@@ -111,19 +121,38 @@ const MyAvailabilitySection = () => {
     return <div>{rows}</div>;
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     // Format the selected dates into a readable message
-
-    console.log(selectedDates);
-    setSelectedDatesMessage(
-      `You have selected the following dates: ${selectedDates}`
+    const formattedDates = selectedDates.map((date) =>
+      format(date, "yyyy-MM-dd")
     );
+    console.log(formattedDates);
+
+    const res = await tryCatchWrapper(
+      updateUnavailableDates,
+      {
+        body: {
+          unAvailability: formattedDates,
+        },
+      },
+      "Updating Unavailable Dates...",
+      "Unavailable Dates Updated Successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    console.log("Res", res);
+
+    if (res?.success) {
+      setSelectedDates([]);
+    }
   };
+
+  console.log("Selectd Dates.", selectedDates);
 
   return (
     <div className="bg-white rounded-lg p-4">
       <h2 className="text-center text-red-800 font-semibold mb-2 text-base sm:text-lg lg:text-xl xl:text-2xl ">
-        My Availability
+        My Unavailable Dates
       </h2>
       {renderHeader()}
       {renderDays()}
@@ -137,11 +166,6 @@ const MyAvailabilitySection = () => {
         >
           Update
         </ReuseButton>
-        {selectedDatesMessage && (
-          <div className="mt-4 text-green-600 font-semibold">
-            {selectedDatesMessage}
-          </div>
-        )}
       </div>
     </div>
   );
