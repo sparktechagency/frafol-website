@@ -114,6 +114,7 @@ const ProfessionalPageDetails = async ({
               />
             </div>
           ) : (
+            myData?.role &&
             userData?.userId !== professionalUser?._id && (
               <div className="flex items-center gap-2">
                 <ReuseButton
