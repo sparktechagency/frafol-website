@@ -5,7 +5,7 @@ import React from "react";
 
 const PaginationSection = ({
   page,
-  limit,
+  limit = 12,
   totalData,
 }: {
   page: number;

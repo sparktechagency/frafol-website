@@ -4,11 +4,9 @@ import { BsEye } from "react-icons/bs";
 import { IoCalendarOutline } from "react-icons/io5";
 
 const PaymentsCard = ({
-  activeTab,
   data,
   openModal = () => {},
 }: {
-  activeTab: string;
   data: any;
   openModal?: () => void;
 }) => {
@@ -29,22 +27,14 @@ const PaymentsCard = ({
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mt-1">
             {data.amount}
           </p>
-          {activeTab === "paymentHistory" ? (
-            <button
-              onClick={() => openModal()}
-              className="flex items-center gap-1 px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 text-sm transition cursor-pointer"
-            >
-              <BsEye size={16} />
-              View Details
-            </button>
-          ) : (
-            <button
-              onClick={() => openModal()}
-              className="flex items-center gap-1 px-3 py-1 border border-secondary-color rounded bg-secondary-color text-white text-sm transition cursor-pointer"
-            >
-              Pay Now
-            </button>
-          )}
+
+          <button
+            onClick={() => openModal()}
+            className="flex items-center gap-1 px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 text-sm transition cursor-pointer"
+          >
+            <BsEye size={16} />
+            View Details
+          </button>
         </div>
       </div>
     </div>

@@ -7,7 +7,6 @@ import UserConfirmOrder from "./UserConfirmOrder";
 import UserDeliveriedOrder from "./UserDeliveriedOrder";
 import UserPendingOrder from "./UserPendingOrder";
 import UserOrderOffer from "./UserOrderOffer";
-import UserMyOffer from "./userMyOffer";
 import UserCancleOrder from "./UserCancleOrder";
 import ReuseSelect from "@/components/ui/Form/ReuseSelect";
 import { Form } from "antd";
@@ -16,9 +15,15 @@ import UserConfirmGearOrder from "./UserConfirmGearOrder";
 import UserDeliveriedGearOrder from "./UserDeliveriedGearOrder";
 import UserCancleGearOrder from "./UserCancleGearOrder";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import PendingPayment from "../Payment/PendingPayment";
+import { IEventOrder } from "@/types";
 
 const UserOrdersPage = ({
   activeTab,
+  page,
+  totalData,
+  myEventData,
+  limit = 12,
 }: {
   activeTab:
     | "currentOrder"
@@ -26,8 +31,12 @@ const UserOrdersPage = ({
     | "delivered"
     | "pending"
     | "orderOffer"
-    | "myOffers"
+    | "accepted"
     | "cancelled";
+  page: number;
+  totalData: number;
+  myEventData: IEventOrder[];
+  limit: number;
 }) => {
   const searchParams = useSearchParams();
   const pathName = usePathname();
@@ -88,10 +97,18 @@ const UserOrdersPage = ({
               {
                 label: "Current Order",
                 value: "currentOrder",
-                content: <UserCurrentOrder activeTab={activeTab} />,
+                content: (
+                  <UserCurrentOrder
+                    activeTab={activeTab}
+                    page={page}
+                    totalData={totalData}
+                    myEventData={myEventData}
+                    limit={limit}
+                  />
+                ),
               },
               {
-                label: "To Confirm",
+                label: "Confirm Delivery",
                 value: "toConfirm",
                 content: <UserConfirmOrder activeTab={activeTab} />,
               },
@@ -101,19 +118,43 @@ const UserOrdersPage = ({
                 content: <UserDeliveriedOrder activeTab={activeTab} />,
               },
               {
-                label: "Pending",
+                label: "My Request",
                 value: "pending",
-                content: <UserPendingOrder activeTab={activeTab} />,
+                content: (
+                  <UserPendingOrder
+                    activeTab={activeTab}
+                    page={page}
+                    totalData={totalData}
+                    myEventData={myEventData}
+                    limit={limit}
+                  />
+                ),
               },
               {
                 label: "Order Offer",
                 value: "orderOffer",
-                content: <UserOrderOffer activeTab={activeTab} />,
+                content: (
+                  <UserOrderOffer
+                    activeTab={activeTab}
+                    page={page}
+                    totalData={totalData}
+                    myEventData={myEventData}
+                    limit={limit}
+                  />
+                ),
               },
               {
-                label: "My Offers",
-                value: "myOffers",
-                content: <UserMyOffer activeTab={activeTab} />,
+                label: "Pending Payment",
+                value: "accepted",
+                content: (
+                  <PendingPayment
+                    activeTab={activeTab}
+                    page={page}
+                    totalData={totalData}
+                    myEventData={myEventData}
+                    limit={limit}
+                  />
+                ),
               },
               {
                 label: "Cancelled",

@@ -1,4 +1,6 @@
 import UserOrdersPage from "@/components/Dashboard/User/Orders/UserOrdersPage";
+import TagTypes from "@/helpers/config/TagTypes";
+import { fetchWithAuth } from "@/lib/fetchWraper";
 import React from "react";
 
 const page = async ({
@@ -14,9 +16,37 @@ const page = async ({
       | "delivered"
       | "pending"
       | "orderOffer"
-      | "myOffers"
+      | "accepted"
       | "cancelled") || "currentOrder";
-  return <UserOrdersPage activeTab={tab} />;
+
+  const page = Number(params?.page) || 1;
+  const limit = 12;
+
+  const eventRes = await fetchWithAuth(
+    `/event-order/my-orders?role=user&tab=${tab}&page=${page}&limit=${limit}&sort=date`,
+    {
+      next: {
+        tags: [TagTypes.eventOrder],
+      },
+    }
+  );
+
+  const eventData = await eventRes.json();
+
+  const myEventData = eventData?.data?.data || [];
+  const totalData = eventData?.data?.meta?.total;
+
+  console.log("myEventData", { myEventData, totalData });
+
+  return (
+    <UserOrdersPage
+      activeTab={tab}
+      page={page}
+      totalData={totalData}
+      limit={limit}
+      myEventData={myEventData}
+    />
+  );
 };
 
 export default page;

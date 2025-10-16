@@ -160,7 +160,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
   const onSubmit = async (values: ICreateEventOrder) => {
     const data = {
       orderType: "custom",
-      serviceProviderId: professionalUser?.profileId?._id,
+      serviceProviderId: professionalUser?._id,
 
       date: values.date,
       time: values.time,
@@ -170,7 +170,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
       serviceType: values.serviceType,
       description: values.description,
 
-      isRegisterAsCompany: values.isRegisterAsCompany,
+      isRegisterAsCompany: type === "company" ? true : false,
       name: values.name,
       sureName: values.sureName,
       streetAddress: values.streetAddress,
@@ -183,6 +183,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
       DIC: values.DIC,
       IC_DPH: values.IC_DPH,
     };
+
     const res = await tryCatchWrapper(
       createEventOrder,
       { body: data },

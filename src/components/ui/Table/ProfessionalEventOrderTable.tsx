@@ -1,84 +1,126 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Space, Tooltip } from "antd";
 import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
+import { IEventOrder } from "@/types";
+import { formatDate, formetTime } from "@/utils/dateFormet";
+import { budgetLabels } from "@/utils/budgetLabels";
 
 // Define the type for the props
 interface ProfessionalEventOrderTableProps {
-  data: any[]; // Replace `unknown` with the actual type of your data array
+  data: IEventOrder[];
   loading: boolean;
-  showViewModal: (record: any) => void; // Function to handle viewing a user
-  setPage?: (page: number) => void; // Function to handle pagination
+  showViewModal: (record: IEventOrder) => void;
+  setPage?: (page: number) => void;
   page?: number;
   total?: number;
   limit?: number;
-  activeTab?: string; // Optional prop for active tab
+  activeTab?: string;
 }
 
 const ProfessionalEventOrderTable: React.FC<
   ProfessionalEventOrderTableProps
-> = ({
-  data,
-  loading,
-  showViewModal,
-  setPage,
-  page,
-  total,
-  limit,
-  activeTab,
-}) => {
+> = ({ data, loading, showViewModal, page, total, limit, activeTab }) => {
+  console.log(activeTab);
   const columns = [
     {
       title: "Order ID",
       dataIndex: "orderId",
       key: "orderId",
+      fixed: "left",
     },
     {
       title: "Client Name",
-      dataIndex: "clientName",
-      key: "clientName",
+      dataIndex: "userId",
+      key: "userId",
+      render: (_: unknown, record: IEventOrder) =>
+        record?.companyName || record?.name || record?.userId?.name,
+      fixed: "left",
+    },
+    {
+      title: "User Type",
+      dataIndex: "isRegisterAsCompany",
+      key: "isRegisterAsCompany",
+      render: (_: unknown, record: IEventOrder) =>
+        record?.isRegisterAsCompany ? "Company" : "Personal",
     },
     {
       title: "Service Type",
       dataIndex: "serviceType",
       key: "serviceType",
+      render: (text: string) => <span className="capitalize">{text}</span>,
     },
     {
-      title: "Service Category",
-      dataIndex: "serviceCategory",
-      key: "serviceCategory",
+      title: "Package Name",
+      dataIndex: ["packageId", "title"],
+      key: "packageId",
+      render: (text: string) => (
+        <div>
+          {text ? (
+            <p className="capitalize">{text}</p>
+          ) : (
+            <p className="capitalize text-center">-</p>
+          )}
+        </div>
+      ),
     },
     {
       title: "Order Type",
       dataIndex: "orderType",
       key: "orderType",
+      render: (text: string) => (
+        <span className="capitalize">{text} Order</span>
+      ),
     },
     {
       title: "Price",
-      dataIndex: "price",
-      key: "price",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
+      render: (text: string, record: IEventOrder) => (
+        <div>
+          {text ? (
+            <p className="capitalize text-center">{text}€</p>
+          ) : (
+            <p className="capitalize">
+              {budgetLabels[record?.budget_range as string] ||
+                record?.budget_range}
+            </p>
+          )}
+        </div>
+      ),
     },
     {
       title: "Date",
       dataIndex: "date",
       key: "date",
+      render: (text: string) => formatDate(text),
+    },
+    {
+      title: "Time",
+      dataIndex: "time",
+      key: "time",
+      render: (text: string) => formetTime(text),
     },
     {
       title: "Location",
       dataIndex: "location",
       key: "location",
+      width: 400,
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: () => <span className=" font-semibold">{activeTab}</span>,
+      render: (status: string) => (
+        <span className=" font-semibold capitalize">
+          {status === "accepted" ? "Waiting for Payment" : status}
+        </span>
+      ),
     },
     {
       title: "Action",
       key: "action",
-      render: (_: unknown, record: any) => (
+      render: (_: unknown, record: IEventOrder) => (
         <Space size="middle">
           {/* View Details Tooltip */}
           <Tooltip placement="right" title="View Details">
@@ -100,11 +142,10 @@ const ProfessionalEventOrderTable: React.FC<
       columns={columns}
       data={data}
       loading={loading}
-      setPage={setPage}
       total={total}
       limit={limit}
       page={page}
-      keyValue={"email"}
+      keyValue={"orderId"}
     />
   );
 };

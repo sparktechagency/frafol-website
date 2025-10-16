@@ -4,18 +4,80 @@ import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
 import ReuseDatePicker from "@/components/ui/Form/ReuseDatePicker";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
-
+import { useEffect, useState } from "react";
+import { IEventOrder } from "@/types";
+import { acceptCustomOrder } from "@/services/EventOrderService/EventOrderServiceApi";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import dayjs from "dayjs";
 const EventCreateOrderModal = ({
   isViewModalVisible,
   handleCancel,
   currentRecord,
-}: any) => {
+  serviceCharge,
+}: {
+  isViewModalVisible: boolean;
+  handleCancel: () => void;
+  currentRecord: IEventOrder | null;
+  serviceCharge: number;
+}) => {
   const [form] = Form.useForm();
+  const priceValue = Form.useWatch("price", form) || 0;
+  const vatAmountValue = Form.useWatch("vatAmount", form) || 0;
+  const [priceWithServiceCharge, setPriceWithServiceCharge] =
+    useState<number>(0);
 
-  const onSubmit = (values: any) => {
-    console.log(values);
+  useEffect(() => {
+    const serviceChagePercentage = serviceCharge / 100;
+    const vatAmountPercentage = vatAmountValue / 100;
+
+    const totalServiceCharge = Number(priceValue) * serviceChagePercentage;
+    const totalVatAmount = Number(priceValue) * vatAmountPercentage;
+
+    setPriceWithServiceCharge(priceValue + totalServiceCharge);
+
+    const mainPriceValue =
+      Number(priceValue) + totalServiceCharge + totalVatAmount;
+
+    form.setFieldValue("totalPrice", Number(mainPriceValue?.toFixed(2)));
+  }, [form, priceValue, serviceCharge, vatAmountValue]);
+
+  const onSubmit = async (values: any) => {
+    // Ensure date is correctly formatted before sending to API
+    const formattedDate = values?.["date "]
+      ? dayjs(values["date "]).format("YYYY-MM-DD")
+      : null; // Format the Day.js object
+
+    // Prepare the data object
+    const data = {
+      price: Number(values.price),
+      vatAmount: Number(values.vatAmount),
+      priceWithServiceFee: Number(priceWithServiceCharge),
+      totalPrice: Number(values.totalPrice),
+      deliveryDate: formattedDate,
+      description: values.description,
+    };
+
+    console.log({ data, values }); // Debugging: Log both `data` and `values` for inspection
+
+    // Try catching API call and handling errors
+    const res = await tryCatchWrapper(
+      acceptCustomOrder,
+      {
+        params: currentRecord?._id,
+        body: data,
+      },
+      "Adding new package...",
+      "Package added successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    if (res?.success) {
+      form.resetFields();
+      setPriceWithServiceCharge(0);
+      handleCancel(); // Handle cancel if the request is successful
+    }
   };
-  console.log(currentRecord);
+
   return (
     <Modal
       open={isViewModalVisible}
@@ -32,7 +94,7 @@ const EventCreateOrderModal = ({
       </h3>
 
       <ReusableForm form={form} handleFinish={onSubmit}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1  gap-1">
           <ReuseInput
             name="price"
             label="Total Price ($)"
@@ -40,17 +102,26 @@ const EventCreateOrderModal = ({
             rules={[{ required: true, message: "Total Price is required" }]}
             labelClassName="!font-semibold"
           />
-          <ReuseDatePicker
-            name="date"
-            label="Delivery Date"
-            rules={[{ required: true, message: "Delivery Date is required" }]}
-            labelClassName="!font-semibold"
-          />
           <ReuseInput
             name="vatAmount"
             label="VAT Amount (%) (Optional)"
             placeholder="Enter VAT Amount"
             // rules={[{ required: true, message: "VAT Amount is required" }]}
+            labelClassName="!font-semibold"
+          />
+          <ReuseInput
+            name="totalPrice"
+            label="Package Price After Adding Service Fee and VAT"
+            placeholder="Enter Package Price"
+            disabled
+            type="number"
+            rules={[{ required: true, message: "Package Price is required" }]}
+            labelClassName="!font-semibold"
+          />{" "}
+          <ReuseDatePicker
+            name="date "
+            label="Delivery Date"
+            rules={[{ required: true, message: "Delivery Date is required" }]}
             labelClassName="!font-semibold"
           />
         </div>

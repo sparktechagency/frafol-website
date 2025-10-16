@@ -1,4 +1,6 @@
 import EventOrdersPage from "@/components/Dashboard/Professional/EventOrders/EventOrdersPage";
+import TagTypes from "@/helpers/config/TagTypes";
+import { fetchWithAuth } from "@/lib/fetchWraper";
 import React from "react";
 
 const page = async ({
@@ -9,12 +11,50 @@ const page = async ({
   const params = await searchParams;
   const tab =
     (params?.tab as
-      | "Delivered"
-      | "InProgress"
-      | "Upcoming"
-      | "Pending"
-      | "Cancelled") || "Delivered";
-  return <EventOrdersPage activeTab={tab} />;
+      | "delivered"
+      | "inProgress"
+      | "upcoming"
+      | "pending"
+      | "accepted"
+      | "cancelled") || "delivered";
+
+  const page = Number(params?.page) || 1;
+
+  const eventRes = await fetchWithAuth(
+    `/event-order/my-orders?role=professional&tab=${tab}&page=${page}&limit=12`,
+    {
+      next: {
+        tags: [TagTypes.eventOrder],
+      },
+    }
+  );
+
+  const eventData = await eventRes.json();
+
+  const myEventData = eventData?.data?.data || [];
+  const totalData = eventData?.data?.meta?.total;
+
+  const serviceChargeRes = await fetchWithAuth(`/commissionSetup`, {
+    next: {
+      tags: [TagTypes.package],
+    },
+  });
+
+  const serviceChargeData = await serviceChargeRes.json();
+  const serviceCharge: number = serviceChargeData?.data?.photoVideoGrapy;
+
+  console.log("data", myEventData);
+  console.log(myEventData?.length);
+
+  return (
+    <EventOrdersPage
+      activeTab={tab}
+      myEventData={myEventData}
+      totalData={totalData}
+      page={page}
+      serviceCharge={serviceCharge}
+    />
+  );
 };
 
 export default page;

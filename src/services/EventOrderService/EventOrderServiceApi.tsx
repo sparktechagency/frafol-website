@@ -26,6 +26,73 @@ export const createEventOrder = async (req: {
   }
 };
 
+export const acceptDirectOrder = async (req: {
+  body: ICreateEventOrder;
+  params: any;
+}) => {
+  console.log(req?.params);
+  try {
+    const res = await fetchWithAuth(
+      `/event-order/direct/accept/${req.params}`,
+      {
+        method: "PATCH",
+      }
+    );
+    const result = await res.json();
+    revalidateTag(TagTypes.eventOrder);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const acceptCustomOrder = async (req: {
+  body: ICreateEventOrder;
+  params: any;
+}) => {
+  console.log(req?.params);
+  try {
+    const res = await fetchWithAuth(
+      `/event-order/custom/accept/${req.params}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json", // Add content type header for JSON
+        },
+        body: JSON.stringify(req.body),
+      }
+    );
+    const result = await res.json();
+    revalidateTag(TagTypes.eventOrder);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const cancelEventOrder = async (req: {
+  body: ICreateEventOrder;
+  params: any;
+}) => {
+  console.log(req?.params, req.body);
+  try {
+    const res = await fetchWithAuth(`/event-order/cancel/${req.params}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json", // Add content type header for JSON
+      },
+      body: JSON.stringify(req.body),
+    });
+    const result = await res.json();
+    revalidateTag(TagTypes.eventOrder);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
 // export const updateGear = async (
 //   req = {
 //     body: FormData,

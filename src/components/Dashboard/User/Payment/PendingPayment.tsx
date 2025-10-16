@@ -1,44 +1,54 @@
 import React from "react";
-import PaymentsCard from "./PaymentsCard";
-import PaymenViewModal from "./PaymentViewModal";
+import { IEventOrder } from "@/types";
+import UserOrderCard from "../Orders/UserOrderCard";
+import PaginationSection from "@/components/shared/PaginationSection";
+import UserOrderViewModal from "../Orders/UserOrderViewModal";
 
-const data = [
-  {
-    title: "Wedding Photography",
-    role: "Photographer",
-    name: "Peter Kováč",
-    date: "May 23, 2023",
-    amount: "$2,000",
-  },
-  {
-    title: "Canon EOS 2000D",
-    role: "Seller",
-    name: "Mark Kováč",
-    date: "May 24, 2025",
-    amount: "$5,000",
-  },
-];
-
-const PendingPayment = ({ activeTab }: { activeTab: string }) => {
+const PendingPayment = ({
+  activeTab,
+  page,
+  totalData,
+  myEventData,
+  limit,
+}: {
+  activeTab: string;
+  page: number;
+  totalData: number;
+  myEventData: IEventOrder[];
+  limit: number;
+}) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const handleCancel = () => setIsModalOpen(false);
+  const [currentRecord, setCurrentRecord] = React.useState<IEventOrder | null>(
+    null
+  );
+  const openModal = (record: IEventOrder) => {
+    setIsModalOpen(true);
+    setCurrentRecord(record);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setCurrentRecord(null);
+  };
   return (
     <div>
       <div className="flex flex-col gap-5">
-        {data?.map((item, index) => (
-          <PaymentsCard
-            activeTab={activeTab}
-            openModal={openModal}
-            key={index}
+        {myEventData?.map((item) => (
+          <UserOrderCard
             data={item}
+            activeTab={activeTab}
+            key={item?._id}
+            openModal={openModal}
           />
         ))}
       </div>
-      <PaymenViewModal
+      <div className="mt-10 flex justify-center items-center">
+        <PaginationSection page={page} totalData={totalData} limit={limit} />
+      </div>
+      <UserOrderViewModal
         isViewModalVisible={isModalOpen}
         handleCancel={handleCancel}
-        currentRecord={data[0]}
+        currentRecord={currentRecord}
+        activeModal={activeTab}
       />
     </div>
   );

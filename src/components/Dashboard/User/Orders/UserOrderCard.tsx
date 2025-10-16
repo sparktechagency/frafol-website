@@ -1,36 +1,113 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { getServerUrl } from "@/helpers/config/envConfig";
+import { IEventOrder } from "@/types";
+import { budgetLabels } from "@/utils/budgetLabels";
+import { formatDate, formetTime } from "@/utils/dateFormet";
+import Image from "next/image";
 import { BsEye } from "react-icons/bs";
-import { IoCalendarOutline, IoCheckmarkSharp } from "react-icons/io5";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import {
+  IoCalendarOutline,
+  IoCheckmarkSharp,
+  IoTimeOutline,
+} from "react-icons/io5";
+import { AllImages } from "../../../../../public/assets/AllImages";
+import { FaEuroSign } from "react-icons/fa6";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { completePayment } from "@/services/PaymentService/PaymentServiceApi";
 
 const UserOrderCard = ({
   activeTab,
   data,
-  openModal = () => {},
+  openModal,
 }: {
   activeTab: string;
-  data: any;
-  openModal?: () => void;
+  data: IEventOrder;
+  openModal?: any;
 }) => {
-  console.log(data);
+  const serverUrl = getServerUrl();
+
+  const handlePayment = async (data: IEventOrder) => {
+    const value = {
+      paymentType: "event", //"event" || "gear" || "workshop"
+      eventOrderId: data?._id, // "eventOrderId" || "gearOrderId" || "workshopId"
+    };
+
+    const res = await tryCatchWrapper(
+      completePayment,
+      { body: value },
+      "Waiting for payment...",
+      "Redirecting to Stripe to Complete Payment From Stripe",
+      "Something went wrong! Please try again."
+    );
+
+    console.log("res", res);
+
+    if (res?.success) {
+      window.open(res?.data?.checkoutUrl, "_blank"); // Opens in a new tab
+    }
+  };
+
   return (
-    <div className="p-4 rounded-md border border-[#E1E1E1] shadow-xs hover:shadow-md transition-all duration-200">
+    <div
+      className={`p-4 rounded-md border border-[#E1E1E1] shadow-xs hover:shadow-md transition-all duration-200`}
+    >
       <div>
-        <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mb-1">
-          Standard Wedding Photography
-        </h3>
-        <h4 className="text-xs sm:text-sm lg:text-base xl:text-lg font-bold mb-1">
-          Wedding Photography
-        </h4>
-        <p className="text-xs sm:text-sm lg:text-base text-gray-700">
-          By Peter Kováč
-        </p>
-        <div className="text-xs sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-1">
-          <IoCalendarOutline />
-          <span>May 24, 2025</span>
+        <div className="flex items-center gap-2 text-xs">
+          <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mb-1">
+            {data?.packageId?.title || "Custom Order"}
+          </h3>{" "}
+          <p className="px-2 py-0.5 rounded-full bg-secondary-color text-primary-color w-fit capitalize">
+            {data?.orderType}
+          </p>
+          <p className="px-2 py-0.5 rounded-full bg-yellow-500 text-primary-color w-fit capitalize">
+            {data?.status === "accepted" ? "Payment Required" : data?.status}
+          </p>
         </div>
+        <h4 className="text-xs sm:text-sm lg:text-base xl:text-lg font-bold mb-1 capitalize">
+          {data?.serviceType}
+        </h4>
+        <div className="text-sm sm:text-base lg:text-lg text-gray-700 flex items-center my-3 gap-1">
+          <Image
+            src={
+              data?.serviceProviderId?.profileImage
+                ? serverUrl + data?.serviceProviderId?.profileImage
+                : AllImages.dummyProfile
+            }
+            width={1000}
+            height={1000}
+            className="w-6 h-6 rounded-full object-cover"
+            alt="user"
+          />
+          <p>{data?.serviceProviderId?.name}</p>
+        </div>
+
+        <div className="flex items-center gap-5">
+          <div className="text-xs sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-1">
+            <IoCalendarOutline />
+            <span>{formatDate(data?.date)}</span>
+          </div>
+          <div className="text-xs sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-1">
+            <IoTimeOutline />
+            <span>{formetTime(data?.time)}</span>
+          </div>
+        </div>
+        <p className="text-xs sm:text-sm text-[#5D5D5D] flex items-start gap-2 my-1">
+          <div className="flex items-center text-nowrap">
+            <FaMapMarkerAlt /> <span>Location : </span>
+          </div>
+          {data?.location}
+        </p>
         <div className="flex items-center justify-between">
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mt-1">
-            $500
+            {data?.totalPrice ? (
+              <span>{data?.totalPrice}€</span>
+            ) : (
+              <span>
+                {budgetLabels[data?.budget_range as string] ||
+                  data?.budget_range}
+              </span>
+            )}
           </p>
           {activeTab === "toConfirm" ? (
             <div className="flex items-center gap-2">
@@ -42,7 +119,7 @@ const UserOrderCard = ({
                 Complete
               </button>
               <button
-                onClick={() => openModal()}
+                onClick={() => openModal(data)}
                 className="flex items-center gap-1 px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 text-sm transition cursor-pointer"
               >
                 <BsEye size={16} />
@@ -52,14 +129,31 @@ const UserOrderCard = ({
           ) : activeTab === "orderOffer" ? (
             <div className="flex items-center gap-2">
               <button
-                // onClick={() => openModal()}
+                onClick={() => handlePayment(data)}
                 className="flex items-center gap-1 px-3 py-1 border border-[#00C566] text-primary-color rounded bg-[#00C566] text-sm transition cursor-pointer"
               >
                 <IoCheckmarkSharp size={16} />
                 Accept Order
               </button>
               <button
-                onClick={() => openModal()}
+                onClick={() => openModal(data)}
+                className="flex items-center gap-1 px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 text-sm transition cursor-pointer"
+              >
+                <BsEye size={16} />
+                View Details
+              </button>
+            </div>
+          ) : activeTab === "accepted" ? (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handlePayment(data)}
+                className="flex items-center gap-1 px-3 py-1 border border-[#00C566] text-primary-color rounded bg-[#00C566] text-sm transition cursor-pointer"
+              >
+                <FaEuroSign size={16} />
+                Pay
+              </button>
+              <button
+                onClick={() => openModal(data)}
                 className="flex items-center gap-1 px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 text-sm transition cursor-pointer"
               >
                 <BsEye size={16} />
@@ -69,7 +163,7 @@ const UserOrderCard = ({
           ) : (
             <div className="flex items-center gap-2">
               <button
-                onClick={() => openModal()}
+                onClick={() => openModal(data)}
                 className="flex items-center gap-1 px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 text-sm transition cursor-pointer"
               >
                 <BsEye size={16} />

@@ -46,8 +46,6 @@ const page = async ({
   const serviceChargeData = await serviceChargeRes.json();
   const serviceCharge: number = serviceChargeData?.data?.photoVideoGrapy;
 
-  console.log("serviceCharge", serviceCharge);
-
   return (
     <PackagesPage
       tab={activeTab}

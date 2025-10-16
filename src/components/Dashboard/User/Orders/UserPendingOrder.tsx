@@ -1,27 +1,53 @@
 import React from "react";
 import UserOrderCard from "./UserOrderCard";
 import UserOrderViewModal from "./UserOrderViewModal";
+import PaginationSection from "@/components/shared/PaginationSection";
+import { IEventOrder } from "@/types";
 
-const UserPendingOrder = ({ activeTab }: { activeTab: string }) => {
+const UserPendingOrder = ({
+  activeTab,
+  page,
+  totalData,
+  myEventData,
+  limit,
+}: {
+  activeTab: string;
+  page: number;
+  totalData: number;
+  myEventData: IEventOrder[];
+  limit: number;
+}) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const handleCancel = () => setIsModalOpen(false);
+  const [currentRecord, setCurrentRecord] = React.useState<IEventOrder | null>(
+    null
+  );
+  const openModal = (record: IEventOrder) => {
+    setIsModalOpen(true);
+    setCurrentRecord(record);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setCurrentRecord(null);
+  };
   return (
     <div>
       <div className="space-y-5">
-        {Array.from({ length: 2 }).map((_, index) => (
+        {myEventData?.map((item) => (
           <UserOrderCard
-            data={null}
+            data={item}
             activeTab={activeTab}
-            key={index}
+            key={item?._id}
             openModal={openModal}
           />
         ))}
       </div>
+      <div className="mt-10 flex justify-center items-center">
+        <PaginationSection page={page} totalData={totalData} limit={limit} />
+      </div>
       <UserOrderViewModal
         isViewModalVisible={isModalOpen}
         handleCancel={handleCancel}
-        currentRecord={null}
+        currentRecord={currentRecord}
         activeModal={activeTab}
       />
     </div>

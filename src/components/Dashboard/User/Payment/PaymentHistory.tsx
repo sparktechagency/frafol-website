@@ -20,7 +20,7 @@ const data = [
   },
 ];
 
-const PaymentHistory = ({ activeTab }: { activeTab: string }) => {
+const PaymentHistory = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const openModal = () => setIsModalOpen(true);
   const handleCancel = () => setIsModalOpen(false);
@@ -28,12 +28,7 @@ const PaymentHistory = ({ activeTab }: { activeTab: string }) => {
     <div>
       <div className="flex flex-col gap-5">
         {data?.map((item, index) => (
-          <PaymentsCard
-            activeTab={activeTab}
-            openModal={openModal}
-            key={index}
-            data={item}
-          />
+          <PaymentsCard openModal={openModal} key={index} data={item} />
         ))}
       </div>
       <PaymenViewModal

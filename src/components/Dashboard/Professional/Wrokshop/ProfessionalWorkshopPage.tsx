@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import SearchInput from "@/components/ui/Form/ReuseSearchInput";

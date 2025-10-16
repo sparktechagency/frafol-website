@@ -1,16 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "antd";
 import { FaMapMarkerAlt, FaClock, FaCalendarAlt } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import Image from "next/image";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
+import { IEventOrder } from "@/types";
+import { formatDate, formetTime } from "@/utils/dateFormet";
+import { budgetLabels } from "@/utils/budgetLabels";
+import { getServerUrl } from "@/helpers/config/envConfig";
 
 interface UserOrderViewModalProps {
   isViewModalVisible: boolean;
   handleCancel: () => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  currentRecord: any | null;
+  currentRecord: IEventOrder | null;
   activeModal: string;
+  showCancelModal?: any;
 }
 
 const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
@@ -18,7 +23,10 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
   handleCancel,
   currentRecord,
   activeModal,
+  showCancelModal,
 }) => {
+  const serverUrl = getServerUrl();
+
   return (
     <Modal
       open={isViewModalVisible}
@@ -36,16 +44,19 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
         {/* Title & Category */}
         <div className="mb-3">
           <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
-            Custom Photography
+            {currentRecord?.packageId?.title || "Custom Order"}
           </p>
           <p className="text-sm sm:text-base lg:text-kg xl:text-xl font-medium">
-            Wedding Photography
+            {currentRecord?.serviceType}
           </p>
           <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
-            By {currentRecord?.name || "Peter Kováč"}
+            By {currentRecord?.serviceProviderId?.name}
           </p>
           <p className="text-xs lg:text-sm text-gray-500 mt-1 flex items-center gap-1">
-            <FaCalendarAlt /> {currentRecord?.date || "May 24, 2025"}
+            <FaCalendarAlt /> {formatDate(currentRecord?.date)}
+          </p>
+          <p className="text-xs lg:text-sm text-gray-500 mt-1 flex items-center gap-1">
+            <FaClock /> {formetTime(currentRecord?.time)}
           </p>
         </div>
 
@@ -57,14 +68,19 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
           <div className="mt-2">
             {" "}
             <p className="text-xs sm:text-sm lg:text-base">
-              <span className="font-semibold">Order Date :</span> May 24, 2024
+              <span className="font-semibold">Order Date :</span>{" "}
+              {formatDate(currentRecord?.statusTimestamps?.createdAt)} -{" "}
+              {formetTime(currentRecord?.statusTimestamps?.createdAt)}
             </p>
             <p className="text-xs sm:text-sm lg:text-base">
-              <span className="font-semibold">Event Date :</span> May 28, 2024
+              <span className="font-semibold">Event Date :</span>{" "}
+              {formatDate(currentRecord?.date)} -{" "}
+              {formetTime(currentRecord?.time)}
             </p>
             <p className="text-xs sm:text-sm lg:text-base">
-              <span className="font-semibold">Delivery Date :</span> June 6,
-              2024
+              <span className="font-semibold">Delivery Date :</span>{" "}
+              {formatDate(currentRecord?.statusTimestamps?.deliveredAt)} -{" "}
+              {formetTime(currentRecord?.statusTimestamps?.deliveredAt)}
             </p>
           </div>
         </div>
@@ -74,17 +90,23 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
             Photographer Information
           </h4>
-          <div className="flex items-center gap-3 mt-2">
+          <div className="flex items-center gap-1 mt-2">
             <Image
-              src={AllImages.dummyProfile}
+              src={
+                currentRecord?.serviceProviderId?.profileImage
+                  ? serverUrl + currentRecord?.serviceProviderId?.profileImage
+                  : AllImages.dummyProfile
+              }
               alt="photographer"
               width={50}
               height={50}
-              className="rounded-full object-cover"
+              className="rounded-full h-7 w-7 object-cover"
             />
             <div>
-              <p className="font-bold">Peter Kováč</p>
-              <p className="text-sm text-gray-600">Wedding Photographer</p>
+              <p className="font-bold text-base">
+                {currentRecord?.serviceProviderId?.name}
+              </p>
+              {/* <p className="text-sm text-gray-600">Wedding Photographer</p> */}
             </div>
           </div>
         </div>
@@ -94,11 +116,15 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold mb-2">
             Event Details
           </h4>
-          <p className="text-xs sm:text-sm lg:text-base flex items-center gap-2">
-            <FaMapMarkerAlt /> <span>Location : Bratislava</span>
+          <p className="text-xs sm:text-sm lg:text-base flex items-start gap-2 mb-2">
+            <div className="flex items-center text-nowrap">
+              <FaMapMarkerAlt /> <span>Location : </span>
+            </div>
+            {currentRecord?.location}
           </p>
-          <p className="text-xs sm:text-sm lg:text-base flex items-center gap-2">
-            <FaClock /> <span>Duration : 4 Hours</span>
+          <p className="text-xs sm:text-sm lg:text-base flex items-center gap-2 mb-2">
+            <FaClock /> <span>Time : </span>
+            {formetTime(currentRecord?.time)}
           </p>
         </div>
 
@@ -108,13 +134,29 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
             Payment Details
           </h4>
           <p className="text-xs sm:text-sm lg:text-base xl:text-lg mt-2">
-            <span className="font-semibold">Amount :</span> $
-            {currentRecord?.amount || "200"}
+            <span className="font-semibold">
+              {currentRecord?.totalPrice ? "Amount" : "Budget Range"} :
+            </span>{" "}
+            {currentRecord?.totalPrice ||
+              budgetLabels[currentRecord?.budget_range as string] ||
+              currentRecord?.budget_range}
           </p>
         </div>
         <div className="mt-5">
           {activeModal === "currentOrder" ? (
-            <ReuseButton variant="secondary">Cancle Order</ReuseButton>
+            <ReuseButton
+              onClick={() => showCancelModal(currentRecord)}
+              variant="secondary"
+            >
+              Cancle Order
+            </ReuseButton>
+          ) : activeModal === "orderOffer" ? (
+            <ReuseButton
+              variant="secondary"
+              onClick={() => showCancelModal(currentRecord)}
+            >
+              Cancle Order
+            </ReuseButton>
           ) : activeModal === "delivered" ? (
             <ReuseButton variant="secondary">Download Invoice</ReuseButton>
           ) : null}

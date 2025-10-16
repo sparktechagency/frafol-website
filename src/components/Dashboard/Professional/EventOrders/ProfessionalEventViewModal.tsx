@@ -1,16 +1,21 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { Modal } from "antd";
 import Image from "next/image";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { FaClock } from "react-icons/fa6";
 import { AllImages } from "../../../../../public/assets/AllImages";
+import { IEventOrder } from "@/types";
+import { getServerUrl } from "@/helpers/config/envConfig";
+import { formatDate, formetTime } from "@/utils/dateFormet";
+import { acceptDirectOrder } from "@/services/EventOrderService/EventOrderServiceApi";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { budgetLabels } from "@/utils/budgetLabels";
 
 interface ProfessionalEventViewModalProps {
-  showCreateOrderModal: any;
+  showCreateOrderModal: ({ record }: { record: IEventOrder | null }) => void;
   isViewModalVisible: boolean;
   handleCancel: () => void;
-  currentRecord: any | null;
+  currentRecord: IEventOrder | null;
   activeTab: string; // Optional prop for active tab
 }
 const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
@@ -18,8 +23,25 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
   isViewModalVisible,
   handleCancel,
   currentRecord,
-  activeTab, // Default to "Pending" if not provided
+  activeTab, // Default to "pending" if not provided
 }) => {
+  const serverUrl = getServerUrl();
+
+  const handleDirectAccept = async (record: IEventOrder) => {
+    const res = await tryCatchWrapper(
+      acceptDirectOrder,
+      {
+        params: record?._id,
+      },
+      "Accepting Order...",
+      "Order accepted successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    if (res?.success) {
+      handleCancel();
+    }
+  };
   return (
     <Modal
       open={isViewModalVisible}
@@ -36,13 +58,13 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
         {/* Title & Category */}
         <div className="mb-3">
           <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
-            Standard Wedding Photography
+            {currentRecord?.packageId?.title || "Custom Order"}
           </p>
-          <p className="text-sm sm:text-base lg:text-kg xl:text-xl font-medium">
-            Wedding Photography
+          <p className="text-sm sm:text-base lg:text-kg xl:text-xl font-medium capitalize mt-1">
+            {currentRecord?.serviceType}
           </p>
           <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
-            By {currentRecord?.name || "Peter Kováč"}
+            By {currentRecord?.serviceProviderId?.name}
           </p>
         </div>
 
@@ -51,19 +73,51 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
             Client Information
           </h4>
-          <div className="flex items-center gap-3 mt-2">
+          <div className="flex flex-col gap-1 my-2 ">
             <Image
-              src={AllImages.dummyProfile}
+              src={
+                currentRecord?.userId?.profileImage
+                  ? serverUrl + currentRecord?.userId?.profileImage
+                  : AllImages.dummyProfile
+              }
               alt="photographer"
               width={50}
               height={50}
               className="rounded-full object-cover"
             />
             <div>
-              <p className="font-bold">Peter Kováč</p>
-              <p className="text-sm text-gray-600">Wedding Photographer</p>
+              <p className="font-bold text-lg">
+                {currentRecord?.companyName ||
+                  currentRecord?.name ||
+                  currentRecord?.userId?.name}
+              </p>
+              <p className="text-base font-semibold text-gray-600">
+                {currentRecord?.isRegisterAsCompany ? "Company" : "Personal"}
+              </p>
+
+              {/* <p className="text-sm text-gray-600">Wedding Photographer</p> */}
             </div>
           </div>
+          {currentRecord?.ICO ? (
+            <p className="text-sm font-semibold">
+              ICO :{" "}
+              <span className="text-secondary-color">{currentRecord?.ICO}</span>
+            </p>
+          ) : null}
+          {currentRecord?.IC_DPH ? (
+            <p className="text-sm font-semibold">
+              IC_DPH :{" "}
+              <span className="text-secondary-color">
+                {currentRecord?.IC_DPH}
+              </span>
+            </p>
+          ) : null}
+          {currentRecord?.DIC ? (
+            <p className="text-sm font-semibold">
+              DIC :{" "}
+              <span className="text-secondary-color">{currentRecord?.DIC}</span>
+            </p>
+          ) : null}
         </div>
 
         {/* Order Info */}
@@ -74,12 +128,15 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           <div className="mt-2">
             {" "}
             <p className="text-xs sm:text-sm lg:text-base">
-              <span className="font-semibold">Order Date :</span> May 24, 2024
+              <span className="font-semibold">Order Date :</span>{" "}
+              {formatDate(currentRecord?.createdAt)}
             </p>
-            <p className="text-xs sm:text-sm lg:text-base">
-              <span className="font-semibold">Delivery Date :</span> June 6,
-              2024
-            </p>
+            {currentRecord?.status !== "pending" && (
+              <p className="text-xs sm:text-sm lg:text-base">
+                <span className="font-semibold">Delivery Date :</span>{" "}
+                {formatDate(currentRecord?.statusTimestamps?.deliveredAt)}
+              </p>
+            )}
           </div>
         </div>
 
@@ -88,14 +145,19 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold mb-2">
             Event Details
           </h4>
-          <p className="text-xs lg:text-sm text-gray-500 mt-1 flex items-center gap-1">
-            <FaCalendarAlt /> {currentRecord?.date || "May 24, 2025"}
+          <p className="text-xs sm:text-sm lg:text-base mt-1 flex items-center gap-1 mb-2">
+            <FaCalendarAlt /> <span>Event Date : </span>
+            {formatDate(currentRecord?.date)}
           </p>
-          <p className="text-xs sm:text-sm lg:text-base flex items-center gap-2">
-            <FaMapMarkerAlt /> <span>Location : Bratislava</span>
+          <p className="text-xs sm:text-sm lg:text-base flex items-start gap-2 mb-2">
+            <div className="flex items-center text-nowrap">
+              <FaMapMarkerAlt /> <span>Location : </span>
+            </div>
+            {currentRecord?.location}
           </p>
-          <p className="text-xs sm:text-sm lg:text-base flex items-center gap-2">
-            <FaClock /> <span>Time : 12:00 PM</span>
+          <p className="text-xs sm:text-sm lg:text-base flex items-center gap-2 mb-2">
+            <FaClock /> <span>Time : </span>
+            {formetTime(currentRecord?.time)}
           </p>
         </div>
 
@@ -105,8 +167,12 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
             Payment Details
           </h4>
           <p className="text-xs sm:text-sm lg:text-base xl:text-lg mt-2">
-            <span className="font-semibold">Amount :</span> $
-            {currentRecord?.amount || "200"}
+            <span className="font-semibold">
+              {currentRecord?.totalPrice ? "Amount" : "Budget Range"} :
+            </span>{" "}
+            {currentRecord?.totalPrice ||
+              budgetLabels[currentRecord?.budget_range as string] ||
+              currentRecord?.budget_range}
           </p>
         </div>
         {activeTab === "Delivered" ? (
@@ -118,7 +184,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               Download Invoice with Admin
             </ReuseButton>
           </div>
-        ) : activeTab === "InProgress" ? (
+        ) : activeTab === "inProgress" ? (
           <div className="mt-5 flex gap-3 items-center justify-center flex-wrap">
             <ReuseButton
               variant="secondary"
@@ -139,10 +205,14 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               Request Extension
             </ReuseButton>
           </div>
-        ) : activeTab === "Pending" ? (
+        ) : activeTab === "pending" ? (
           <div className="mt-5 flex gap-3 items-center justify-center flex-wrap">
             <ReuseButton
-              onClick={() => showCreateOrderModal({ record: currentRecord })}
+              onClick={() =>
+                currentRecord?.orderType === "custom"
+                  ? showCreateOrderModal({ record: currentRecord })
+                  : handleDirectAccept(currentRecord as IEventOrder)
+              }
               variant="secondary"
               className="!text-white !bg-success !border-success !w-fit"
             >

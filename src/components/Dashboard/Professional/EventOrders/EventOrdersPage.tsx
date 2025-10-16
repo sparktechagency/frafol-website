@@ -6,27 +6,27 @@ import ProfessionalEventViewModal from "./ProfessionalEventViewModal";
 import EventOrdersOverview from "./EventOrdersOverview";
 import ReusableTabs from "@/components/ui/ReusableTabs";
 import EventCreateOrderModal from "./EventCreateOrderModal";
+import { IEventOrder } from "@/types";
 
 const EventOrdersPage = ({
   activeTab,
+  myEventData,
+  totalData,
+  page,
+  serviceCharge,
 }: {
-  activeTab: "Delivered" | "InProgress" | "Upcoming" | "Pending" | "Cancelled";
+  activeTab:
+    | "delivered"
+    | "inProgress"
+    | "upcoming"
+    | "pending"
+    | "accepted"
+    | "cancelled";
+  myEventData: IEventOrder[];
+  totalData: number;
+  page: number;
+  serviceCharge: number;
 }) => {
-  const ordersData = Array.from({ length: 20 }).map((_, index) => ({
-    key: index + 1,
-    orderId: 1223,
-    clientName: "Lívia Nováková",
-    serviceType: "Photo",
-    serviceCategory: "Wedding Photography",
-    orderType: "Direct",
-    price: "$200",
-    date: "24 May, 2025",
-    location: "Trencin, Slovakia",
-    status: "Pending",
-  }));
-
-  const [page, setPage] = useState(1);
-
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -71,63 +71,74 @@ const EventOrdersPage = ({
             tabs={[
               {
                 label: "Delivered",
-                value: "Delivered",
+                value: "delivered",
                 content: (
                   <ProfessionalEventOrderTable
-                    data={ordersData}
+                    data={myEventData}
                     loading={false}
                     showViewModal={showViewUserModal}
-                    setPage={setPage}
                     page={page}
-                    total={ordersData?.length}
+                    total={totalData}
                     limit={limit}
                     activeTab={activeTab}
                   />
                 ),
               },
               {
-                label: "InProgress",
-                value: "InProgress",
+                label: "In Progress",
+                value: "inProgress",
                 content: (
                   <ProfessionalEventOrderTable
-                    data={ordersData}
+                    data={myEventData}
                     loading={false}
                     showViewModal={showViewUserModal}
-                    setPage={setPage}
                     page={page}
-                    total={ordersData?.length}
+                    total={totalData}
                     limit={limit}
                     activeTab={activeTab}
                   />
                 ),
               },
               {
-                label: "Upcoming",
-                value: "Upcoming",
+                label: "Upcoming Event",
+                value: "upcoming",
                 content: (
                   <ProfessionalEventOrderTable
-                    data={ordersData}
+                    data={myEventData}
                     loading={false}
                     showViewModal={showViewUserModal}
-                    setPage={setPage}
                     page={page}
-                    total={ordersData?.length}
+                    total={totalData}
                     limit={limit}
                     activeTab={activeTab}
                   />
                 ),
               },
               {
-                label: "Pending",
-                value: "Pending",
+                label: "Pending Request",
+                value: "pending",
                 content: (
                   <ProfessionalEventOrderTable
-                    data={ordersData}
+                    data={myEventData}
                     loading={false}
                     showViewModal={showViewUserModal}
-                    setPage={setPage}
                     page={page}
-                    total={ordersData?.length}
+                    total={totalData}
+                    limit={limit}
+                    activeTab={activeTab}
+                  />
+                ),
+              },
+              {
+                label: "Waiting for Payment",
+                value: "accepted",
+                content: (
+                  <ProfessionalEventOrderTable
+                    data={myEventData}
+                    loading={false}
+                    showViewModal={showViewUserModal}
+                    page={page}
+                    total={totalData}
                     limit={limit}
                     activeTab={activeTab}
                   />
@@ -135,15 +146,14 @@ const EventOrdersPage = ({
               },
               {
                 label: "Cancelled",
-                value: "Cancelled",
+                value: "cancelled",
                 content: (
                   <ProfessionalEventOrderTable
-                    data={ordersData}
+                    data={myEventData}
                     loading={false}
                     showViewModal={showViewUserModal}
-                    setPage={setPage}
                     page={page}
-                    total={ordersData?.length}
+                    total={totalData}
                     limit={limit}
                     activeTab={activeTab}
                   />
@@ -163,6 +173,7 @@ const EventOrdersPage = ({
           isViewModalVisible={isCreateOrderModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
+          serviceCharge={serviceCharge}
         />
       </div>
     </div>
