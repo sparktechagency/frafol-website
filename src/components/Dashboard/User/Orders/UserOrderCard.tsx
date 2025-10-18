@@ -20,10 +20,12 @@ const UserOrderCard = ({
   activeTab,
   data,
   openModal,
+  showConfirmModal,
 }: {
   activeTab: string;
   data: IEventOrder;
   openModal?: any;
+  showConfirmModal?: any;
 }) => {
   const serverUrl = getServerUrl();
 
@@ -61,7 +63,11 @@ const UserOrderCard = ({
             {data?.orderType}
           </p>
           <p className="px-2 py-0.5 rounded-full bg-yellow-500 text-primary-color w-fit capitalize">
-            {data?.status === "accepted" ? "Payment Required" : data?.status}
+            {data?.status === "accepted"
+              ? "Payment Required"
+              : data?.status === "inProgress"
+              ? "In Progress"
+              : data?.status}
           </p>
         </div>
         <h4 className="text-xs sm:text-sm lg:text-base xl:text-lg font-bold mb-1 capitalize">
@@ -112,7 +118,7 @@ const UserOrderCard = ({
           {activeTab === "toConfirm" ? (
             <div className="flex items-center gap-2">
               <button
-                // onClick={() => openModal()}
+                onClick={() => showConfirmModal(data)}
                 className="flex items-center gap-1 px-3 py-1 border border-[#00C566] text-[#00C566] rounded bg-[#00C56633] text-sm transition cursor-pointer"
               >
                 <IoCheckmarkSharp size={16} />

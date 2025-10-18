@@ -75,7 +75,6 @@ export const cancelEventOrder = async (req: {
   body: ICreateEventOrder;
   params: any;
 }) => {
-  console.log(req?.params, req.body);
   try {
     const res = await fetchWithAuth(`/event-order/cancel/${req.params}`, {
       method: "PATCH",
@@ -84,6 +83,45 @@ export const cancelEventOrder = async (req: {
       },
       body: JSON.stringify(req.body),
     });
+    const result = await res.json();
+    revalidateTag(TagTypes.eventOrder);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const sendDeliveryRequest = async (req: {
+  body: ICreateEventOrder;
+  params: any;
+}) => {
+  try {
+    const res = await fetchWithAuth(
+      `/event-order/request-delivery/${req.params}`,
+      {
+        method: "PATCH",
+      }
+    );
+    const result = await res.json();
+    revalidateTag(TagTypes.eventOrder);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const acceptDeliveryRequest = async (req: {
+  body: ICreateEventOrder;
+  params: any;
+}) => {
+  try {
+    const res = await fetchWithAuth(
+      `/event-order/accept-delivery/${req.params}`,
+      {
+        method: "PATCH",
+      }
+    );
     const result = await res.json();
     revalidateTag(TagTypes.eventOrder);
 

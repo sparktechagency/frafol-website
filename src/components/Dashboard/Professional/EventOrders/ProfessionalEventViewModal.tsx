@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { Modal } from "antd";
 import Image from "next/image";
@@ -13,6 +14,7 @@ import { budgetLabels } from "@/utils/budgetLabels";
 
 interface ProfessionalEventViewModalProps {
   showCreateOrderModal: ({ record }: { record: IEventOrder | null }) => void;
+  showSendDeliveryRequestModal?: any;
   isViewModalVisible: boolean;
   handleCancel: () => void;
   currentRecord: IEventOrder | null;
@@ -20,6 +22,7 @@ interface ProfessionalEventViewModalProps {
 }
 const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
   showCreateOrderModal,
+  showSendDeliveryRequestModal,
   isViewModalVisible,
   handleCancel,
   currentRecord,
@@ -129,12 +132,16 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
             {" "}
             <p className="text-xs sm:text-sm lg:text-base">
               <span className="font-semibold">Order Date :</span>{" "}
-              {formatDate(currentRecord?.createdAt)}
+              {`${formatDate(currentRecord?.createdAt)} - ${formetTime(
+                currentRecord?.createdAt
+              )}`}
             </p>
             {currentRecord?.status !== "pending" && (
               <p className="text-xs sm:text-sm lg:text-base">
                 <span className="font-semibold">Delivery Date :</span>{" "}
-                {formatDate(currentRecord?.statusTimestamps?.deliveredAt)}
+                {`${formatDate(currentRecord?.deliveryDate)} - ${formetTime(
+                  currentRecord?.deliveryDate
+                )}`}
               </p>
             )}
           </div>
@@ -175,7 +182,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               currentRecord?.budget_range}
           </p>
         </div>
-        {activeTab === "Delivered" ? (
+        {activeTab === "delivered" ? (
           <div className="mt-5 flex flex-col items-center gap-5">
             <ReuseButton variant="secondary" className="!w-fit">
               Download Invoice With Client
@@ -187,6 +194,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
         ) : activeTab === "inProgress" ? (
           <div className="mt-5 flex gap-3 items-center justify-center flex-wrap">
             <ReuseButton
+              onClick={() => showSendDeliveryRequestModal()}
               variant="secondary"
               className="!text-white !bg-success !border-success !w-fit"
             >

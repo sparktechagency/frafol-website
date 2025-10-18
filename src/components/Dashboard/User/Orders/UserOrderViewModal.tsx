@@ -77,11 +77,13 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               {formatDate(currentRecord?.date)} -{" "}
               {formetTime(currentRecord?.time)}
             </p>
-            <p className="text-xs sm:text-sm lg:text-base">
-              <span className="font-semibold">Delivery Date :</span>{" "}
-              {formatDate(currentRecord?.statusTimestamps?.deliveredAt)} -{" "}
-              {formetTime(currentRecord?.statusTimestamps?.deliveredAt)}
-            </p>
+            {currentRecord?.status !== "cancelled" && (
+              <p className="text-xs sm:text-sm lg:text-base">
+                <span className="font-semibold">Expected Delivery Date :</span>{" "}
+                {formatDate(currentRecord?.deliveryDate)} -{" "}
+                {formetTime(currentRecord?.deliveryDate)}
+              </p>
+            )}
           </div>
         </div>
 
@@ -144,6 +146,20 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
         </div>
         <div className="mt-5">
           {activeModal === "currentOrder" ? (
+            <ReuseButton
+              onClick={() => showCancelModal(currentRecord)}
+              variant="secondary"
+            >
+              Cancle Order
+            </ReuseButton>
+          ) : activeModal === "toConfirm" ? (
+            <ReuseButton
+              onClick={() => showCancelModal(currentRecord)}
+              variant="secondary"
+            >
+              Cancle Order
+            </ReuseButton>
+          ) : activeModal === "accepted" ? (
             <ReuseButton
               onClick={() => showCancelModal(currentRecord)}
               variant="secondary"

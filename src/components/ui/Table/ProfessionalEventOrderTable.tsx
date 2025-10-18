@@ -4,7 +4,7 @@ import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
 import { IEventOrder } from "@/types";
 import { formatDate, formetTime } from "@/utils/dateFormet";
-import { budgetLabels } from "@/utils/budgetLabels";
+import { budgetLabels, eventOrderStatus } from "@/utils/budgetLabels";
 
 // Define the type for the props
 interface ProfessionalEventOrderTableProps {
@@ -90,9 +90,15 @@ const ProfessionalEventOrderTable: React.FC<
       ),
     },
     {
-      title: "Date",
+      title: "Event Date",
       dataIndex: "date",
       key: "date",
+      render: (text: string) => formatDate(text),
+    },
+    {
+      title: "Expected Delivery Date",
+      dataIndex: "deliveryDate",
+      key: "deliveryDate",
       render: (text: string) => formatDate(text),
     },
     {
@@ -105,18 +111,36 @@ const ProfessionalEventOrderTable: React.FC<
       title: "Location",
       dataIndex: "location",
       key: "location",
-      width: 400,
+      width: 300,
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (status: string) => (
+      render: (status: string, record: IEventOrder) => (
         <span className=" font-semibold capitalize">
-          {status === "accepted" ? "Waiting for Payment" : status}
+          {eventOrderStatus[record?.status as string] || record?.status}
         </span>
       ),
     },
+    ...(activeTab === "inProgress"
+      ? [
+          {
+            title: "Delivery Status",
+            dataIndex: "status",
+            key: "status",
+            render: (status: string) => (
+              <span className="font-semibold capitalize">
+                {status === "inProgress"
+                  ? "Request Not Sent"
+                  : status === "deliveryRequest"
+                  ? "On Pending"
+                  : "Delivery Request Decline"}
+              </span>
+            ),
+          },
+        ]
+      : []),
     {
       title: "Action",
       key: "action",

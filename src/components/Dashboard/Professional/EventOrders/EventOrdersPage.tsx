@@ -7,6 +7,7 @@ import EventOrdersOverview from "./EventOrdersOverview";
 import ReusableTabs from "@/components/ui/ReusableTabs";
 import EventCreateOrderModal from "./EventCreateOrderModal";
 import { IEventOrder } from "@/types";
+import SendDeliveryRequestModal from "@/components/ui/Modal/Event/SendDeliveryRequestModal";
 
 const EventOrdersPage = ({
   activeTab,
@@ -34,6 +35,11 @@ const EventOrdersPage = ({
   const [isCreateOrderModalVisible, setIsCreateOrderModalVisible] =
     useState(false);
 
+  const [
+    isSendDeliveryRequestModalVisible,
+    setIsSendDeliveryRequestModalVisible,
+  ] = useState(false);
+
   const [currentRecord, setCurrentRecord] = useState(null);
 
   const showViewUserModal = (record: any) => {
@@ -46,6 +52,10 @@ const EventOrdersPage = ({
     setCurrentRecord(record);
     setIsViewModalVisible(false);
     setIsCreateOrderModalVisible(true);
+  };
+
+  const showSendDeliveryRequestModal = () => {
+    setIsSendDeliveryRequestModalVisible(true);
   };
 
   const handleCancel = () => {
@@ -166,6 +176,7 @@ const EventOrdersPage = ({
           showCreateOrderModal={showCreateOrderModal}
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
+          showSendDeliveryRequestModal={showSendDeliveryRequestModal}
           currentRecord={currentRecord}
           activeTab={activeTab}
         />
@@ -174,6 +185,14 @@ const EventOrdersPage = ({
           handleCancel={handleCancel}
           currentRecord={currentRecord}
           serviceCharge={serviceCharge}
+        />
+        <SendDeliveryRequestModal
+          isSendDeliveryRequestModalVisible={isSendDeliveryRequestModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
+          setIsSendDeliveryRequestModalVisible={
+            setIsSendDeliveryRequestModalVisible
+          }
         />
       </div>
     </div>

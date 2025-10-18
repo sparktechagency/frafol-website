@@ -110,12 +110,28 @@ const UserOrdersPage = ({
               {
                 label: "Confirm Delivery",
                 value: "toConfirm",
-                content: <UserConfirmOrder activeTab={activeTab} />,
+                content: (
+                  <UserConfirmOrder
+                    activeTab={activeTab}
+                    page={page}
+                    totalData={totalData}
+                    myEventData={myEventData}
+                    limit={limit}
+                  />
+                ),
               },
               {
                 label: "Delivered",
                 value: "delivered",
-                content: <UserDeliveriedOrder activeTab={activeTab} />,
+                content: (
+                  <UserDeliveriedOrder
+                    activeTab={activeTab}
+                    page={page}
+                    totalData={totalData}
+                    myEventData={myEventData}
+                    limit={limit}
+                  />
+                ),
               },
               {
                 label: "My Request",
@@ -159,7 +175,15 @@ const UserOrdersPage = ({
               {
                 label: "Cancelled",
                 value: "cancelled",
-                content: <UserCancleOrder activeTab={activeTab} />,
+                content: (
+                  <UserCancleOrder
+                    activeTab={activeTab}
+                    page={page}
+                    totalData={totalData}
+                    myEventData={myEventData}
+                    limit={limit}
+                  />
+                ),
               },
             ]}
           />

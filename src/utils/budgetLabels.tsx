@@ -5,3 +5,12 @@ export const budgetLabels: { [key: string]: string } = {
   "2000-5000": "2000€-5000€",
   over5000: "Over 5000€",
 };
+export const eventOrderStatus: { [key: string]: string } = {
+  pending: "Pending",
+  declined: "Declined",
+  accepted: "Waiting for Payment",
+  inProgress: "In Progress",
+  deliveryRequest: "Delivery Request",
+  delivered: "Delivered",
+  cancelled: "Cancelled",
+};

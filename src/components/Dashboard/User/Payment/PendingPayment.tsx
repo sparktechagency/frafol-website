@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { IEventOrder } from "@/types";
 import UserOrderCard from "../Orders/UserOrderCard";
 import PaginationSection from "@/components/shared/PaginationSection";
 import UserOrderViewModal from "../Orders/UserOrderViewModal";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { cancelEventOrder } from "@/services/EventOrderService/EventOrderServiceApi";
+import CancleOrderModal from "@/components/ui/Modal/CancleOrderModal";
 
 const PendingPayment = ({
   activeTab,
@@ -21,6 +25,13 @@ const PendingPayment = ({
   const [currentRecord, setCurrentRecord] = React.useState<IEventOrder | null>(
     null
   );
+  const [isCancelModalVisible, setIsCancelModalVisible] = React.useState(false);
+
+  const showCancelModal = (record: IEventOrder) => {
+    setIsCancelModalVisible(true);
+    setCurrentRecord(record);
+  };
+
   const openModal = (record: IEventOrder) => {
     setIsModalOpen(true);
     setCurrentRecord(record);
@@ -28,6 +39,24 @@ const PendingPayment = ({
   const handleCancel = () => {
     setIsModalOpen(false);
     setCurrentRecord(null);
+  };
+
+  const handleCancelOrder = async (values: any, data: IEventOrder) => {
+    console.log({ body: values, params: data?._id });
+    const res = await tryCatchWrapper(
+      cancelEventOrder,
+      { body: values, params: data?._id },
+      "Waiting for payment...",
+      "Redirecting to Stripe to Complete Payment From Stripe",
+      "Something went wrong! Please try again."
+    );
+
+    console.log("res", res);
+
+    if (res?.success) {
+      setIsCancelModalVisible(false);
+      handleCancel();
+    }
   };
   return (
     <div>
@@ -49,6 +78,13 @@ const PendingPayment = ({
         handleCancel={handleCancel}
         currentRecord={currentRecord}
         activeModal={activeTab}
+        showCancelModal={showCancelModal}
+      />
+      <CancleOrderModal
+        isCancleOrderModalVisible={isCancelModalVisible}
+        handleCancel={() => setIsCancelModalVisible(false)}
+        currentRecord={currentRecord}
+        handleCancelOrder={handleCancelOrder}
       />
     </div>
   );
