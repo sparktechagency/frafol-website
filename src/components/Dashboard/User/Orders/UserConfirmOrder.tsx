@@ -6,11 +6,11 @@ import { IEventOrder } from "@/types";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import {
   acceptDeliveryRequest,
-  cancelEventOrder,
+  declineEventOrder,
 } from "@/services/EventOrderService/EventOrderServiceApi";
 import PaginationSection from "@/components/shared/PaginationSection";
-import CancleOrderModal from "@/components/ui/Modal/CancleOrderModal";
 import AcceptModal from "@/components/ui/Modal/AcceptModal";
+import DeclineOrderRequestModal from "@/components/ui/Modal/DeclineOrderRequestModal";
 
 const UserConfirmOrder = ({
   activeTab,
@@ -29,12 +29,15 @@ const UserConfirmOrder = ({
   const [currentRecord, setCurrentRecord] = React.useState<IEventOrder | null>(
     null
   );
-  const [isCancelModalVisible, setIsCancelModalVisible] = React.useState(false);
+  const [
+    isDeclineOrderRequestModalVisible,
+    setIsDeclineOrderRequestModalVisible,
+  ] = React.useState(false);
   const [isConfirmModalVisible, setIsConfirmModalVisible] =
     React.useState(false);
 
   const showCancelModal = (record: IEventOrder) => {
-    setIsCancelModalVisible(true);
+    setIsDeclineOrderRequestModalVisible(true);
     setCurrentRecord(record);
   };
 
@@ -53,11 +56,14 @@ const UserConfirmOrder = ({
     setCurrentRecord(null);
   };
 
-  const handleCancelOrder = async (values: any, data: IEventOrder) => {
+  const handleDeclineOrder = async (values: any, data: IEventOrder) => {
     console.log({ body: values, params: data?._id });
     const res = await tryCatchWrapper(
-      cancelEventOrder,
-      { body: values, params: data?._id },
+      declineEventOrder,
+      {
+        body: { ...values, status: "deliveryRequestDeclined" },
+        params: data?._id,
+      },
       "Waiting for payment...",
       "Redirecting to Stripe to Complete Payment From Stripe",
       "Something went wrong! Please try again."
@@ -66,7 +72,7 @@ const UserConfirmOrder = ({
     console.log("res", res);
 
     if (res?.success) {
-      setIsCancelModalVisible(false);
+      setIsDeclineOrderRequestModalVisible(false);
       handleCancel();
     }
   };
@@ -111,11 +117,12 @@ const UserConfirmOrder = ({
         activeModal={activeTab}
         showCancelModal={showCancelModal}
       />
-      <CancleOrderModal
-        isCancleOrderModalVisible={isCancelModalVisible}
-        handleCancel={() => setIsCancelModalVisible(false)}
+      <DeclineOrderRequestModal
+        isDeclineOrderRequestModalVisible={isDeclineOrderRequestModalVisible}
+        handleCancel={() => setIsDeclineOrderRequestModalVisible(false)}
         currentRecord={currentRecord}
-        handleCancelOrder={handleCancelOrder}
+        handleDeclineOrder={handleDeclineOrder}
+        description="Are You Sure You want to Decline This Delivery Request ?"
       />
       <AcceptModal
         isModalVisible={isConfirmModalVisible}

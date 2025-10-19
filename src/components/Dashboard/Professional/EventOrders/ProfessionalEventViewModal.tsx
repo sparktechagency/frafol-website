@@ -14,6 +14,9 @@ import { budgetLabels } from "@/utils/budgetLabels";
 
 interface ProfessionalEventViewModalProps {
   showCreateOrderModal: ({ record }: { record: IEventOrder | null }) => void;
+  showDeclineModal: (record: any) => void;
+  showExtenstionRequestModal: (record: any) => void;
+  showCancelModal?: any;
   showSendDeliveryRequestModal?: any;
   isViewModalVisible: boolean;
   handleCancel: () => void;
@@ -22,6 +25,9 @@ interface ProfessionalEventViewModalProps {
 }
 const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
   showCreateOrderModal,
+  showDeclineModal,
+  showExtenstionRequestModal,
+  showCancelModal,
   showSendDeliveryRequestModal,
   isViewModalVisible,
   handleCancel,
@@ -29,6 +35,8 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
   activeTab, // Default to "pending" if not provided
 }) => {
   const serverUrl = getServerUrl();
+
+  const extensionLength = currentRecord?.extensionRequests?.length || 0;
 
   const handleDirectAccept = async (record: IEventOrder) => {
     const res = await tryCatchWrapper(
@@ -169,7 +177,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
         </div>
 
         {/* Payment Details */}
-        <div>
+        <div className="mb-4">
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
             Payment Details
           </h4>
@@ -182,6 +190,36 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               currentRecord?.budget_range}
           </p>
         </div>
+
+        {activeTab === "cancelled" && (
+          <div className="mb-4">
+            <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
+              Cancel Reason
+            </h4>
+            <div className="mt-2">
+              {" "}
+              <p className="text-xs sm:text-sm lg:text-base">
+                <span className="font-semibold">Reason :</span>{" "}
+                {currentRecord?.cancelReason}
+              </p>
+            </div>
+          </div>
+        )}
+        {activeTab === "inProgress" &&
+          currentRecord?.deliveryRequestDeclinedReason && (
+            <div className="mb-4">
+              <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
+                Decline Reason
+              </h4>
+              <div className="mt-2">
+                {" "}
+                <p className="text-xs sm:text-sm lg:text-base">
+                  <span className="font-semibold">Reason :</span>{" "}
+                  {currentRecord?.deliveryRequestDeclinedReason}
+                </p>
+              </div>
+            </div>
+          )}
         {activeTab === "delivered" ? (
           <div className="mt-5 flex flex-col items-center gap-5">
             <ReuseButton variant="secondary" className="!w-fit">
@@ -201,16 +239,36 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               Deliver Order
             </ReuseButton>
             <ReuseButton
+              onClick={() => showCancelModal(currentRecord)}
               variant="secondary"
               className="!text-white !bg-error !border-error !w-fit"
             >
               Cancel Order
             </ReuseButton>
+            {extensionLength < 0 ||
+            currentRecord?.extensionRequests?.[extensionLength - 1]?.status !==
+              "pending" ? (
+              <ReuseButton
+                onClick={() => showExtenstionRequestModal(currentRecord)}
+                variant="secondary"
+                className="!text-white !bg-[#2529FF] !border-[#2529FF] !w-fit"
+              >
+                Request Extension
+              </ReuseButton>
+            ) : (
+              <h4 className="text-sm sm:text-base lg:text-lg xl:text-xl text-yellow-600 font-bold">
+                Extension Request On Pending
+              </h4>
+            )}
+          </div>
+        ) : activeTab === "upcoming" ? (
+          <div className="mt-5 flex gap-3 items-center justify-center flex-wrap">
             <ReuseButton
+              onClick={() => showCancelModal(currentRecord)}
               variant="secondary"
-              className="!text-white !bg-[#2529FF] !border-[#2529FF] !w-fit"
+              className="!text-white !bg-error !border-error !w-fit"
             >
-              Request Extension
+              Cancel Order
             </ReuseButton>
           </div>
         ) : activeTab === "pending" ? (
@@ -227,6 +285,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               Accept
             </ReuseButton>
             <ReuseButton
+              onClick={() => showDeclineModal(currentRecord)}
               variant="secondary"
               className="!text-white !bg-error !border-error !w-fit"
             >

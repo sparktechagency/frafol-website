@@ -131,7 +131,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
         </div>
 
         {/* Payment Details */}
-        <div>
+        <div className="mb-4">
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
             Payment Details
           </h4>
@@ -144,6 +144,35 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               currentRecord?.budget_range}
           </p>
         </div>
+
+        {activeModal === "cancelled" && (
+          <div className="mb-4">
+            <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
+              Cancel Reason
+            </h4>
+            <div className="mt-2">
+              {" "}
+              <p className="text-xs sm:text-sm lg:text-base">
+                <span className="font-semibold">Reason :</span>{" "}
+                {currentRecord?.cancelReason}
+              </p>
+            </div>
+          </div>
+        )}
+        {activeModal === "orderOffer" && (
+          <div className="mb-4">
+            <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
+              Description
+            </h4>
+            <div className="mt-2">
+              {" "}
+              <p className="text-xs sm:text-sm lg:text-base">
+                {currentRecord?.description}
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="mt-5">
           {activeModal === "currentOrder" ? (
             <ReuseButton
@@ -157,7 +186,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               onClick={() => showCancelModal(currentRecord)}
               variant="secondary"
             >
-              Cancle Order
+              Decline Delivery Request
             </ReuseButton>
           ) : activeModal === "accepted" ? (
             <ReuseButton

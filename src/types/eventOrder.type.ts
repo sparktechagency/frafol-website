@@ -37,6 +37,7 @@ interface IExtensionRequest {
   newDeliveryDate: Date;
   reason: string;
   approved: boolean;
+  status: string;
 }
 
 interface IStatusTimestamps {
@@ -98,11 +99,12 @@ interface IEventOrder {
   sureName?: string; // Optional, surname of the person (if custom)
   status: OrderStatus; // The current status of the order
   declineReason?: string; // Optional, reason if declined
+  deliveryRequestDeclinedReason?: string; // Optional, reason if declined
   cancelReason?: string; // Optional, reason if cancelled
+  description?: string; // Optional, a description of the order
   statusTimestamps: IStatusTimestamps; // Timestamps for different statuses
   statusHistory: IStatusHistory[]; // History of status changes
   extensionRequests: IExtensionRequest[]; // Any extension requests for the order
-  description?: string; // Optional, a description of the order
   paymentStatus: string; // Status of the payment (e.g., "paid", "unpaid")
   isDeleted: boolean; // Whether the order is deleted
   createdAt: string;

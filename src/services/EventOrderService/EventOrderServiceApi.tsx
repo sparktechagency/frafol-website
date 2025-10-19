@@ -91,6 +91,30 @@ export const cancelEventOrder = async (req: {
     return Error(error);
   }
 };
+export const declineEventOrder = async (req: {
+  body: ICreateEventOrder;
+  params: any;
+}) => {
+  console.log(req?.body);
+  try {
+    const res = await fetchWithAuth(
+      `/event-order/decline-request/${req.params}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json", // Add content type header for JSON
+        },
+        body: JSON.stringify(req.body),
+      }
+    );
+    const result = await res.json();
+    revalidateTag(TagTypes.eventOrder);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
 
 export const sendDeliveryRequest = async (req: {
   body: ICreateEventOrder;
@@ -103,6 +127,27 @@ export const sendDeliveryRequest = async (req: {
         method: "PATCH",
       }
     );
+    const result = await res.json();
+    revalidateTag(TagTypes.eventOrder);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const sendExtensionRequest = async (req: {
+  body: ICreateEventOrder;
+  params: any;
+}) => {
+  console.log(req);
+  try {
+    const res = await fetchWithAuth(`/event-order/extension/${req.params}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req.body),
+    });
     const result = await res.json();
     revalidateTag(TagTypes.eventOrder);
 
