@@ -175,6 +175,54 @@ export const acceptDeliveryRequest = async (req: {
     return Error(error);
   }
 };
+export const acceptExtensionRequest = async (req: {
+  body: ICreateEventOrder;
+  params: any;
+}) => {
+  try {
+    const res = await fetchWithAuth(
+      `/event-order/extension/accept/${req.params}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json", // Add content type header for JSON
+        },
+        body: JSON.stringify(req.body),
+      }
+    );
+    const result = await res.json();
+    revalidateTag(TagTypes.eventOrder);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const declineExtensionRequest = async (req: {
+  body: ICreateEventOrder;
+  params: any;
+}) => {
+  console.log(req);
+  try {
+    const res = await fetchWithAuth(
+      `/event-order/extension/reject/${req.params}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json", // Add content type header for JSON
+        },
+        body: JSON.stringify(req.body),
+      }
+    );
+    const result = await res.json();
+    revalidateTag(TagTypes.eventOrder);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
 
 // export const updateGear = async (
 //   req = {

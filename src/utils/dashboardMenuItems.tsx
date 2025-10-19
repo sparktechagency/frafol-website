@@ -57,6 +57,27 @@ export const useAdminPaths = () => {
       label: <Link href="/dashboard/my-account/orders">My Orders</Link>,
     },
     {
+      key: "extension-requests",
+      icon: (
+        <Image
+          src={orders}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/extension-requests")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+      label: (
+        <Link href="/dashboard/my-account/extension-requests">
+          Extension Requests
+        </Link>
+      ),
+    },
+    {
       key: "payments",
       icon: (
         <Image

@@ -36,6 +36,7 @@ interface IExtensionRequest {
   requestedBy: string; // Assuming this is a string (userId or name)
   newDeliveryDate: Date;
   reason: string;
+  _id: string;
   approved: boolean;
   status: string;
 }

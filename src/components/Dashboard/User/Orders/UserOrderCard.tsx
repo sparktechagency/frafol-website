@@ -5,10 +5,11 @@ import { budgetLabels } from "@/utils/budgetLabels";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import Image from "next/image";
 import { BsEye } from "react-icons/bs";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaClock, FaMapMarkerAlt } from "react-icons/fa";
 import {
   IoCalendarOutline,
   IoCheckmarkSharp,
+  IoClose,
   IoTimeOutline,
 } from "react-icons/io5";
 import { AllImages } from "../../../../../public/assets/AllImages";
@@ -21,11 +22,15 @@ const UserOrderCard = ({
   data,
   openModal,
   showConfirmModal,
+  showRejectExtensionModal,
+  showAcceptExtensionModal,
 }: {
   activeTab: string;
   data: IEventOrder;
   openModal?: any;
   showConfirmModal?: any;
+  showRejectExtensionModal?: any;
+  showAcceptExtensionModal?: any;
 }) => {
   const serverUrl = getServerUrl();
 
@@ -50,6 +55,8 @@ const UserOrderCard = ({
     }
   };
 
+  const extensionLength = data?.extensionRequests?.length;
+
   return (
     <div
       className={`p-4 rounded-md border border-[#E1E1E1] shadow-xs hover:shadow-md transition-all duration-200`}
@@ -62,13 +69,15 @@ const UserOrderCard = ({
           <p className="px-2 py-0.5 rounded-full bg-secondary-color text-primary-color w-fit capitalize">
             {data?.orderType}
           </p>
-          <p className="px-2 py-0.5 rounded-full bg-yellow-500 text-primary-color w-fit capitalize">
-            {data?.status === "accepted"
-              ? "Payment Required"
-              : data?.status === "inProgress"
-              ? "In Progress"
-              : data?.status}
-          </p>
+          {activeTab !== "extension" && (
+            <p className="px-2 py-0.5 rounded-full bg-yellow-500 text-primary-color w-fit capitalize">
+              {data?.status === "accepted"
+                ? "Payment Required"
+                : data?.status === "inProgress"
+                ? "In Progress"
+                : data?.status}
+            </p>
+          )}
         </div>
         <h4 className="text-xs sm:text-sm lg:text-base xl:text-lg font-bold mb-1 capitalize">
           {data?.serviceType}
@@ -99,11 +108,30 @@ const UserOrderCard = ({
           </div>
         </div>
         <p className="text-xs sm:text-sm text-[#5D5D5D] flex items-start gap-2 my-1">
-          <div className="flex items-center text-nowrap">
+          <div className="flex items-center text-nowrap  gap-1">
             <FaMapMarkerAlt /> <span>Location : </span>
           </div>
           {data?.location}
         </p>
+        {activeTab === "extension" && (
+          <div className="my-5">
+            {" "}
+            <p className="text-xs sm:text-sm lg:text-base font-bold text-secondary-color flex items-start gap-2 my-1">
+              <div className="flex items-center text-nowrap gap-1">
+                <FaClock /> <span>Delivery Date : </span>
+              </div>
+              {formatDate(data?.deliveryDate)}
+            </p>
+            <p className="text-xs sm:text-sm lg:text-base font-bold text-green-800 flex items-start gap-2 my-1">
+              <div className="flex items-center text-nowrap gap-1">
+                <FaClock /> <span>Extended Date : </span>
+              </div>
+              {formatDate(
+                data?.extensionRequests?.[extensionLength - 1]?.newDeliveryDate
+              )}
+            </p>
+          </div>
+        )}
         <div className="flex items-center justify-between">
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mt-1">
             {data?.totalPrice ? (
@@ -157,6 +185,30 @@ const UserOrderCard = ({
               >
                 <FaEuroSign size={16} />
                 Pay
+              </button>
+              <button
+                onClick={() => openModal(data)}
+                className="flex items-center gap-1 px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 text-sm transition cursor-pointer"
+              >
+                <BsEye size={16} />
+                View Details
+              </button>
+            </div>
+          ) : activeTab === "extension" ? (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => showAcceptExtensionModal(data)}
+                className="flex items-center gap-1 px-3 py-1 border border-[#00C566] text-primary-color rounded bg-[#00C566] text-sm transition cursor-pointer"
+              >
+                <IoCheckmarkSharp size={16} />
+                Accept
+              </button>
+              <button
+                onClick={() => showRejectExtensionModal(data)}
+                className="flex items-center gap-1 px-3 py-1 border border-red-700 text-primary-color rounded bg-red-700 text-sm transition cursor-pointer"
+              >
+                <IoClose size={16} />
+                Reject
               </button>
               <button
                 onClick={() => openModal(data)}
