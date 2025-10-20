@@ -10,6 +10,7 @@ export const eventOrderStatus: { [key: string]: string } = {
   declined: "Declined",
   accepted: "Waiting for Payment",
   inProgress: "In Progress",
+  deliveryRequestDeclined: "In Progress",
   deliveryRequest: "Delivery Request",
   delivered: "Delivered",
   cancelled: "Cancelled",
