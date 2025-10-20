@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Space, Tooltip } from "antd";
 import { GoEye } from "react-icons/go";
@@ -22,6 +23,15 @@ const ProfessionalEventOrderTable: React.FC<
   ProfessionalEventOrderTableProps
 > = ({ data, loading, showViewModal, page, total, limit, activeTab }) => {
   console.log(activeTab);
+
+  const checkExtension = (extensionReq: any) => {
+    const extensionLength = extensionReq?.length;
+
+    const lastExtension = extensionReq[extensionLength - 1];
+
+    return lastExtension;
+  };
+
   const columns = [
     {
       title: "Order ID",
@@ -129,13 +139,17 @@ const ProfessionalEventOrderTable: React.FC<
             title: "Delivery Status",
             dataIndex: "status",
             key: "status",
-            render: (status: string) => (
+            render: (_: unknown, record: IEventOrder) => (
               <span className="font-semibold capitalize">
-                {status === "inProgress"
+                {record?.extensionRequests?.length < 1
                   ? "Request Not Sent"
-                  : status === "deliveryRequest"
-                  ? "On Pending"
-                  : "Delivery Request Decline"}
+                  : checkExtension(record?.extensionRequests)?.status ===
+                    "pending"
+                  ? "Request On Pending"
+                  : checkExtension(record?.extensionRequests)?.status ===
+                    "accepted"
+                  ? " Request Approved"
+                  : " Request Decline"}
               </span>
             ),
           },
