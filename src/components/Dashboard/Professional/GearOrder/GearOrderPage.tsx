@@ -4,33 +4,42 @@ import SearchInput from "@/components/ui/Form/ReuseSearchInput";
 import GearOrderTable from "@/components/ui/Table/GearOrderTable";
 import React, { useState } from "react";
 import GearOrderViewModal from "./GearOrderViewModal";
+import { IGearOrder } from "@/types";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import {
+  cancelGearOrder,
+  sendGearDeliveryRequest,
+} from "@/services/GearOrder/GearOrderApi";
+import CancleOrderModal from "@/components/ui/Modal/CancleOrderModal";
+import AcceptModal from "@/components/ui/Modal/AcceptModal";
 
-const GearOrderPage = () => {
-  const orderData = Array.from({ length: 20 }).map((_, index) => ({
-    key: (index + 1).toString(),
-    orderId: (1223 + index).toString(),
-    clientName: "Lívia Nováková",
-    email: "livianova@example.com",
-    itemName: "Canon Camera",
-    date: "24 May, 2025",
-    orderStatus:
-      index % 5 === 0 ? "Shipped" : index % 5 === 1 ? "Cancelled" : "Pending",
-    amount: "$200",
-    paymentStatus:
-      index % 5 === 0 ? "Received" : index % 5 === 1 ? "-" : "Pending",
-  }));
-
-  const [page, setPage] = useState(1);
-
-  const [searchText, setSearchText] = useState("");
-  console.log("Search Text:", searchText);
-
-  const limit = 12;
-
+const GearOrderPage = ({
+  myGearOrderData,
+  totalData,
+  page,
+  limit = 12,
+}: {
+  myGearOrderData: IGearOrder[];
+  totalData: number;
+  page: number;
+  limit?: number;
+}) => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [currentRecord, setCurrentRecord] = useState<any | null>(null);
+  const [isDeliverModalVisible, setIsDeliverModalVisible] = useState(false);
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
+  const [currentRecord, setCurrentRecord] = useState<IGearOrder | null>(null);
 
-  const showViewUserModal = (record: any) => {
+  const showCancelModal = (record: IGearOrder) => {
+    setIsCancelModalVisible(true);
+    setCurrentRecord(record);
+  };
+
+  const showDeliverModal = (record: IGearOrder) => {
+    setIsDeliverModalVisible(true);
+    setCurrentRecord(record);
+  };
+
+  const showViewUserModal = (record: IGearOrder) => {
     setIsViewModalVisible(true);
     setCurrentRecord(record);
   };
@@ -38,6 +47,41 @@ const GearOrderPage = () => {
   const handleCancel = () => {
     setIsViewModalVisible(false);
     setCurrentRecord(null);
+  };
+
+  const handleDeliverGearOrder = async (data: IGearOrder) => {
+    const res = await tryCatchWrapper(
+      sendGearDeliveryRequest,
+      { params: data?._id },
+      "Sending request...",
+      "Request Sent Successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    if (res?.success) {
+      setIsDeliverModalVisible(false);
+      handleCancel();
+    }
+  };
+  const handleCancelGearOrder = async (
+    values: { reason: string },
+    data: IGearOrder
+  ) => {
+    console.log({ body: values, params: data?._id });
+    const res = await tryCatchWrapper(
+      cancelGearOrder,
+      { body: values, params: data?._id },
+      "Please wait...",
+      "Order Canceled Successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    console.log("res", res);
+
+    if (res?.success) {
+      setIsCancelModalVisible(false);
+      handleCancel();
+    }
   };
 
   return (
@@ -48,21 +92,16 @@ const GearOrderPage = () => {
             <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-5">
               Gear Orders
             </h1>
-            <SearchInput
-              placeholder="Search ..."
-              setSearch={setSearchText}
-              setPage={setPage}
-            />
+            <SearchInput placeholder="Search ..." />
           </div>
         </div>
 
         <GearOrderTable
-          data={orderData}
+          data={myGearOrderData}
           loading={false}
           showViewModal={showViewUserModal}
-          setPage={setPage}
           page={page}
-          total={orderData?.length}
+          total={totalData}
           limit={limit}
         />
 
@@ -70,6 +109,21 @@ const GearOrderPage = () => {
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
+          showCancelModal={showCancelModal}
+          showDeliverModal={showDeliverModal}
+        />
+        <CancleOrderModal
+          isCancleOrderModalVisible={isCancelModalVisible}
+          handleCancel={() => setIsCancelModalVisible(false)}
+          currentRecord={currentRecord}
+          handleCancelOrder={handleCancelGearOrder}
+        />
+        <AcceptModal
+          isModalVisible={isDeliverModalVisible}
+          handleCancel={() => setIsDeliverModalVisible(false)}
+          description="Are you sure you want to mark this order as delivered?"
+          currentRecord={currentRecord}
+          handleConfirm={handleDeliverGearOrder}
         />
       </div>
     </div>

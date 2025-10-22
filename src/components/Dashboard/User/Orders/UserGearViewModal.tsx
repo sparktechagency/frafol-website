@@ -1,16 +1,16 @@
 import { Modal } from "antd";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { MdClose } from "react-icons/md";
+
 import Image from "next/image";
 import { AllImages } from "../../../../../public/assets/AllImages";
-import ReuseButton from "@/components/ui/Button/ReuseButton";
+import { getServerUrl } from "@/helpers/config/envConfig";
+import { IGearOrder } from "@/types";
 
 interface UserGearViewModalProps {
   isViewModalVisible: boolean;
   handleCancel: () => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  currentRecord: any | null;
+  currentRecord: IGearOrder | null;
   activeModal: string;
+  showAcceptDeliverModal?: (record: IGearOrder) => void;
 }
 
 const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
@@ -18,104 +18,126 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
   handleCancel,
   currentRecord,
   activeModal,
+  showAcceptDeliverModal,
 }) => {
+  console.log(currentRecord);
+  const serverUrl = getServerUrl();
   return (
     <Modal
       open={isViewModalVisible}
       onCancel={handleCancel}
       footer={null}
-      centered
-      closeIcon={<MdClose className="text-secondary-color text-xl" />}
-      className="lg:!w-[600px]"
+      className="lg:!w-[1000px]"
     >
-      <div className="p-5 text-[#1a1a1a]">
-        <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-5">
-          Order Details
-        </h3>
-
-        <Image
-          src={AllImages.product}
-          alt="product"
-          width={1000}
-          height={1000}
-          className="w-fit h-40 sm:h-24 lg:h-32 xl:h-40 object-cover rounded-lg "
-        />
-
-        {/* Title & Category */}
-        <div className="mb-3">
-          <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
-            Cannon Camera
-          </p>
-          <p className="text-sm sm:text-base lg:text-kg xl:text-xl font-medium">
-            Wedding Photography
-          </p>
-          <p className="text-xs sm:text-sm lg:text-base">
-            <span className="font-semibold">Condition : </span> New
-          </p>
-        </div>
-
-        {/* Order Info */}
-        <div className="mb-4">
-          <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
-            Order Information
-          </h4>
-          <div className="mt-2">
-            {" "}
-            <p className="text-xs sm:text-sm lg:text-base">
-              <span className="font-semibold">Order Date :</span> May 24, 2024
+      <div className="p-3 space-y-6">
+        {/* Product Card */}
+        <div className="bg-white rounded-lg border border-[#E1E1E1] p-4 grid grid-cols-2 gap-4 items-center">
+          <div className="flex items-center gap-4">
+            <Image
+              src={
+                currentRecord?.gearMarketplaceId?.gallery?.[0]
+                  ? serverUrl + currentRecord?.gearMarketplaceId?.gallery?.[0]
+                  : AllImages?.product
+              }
+              alt={currentRecord?.gearMarketplaceId?.name || "Product Image"}
+              width={80}
+              height={80}
+            />
+            <div>
+              <h2 className="text-lg font-medium">
+                {currentRecord?.gearMarketplaceId?.name || "Product Name"}
+              </h2>
+            </div>
+          </div>
+          <div className="text-right">
+            <span className=" text-sm">Price</span>
+            <p className="text-xl font-semibold">
+              {currentRecord?.gearMarketplaceId?.mainPrice || 0}€
             </p>
           </div>
         </div>
 
-        {/* Photographer Info */}
-        <div className="mb-4">
-          <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
-            Seller Information
-          </h4>
-          <div className="flex items-center gap-3 mt-2">
-            <Image
-              src={AllImages.dummyProfile}
-              alt="photographer"
-              width={50}
-              height={50}
-              className="rounded-full object-cover"
-            />
-            <div>
-              <p className="font-bold">Peter Kováč</p>
-              <p className="text-sm text-gray-600">Wedding Photographer</p>
+        {/* Summary & Payment */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Order Summary */}
+          <div className="bg-white rounded-lg border border-[#E1E1E1] p-4">
+            <h3 className="font-semibold mb-4">Order Summary</h3>
+            <div className="space-y-2 text-sm text-gray-600">
+              <div className="flex justify-between">
+                <span>Sub Total :</span>
+                <span className="text-black font-medium">
+                  {currentRecord?.gearMarketplaceId?.mainPrice?.toFixed(2)}€
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Shipping Charge :</span>
+                <span className="text-black font-medium">
+                  {currentRecord?.gearMarketplaceId?.shippingCompany?.price?.toFixed(
+                    2
+                  )}
+                  €
+                </span>
+              </div>
+              <div className="border-t pt-2 flex justify-between font-semibold text-black">
+                <span>Total (USD) :</span>
+                {(
+                  (currentRecord?.gearMarketplaceId?.mainPrice || 0) +
+                  (currentRecord?.gearMarketplaceId?.shippingCompany?.price ||
+                    0)
+                ).toFixed(2)}{" "}
+                €
+              </div>
+            </div>
+          </div>
+
+          {/* Payment Details */}
+          <div className="bg-white rounded-lg border border-[#E1E1E1] p-4">
+            <h3 className="font-semibold mb-4">Payment Details</h3>
+            <div className="text-sm ">
+              <p>
+                <span className="font-semibold">Transaction ID:</span>{" "}
+                {currentRecord?.paymentId?.transactionId || "N/A"}
+              </p>
+              <p>
+                <span className="font-semibold">Payment Method:</span>{" "}
+                {currentRecord?.paymentId?.paymentMethod || "N/A"}
+                Card
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Event Details */}
-        <div className="mb-4">
-          <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold mb-2">
-            Delivery Details
-          </h4>
-          <p className="text-xs sm:text-sm lg:text-base flex items-center gap-2">
-            <FaMapMarkerAlt /> <span>Location : Bratislava</span>
+        {/* Shipping Method */}
+        <div className="bg-white rounded-lg border border-[#E1E1E1] p-4">
+          <h3 className="font-semibold mb-2">Preferred Shipping Method</h3>
+          <p className="text-sm ">
+            {currentRecord?.gearMarketplaceId?.shippingCompany?.name} -{" "}
+            {currentRecord?.gearMarketplaceId?.shippingCompany?.price}€
           </p>
-          {/* <p className="text-xs sm:text-sm lg:text-base flex items-center gap-2">
-            <FaClock /> <span>Duration : 4 Hours</span>
-          </p> */}
         </div>
 
-        {/* Payment Details */}
-        <div>
-          <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
-            Payment Details
-          </h4>
-          <p className="text-xs sm:text-sm lg:text-base xl:text-lg mt-2">
-            <span className="font-semibold">Amount :</span> $
-            {currentRecord?.amount || "200"}
-          </p>
+        {/* Shipping Address */}
+        <div className="bg-white rounded-lg border border-[#E1E1E1] p-4">
+          <h3 className="font-semibold mb-2">Shipping Address</h3>
+          <p className="text-sm ">{currentRecord?.shippingAddress}</p>
         </div>
-        <div className="mt-5">
-          {activeModal === "currentOrder" ? (
-            <ReuseButton variant="secondary">Cancle Order</ReuseButton>
-          ) : activeModal === "delivered" ? (
-            <ReuseButton variant="secondary">Download Invoice</ReuseButton>
-          ) : null}
+
+        {/* Delivery Note */}
+        <div className="bg-white rounded-lg border border-[#E1E1E1] p-4">
+          <h3 className="font-semibold mb-2">Delivery Note</h3>
+          <p className="text-sm ">{currentRecord?.deliveryNote || "N/A"}</p>
+        </div>
+
+        {/* Actions */}
+        <div className="flex gap-4">
+          {activeModal === "toConfirm" && (
+            <button
+              onClick={() => showAcceptDeliverModal?.(currentRecord!)}
+              className="!bg-success hover:!bg-success text-white px-4 py-2 rounded !cursor-pointer"
+            >
+              Accept Delivery
+            </button>
+          )}
         </div>
       </div>
     </Modal>

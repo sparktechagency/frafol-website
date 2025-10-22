@@ -28,7 +28,7 @@ const MarketPlace = async ({ searchParams }: { searchParams: any }) => {
   const limit = 12;
 
   const res = await fetchWithAuth(
-    `/marketPlace?page=${page}&limit=${limit}&searchTerm=${search}&categoryId=${category}&condition=${condition}&minPrice=${minPrice}&maxPrice=${maxPrice}`,
+    `/marketPlace?page=${page}&limit=${limit}&searchTerm=${search}&categoryId=${category}&condition=${condition}&minPrice=${minPrice}&maxPrice=${maxPrice}&status=In Stock`,
     {
       next: {
         tags: [TagTypes.gear],

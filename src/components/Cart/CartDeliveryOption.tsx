@@ -8,9 +8,9 @@ import ReuseInput from "../ui/Form/ReuseInput";
 import type { Rule } from "antd/es/form";
 import { IGear, IProfile } from "@/types";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
-import { gearOrder } from "@/services/GearService/GearServiceApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { clearCart } from "@/redux/features/cart/cartSlice";
+import { gearOrder } from "@/services/GearOrder/GearOrderApi";
 
 const inputFields: {
   name: string;

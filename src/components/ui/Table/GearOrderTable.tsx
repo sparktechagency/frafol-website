@@ -1,15 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Space, Tooltip } from "antd";
 import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
+import { IGearOrder } from "@/types";
+import { formatDate } from "@/utils/dateFormet";
+import { eventOrderStatus } from "@/utils/budgetLabels";
 
 // Define the type for the props
 interface GearOrderTableProps {
-  data: any[]; // Replace `unknown` with the actual type of your data array
+  data: IGearOrder[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
-  showViewModal: (record: any) => void; // Function to handle viewing a user
-  setPage?: (page: number) => void; // Function to handle pagination
+  showViewModal: (record: IGearOrder) => void; // Function to handle viewing a user
   page?: number;
   total?: number;
   limit?: number;
@@ -19,7 +20,6 @@ const GearOrderTable: React.FC<GearOrderTableProps> = ({
   data,
   loading,
   showViewModal,
-  setPage,
   page,
   total,
   limit,
@@ -29,46 +29,61 @@ const GearOrderTable: React.FC<GearOrderTableProps> = ({
       title: "Order ID",
       dataIndex: "orderId",
       key: "orderId",
+      fixed: "left",
     },
     {
       title: "Client Name",
-      dataIndex: "clientName",
-      key: "clientName",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Mobile Number",
+      dataIndex: "mobileNumber",
+      key: "mobileNumber",
     },
     {
       title: "Item Name",
-      dataIndex: "itemName",
-      key: "itemName",
+      dataIndex: ["gearMarketplaceId", "name"],
+      key: ["gearMarketplaceId", "name"],
     },
     {
       title: "Date",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text: string) => formatDate(text),
+    },
+    {
+      title: "Amount",
+      dataIndex: ["gearMarketplaceId", "mainPrice"],
+      key: "amount",
+    },
+    {
+      title: "Shipping Details",
+      dataIndex: ["gearMarketplaceId", "shippingCompany"],
+      key: "shippingDetails",
+      render: (shippingCompany: { name: string; price: number }) =>
+        `${shippingCompany.name} - $${shippingCompany.price}`,
+    },
+    {
+      title: "Payment Confirmation By Admin",
+      dataIndex: "paymentStatus",
+      key: "paymentStatus",
+      render: (text: string) => text.charAt(0).toUpperCase() + text.slice(1),
     },
     {
       title: "Order Status",
       dataIndex: "orderStatus",
       key: "orderStatus",
-    },
-    {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
-    },
-    {
-      title: "Payment Status",
-      dataIndex: "paymentStatus",
-      key: "paymentStatus",
+      render: (_: string, record: IGearOrder) => {
+        return (
+          eventOrderStatus[record?.orderStatus as string] || record?.orderStatus
+        );
+      },
     },
     {
       title: "Action",
       key: "action",
-      render: (_: unknown, record: any) => (
+      render: (_: unknown, record: IGearOrder) => (
         <Space size="middle">
           <Tooltip placement="right" title="View Details">
             <button
@@ -89,11 +104,10 @@ const GearOrderTable: React.FC<GearOrderTableProps> = ({
       columns={columns}
       data={data}
       loading={loading}
-      setPage={setPage}
       total={total}
       limit={limit}
       page={page}
-      keyValue={"email"}
+      keyValue={"orderId"}
     />
   );
 };

@@ -6,6 +6,7 @@ const TagTypes = {
   eventOrder: "EVENT_ORDER",
   workshop: "WORKSHOP",
   gear: "GEAR",
+  gearOrder: "GEAR_ORDER",
   testimonial: "TESTIMONIAL",
   product: "PRODUCT",
   service: "SERVICE",

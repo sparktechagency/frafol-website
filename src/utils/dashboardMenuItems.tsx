@@ -54,7 +54,24 @@ export const useAdminPaths = () => {
           }}
         />
       ),
-      label: <Link href="/dashboard/my-account/orders">My Orders</Link>,
+      label: <Link href="/dashboard/my-account/orders">Event Orders</Link>,
+    },
+    {
+      key: "gear-order",
+      icon: (
+        <Image
+          src={gearOrder}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/gear-order")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+      label: <Link href="/dashboard/my-account/gear-order">Gear Orders</Link>,
     },
     {
       key: "extension-requests",

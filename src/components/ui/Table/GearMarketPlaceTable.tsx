@@ -138,6 +138,12 @@ const GearMarketPlaceTable: React.FC<GearMarketPlaceTableProps> = ({
       ),
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      align: "center",
+    },
+    {
       title: "Action",
       key: "action",
       render: (_: unknown, record: any) => (
