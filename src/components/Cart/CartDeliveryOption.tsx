@@ -1,11 +1,16 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useEffect } from "react";
 import ReusableForm from "../ui/Form/ReuseForm";
 import { Checkbox, Form } from "antd";
 import ReuseButton from "../ui/Button/ReuseButton";
 import ReuseInput from "../ui/Form/ReuseInput";
 import type { Rule } from "antd/es/form";
+import { IGear, IProfile } from "@/types";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { gearOrder } from "@/services/GearService/GearServiceApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { clearCart } from "@/redux/features/cart/cartSlice";
 
 const inputFields: {
   name: string;
@@ -14,6 +19,7 @@ const inputFields: {
   required?: boolean;
   rules?: Rule[];
   inputType?: "normal" | "password" | "textarea";
+  disabled?: boolean;
 }[] = [
   {
     name: "name",
@@ -23,11 +29,13 @@ const inputFields: {
     rules: [{ required: true, message: "Name is required" }] as Rule[],
   },
   {
-    name: "street",
-    label: "Street",
+    name: "shippingAddress",
+    label: "Shipping Address",
     placeholder: "Placeholder",
     required: true,
-    rules: [{ required: true, message: "Street is required" }] as Rule[],
+    rules: [
+      { required: true, message: "Shipping Address is required" },
+    ] as Rule[],
   },
   {
     name: "postCode",
@@ -59,6 +67,7 @@ const inputFields: {
       { required: true, message: "Email is required" },
       { type: "email", message: "Enter a valid email" },
     ] as Rule[],
+    disabled: true,
   },
 ];
 const otherFields: {
@@ -80,7 +89,7 @@ const otherFields: {
     placeholder: "Placeholder",
   },
   {
-    name: "ic_dhp",
+    name: "ic_dph",
     label: "IČ DHP (Optional)",
     placeholder: "Placeholder",
   },
@@ -89,20 +98,57 @@ const otherFields: {
     label: "Company Address (Optional)",
     placeholder: "Placeholder",
   },
-  {
-    name: "deliveryNote",
-    label: "Delivery Note (Optional)",
-    placeholder: "Placeholder",
-    inputType: "textarea",
-  },
 ];
 
-const CartDeliveryOption = () => {
+const CartDeliveryOption = ({
+  cartProducts,
+  myData,
+}: {
+  cartProducts: any;
+  myData: IProfile;
+}) => {
+  const dispatch = useAppDispatch();
   const [form] = Form.useForm();
+  const loginAsCompany = Form.useWatch("loginAsCompany", form) || false;
 
-  const handleSubmit = (value: any) => {
-    console.log(value);
+  useEffect(() => {
+    form.setFieldsValue({
+      name: myData?.name || "",
+      email: myData?.email || "",
+      mobileNumber: myData?.phone || "",
+      shippingAddress: myData?.address || "",
+      postCode: "",
+      town: "",
+      ico: myData?.ico || "",
+      dic: myData?.dic || "",
+      ic_dph: myData?.ic_dph || "",
+      companyAddress: myData?.address || "",
+      deliveryNote: "",
+    });
+  }, [myData, form]);
+
+  const handleSubmit = async (value: any) => {
+    const data = {
+      gearMarketPlaceIds: cartProducts.map((product: IGear) => product._id),
+      ...value,
+      loginAsCompany,
+    };
+    console.log(data);
+    const res = await tryCatchWrapper(
+      gearOrder,
+      { body: data },
+      "Please wait...",
+      "Redirecting to Stripe to Complete Payment From Stripe",
+      "Something went wrong! Please try again."
+    );
+    console.log("res", res);
+    if (res?.success) {
+      window.open(res?.data?.checkoutUrl, "_blank"); // Opens in a new tab
+      form.resetFields();
+      dispatch(clearCart());
+    }
   };
+
   return (
     <ReusableForm handleFinish={handleSubmit} form={form}>
       <div className="">
@@ -114,28 +160,41 @@ const CartDeliveryOption = () => {
             placeholder={field.placeholder}
             rules={field.rules}
             inputType={field.inputType}
+            disabled={field.disabled || false}
           />
         ))}
         <div className="mb-2">
-          <Checkbox>I am login as company</Checkbox>
+          <Form.Item name="loginAsCompany" valuePropName="checked">
+            <Checkbox className="text-base-color font-semibold">
+              I am login as company
+            </Checkbox>
+          </Form.Item>
         </div>
-        {otherFields.map((field) => (
-          <ReuseInput
-            key={field.name}
-            name={field.name}
-            label={field.label}
-            placeholder={field.placeholder}
-            rules={field.rules}
-            inputType={field.inputType}
-          />
-        ))}
+        {loginAsCompany &&
+          otherFields.map((field) => (
+            <ReuseInput
+              key={field.name}
+              name={field.name}
+              label={field.label}
+              placeholder={field.placeholder}
+              rules={field.rules}
+              inputType={field.inputType}
+            />
+          ))}
+        <ReuseInput
+          name={"deliveryNote"}
+          label={"Delivery Note (Optional)"}
+          placeholder={"Placeholder"}
+          rules={[]}
+          inputType={"textarea"}
+        />
         <div className="flex justify-end">
           <ReuseButton
             htmlType="submit"
             variant="secondary"
             className="w-full md:w-auto !text-base !py-5 !px-5"
           >
-            Next Step
+            Continue to Payment
           </ReuseButton>
         </div>
       </div>

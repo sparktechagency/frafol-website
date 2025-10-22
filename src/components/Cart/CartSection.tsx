@@ -6,10 +6,17 @@ import CartCard from "./CartProductCards";
 import CartDeliveryOption from "./CartDeliveryOption";
 import { useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
-import { selectTotalPrice } from "@/redux/features/cart/cartSlice";
+import {
+  selectSubTotalPrice,
+  selectTotalPrice,
+  selectTotalShippingPrice,
+} from "@/redux/features/cart/cartSlice";
+import { IProfile } from "@/types";
 
-const CartSection = () => {
-  const subTotal = useAppSelector(selectTotalPrice);
+const CartSection = ({ myData }: { myData: IProfile }) => {
+  const subTotal = useAppSelector(selectSubTotalPrice);
+  const shippingTotal = useAppSelector(selectTotalShippingPrice);
+  const totalPrice = useAppSelector(selectTotalPrice);
 
   const cartProducts = useAppSelector(
     (state: RootState) => state.cart.products
@@ -43,16 +50,12 @@ const CartSection = () => {
           <div className=" py-5 w-full space-y-4 border-y border-base-color/30 mb-5">
             <div className="flex justify-between">
               <span className="font-bold">Sub Total: </span>
-              <span className="font-bold">${subTotal}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-bold">Service Charge: </span>
-              <span className="font-bold">$50.00</span>
+              <span className="font-bold">{subTotal?.toFixed(2)}€</span>
             </div>
 
             <div className="flex justify-between">
               <span className="font-bold">Shipping: </span>
-              <span className="font-bold"> $29.00</span>
+              <span className="font-bold">{shippingTotal?.toFixed(2)}€</span>
             </div>
 
             <hr className="border-gray-700" />
@@ -60,7 +63,7 @@ const CartSection = () => {
             <div className="flex justify-between font-semibold">
               <span className=" font-bold">Total</span>
               <span className="text-secondary-color text-lg font-bold">
-                $629.00
+                {totalPrice?.toFixed(2)}€
               </span>
             </div>
           </div>
@@ -68,7 +71,7 @@ const CartSection = () => {
             <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-5">
               Delivery Information
             </h2>
-            <CartDeliveryOption />
+            <CartDeliveryOption cartProducts={cartProducts} myData={myData} />
           </div>
         </section>
       </div>

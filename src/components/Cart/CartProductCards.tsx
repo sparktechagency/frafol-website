@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import Image from "next/image";
 import { AllImages } from "../../../public/assets/AllImages";
@@ -52,7 +51,7 @@ const CartCard = ({ product }: { product: IGear }) => {
             </p>
           </div>
           <h2 className="text-xs sm:text-sm lg:text-base mb-2">
-            Price: <span className="font-semibold">${product?.price}</span>
+            Price: <span className="font-semibold">{product?.mainPrice}€</span>
           </h2>
         </div>
       </div>

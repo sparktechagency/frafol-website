@@ -49,10 +49,37 @@ const cartSlice = createSlice({
 export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
 
 // Selectors
+export const selectSubTotalPrice = (state: { cart: CartState }) => {
+  return parseFloat(
+    state.cart.products
+      .reduce((total, product) => total + product.mainPrice, 0)
+      .toFixed(2)
+  );
+};
+
+export const selectTotalShippingPrice = (state: { cart: CartState }) => {
+  return parseFloat(
+    state.cart.products
+      .reduce(
+        (total, product) =>
+          total + (product.shippingCompany ? product.shippingCompany.price : 0),
+        0
+      )
+      .toFixed(2)
+  );
+};
+
 export const selectTotalPrice = (state: { cart: CartState }) => {
-  return state.cart.products.reduce(
-    (total, product) => total + product.price,
-    0
+  return parseFloat(
+    state.cart.products
+      .reduce(
+        (total, product) =>
+          total +
+          (product.mainPrice +
+            (product.shippingCompany ? product.shippingCompany.price : 0)),
+        0
+      )
+      .toFixed(2)
   );
 };
 
