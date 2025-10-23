@@ -56,4 +56,33 @@ interface IWorkshopParticipants {
   instructorPayment: WorkshopPayment;
 }
 
-export type { IWorkshop, IWorkshopParticipants };
+interface Author {
+  _id: string;
+  name: string;
+  sureName: string;
+  profileImage: string;
+  role: string; // 'both' or any other role
+}
+
+interface InstructorPayment {
+  status: string; // 'pending' | 'completed'
+  amount: number;
+  paidAt: string | null;
+}
+
+interface IMyRegisteredWorkshop {
+  _id: string;
+  orderId: string;
+  clientId: string; // Client ID as a string
+  instructorId: string;
+  workshopId: string; // Can be either string or full workshop object
+  paymentStatus: string; // 'completed' | 'pending'
+  isDeleted: boolean;
+  joinedAt: string; // ISO format date string
+  createdAt: string; // ISO format date string
+  updatedAt: string; // ISO format date string
+  instructorPayment: InstructorPayment;
+  workshop: IWorkshop; // Nested workshop object
+}
+
+export type { IWorkshop, IWorkshopParticipants, IMyRegisteredWorkshop };
