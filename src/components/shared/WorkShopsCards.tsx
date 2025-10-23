@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { AllImages } from "../../../public/assets/AllImages";
@@ -10,16 +11,36 @@ import { IWorkshop } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import { useUser } from "@/context/UserContext";
+import { useRouter } from "next/navigation";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { createWorkshopOrder } from "@/services/WorkshopOrderService/WorkshopOrderServiceApi";
 
-const WorkShopsCards = ({
-  data,
-  openModal,
-}: {
-  data: IWorkshop;
-  openModal: () => void;
-}) => {
+const WorkShopsCards = ({ data }: { data: IWorkshop }) => {
+  const router = useRouter();
   const serverUrl = getServerUrl();
   const userData = useUser();
+
+  const handleRegister = async (workshopData: IWorkshop) => {
+    if (userData?.user?.userId) {
+      const data = {
+        paymentType: "workshop",
+        workshopId: workshopData?._id,
+      };
+      const res = await tryCatchWrapper(
+        createWorkshopOrder,
+        { body: data },
+        "Registering for workshop...",
+        "Redirecting to Stripe to Complete Payment From Stripe",
+        "Something went wrong! Please try again."
+      );
+
+      if (res?.success) {
+        window.open(res?.data?.checkoutUrl, "_blank");
+      }
+    } else {
+      router.push("/sign-in");
+    }
+  };
   return (
     <div className="p-1.5 rounded-xl border border-background-color flex flex-col justify-between">
       <div>
@@ -93,7 +114,7 @@ const WorkShopsCards = ({
           <ReuseButton
             variant="secondary"
             className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
-            onClick={openModal}
+            onClick={() => handleRegister(data)}
           >
             Register Now
           </ReuseButton>

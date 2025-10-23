@@ -2,9 +2,17 @@
 import React, { useState } from "react";
 import ReuseButton from "../ui/Button/ReuseButton";
 import ProfessionalServiceBookingModal from "../ui/Modal/Professional/ProfessionalServiceBookingModal";
-import { IPackage } from "@/types";
+import { IPackage, IProfile } from "@/types";
+import { useRouter } from "next/navigation";
 
-const ServiceCardBookNow = ({ packageData }: { packageData: IPackage }) => {
+const ServiceCardBookNow = ({
+  myData,
+  packageData,
+}: {
+  myData: IProfile;
+  packageData: IPackage;
+}) => {
+  const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const openModal = () => setIsModalVisible(true);
@@ -15,7 +23,7 @@ const ServiceCardBookNow = ({ packageData }: { packageData: IPackage }) => {
       <ReuseButton
         variant="secondary"
         className="!text-xs sm:!text-sm lg:!text-base !px-2 !py-1 w-fit"
-        onClick={openModal}
+        onClick={myData?._id ? openModal : () => router.push("/sign-in")}
       >
         Book Now
       </ReuseButton>

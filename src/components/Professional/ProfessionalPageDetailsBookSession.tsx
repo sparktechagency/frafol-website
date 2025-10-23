@@ -4,6 +4,7 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import { IoCameraOutline } from "react-icons/io5";
 import ProfessionalBookingModal from "../ui/Modal/Professional/ProfessionalBookingModal";
 import { IProfessionalUser, IProfile } from "@/types";
+import { useRouter } from "next/navigation";
 
 const ProfessionalPageDetailsBookSession = ({
   myData,
@@ -12,6 +13,7 @@ const ProfessionalPageDetailsBookSession = ({
   myData: IProfile;
   professionalUser: IProfessionalUser;
 }) => {
+  const router = useRouter();
   const [isBookModalOpen, setIsBookModalOpen] = React.useState(false);
 
   const openBookModal = () => setIsBookModalOpen(true);
@@ -22,7 +24,7 @@ const ProfessionalPageDetailsBookSession = ({
       <ReuseButton
         variant="outline"
         className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base !text-secondary-color !border-secondary-color flex items-center"
-        onClick={openBookModal}
+        onClick={myData?._id ? openBookModal : () => router.push("/sign-in")}
       >
         <IoCameraOutline className="" /> Book a Session
       </ReuseButton>

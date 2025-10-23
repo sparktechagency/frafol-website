@@ -17,6 +17,7 @@ const page = async ({
 
   const page = Number(params?.page) || 1;
   const searchText = params?.search || "";
+  const workshopId = params?.workshop || undefined;
   const limit = 12;
 
   const res = await fetchWithAuth(`/workshop/my?approvalStatus=${activeTab}`, {
@@ -40,6 +41,26 @@ const page = async ({
   const serviceChargeData = await serviceChargeRes.json();
   const serviceCharge: number = serviceChargeData?.data?.workShop;
 
+  let participantsData = undefined;
+
+  if (workshopId) {
+    const participantsRes = await fetchWithAuth(
+      `/workshop/participants/${workshopId}`,
+      {
+        next: {
+          tags: [TagTypes.workshop],
+        },
+      }
+    );
+
+    const participants = await participantsRes.json();
+    participantsData = participants?.data || undefined;
+  } else {
+    participantsData = undefined;
+  }
+
+  console.log(participantsData);
+
   return (
     <ProfessionalWorkshopPage
       tab={tab as "approved" | "pending"}
@@ -49,6 +70,7 @@ const page = async ({
       workshops={workshops}
       totalData={totalData}
       serviceCharge={serviceCharge}
+      participantsData={participantsData}
     />
   );
 };

@@ -1,3 +1,4 @@
+import { IWorkshopParticipants } from "@/types";
 import ReuseTable from "@/utils/ReuseTable";
 import { Modal } from "antd";
 import React from "react";
@@ -5,30 +6,26 @@ import React from "react";
 const ProfessionalViewParticipentModal = ({
   isViewModalVisible,
   handleCancel,
+  participantsData,
 }: {
   isViewModalVisible: boolean;
   handleCancel: () => void;
+  participantsData: IWorkshopParticipants[] | undefined;
 }) => {
-  const participantsData = Array.from({ length: 8 }).map((_, index) => ({
-    key: index + 1,
-    clientName: "Lívia Nováková",
-    email: "livia@example.com",
-  }));
-
   const columns = [
     {
       title: "Order ID",
-      dataIndex: "key",
-      key: "key",
+      dataIndex: "orderId",
+      key: "orderId",
     },
     {
       title: "Client Name",
-      dataIndex: "clientName",
+      dataIndex: ["clientId", "name"],
       key: "clientName",
     },
     {
       title: "Email",
-      dataIndex: "email",
+      dataIndex: ["clientId", "email"],
       key: "email",
     },
   ];
@@ -46,9 +43,9 @@ const ProfessionalViewParticipentModal = ({
       <div className="mt-10">
         <ReuseTable
           columns={columns}
-          data={participantsData}
-          loading={false}
-          keyValue={"email"}
+          data={participantsData === undefined ? [] : participantsData}
+          loading={participantsData === undefined ? true : false}
+          keyValue={"orderId"}
         />
       </div>
     </Modal>

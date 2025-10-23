@@ -113,17 +113,23 @@ const ProfessionalPageDetails = async ({
                 professionalUser={professionalUser}
               />
             </div>
+          ) : myData?.role && userData?.userId !== professionalUser?._id ? (
+            <div className="flex items-center gap-2">
+              <ReuseButton
+                variant="secondary"
+                className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
+                url="/message"
+              >
+                <AiFillMessage /> Contact
+              </ReuseButton>
+            </div>
           ) : (
-            myData?.role &&
-            userData?.userId !== professionalUser?._id && (
+            !myData?._id && (
               <div className="flex items-center gap-2">
-                <ReuseButton
-                  variant="secondary"
-                  className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
-                  url="/message"
-                >
-                  <AiFillMessage /> Contact
-                </ReuseButton>
+                <ProfessionalPageDetailsBookSession
+                  myData={myData}
+                  professionalUser={professionalUser}
+                />
               </div>
             )
           )}

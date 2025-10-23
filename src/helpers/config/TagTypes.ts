@@ -5,6 +5,7 @@ const TagTypes = {
   package: "PACKAGE",
   eventOrder: "EVENT_ORDER",
   workshop: "WORKSHOP",
+  workshopOrders: "WORKSHOP_ORDERS",
   gear: "GEAR",
   gearOrder: "GEAR_ORDER",
   testimonial: "TESTIMONIAL",

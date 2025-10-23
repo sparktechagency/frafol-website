@@ -6,13 +6,19 @@ import { addToCart } from "@/redux/features/cart/cartSlice";
 import { IGear } from "@/types";
 import { IoCartOutline } from "react-icons/io5";
 import { useUser } from "@/context/UserContext";
+import { useRouter } from "next/navigation";
 
 const AddToCardButton = ({ gear }: { gear: IGear }) => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const userData = useUser();
 
   const handleAddToCart = (data: IGear) => {
-    dispatch(addToCart(data));
+    if (userData?.user?.userId) {
+      dispatch(addToCart(data));
+    } else {
+      router.push("/sign-in");
+    }
   };
   return (
     <>

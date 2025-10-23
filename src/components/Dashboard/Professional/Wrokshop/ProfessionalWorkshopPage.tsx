@@ -9,19 +9,20 @@ import ProfessionalWorkshopCard from "./ProfessionalWorkshopCard";
 import ProfessionalAddNewWorkshop from "./ProfessionalAddNewWorkshop";
 import ProfessionalEditWorkshop from "./ProfessionalEditWorkshop";
 import ProfessionalViewParticipentModal from "./ProfessionalViewParticipentModal";
-import { IWorkshop } from "@/types";
+import { IWorkshop, IWorkshopParticipants } from "@/types";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { deleteWrokshop } from "@/services/WorkshopService/WorkshopServiceApi";
 import PaginationSection from "@/components/shared/PaginationSection";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const ProfessionalWorkshopPage = ({
   tab,
-  searchText,
   page,
   limit,
   workshops,
   totalData,
   serviceCharge,
+  participantsData,
 }: {
   tab: string;
   searchText: string;
@@ -30,8 +31,12 @@ const ProfessionalWorkshopPage = ({
   workshops: IWorkshop[];
   totalData: number;
   serviceCharge: number;
+  participantsData: IWorkshopParticipants[] | undefined;
 }) => {
-  console.log("Search Text:", searchText, "Page:", page, "Limit:", limit);
+  const searchParams = useSearchParams();
+  const pathName = usePathname();
+  const router = useRouter();
+  const { replace } = router;
 
   const [isViewParticipantModalVisible, setIsViewParticipantModalVisible] =
     useState(false);
@@ -41,6 +46,15 @@ const ProfessionalWorkshopPage = ({
   const [currentRecord, setCurrentRecord] = useState<IWorkshop | null>(null);
 
   const showViewParticipantModal = (record: IWorkshop) => {
+    const text = record?._id;
+    const params = new URLSearchParams(searchParams);
+    if (text) {
+      params.set("workshop", text);
+    } else {
+      params.delete("workshop");
+    }
+
+    replace(`${pathName}?${params.toString()}`, { scroll: false });
     setCurrentRecord(record);
     setIsViewParticipantModalVisible(true);
   };
@@ -59,6 +73,9 @@ const ProfessionalWorkshopPage = ({
   };
 
   const handleCancel = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("workshop");
+    replace(`${pathName}?${params.toString()}`, { scroll: false });
     setIsViewParticipantModalVisible(false);
     setIsAddModalVisible(false);
     setIsEditModalVisible(false);
@@ -172,6 +189,7 @@ const ProfessionalWorkshopPage = ({
       <ProfessionalViewParticipentModal
         isViewModalVisible={isViewParticipantModalVisible}
         handleCancel={handleCancel}
+        participantsData={participantsData}
       />
     </div>
   );

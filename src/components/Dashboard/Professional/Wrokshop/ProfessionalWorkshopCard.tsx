@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import React from "react";
 import { AllImages } from "../../../../../public/assets/AllImages";
@@ -24,6 +23,7 @@ const ProfessionalWorkshopCard = ({
   showViewParticipantModal: (record: IWorkshop) => void;
 }) => {
   const serverUrl = getServerUrl();
+  console.log(workshop);
   return (
     <div className="p-1.5 rounded-xl border border-background-color">
       <div className="relative">
@@ -115,7 +115,7 @@ const ProfessionalWorkshopCard = ({
         <div className="flex items-center gap-2 mt-1">
           <LuUsers className="text-secondary-color text-sm sm:text-base lg:text-lg" />
           <p className="text-xs sm:text-sm lg:text-base font-semibold">
-            {workshop?.maxParticipant}
+            {workshop?.totalParticipants || 0}
           </p>
         </div>
         <div className="flex items-center gap-2 mt-5 justify-between">

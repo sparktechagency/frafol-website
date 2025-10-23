@@ -83,13 +83,19 @@ const ProfessionalServiceCard = ({
         </div>
         {myData?.role === "user" ? (
           <div className="flex items-center gap-2 mt-5 justify-between">
-            <ServiceCardBookNow packageData={data} />
+            <ServiceCardBookNow myData={myData} packageData={data} />
           </div>
         ) : myData?.role === "company" ? (
           <div className="flex items-center gap-2 mt-5 justify-between">
-            <ServiceCardBookNow packageData={data} />
+            <ServiceCardBookNow myData={myData} packageData={data} />
           </div>
-        ) : null}
+        ) : (
+          !myData?._id && (
+            <div className="flex items-center gap-2 mt-5 justify-between">
+              <ServiceCardBookNow myData={myData} packageData={data} />
+            </div>
+          )
+        )}
       </div>
     </div>
   );
