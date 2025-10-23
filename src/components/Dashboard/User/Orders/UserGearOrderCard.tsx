@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import { BsEye } from "react-icons/bs";
 import { IoCalendarOutline, IoCheckmarkSharp } from "react-icons/io5";

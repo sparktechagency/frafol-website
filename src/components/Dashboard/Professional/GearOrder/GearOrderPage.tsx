@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import SearchInput from "@/components/ui/Form/ReuseSearchInput";
 import GearOrderTable from "@/components/ui/Table/GearOrderTable";
