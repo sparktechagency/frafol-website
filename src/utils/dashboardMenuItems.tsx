@@ -9,6 +9,7 @@ import payments from "../../public/assets/svg/payments.svg";
 import workshop from "../../public/assets/svg/workshop.svg";
 import review from "../../public/assets/svg/review.svg";
 import profile from "../../public/assets/svg/profile.svg";
+import myCommunityPost from "../../public/assets/svg/myCommunityPost.svg";
 
 // Profesional Dashboard Icons
 import event from "../../public/assets/svg/event.svg";
@@ -344,6 +345,27 @@ export const useProfessionalPaths = () => {
               : undefined,
           }}
         />
+      ),
+    },
+    {
+      key: "my-community-posts",
+      icon: (
+        <Image
+          src={myCommunityPost}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/my-community-posts")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+      label: (
+        <Link href="/dashboard/professional/my-community-posts">
+          My Community Posts
+        </Link>
       ),
     },
     {

@@ -3,13 +3,46 @@ import React from "react";
 import { AllImages } from "../../../../public/assets/AllImages";
 import Container from "@/components/ui/Container";
 import ForumPage from "@/components/Forum/ForumPage";
+import { fetchWithAuth } from "@/lib/fetchWraper";
+import TagTypes from "@/helpers/config/TagTypes";
+import { ICommunityPost } from "@/types";
 
-const page = () => {
+const page = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
+  const params = await searchParams;
+
+  const page = Number(params?.page) || 1;
+  const searchText = params?.search || "";
+  const limit = 12;
+
+  const res = await fetchWithAuth(
+    `/community?page=${page}&limit=${limit}&searchTerm=${searchText}`,
+    {
+      next: {
+        tags: [TagTypes.communityForum],
+      },
+    }
+  );
+
+  const data = await res.json();
+
+  const totalData = data?.data?.meta?.total;
+
+  const communityPosts: ICommunityPost[] = data?.data?.result || [];
+
   return (
     <main className="pb-20">
       <SectionBanner image={AllImages?.forum?.src} title="Forum" />
       <Container>
-        <ForumPage />
+        <ForumPage
+          communityPosts={communityPosts}
+          totalData={totalData}
+          page={page}
+          limit={limit}
+        />
       </Container>
     </main>
   );

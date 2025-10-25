@@ -5,8 +5,16 @@ import { AllImages } from "../../../public/assets/AllImages";
 import ForumReplyCard from "./ForumReplyCard";
 import ForumSubmitReply from "./ForumSubmitReply";
 import Link from "next/link";
+import { ICommunityPost } from "@/types";
+import { formatDateTime } from "@/utils/dateFormet";
+import { getServerUrl } from "@/helpers/config/envConfig";
 
-const ForumDetailsPage = () => {
+const ForumDetailsPage = ({
+  communityPosts,
+}: {
+  communityPosts: ICommunityPost;
+}) => {
+  const serverUrl = getServerUrl();
   return (
     <div className="py-16">
       <Link href="/forums">
@@ -19,76 +27,50 @@ const ForumDetailsPage = () => {
       <div className="mt-10 rounded-xl border border-background-color">
         <div className=" p-4 border-b border-background-color">
           <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold">
-            Deep Sky Imaging Guide for Beginners
+            {communityPosts?.title}
           </h1>
           <div className="flex items-center gap-5">
             <p className="text-xs sm:text-sm lg:text-base  mt-4">
-              Posted 3 days ago
+              Posted {formatDateTime(communityPosts?.createdAt)}
             </p>
-            <p className="text-xs sm:text-sm lg:text-base  mt-4">1250 views</p>
+            <p className="text-xs sm:text-sm lg:text-base  mt-4">
+              {communityPosts?.totalViewers} views
+            </p>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row items-start gap-5">
-          <div className="text-xs sm:text-sm lg:text-base p-5 flex flex-col items-center gap-2">
+        <div className="flex flex-col lg:flex-row items-start gap-2 ">
+          <div className="text-xs sm:text-sm lg:text-base p-1 flex flex-col items-center gap-2 min-w-28">
             <Image
               width={1000}
               height={1000}
-              src={AllImages?.dummyProfile}
+              src={
+                communityPosts?.authorId?.profileImage
+                  ? serverUrl + communityPosts?.authorId?.profileImage
+                  : AllImages?.dummyProfile
+              }
               alt="user"
               className="w-10 h-10 object-cover rounded-full "
             />
             <p className="text-xs sm:text-sm lg:text-base font-bold">
-              Marek Krajč
+              {communityPosts?.authorId?.name}
             </p>
           </div>
-          <div className=" p-5 lg:border-l lg:border-background-color ">
-            <p className="text-sm sm:text-base lg:text-lg">
-              Introduction to Deep Sky Astrophotography Welcome to the wonderful
-              world of deep sky astrophotography! This guide will help beginners
-              navigate the sometimes complex journey of capturing beautiful
-              images of deep sky objects (DSOs) like galaxies, nebulae, and star
-              clusters. Equipment You&apos;ll Need
-            </p>
-            <div className="flex items-center gap-2 mt-5">
-              <p className="text-sm sm:text-base lg:text-lg font-bold text-nowrap">
-                Telescope:
-              </p>
-              <p className="text-sm sm:text-base lg:text-lg">
-                An equatorially mounted telescope or telephoto lens
-              </p>
-            </div>
-            <div className="flex items-center gap-2 mt-1">
-              <p className="text-sm sm:text-base lg:text-lg font-bold text-nowrap">
-                Mount:
-              </p>
-              <p className="text-sm sm:text-base lg:text-lg">
-                A tracking mount is essential for deep sky work
-              </p>
-            </div>
-            <div className="flex items-center gap-2 mt-1">
-              <p className="text-sm sm:text-base lg:text-lg font-bold text-nowrap">
-                Accessories:
-              </p>
-              <p className="text-sm sm:text-base lg:text-lg">
-                T-adapter, field flattener (optional), guidescope (optional
-              </p>
-            </div>
-            <div className="flex items-center gap-2 mt-1">
-              <p className="text-sm sm:text-base lg:text-lg font-bold text-nowrap">
-                Telescope:
-              </p>
-              <p className="text-sm sm:text-base lg:text-lg">
-                An equatorially mounted telescope or telephoto lens
-              </p>
-            </div>
-            <p className="text-sm sm:text-base lg:text-lg mt-5">
-              Remember that this hobby takes patience and practice. Don&apos;t
-              get discouraged if your first images don&apos;t look like
-              Hubble&apos;s! Each session is a learning experience. I&apos;ll be
-              updating this guide with more specific tutorials based on your
-              questions.
-            </p>
-          </div>
+          <div className="p-5 lg:border-l lg:border-background-color">
+            <Image
+              width={1000}
+              height={1000}
+              src={
+                communityPosts?.images?.[0]
+                  ? serverUrl + communityPosts?.images?.[0]
+                  : AllImages?.dummyCover?.src
+              }
+              alt="user"
+              className="w-full lg:w-1/2 mx-auto h-auto object-cover rounded-lg mb-10"
+            />
+            <div
+              dangerouslySetInnerHTML={{ __html: communityPosts?.text }}
+            ></div>
+          </div>{" "}
         </div>
       </div>
       {/* Replies Card */}

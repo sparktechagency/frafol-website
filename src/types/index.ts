@@ -5,6 +5,7 @@ export * from "./professional.type";
 export * from "./package.type";
 export * from "./eventOrder.type";
 export * from "./gearOrder.type";
+export * from "./communityForum.type";
 export * from "./review.type";
 export * from "./gear.type";
 export * from "./workshop.type";

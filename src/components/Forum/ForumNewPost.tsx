@@ -2,7 +2,7 @@
 import React from "react";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { FaPlus } from "react-icons/fa6";
-import AddNewForumMoidal from "../ui/Modal/AddNewForumMoidal";
+import AddNewForumMoidal from "../ui/Modal/Forum/AddNewForumMoidal";
 
 const ForumNewPost = () => {
   const [isAddModalVisible, setIsAddModalOpen] = React.useState(false);

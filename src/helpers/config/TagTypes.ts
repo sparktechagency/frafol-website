@@ -8,6 +8,7 @@ const TagTypes = {
   workshopOrders: "WORKSHOP_ORDERS",
   gear: "GEAR",
   gearOrder: "GEAR_ORDER",
+  communityForum: "COMMUNITY_FORUM",
   testimonial: "TESTIMONIAL",
   product: "PRODUCT",
   service: "SERVICE",
