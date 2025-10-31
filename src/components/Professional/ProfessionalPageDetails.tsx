@@ -153,6 +153,8 @@ const ProfessionalPageDetails = async ({
           sort={sort}
           rating={rating}
         />
+
+        <h4 className="text-gray-400 text-lg ">Show More Information</h4>
       </Container>
     </main>
   );

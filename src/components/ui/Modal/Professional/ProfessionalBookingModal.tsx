@@ -267,11 +267,13 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
               labelClassName="!font-semibold"
               rules={[{ required: true, message: "Budget is required" }]}
               options={[
-                { value: "under500", label: "Under 500€" },
-                { value: "500-1000", label: "500€-1000€" },
-                { value: "1000-2000", label: "1000€-2000€" },
-                { value: "2000-5000", label: "2000€-5000€" },
-                { value: "over5000", label: "Over 5000€" },
+                { value: "under50", label: "Under 50€" },
+                { value: "€50-€100", label: "€50-€100" },
+                { value: "€100-€300", label: "€100-€300" },
+                { value: "€300 – €500", label: "€300 – €500" },
+                { value: "€500 – €700", label: "€500 – €700" },
+                { value: "€700 – €1000", label: "€700 – €1000" },
+                { value: "over1000", label: "Over €1000" },
               ]}
             />
             <ReuseSelect

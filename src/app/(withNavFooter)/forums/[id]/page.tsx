@@ -5,9 +5,15 @@ import { fetchWithAuth } from "@/lib/fetchWraper";
 import { ICommunityPost } from "@/types/communityForum.type";
 import React from "react";
 
-const page = async ({ params }: { params: { id: string } }) => {
-  console.log(params.id);
-  const id = await params?.id;
+const page = async ({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>; // Type params as a Promise
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
+  const { id } = await params;
+  const page = Number((await searchParams)?.page) || 1;
   const res = await fetchWithAuth(`/community/${id}`, {
     next: {
       tags: [TagTypes.communityForum],
@@ -16,12 +22,11 @@ const page = async ({ params }: { params: { id: string } }) => {
 
   const data = await res.json();
 
-  console.log(data);
   const communityPosts: ICommunityPost = data?.data || {};
   return (
     <main>
       <Container>
-        <ForumDetailsPage communityPosts={communityPosts} />
+        <ForumDetailsPage communityPosts={communityPosts} id={id} page={page} />
       </Container>
     </main>
   );

@@ -17,8 +17,25 @@ interface ICommunityPost {
   createdAt: string; // or Date if you parse it
   updatedAt: string; // or Date if you parse it
   totalLikes: number;
+  isLiked: boolean;
   totalViewers: number;
   totalComments: number;
 }
 
-export type { ICommunityPost };
+interface IUser {
+  _id: string;
+  name: string;
+  sureName: string;
+  profileImage: string;
+}
+
+interface ICommunityComment {
+  _id: string;
+  user: IUser;
+  text: string;
+  isAnonymous: boolean;
+  createdAt: string; // ISO date string
+  replies: ICommunityComment[]; // recursive for replies
+}
+
+export type { ICommunityPost, ICommunityComment };

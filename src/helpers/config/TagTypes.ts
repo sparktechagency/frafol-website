@@ -9,6 +9,7 @@ const TagTypes = {
   gear: "GEAR",
   gearOrder: "GEAR_ORDER",
   communityForum: "COMMUNITY_FORUM",
+  comment: "COMMENT",
   testimonial: "TESTIMONIAL",
   product: "PRODUCT",
   service: "SERVICE",

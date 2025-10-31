@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { IProfessional } from "@/types";
 import Image from "next/image";

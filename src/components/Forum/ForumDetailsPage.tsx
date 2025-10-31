@@ -2,18 +2,23 @@ import Image from "next/image";
 import React from "react";
 import { GoArrowLeft } from "react-icons/go";
 import { AllImages } from "../../../public/assets/AllImages";
-import ForumReplyCard from "./ForumReplyCard";
-import ForumSubmitReply from "./ForumSubmitReply";
 import Link from "next/link";
 import { ICommunityPost } from "@/types";
 import { formatDateTime } from "@/utils/dateFormet";
 import { getServerUrl } from "@/helpers/config/envConfig";
+import ForumAllComents from "./ForumAllComents";
+import ForumPostLikeSection from "./ForumPostLikeSection";
 
 const ForumDetailsPage = ({
   communityPosts,
+  id,
+  page,
 }: {
   communityPosts: ICommunityPost;
+  id: string;
+  page: number;
 }) => {
+  console.log(communityPosts);
   const serverUrl = getServerUrl();
   return (
     <div className="py-16">
@@ -25,24 +30,28 @@ const ForumDetailsPage = ({
       </Link>
       {/* Main Post  */}
       <div className="mt-10 rounded-xl border border-background-color">
-        <div className=" p-4 border-b border-background-color">
-          <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold">
-            {communityPosts?.title}
-          </h1>
-          <div className="flex items-center gap-5">
-            <p className="text-xs sm:text-sm lg:text-base  mt-4">
-              Posted {formatDateTime(communityPosts?.createdAt)}
-            </p>
-            <p className="text-xs sm:text-sm lg:text-base  mt-4">
-              {communityPosts?.totalViewers} views
-            </p>
+        <div className=" p-4 border-b border-background-color flex justify-between items-center">
+          <div>
+            <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold">
+              {communityPosts?.title}
+            </h1>
+            <div className="flex items-center gap-5">
+              <p className="text-xs sm:text-sm lg:text-base  mt-4">
+                Posted {formatDateTime(communityPosts?.createdAt)}
+              </p>
+              <p className="text-xs sm:text-sm lg:text-base  mt-4">
+                {communityPosts?.totalViewers} views
+              </p>
+            </div>
           </div>
+          <ForumPostLikeSection communityPosts={communityPosts} id={id} />
         </div>
         <div className="flex flex-col lg:flex-row items-start gap-2 ">
           <div className="text-xs sm:text-sm lg:text-base p-1 flex flex-col items-center gap-2 min-w-28">
             <Image
               width={1000}
               height={1000}
+              draggable={false}
               src={
                 communityPosts?.authorId?.profileImage
                   ? serverUrl + communityPosts?.authorId?.profileImage
@@ -74,14 +83,7 @@ const ForumDetailsPage = ({
         </div>
       </div>
       {/* Replies Card */}
-      <div className="rounded-xl border border-background-color flex flex-col gap-2 p-5 items-start mt-16">
-        <p className="text-base sm:text-lg lg:text-xl font-bold">Replies</p>
-
-        {Array.from({ length: 4 }).map((item, index) => (
-          <ForumReplyCard key={index} />
-        ))}
-        <ForumSubmitReply />
-      </div>
+      <ForumAllComents id={id} page={page} />
     </div>
   );
 };

@@ -31,7 +31,7 @@ const ReuseDatePicker = ({
   disabled = false,
   className,
   style,
-  format = "MM-DD-YYYY",
+  format = "DD-MM-YYYY",
   placeholder = "Select date",
   labelClassName,
   wrapperClassName,

@@ -136,7 +136,7 @@ const ProfessionalEventOrderTable: React.FC<
     ...(activeTab === "inProgress"
       ? [
           {
-            title: "Delivery Status",
+            title: "Extension Status",
             dataIndex: "status",
             key: "status",
             render: (_: unknown, record: IEventOrder) => (

@@ -9,8 +9,6 @@ import TransactionViewModal from "./TransactionViewModal";
 const EarningsPage = () => {
   const data = TransactionsData;
   const [page, setPage] = useState(1);
-  const [searchText, setSearchText] = useState("");
-  console.log(searchText);
 
   const limit = 12;
 
@@ -34,11 +32,7 @@ const EarningsPage = () => {
           Earning
         </h1>
         <div className="h-fit">
-          <SearchInput
-            placeholder="Search ..."
-            setSearch={setSearchText}
-            setPage={setPage}
-          />
+          <SearchInput placeholder="Search ..." />
         </div>
       </div>
 
