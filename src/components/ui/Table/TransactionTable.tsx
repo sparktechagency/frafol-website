@@ -19,7 +19,6 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   data,
   loading,
   showViewModal,
-  setPage,
   page,
   total,
   limit,
@@ -84,7 +83,6 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       columns={columns}
       data={data}
       loading={loading}
-      setPage={setPage}
       total={total}
       limit={limit}
       page={page}

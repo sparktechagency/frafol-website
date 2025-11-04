@@ -1,15 +1,11 @@
-"use client";
 import ReusableTabs from "@/components/ui/ReusableTabs";
-import React, { useState } from "react";
+import React from "react";
 import UserAllReviews from "./UserAllReviews";
 import UserAllPendingReview from "./UserAllPendingReview";
 import UserReviewOverview from "./UserReviewOverview";
 
 const UserReviewPage = () => {
-  const [activeTab, setActiveTab] = useState<"allReviews" | "pendingReviews">(
-    "allReviews"
-  );
-
+  const activeTab = "allReviews";
   return (
     <div>
       <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl  font-bold mb-10">
@@ -20,7 +16,6 @@ const UserReviewPage = () => {
       <div className="mt-10">
         <ReusableTabs
           activeTab={activeTab}
-          onTabChange={setActiveTab}
           align="left"
           tabs={[
             {

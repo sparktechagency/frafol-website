@@ -7,7 +7,6 @@ import ReportViewModal from "./ReviewViewModal";
 
 const ReviewPage = () => {
   const feedbackData = reportData;
-  const [page, setPage] = useState(1);
 
   const limit = 12;
 
@@ -40,8 +39,7 @@ const ReviewPage = () => {
           data={feedbackData}
           loading={false}
           showViewModal={showViewUserModal}
-          setPage={setPage}
-          page={page}
+          page={1}
           total={feedbackData?.length}
           limit={limit}
         />

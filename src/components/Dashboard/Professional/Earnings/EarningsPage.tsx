@@ -8,7 +8,6 @@ import TransactionViewModal from "./TransactionViewModal";
 
 const EarningsPage = () => {
   const data = TransactionsData;
-  const [page, setPage] = useState(1);
 
   const limit = 12;
 
@@ -40,8 +39,7 @@ const EarningsPage = () => {
         data={data}
         loading={false}
         showViewModal={showViewUserModal}
-        setPage={setPage}
-        page={page}
+        page={1}
         total={data.length}
         limit={limit}
       />

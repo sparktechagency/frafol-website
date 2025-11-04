@@ -6,7 +6,6 @@ const ProfessionalReviewTable = ({
   data,
   loading,
   showViewModal,
-  setPage,
   page,
   total,
   limit,
@@ -87,7 +86,6 @@ any) => {
       columns={columns}
       data={data}
       loading={loading}
-      setPage={setPage}
       total={total}
       limit={limit}
       page={page}

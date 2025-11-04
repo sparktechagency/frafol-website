@@ -4,12 +4,23 @@ import ReuseInput from "./ReuseInput";
 import { SearchOutlined } from "@ant-design/icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Form } from "antd";
+import { cn } from "@/lib/utils";
 
 interface SearchInputProps {
   placeholder: string;
+  className?: string;
+  inputClassName?: string;
+  formClassName?: string;
+  isPage?: boolean;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ placeholder }) => {
+const SearchInput: React.FC<SearchInputProps> = ({
+  placeholder,
+  className = "",
+  inputClassName = "",
+  formClassName = "",
+  isPage = true,
+}) => {
   const [form] = Form.useForm();
   const searchParams = useSearchParams();
   const pathName = usePathname();
@@ -25,7 +36,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ placeholder }) => {
     const params = new URLSearchParams(searchParams);
     if (text) {
       params.set("search", text);
-      params.set("page", "1");
+      if (isPage) {
+        params.set("page", "1");
+      }
     } else {
       params.delete("search");
     }
@@ -54,14 +67,17 @@ const SearchInput: React.FC<SearchInputProps> = ({ placeholder }) => {
     }
   }, [searchParams, form]);
   return (
-    <div className="flex gap-4 items-center">
-      <Form form={form}>
+    <div className={cn("flex gap-4 items-center", className)}>
+      <Form form={form} className={cn(formClassName)}>
         <ReuseInput
           name="search"
           type="text"
           placeholder={placeholder}
           onChange={handleSearch}
-          inputClassName="!bg-primary-color !text-base-color !border-[#E1E1E1]"
+          inputClassName={cn(
+            "!bg-primary-color !text-base-color !border-[#E1E1E1]",
+            inputClassName
+          )}
           prefix={<SearchOutlined className="text-[#667185] text-xl mr-2" />}
         />
       </Form>

@@ -55,6 +55,9 @@ const WorkShopsCards = ({ data }: { data: IWorkshop }) => {
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3">
             {data?.title}
           </p>
+          <p className="text-xs sm:text-sm lg:text-base mt-1">
+            {data?.description}
+          </p>
           <div className="flex items-center gap-2 mt-3">
             <Image
               width={1000}

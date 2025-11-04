@@ -13,6 +13,7 @@ const TagTypes = {
   testimonial: "TESTIMONIAL",
   product: "PRODUCT",
   service: "SERVICE",
+  conversation: "CONVERSATION",
 };
 
 export default TagTypes;

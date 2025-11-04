@@ -4,8 +4,6 @@ import Image from "next/image";
 import { AllImages } from "../../../public/assets/AllImages";
 import { FaStar } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-import ReuseButton from "../ui/Button/ReuseButton";
-import { AiFillMessage } from "react-icons/ai";
 import SectionHeader from "../ui/SectionHeader";
 import ProfessionalPageDetailsMyServices from "./ProfessionalPageDetailsMyServices";
 import ProfessionalPageDetailsMyWork from "./ProfessionalPageDetailsMyWork";
@@ -17,6 +15,7 @@ import { getServerUrl } from "@/helpers/config/envConfig";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { getCurrentUser } from "@/services/AuthService";
+import CreateConversionButton from "./CreateConversionButton";
 
 const ProfessionalPageDetails = async ({
   professionalUser,
@@ -87,13 +86,7 @@ const ProfessionalPageDetails = async ({
           </p>
           {myData?.role === "user" ? (
             <div className="flex items-center gap-2">
-              <ReuseButton
-                variant="secondary"
-                className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
-                url="/message"
-              >
-                <AiFillMessage /> Contact
-              </ReuseButton>
+              <CreateConversionButton professionalUser={professionalUser} />
               <ProfessionalPageDetailsBookSession
                 myData={myData}
                 professionalUser={professionalUser}
@@ -101,13 +94,8 @@ const ProfessionalPageDetails = async ({
             </div>
           ) : myData?.role === "company" ? (
             <div className="flex items-center gap-2">
-              <ReuseButton
-                variant="secondary"
-                className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
-                url="/message"
-              >
-                <AiFillMessage /> Contact
-              </ReuseButton>
+              <CreateConversionButton professionalUser={professionalUser} />
+
               <ProfessionalPageDetailsBookSession
                 myData={myData}
                 professionalUser={professionalUser}
@@ -115,13 +103,7 @@ const ProfessionalPageDetails = async ({
             </div>
           ) : myData?.role && userData?.userId !== professionalUser?._id ? (
             <div className="flex items-center gap-2">
-              <ReuseButton
-                variant="secondary"
-                className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
-                url="/message"
-              >
-                <AiFillMessage /> Contact
-              </ReuseButton>
+              <CreateConversionButton professionalUser={professionalUser} />
             </div>
           ) : (
             !myData?._id && (
