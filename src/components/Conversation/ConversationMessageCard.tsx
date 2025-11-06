@@ -15,7 +15,7 @@ const ConversationMessageCard = ({
   return (
     <div>
       <div>
-        <div className="flex items-start gap-1 mb-5">
+        <div className="flex items-start gap-1 mb-2">
           {/* {msg?.sender !== null && (
             <Image
               loading="lazy"

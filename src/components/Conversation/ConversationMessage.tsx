@@ -22,7 +22,7 @@ const ConversationMessage = ({
   allMessages,
   userData,
   onlineUsers,
-  // totalMessages,
+  totalMessages,
   room,
   page,
 }: {
@@ -101,39 +101,43 @@ const ConversationMessage = ({
   }, [allMessages, page]);
 
   // // Infinite scroll handler
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const container = messagesContainerRef.current;
-  //     if (!container) return;
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = messagesContainerRef.current;
+      if (!container) return;
 
-  //     if (container.scrollTop === 0) {
-  //       console.log("totalMessages?.totalPage", totalMessages?.totalPage);
-  //       if (totalMessages?.totalPage && page < totalMessages?.totalPage) {
-  //         const curentPage = page;
-  //         const params = new URLSearchParams(searchParams);
-  //         if (curentPage) {
-  //           params.set("page", (curentPage + 1).toString());
-  //         } else {
-  //           params.delete("page");
-  //         }
+      if (container.scrollTop === 0) {
+        console.log("totalMessages?.totalPage", totalMessages?.totalPage);
+        if (room === selectedConversation?.chat?._id) {
+          if (totalMessages?.totalPage && page < totalMessages?.totalPage) {
+            const curentPage = page;
+            const params = new URLSearchParams(searchParams);
+            if (curentPage) {
+              params.set("page", (curentPage + 1).toString());
+            } else {
+              params.delete("page");
+            }
 
-  //         replace(`${pathName}?${params.toString()}`, { scroll: false });
-  //       }
-  //     }
-  //   };
+            replace(`${pathName}?${params.toString()}`, { scroll: false });
+          }
+        }
+      }
+    };
 
-  //   const container = messagesContainerRef.current;
-  //   container?.addEventListener("scroll", handleScroll);
-  //   return () => container?.removeEventListener("scroll", handleScroll);
-  // }, [
-  //   allMessages,
-  //   page,
-  //   pathName,
-  //   replace,
-  //   searchParams,
-  //   totalMessages,
-  //   totalMessages?.totalPage,
-  // ]);
+    const container = messagesContainerRef.current;
+    container?.addEventListener("scroll", handleScroll);
+    return () => container?.removeEventListener("scroll", handleScroll);
+  }, [
+    allMessages,
+    page,
+    pathName,
+    replace,
+    room,
+    searchParams,
+    selectedConversation?.chat?._id,
+    totalMessages,
+    totalMessages?.totalPage,
+  ]);
 
   // New socket message handler
   const handleMessage = useCallback((message: any) => {
@@ -178,7 +182,7 @@ const ConversationMessage = ({
       {selectedConversation ? (
         <Layout className={`!bg-[#FFFAF5] lg:col-span-3 xl:col-span-4 h-full`}>
           {/* Header */}
-          <div className="!bg-[#FFFFFF] p-2 lg:p-3 border-b-2 border-secondary-color flex justify-between items-center">
+          <div className="!bg-[#FFFFFF] p-2 lg:p-3 border-b-2 border-secondary-color/20 flex justify-between items-center">
             <div className="flex items-center gap-2">
               <div className="flex items-center mr-2">
                 <MdOutlineArrowBackIosNew
@@ -218,9 +222,9 @@ const ConversationMessage = ({
 
           {/* Message List */}
           <Content className="bg-white flex flex-col gap-5 !relative">
-            <div className="h-full flex flex-col justify-end !relative">
+            <div className="h-full flex flex-col justify-end !relative ">
               <Card
-                className="!border-0 !pb-5 !relative overflow-y-auto border-none h-full overflow-x-hidden"
+                className="!border-0 !pb-5 !relative overflow-y-auto border-none h-full overflow-x-hidden  !mb-5"
                 ref={messagesContainerRef}
               >
                 {convertnewMessageFirst.map((msg: IMessage) => (

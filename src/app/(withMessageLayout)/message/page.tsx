@@ -27,7 +27,7 @@ const page = async ({
 
   if (room) {
     const roomRes = await fetchWithAuth(
-      `/message/${room}?page=${page}&limit=1000`,
+      `/message/${room}?page=${page}&limit=50`,
       {
         next: {
           tags: [TagTypes.conversation],

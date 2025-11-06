@@ -10,6 +10,7 @@ import Image from "next/image";
 import { IConversation } from "@/types/conversation.type";
 import { AllImages } from "../../../public/assets/AllImages";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 interface IConversationChatListCardProps {
   conversation: IConversation;
@@ -29,6 +30,19 @@ const ConversationChatListCard = ({
   const imageUrl = getServerUrl();
   const dispatch = useAppDispatch();
   const selectedConversation = useAppSelector(selectSelectedChatUser);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("room") || params.has("page")) {
+      params.delete("room");
+      params.delete("page");
+
+      // Replace URL without these params, scroll false keeps scroll position
+      replace(`${pathName}?${params.toString()}`, { scroll: false });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleConversationSelect = (conversation: IConversation) => {
     const conversationId = conversation?.chat?._id;
@@ -108,13 +122,13 @@ const ConversationChatListCard = ({
             </div>
             <div className="flex justify-between items-center w-full">
               <div className="text-sm">
-                {conversation?.message
-                  ? `${conversation?.message?.slice(0, 10)}...`
+                {conversation?.lastMessage
+                  ? `${conversation?.lastMessage?.slice(0, 10)}...`
                   : ""}
               </div>
               <div className="text-xs">
-                {conversation?.message
-                  ? formatDateTime(conversation?.message)
+                {conversation?.lastMessageCreatedAt
+                  ? formatDateTime(conversation?.lastMessageCreatedAt)
                   : ""}
               </div>
             </div>

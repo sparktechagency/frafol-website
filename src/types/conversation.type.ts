@@ -18,6 +18,7 @@ interface IConversationInfo {
 
 export interface IConversation {
   chat: IConversationInfo;
+  lastMessage: string;
   message: string;
   unreadMessageCount: number;
   lastMessageSender: string;
