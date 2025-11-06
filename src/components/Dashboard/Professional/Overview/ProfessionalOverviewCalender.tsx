@@ -11,14 +11,30 @@ import {
   addDays,
   isSameMonth,
   isSameDay,
+  isBefore,
+  startOfDay,
 } from "date-fns";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { IEventOrder } from "@/types";
 
-const upcomingEventDates = [new Date(2025, 4, 6), new Date(2025, 4, 24)]; // May 6 and 24, 2025
+const ProfessionalOverviewCalendar = ({
+  upcomingEvents,
+}: {
+  upcomingEvents: IEventOrder[];
+}) => {
+  // currentMonth defaults to today's month
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-const ProfessionalOverviewCalender = () => {
-  const [currentMonth, setCurrentMonth] = useState(new Date(2025, 4, 1)); // May 2025
+  // convert event.date strings to Date objects and filter future events
+  const upcomingEventDates = useMemo(() => {
+    const now = startOfDay(new Date());
+    return (
+      upcomingEvents
+        ?.map((event) => new Date(event.date))
+        .filter((eventDate) => !isBefore(eventDate, now)) || []
+    );
+  }, [upcomingEvents]);
 
   const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
   const prevMonth = () => setCurrentMonth(addMonths(currentMonth, -1));
@@ -66,12 +82,15 @@ const ProfessionalOverviewCalender = () => {
 
         const isEvent = upcomingEventDates.some((d) => isSameDay(d, cloneDay));
 
+        const isPast = isBefore(startOfDay(day), startOfDay(new Date()));
+
         days.push(
           <div
             key={day.toString()}
             className={`text-sm h-10 w-10 flex items-center justify-center mx-auto rounded-full
               ${!isSameMonth(day, monthStart) ? "text-gray-400" : ""}
               ${isEvent ? "bg-red-700 text-white font-semibold" : ""}
+              ${isPast ? "opacity-40 pointer-events-none" : ""}
             `}
           >
             {formattedDate}
@@ -91,10 +110,7 @@ const ProfessionalOverviewCalender = () => {
   };
 
   return (
-    <div className=" bg-white rounded-lg  p-4">
-      <h2 className="text-center text-red-800 font-semibold mb-2 text-base sm:text-lg lg:text-xl xl:text-2xl ">
-        Upcoming Events
-      </h2>
+    <div className="bg-white rounded-lg p-4">
       {renderHeader()}
       {renderDays()}
       {renderCells()}
@@ -102,4 +118,4 @@ const ProfessionalOverviewCalender = () => {
   );
 };
 
-export default ProfessionalOverviewCalender;
+export default ProfessionalOverviewCalendar;

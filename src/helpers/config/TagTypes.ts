@@ -14,6 +14,8 @@ const TagTypes = {
   product: "PRODUCT",
   service: "SERVICE",
   conversation: "CONVERSATION",
+  earning: "EARNING",
+  review: "REVIEW",
 };
 
 export default TagTypes;

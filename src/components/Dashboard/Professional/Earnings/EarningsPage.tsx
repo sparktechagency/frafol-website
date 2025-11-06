@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useState } from "react";
-import { TransactionsData } from "../../../../../public/data/TransactionsData";
 import SearchInput from "@/components/ui/Form/ReuseSearchInput";
 import TransactionTable from "@/components/ui/Table/TransactionTable";
 import TransactionViewModal from "./TransactionViewModal";
 
-const EarningsPage = () => {
-  const data = TransactionsData;
+const EarningsPage = ({ earning, totalData }: any) => {
+  console.log(earning);
 
   const limit = 12;
 
@@ -36,11 +35,11 @@ const EarningsPage = () => {
       </div>
 
       <TransactionTable
-        data={data}
+        data={earning}
         loading={false}
         showViewModal={showViewUserModal}
         page={1}
-        total={data.length}
+        total={totalData}
         limit={limit}
       />
       <TransactionViewModal

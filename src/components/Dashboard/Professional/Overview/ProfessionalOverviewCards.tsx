@@ -2,40 +2,55 @@ import { FaStar } from "react-icons/fa6";
 import { LuShoppingBag } from "react-icons/lu";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { IoCameraSharp } from "react-icons/io5";
+import { fetchWithAuth } from "@/lib/fetchWraper";
+import TagTypes from "@/helpers/config/TagTypes";
 
-const ProfessionalOverviewCards = () => {
+const ProfessionalOverviewCards = async () => {
+  const overviewRes = await fetchWithAuth(
+    `/users/specific-professional-overview`,
+    {
+      next: {
+        tags: [
+          TagTypes.eventOrder,
+          TagTypes.gearOrder,
+          TagTypes.earning,
+          TagTypes.review,
+        ],
+      },
+    }
+  );
+
+  const overviewData = await overviewRes.json();
+  const overview = overviewData.data;
   const countData = [
     {
       id: 1,
       background: "#ffffff",
       name: "Pending Gear Order",
       icon: <LuShoppingBag className="size-5 text-secondary-color" />,
-      count: 4,
-      message: "2  Due This week",
+      count: overview?.totalPendingGearOrders,
+      // message: "2  Due This week",
     },
     {
       id: 2,
       background: "#ffffff",
       name: "Upcoming Events",
       icon: <IoCameraSharp className="size-5 text-secondary-color" />,
-      count: 2,
-      message: "2  Due This week",
+      count: overview?.totalUpcomingEvents,
     },
     {
       id: 3,
       background: "#ffffff",
       name: "May Earnings",
       icon: <RiMoneyDollarCircleFill className="size-6 text-secondary-color" />,
-      count: "$500",
-      message: "+12%",
+      count: `${overview?.totalOverallEarnings}`,
     },
     {
       id: 4,
       background: "#ffffff",
       name: "Reviews Received",
       icon: <FaStar className="size-6 text-secondary-color" />,
-      count: 12,
-      message: "Based on 27 reviews",
+      count: overview?.totalReviewsReceived,
     },
   ];
   return (
@@ -59,10 +74,6 @@ const ProfessionalOverviewCards = () => {
             <p className="text-lg sm:text-xl lg:text-2xl  font-bold capitalize tracking-wider">
               {item.count}
             </p>
-            <p className="text-sm sm:text-base lg:text-lg  font-medium capitalize tracking-wider">
-              {item.message}
-            </p>
-            {/* <div className="bg-[#FAF4FF] p-3 rounded-full">{item.icon}</div> */}
           </div>
         </div>
       ))}

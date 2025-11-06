@@ -1,11 +1,24 @@
 import Bar_Chart from "@/components/Chart/BarChart";
+import TagTypes from "@/helpers/config/TagTypes";
+import { fetchWithAuth } from "@/lib/fetchWraper";
 import YearOption from "@/utils/YearOption";
-import { useState } from "react";
 
-const IncomeOverview = () => {
+const IncomeOverview = async ({ year }: { year: number }) => {
   const currentYear = new Date().getFullYear();
-  const [year, setYear] = useState(currentYear);
-  console.log(year);
+
+  const earningStateRes = await fetchWithAuth(
+    `/users/monthly-earning-statistics?year=${year}`,
+    {
+      next: {
+        tags: [TagTypes.earning],
+      },
+    }
+  );
+
+  const earningStateData = await earningStateRes.json();
+  const earningState = earningStateData.data?.monthlyEarnings;
+
+  console.log("earningState", earningState);
 
   return (
     <div className="w-full p-3 rounded-lg flex flex-col bg-primary-color">
@@ -14,12 +27,12 @@ const IncomeOverview = () => {
           Earning
         </p>
         <div>
-          <YearOption currentYear={currentYear} setThisYear={setYear} />
+          <YearOption currentYear={currentYear} />
         </div>
       </div>
       <hr />
       <div>
-        <Bar_Chart />
+        <Bar_Chart data={earningState} />
       </div>
     </div>
   );

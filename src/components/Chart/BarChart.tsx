@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import {
   BarChart,
   Bar,
@@ -11,26 +13,30 @@ import {
 // Define the structure of each data point in the chart
 interface ChartData {
   month: string;
-  earnings: number;
+  totalEarnings: number;
 }
 
-const data: ChartData[] = [
-  { month: "Jan", earnings: 5000 },
-  { month: "Feb", earnings: 6000 },
-  { month: "Mar", earnings: 7000 },
-  { month: "Apr", earnings: 8000 },
-  { month: "May", earnings: 9000 },
-  { month: "Jun", earnings: 10000 },
-  { month: "Jul", earnings: 11000 },
-  { month: "Aug", earnings: 12000 },
-  { month: "Sep", earnings: 13000 },
-  { month: "Oct", earnings: 1400 },
-  { month: "Nov", earnings: 15000 },
-  { month: "Dec", earnings: 16000 },
-];
-
-const Bar_Chart = () => {
+const Bar_Chart = ({ data }: { data: ChartData[] }) => {
   // Custom tooltip to display the information
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const value = payload[0].payload.totalEarnings; // Access your data key
+      return (
+        <div
+          style={{
+            backgroundColor: "#fff",
+            padding: "8px 12px",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+          }}
+        >
+          <p style={{ margin: 0, color: "#202020" }}>{`Month: ${label}`}</p>
+          <p style={{ margin: 0, color: "#0a0a08" }}>{`Earnings: ${value}€`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
 
   // Custom tick style for X and Y axes
   const tickStyle = { fill: "#000" };
@@ -48,20 +54,9 @@ const Bar_Chart = () => {
           }}
           barCategoryGap={30} // Adjust the gap between bars if necessary
         >
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "#fff",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-            }}
-            itemStyle={{ color: "#0a0a08" }}
-            labelStyle={{ color: "#202020" }}
-            formatter={(value: number): [string, string] => [
-              `${value}€`,
-              "Earning",
-            ]}
-            labelFormatter={(label: string) => `Month: ${label}`}
-          />
+          {/* Use your custom tooltip */}
+          <Tooltip content={<CustomTooltip />} />
+
           <XAxis dataKey="month" tick={{ ...tickStyle }} tickMargin={6} />
           <YAxis
             tick={{ ...tickStyle }}
@@ -79,11 +74,12 @@ const Bar_Chart = () => {
           <ReferenceLine y={40} stroke="#20202055" />
           <ReferenceLine y={50} stroke="#20202055" />
           <ReferenceLine y={60} stroke="#20202055" />
+
           <Bar
-            dataKey="earnings"
-            fill="url(#incomeGradient)" // Bar color
-            barSize={20} // Width of each bar
-            radius={[10, 10, 10, 10]} // Rounded corners for bars
+            dataKey="totalEarnings" // Make sure this matches your data key
+            fill="url(#incomeGradient)"
+            barSize={20}
+            radius={[10, 10, 10, 10]}
           />
 
           <defs>

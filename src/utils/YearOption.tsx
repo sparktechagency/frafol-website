@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import { ConfigProvider, Select } from "antd";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 // Define types for the props
 interface YearOptionProps {
   currentYear: number;
-  setThisYear: (year: any) => void; // Function to set the selected year
 }
 
 interface YearOption {
@@ -13,14 +13,16 @@ interface YearOption {
   label: string;
 }
 
-const YearOption: React.FC<YearOptionProps> = ({
-  currentYear,
-  setThisYear,
-}) => {
+const YearOption: React.FC<YearOptionProps> = ({ currentYear }) => {
+  const searchParams = useSearchParams();
+  const pathName = usePathname();
+  const router = useRouter();
+  const { replace } = router;
+
   const [yearOptions, setYearOptions] = useState<YearOption[]>([]); // Type state as an array of YearOption objects
 
   useEffect(() => {
-    const startYear = 2025;
+    const startYear = 2020;
     const yearRange: YearOption[] = [];
 
     // Add the years to the list
@@ -30,6 +32,19 @@ const YearOption: React.FC<YearOptionProps> = ({
 
     setYearOptions(yearRange);
   }, [currentYear]);
+
+  const setThisYear = (year: string) => {
+    const text = year;
+
+    const params = new URLSearchParams(searchParams);
+    if (text) {
+      params.set("year", text);
+    } else {
+      params.delete("year");
+    }
+
+    replace(`${pathName}?${params.toString()} `, { scroll: false });
+  };
 
   return (
     <ConfigProvider
@@ -47,8 +62,8 @@ const YearOption: React.FC<YearOptionProps> = ({
             selectorBg: "#FFFFFF",
             colorTextPlaceholder: "#AD2B08",
             optionSelectedColor: "#ffffff",
-            optionSelectedBg: "#202020",
-            optionActiveBg: "#20202055",
+            optionSelectedBg: "#AD2B08",
+            optionActiveBg: "#AD2B0855",
           },
         },
       }}
