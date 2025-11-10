@@ -7,9 +7,22 @@ import ReusableForm from "../ui/Form/ReuseForm";
 import ReuseInput from "../ui/Form/ReuseInput";
 import ReuseButton from "../ui/Button/ReuseButton";
 import Link from "next/link";
+import { useUser } from "@/context/UserContext";
+import { useState } from "react";
+import ReportModal from "../ui/Modal/ReportModal";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const user = useUser();
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+
+  const showReportModal = () => {
+    setIsReportModalOpen(true);
+  };
+
+  const hancleCancel = () => {
+    setIsReportModalOpen(false);
+  };
 
   return (
     <div
@@ -139,7 +152,12 @@ export default function Footer() {
                       <Link href="/contact">Contact Us</Link>
                     </li>
                     <li>
-                      <Link href="/report-problem">Report a Problem</Link>
+                      <p
+                        className="cursor-pointer"
+                        onClick={() => user?.user?.userId && showReportModal()}
+                      >
+                        Report a Problem
+                      </p>
                     </li>
                   </ul>
                 </div>
@@ -160,6 +178,11 @@ export default function Footer() {
           </Container>
         </footer>
       </div>
+      <ReportModal
+        isReportModalVisible={isReportModalOpen}
+        handleCancel={hancleCancel}
+        description="Something went wrong? Please let us know."
+      />
     </div>
   );
 }
