@@ -16,6 +16,7 @@ import { AllImages } from "../../../../../public/assets/AllImages";
 import { FaEuroSign } from "react-icons/fa6";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { completePayment } from "@/services/PaymentService/PaymentServiceApi";
+import { useUser } from "@/context/UserContext";
 
 const UserOrderCard = ({
   activeTab,
@@ -24,6 +25,8 @@ const UserOrderCard = ({
   showConfirmModal,
   showRejectExtensionModal,
   showAcceptExtensionModal,
+  showAcceptModal,
+  showDeclineModal,
 }: {
   activeTab: string;
   data: IEventOrder;
@@ -31,7 +34,10 @@ const UserOrderCard = ({
   showConfirmModal?: any;
   showRejectExtensionModal?: any;
   showAcceptExtensionModal?: any;
+  showAcceptModal?: any;
+  showDeclineModal?: any;
 }) => {
+  const user = useUser();
   const serverUrl = getServerUrl();
 
   const handlePayment = async (data: IEventOrder) => {
@@ -75,6 +81,8 @@ const UserOrderCard = ({
                 ? "Payment Required"
                 : data?.status === "inProgress"
                 ? "In Progress"
+                : data?.status === "cancelRequest"
+                ? "Cancel Requested"
                 : data?.status}
             </p>
           )}
@@ -129,6 +137,23 @@ const UserOrderCard = ({
               {formatDate(
                 data?.extensionRequests?.[extensionLength - 1]?.newDeliveryDate
               )}
+            </p>
+          </div>
+        )}
+        {activeTab === "cancelRequest" && (
+          <div className="my-5">
+            {" "}
+            <p className="text-sm sm:text-base lg:text-lg font-semibold flex items-start gap-2 my-1">
+              <div className="flex items-center text-nowrap gap-1">Reason:</div>
+              {data?.cancelReason}
+            </p>
+            <p className="text-sm sm:text-base lg:text-lg font-semibold flex items-start gap-2 my-1">
+              <div className="flex items-center text-nowrap gap-1">
+                Cancel By:{" "}
+              </div>
+              {data?.cancelRequestedBy === user?.user?.userId
+                ? "You"
+                : data?.serviceProviderId?.name}
             </p>
           </div>
         )}
@@ -210,6 +235,34 @@ const UserOrderCard = ({
                 <IoClose size={16} />
                 Reject
               </button>
+              <button
+                onClick={() => openModal(data)}
+                className="flex items-center gap-1 px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 text-sm transition cursor-pointer"
+              >
+                <BsEye size={16} />
+                View Details
+              </button>
+            </div>
+          ) : activeTab === "cancelRequest" ? (
+            <div className="flex items-center gap-2">
+              {data?.cancelRequestedBy !== user?.user?.userId && (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => showAcceptModal(data)}
+                    className="flex items-center gap-1 px-3 py-1 border border-[#00C566] text-primary-color rounded bg-[#00C566] text-sm transition cursor-pointer"
+                  >
+                    <IoCheckmarkSharp size={16} />
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => showDeclineModal(data)}
+                    className="flex items-center gap-1 px-3 py-1 border border-red-700 text-primary-color rounded bg-red-700 text-sm transition cursor-pointer"
+                  >
+                    <IoClose size={16} />
+                    Reject
+                  </button>
+                </div>
+              )}{" "}
               <button
                 onClick={() => openModal(data)}
                 className="flex items-center gap-1 px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 text-sm transition cursor-pointer"

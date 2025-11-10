@@ -16,6 +16,7 @@ const page = async ({
       | "upcoming"
       | "pending"
       | "accepted"
+      | "cancelRequest"
       | "cancelled") || "delivered";
 
   const page = Number(params?.page) || 1;
@@ -43,11 +44,21 @@ const page = async ({
   const serviceChargeData = await serviceChargeRes.json();
   const serviceCharge: number = serviceChargeData?.data?.photoVideoGrapy;
 
-  console.log("data", myEventData);
+  const stateRes = await fetchWithAuth(`/event-order/professional/stats`, {
+    next: {
+      tags: [TagTypes.eventOrder],
+    },
+  });
+
+  const stateData = await stateRes.json();
+
+  const states = stateData?.data;
+  console.log("data", states);
   console.log(myEventData?.length);
 
   return (
     <EventOrdersPage
+      states={states}
       activeTab={tab}
       myEventData={myEventData}
       totalData={totalData}

@@ -4,6 +4,13 @@ import UserOrderViewModal from "./UserOrderViewModal";
 import { IEventOrder } from "@/types";
 
 import PaginationSection from "@/components/shared/PaginationSection";
+import AcceptModal from "@/components/ui/Modal/AcceptModal";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import {
+  acceptCancelRequest,
+  declineCancelRequest,
+} from "@/services/EventOrderService/EventOrderServiceApi";
+import DeleteModal from "@/components/ui/Modal/DeleteModal";
 
 const UserCancleOrder = ({
   activeTab,
@@ -23,13 +30,65 @@ const UserCancleOrder = ({
     null
   );
 
+  const [isAcceptModalVisible, setIsAcceptModalVisible] = React.useState(false);
+  const [isDeclineModalVisible, setIsDeclineModalVisible] =
+    React.useState(false);
+
+  const showAcceptModal = (record: IEventOrder) => {
+    setIsAcceptModalVisible(true);
+    setCurrentRecord(record);
+  };
+
+  const showDeclineModal = (record: IEventOrder) => {
+    setIsDeclineModalVisible(true);
+    setCurrentRecord(record);
+  };
+
   const openModal = (record: IEventOrder) => {
     setIsModalOpen(true);
     setCurrentRecord(record);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsDeclineModalVisible(false);
+    setIsAcceptModalVisible(false);
     setCurrentRecord(null);
+  };
+
+  const handleAcceptCancel = async (data: IEventOrder) => {
+    console.log({ params: data?._id });
+    const res = await tryCatchWrapper(
+      acceptCancelRequest,
+      { params: data?._id },
+      "Cancelling...",
+      "Cancelled Successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    console.log("res", res);
+
+    if (res?.success) {
+      handleCancel();
+    }
+  };
+
+  const handleRejectCancelOrder = async (data: IEventOrder) => {
+    console.log({ params: data?._id });
+    const res = await tryCatchWrapper(
+      declineCancelRequest,
+      {
+        params: data?._id,
+      },
+      "Rejecting...",
+      "Rejected Successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    console.log("res", res);
+
+    if (res?.success) {
+      handleCancel();
+    }
   };
 
   return (
@@ -41,6 +100,8 @@ const UserCancleOrder = ({
             activeTab={activeTab}
             key={item?._id}
             openModal={openModal}
+            showAcceptModal={showAcceptModal}
+            showDeclineModal={showDeclineModal}
           />
         ))}
       </div>
@@ -52,6 +113,23 @@ const UserCancleOrder = ({
         handleCancel={handleCancel}
         currentRecord={currentRecord}
         activeModal={activeTab}
+      />
+
+      <AcceptModal
+        isModalVisible={isAcceptModalVisible}
+        handleCancel={handleCancel}
+        currentRecord={currentRecord}
+        handleConfirm={handleAcceptCancel}
+        description="Are You Sure You want to Accept This Cancel Request ?"
+      />
+
+      <DeleteModal
+        isDeleteModalVisible={isDeclineModalVisible}
+        handleCancel={handleCancel}
+        currentRecord={currentRecord}
+        handleDelete={handleRejectCancelOrder}
+        buttonText="Decline"
+        description="Are You Sure You want to Reject This Cancel Request ?"
       />
     </div>
   );

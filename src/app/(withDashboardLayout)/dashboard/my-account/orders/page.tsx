@@ -17,10 +17,15 @@ const page = async ({
       | "pending"
       | "orderOffer"
       | "accepted"
+      | "cancelRequest"
       | "cancelled") || "currentOrder";
 
   const page = Number(params?.page) || 1;
   const limit = 12;
+
+  console.log(
+    `/event-order/my-orders?role=user&tab=${tab}&page=${page}&limit=${limit}&sort=date`
+  );
 
   const eventRes = await fetchWithAuth(
     `/event-order/my-orders?role=user&tab=${tab}&page=${page}&limit=${limit}&sort=date`,

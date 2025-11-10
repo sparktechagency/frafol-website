@@ -30,6 +30,7 @@ type OrderStatus =
   | "inProgress"
   | "deliveryRequest"
   | "delivered"
+  | "cancelRequest"
   | "cancelled";
 
 interface IExtensionRequest {
@@ -62,13 +63,25 @@ interface IEventOrder {
     name: string;
     email: string;
     profileImage: string;
-  }; // Assuming this is a user ID string
+    address?: string; // Adding optional address field to user
+    phone?: string; // Optional phone field for the user
+    ico?: string;
+    dic?: string;
+    ic_dph?: string;
+    companyName?: string;
+  };
   serviceProviderId: {
     _id: string;
     name: string;
     email: string;
     profileImage: string;
-  }; // Assuming this is a service provider ID string
+    phone: string;
+    ic_dph: string;
+    dic: string;
+    ico: string;
+    address: string;
+    companyName: string;
+  };
   date: Date;
   orderType: "direct" | "custom"; // The type of the order
   serviceType: "photography" | "videography"; // Type of service
@@ -110,6 +123,7 @@ interface IEventOrder {
   isDeleted: boolean; // Whether the order is deleted
   createdAt: string;
   updatedAt: string;
+  cancelRequestedBy?: string;
 }
 
 export type { ICreateEventOrder, IEventOrder };

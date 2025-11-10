@@ -1,7 +1,16 @@
 import { FaHourglassEnd } from "react-icons/fa6";
 import { IoCameraSharp, IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
-const EventOrdersOverview = () => {
+const EventOrdersOverview = ({
+  states,
+}: {
+  states: {
+    totalCompletedEvents: number;
+    totalInProgressEvents: number;
+    totalUpcomingEvents: number;
+    totalPendingEvents: number;
+  };
+}) => {
   const countData = [
     {
       id: 1,
@@ -10,28 +19,28 @@ const EventOrdersOverview = () => {
       icon: (
         <IoCheckmarkDoneCircleOutline className="size-5 text-secondary-color" />
       ),
-      count: 44,
+      count: states.totalCompletedEvents,
     },
     {
       id: 2,
       background: "#ffffff",
       name: "Events In Progress",
       icon: <FaHourglassEnd className="size-5 text-secondary-color" />,
-      count: 2,
+      count: states.totalInProgressEvents,
     },
     {
       id: 3,
       background: "#ffffff",
       name: "Upcoming Events",
       icon: <IoCameraSharp className="size-6 text-secondary-color" />,
-      count: "$500",
+      count: `${states.totalUpcomingEvents}`,
     },
     {
       id: 4,
       background: "#ffffff",
       name: "Pending Events",
       icon: <FaHourglassEnd className="size-6 text-secondary-color" />,
-      count: 12,
+      count: states.totalPendingEvents,
     },
   ];
   return (

@@ -13,6 +13,7 @@ export const eventOrderStatus: { [key: string]: string } = {
   deliveryRequestDeclined: "In Progress",
   deliveryRequest: "Delivery Request",
   delivered: "Delivered",
+  cancelRequest: "Cancel Requested",
   cancelled: "Cancelled",
 };
 export const gearOrderStatus: { [key: string]: string } = {

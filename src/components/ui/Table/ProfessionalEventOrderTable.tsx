@@ -6,6 +6,7 @@ import ReuseTable from "@/utils/ReuseTable";
 import { IEventOrder } from "@/types";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import { budgetLabels, eventOrderStatus } from "@/utils/budgetLabels";
+import { useUser } from "@/context/UserContext";
 
 // Define the type for the props
 interface ProfessionalEventOrderTableProps {
@@ -22,6 +23,7 @@ interface ProfessionalEventOrderTableProps {
 const ProfessionalEventOrderTable: React.FC<
   ProfessionalEventOrderTableProps
 > = ({ data, loading, showViewModal, page, total, limit, activeTab }) => {
+  const user = useUser();
   console.log(activeTab);
 
   const checkExtension = (extensionReq: any) => {
@@ -150,6 +152,32 @@ const ProfessionalEventOrderTable: React.FC<
                     "accepted"
                   ? " Request Approved"
                   : " Request Decline"}
+              </span>
+            ),
+          },
+        ]
+      : []),
+    ...(activeTab === "cancelRequest"
+      ? [
+          {
+            title: "Reason",
+            dataIndex: "cancelReason",
+            key: "cancelReason",
+            width: 300,
+          },
+        ]
+      : []),
+    ...(activeTab === "cancelRequest"
+      ? [
+          {
+            title: "Canceled By",
+            dataIndex: "cancelRequestedBy",
+            key: "cancelRequestedBy",
+            render: (_: unknown, record: IEventOrder) => (
+              <span className="font-semibold capitalize">
+                {record?.cancelRequestedBy === user?.user?.userId
+                  ? "Me"
+                  : record?.userId?.name}
               </span>
             ),
           },

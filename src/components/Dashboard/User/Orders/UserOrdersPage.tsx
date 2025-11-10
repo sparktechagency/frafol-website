@@ -25,12 +25,14 @@ const UserOrdersPage = ({
     | "pending"
     | "orderOffer"
     | "accepted"
+    | "cancelRequest"
     | "cancelled";
   page: number;
   totalData: number;
   myEventData: IEventOrder[];
   limit: number;
 }) => {
+  console.log(myEventData);
   return (
     <div>
       <div className="flex lg:flex-row flex-col justify-between items-center ">
@@ -115,6 +117,19 @@ const UserOrdersPage = ({
               value: "accepted",
               content: (
                 <PendingPayment
+                  activeTab={activeTab}
+                  page={page}
+                  totalData={totalData}
+                  myEventData={myEventData}
+                  limit={limit}
+                />
+              ),
+            },
+            {
+              label: "Cancel Confirmation",
+              value: "cancelRequest",
+              content: (
+                <UserCancleOrder
                   activeTab={activeTab}
                   page={page}
                   totalData={totalData}

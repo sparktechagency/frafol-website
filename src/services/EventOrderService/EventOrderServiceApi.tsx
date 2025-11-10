@@ -76,13 +76,16 @@ export const cancelEventOrder = async (req: {
   params: any;
 }) => {
   try {
-    const res = await fetchWithAuth(`/event-order/cancel/${req.params}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json", // Add content type header for JSON
-      },
-      body: JSON.stringify(req.body),
-    });
+    const res = await fetchWithAuth(
+      `/event-order/cancel-request/${req.params}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json", // Add content type header for JSON
+        },
+        body: JSON.stringify(req.body),
+      }
+    );
     const result = await res.json();
     revalidateTag(TagTypes.eventOrder);
 
@@ -91,6 +94,47 @@ export const cancelEventOrder = async (req: {
     return Error(error);
   }
 };
+
+export const acceptCancelRequest = async (req: {
+  body: ICreateEventOrder;
+  params: any;
+}) => {
+  try {
+    const res = await fetchWithAuth(
+      `/event-order/approve-cancel/${req.params}`,
+      {
+        method: "PATCH",
+      }
+    );
+    const result = await res.json();
+    revalidateTag(TagTypes.eventOrder);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const declineCancelRequest = async (req: {
+  body: ICreateEventOrder;
+  params: any;
+}) => {
+  try {
+    const res = await fetchWithAuth(
+      `/event-order/decline-cancel-request/${req.params}`,
+      {
+        method: "PATCH",
+      }
+    );
+    const result = await res.json();
+    revalidateTag(TagTypes.eventOrder);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
 export const declineEventOrder = async (req: {
   body: ICreateEventOrder;
   params: any;

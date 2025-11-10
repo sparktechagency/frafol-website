@@ -11,11 +11,18 @@ import { formatDate, formetTime } from "@/utils/dateFormet";
 import { acceptDirectOrder } from "@/services/EventOrderService/EventOrderServiceApi";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { budgetLabels } from "@/utils/budgetLabels";
+import { useUser } from "@/context/UserContext";
+import InvoiceDocumentFromClientSide from "@/utils/InvoiceDocumentFromClientSide";
+import { pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
+import { toast } from "sonner";
+import InvoiceDocumentFromAdminSide from "@/utils/InvoiceDocumentFromAdminSide";
 
 interface ProfessionalEventViewModalProps {
   showCreateOrderModal: ({ record }: { record: IEventOrder | null }) => void;
   showDeclineModal: (record: any) => void;
   showExtenstionRequestModal: (record: any) => void;
+  showCancelAcceptModal: (record: any) => void;
   showCancelModal?: any;
   showSendDeliveryRequestModal?: any;
   isViewModalVisible: boolean;
@@ -27,6 +34,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
   showCreateOrderModal,
   showDeclineModal,
   showExtenstionRequestModal,
+  showCancelAcceptModal,
   showCancelModal,
   showSendDeliveryRequestModal,
   isViewModalVisible,
@@ -35,6 +43,8 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
   activeTab, // Default to "pending" if not provided
 }) => {
   const serverUrl = getServerUrl();
+  const user = useUser();
+  console.log(user);
 
   const extensionLength = currentRecord?.extensionRequests?.length || 0;
 
@@ -52,6 +62,49 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
     if (res?.success) {
       handleCancel();
     }
+  };
+
+  const handleClientInvoiceDownload = (currentRecord: IEventOrder) => {
+    const toastId = toast.loading("Downloading...", {
+      duration: 2000,
+    });
+    // Generate the PDF using @react-pdf/renderer's pdf function
+    pdf(
+      <InvoiceDocumentFromClientSide
+        currentRecord={currentRecord as IEventOrder}
+      />
+    )
+      .toBlob()
+      .then((blob: any) => {
+        // Use file-saver to trigger the download
+        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
+        toast.success("Downloaded successfully!", { id: toastId });
+      })
+      .catch((error: any) => {
+        console.error("Error generating PDF:", error);
+        toast.error("Download failed", { id: toastId });
+      });
+  };
+  const handleProfessionalInvoiceDownload = (currentRecord: IEventOrder) => {
+    const toastId = toast.loading("Downloading...", {
+      duration: 2000,
+    });
+    // Generate the PDF using @react-pdf/renderer's pdf function
+    pdf(
+      <InvoiceDocumentFromAdminSide
+        currentRecord={currentRecord as IEventOrder}
+      />
+    )
+      .toBlob()
+      .then((blob: any) => {
+        // Use file-saver to trigger the download
+        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
+        toast.success("Downloaded successfully!", { id: toastId });
+      })
+      .catch((error: any) => {
+        console.error("Error generating PDF:", error);
+        toast.error("Download failed", { id: toastId });
+      });
   };
   return (
     <Modal
@@ -222,10 +275,22 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           )}
         {activeTab === "delivered" ? (
           <div className="mt-5 flex flex-col items-center gap-5">
-            <ReuseButton variant="secondary" className="!w-fit">
+            <ReuseButton
+              variant="secondary"
+              className="!w-fit"
+              onClick={() =>
+                handleClientInvoiceDownload(currentRecord as IEventOrder)
+              }
+            >
               Download Invoice With Client
             </ReuseButton>
-            <ReuseButton variant="secondary" className="!w-fit">
+            <ReuseButton
+              variant="secondary"
+              className="!w-fit"
+              onClick={() =>
+                handleProfessionalInvoiceDownload(currentRecord as IEventOrder)
+              }
+            >
               Download Invoice with Admin
             </ReuseButton>
           </div>
@@ -279,6 +344,24 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
                   ? showCreateOrderModal({ record: currentRecord })
                   : handleDirectAccept(currentRecord as IEventOrder)
               }
+              variant="secondary"
+              className="!text-white !bg-success !border-success !w-fit"
+            >
+              Accept
+            </ReuseButton>
+            <ReuseButton
+              onClick={() => showDeclineModal(currentRecord)}
+              variant="secondary"
+              className="!text-white !bg-error !border-error !w-fit"
+            >
+              Reject
+            </ReuseButton>
+          </div>
+        ) : activeTab === "cancelRequest" &&
+          user?.user?.userId !== currentRecord?.cancelRequestedBy ? (
+          <div className="mt-5 flex gap-3 items-center justify-center flex-wrap">
+            <ReuseButton
+              onClick={() => showCancelAcceptModal({ record: currentRecord })}
               variant="secondary"
               className="!text-white !bg-success !border-success !w-fit"
             >

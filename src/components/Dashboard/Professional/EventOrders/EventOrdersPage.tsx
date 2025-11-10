@@ -11,32 +11,45 @@ import SendDeliveryRequestModal from "@/components/ui/Modal/Event/SendDeliveryRe
 import CancleOrderModal from "@/components/ui/Modal/CancleOrderModal";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import {
+  acceptCancelRequest,
   cancelEventOrder,
+  declineCancelRequest,
   declineEventOrder,
   sendExtensionRequest,
 } from "@/services/EventOrderService/EventOrderServiceApi";
 import DeclineOrderRequestModal from "@/components/ui/Modal/DeclineOrderRequestModal";
 import ExtenstionRequestModal from "@/components/ui/Modal/ExtenstionRequestModal";
+import AcceptModal from "@/components/ui/Modal/AcceptModal";
+import DeleteModal from "@/components/ui/Modal/DeleteModal";
 
 const EventOrdersPage = ({
+  states,
   activeTab,
   myEventData,
   totalData,
   page,
   serviceCharge,
 }: {
+  states: {
+    totalCompletedEvents: number;
+    totalInProgressEvents: number;
+    totalUpcomingEvents: number;
+    totalPendingEvents: number;
+  };
   activeTab:
     | "delivered"
     | "inProgress"
     | "upcoming"
     | "pending"
     | "accepted"
+    | "cancelRequest"
     | "cancelled";
   myEventData: IEventOrder[];
   totalData: number;
   page: number;
   serviceCharge: number;
 }) => {
+  console.log(myEventData);
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -59,6 +72,8 @@ const EventOrdersPage = ({
   const [isExtenstionRequestModalVisible, setIsExtenstionRequestModalVisible] =
     React.useState(false);
 
+  const [isAcceptModalVisible, setIsAcceptModalVisible] = React.useState(false);
+
   const [currentRecord, setCurrentRecord] = useState<IEventOrder | null>(null);
 
   const showViewUserModal = (record: any) => {
@@ -78,6 +93,11 @@ const EventOrdersPage = ({
   };
   const showCancelModal = (record: IEventOrder) => {
     setIsCancelModalVisible(true);
+    setCurrentRecord(record);
+  };
+
+  const showCancelAcceptModal = (record: IEventOrder) => {
+    setIsAcceptModalVisible(true);
     setCurrentRecord(record);
   };
 
@@ -114,6 +134,23 @@ const EventOrdersPage = ({
       handleCancel();
     }
   };
+  const handleAcceptCancel = async (data: IEventOrder) => {
+    console.log({ params: data?._id });
+    const res = await tryCatchWrapper(
+      acceptCancelRequest,
+      { params: data?._id },
+      "Cancelling...",
+      "Cancelled Successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    console.log("res", res);
+
+    if (res?.success) {
+      setIsAcceptModalVisible(false);
+      handleCancel();
+    }
+  };
 
   const handleDeclineOrder = async (values: any, data: IEventOrder) => {
     console.log({ body: values, params: data?._id });
@@ -125,6 +162,25 @@ const EventOrdersPage = ({
       },
       "Sending request...",
       "Request Sent Successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    console.log("res", res);
+
+    if (res?.success) {
+      setIsDeclineOrderRequestModalVisible(false);
+      handleCancel();
+    }
+  };
+  const handleRejectCancelOrder = async (data: IEventOrder) => {
+    console.log({ params: data?._id });
+    const res = await tryCatchWrapper(
+      declineCancelRequest,
+      {
+        params: data?._id,
+      },
+      "Rejecting...",
+      "Rejected Successfully!",
       "Something went wrong! Please try again."
     );
 
@@ -171,7 +227,7 @@ const EventOrdersPage = ({
             </h1>
           </div>
         </div>
-        <EventOrdersOverview />
+        <EventOrdersOverview states={states} />
         <div className="mt-10">
           <ReusableTabs
             activeTab={activeTab}
@@ -252,6 +308,23 @@ const EventOrdersPage = ({
                   />
                 ),
               },
+
+              {
+                label: "Cancel Confirmation",
+                value: "cancelRequest",
+                content: (
+                  <ProfessionalEventOrderTable
+                    data={myEventData}
+                    loading={false}
+                    showViewModal={showViewUserModal}
+                    page={page}
+                    total={totalData}
+                    limit={limit}
+                    activeTab={activeTab}
+                  />
+                ),
+              },
+
               {
                 label: "Cancelled",
                 value: "cancelled",
@@ -278,6 +351,7 @@ const EventOrdersPage = ({
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           showSendDeliveryRequestModal={showSendDeliveryRequestModal}
+          showCancelAcceptModal={showCancelAcceptModal}
           currentRecord={currentRecord}
           activeTab={activeTab}
         />
@@ -301,18 +375,37 @@ const EventOrdersPage = ({
           currentRecord={currentRecord}
           handleCancelOrder={handleCancelOrder}
         />
+        {activeTab !== "cancelRequest" && (
+          <DeclineOrderRequestModal
+            isDeclineOrderRequestModalVisible={
+              isDeclineOrderRequestModalVisible
+            }
+            handleCancel={() => setIsDeclineOrderRequestModalVisible(false)}
+            currentRecord={currentRecord}
+            handleDeclineOrder={handleDeclineOrder}
+          />
+        )}
 
-        <DeclineOrderRequestModal
-          isDeclineOrderRequestModalVisible={isDeclineOrderRequestModalVisible}
-          handleCancel={() => setIsDeclineOrderRequestModalVisible(false)}
-          currentRecord={currentRecord}
-          handleDeclineOrder={handleDeclineOrder}
-        />
         <ExtenstionRequestModal
           isExtenstionRequestModalVisible={isExtenstionRequestModalVisible}
           handleCancel={() => setIsExtenstionRequestModalVisible(false)}
           currentRecord={currentRecord}
           handleExtenstion={handleExtenstion}
+        />
+        {activeTab === "cancelRequest" && (
+          <DeleteModal
+            isDeleteModalVisible={isDeclineOrderRequestModalVisible}
+            handleCancel={() => setIsDeclineOrderRequestModalVisible(false)}
+            currentRecord={currentRecord}
+            buttonText="Decline"
+            handleDelete={handleRejectCancelOrder}
+          />
+        )}
+        <AcceptModal
+          isModalVisible={isAcceptModalVisible}
+          handleCancel={() => setIsAcceptModalVisible(false)}
+          currentRecord={currentRecord}
+          handleConfirm={handleAcceptCancel}
         />
       </div>
     </div>

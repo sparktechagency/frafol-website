@@ -9,6 +9,9 @@ import { IEventOrder } from "@/types";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import { budgetLabels } from "@/utils/budgetLabels";
 import { getServerUrl } from "@/helpers/config/envConfig";
+import InvoiceDocumentFromClientSide from "@/utils/InvoiceDocumentFromClientSide";
+import { saveAs } from "file-saver";
+import { pdf } from "@react-pdf/renderer"; // Import pdf function from @react-pdf/renderer
 
 interface UserOrderViewModalProps {
   isViewModalVisible: boolean;
@@ -25,7 +28,25 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
   activeModal,
   showCancelModal,
 }) => {
+  console.log(currentRecord);
   const serverUrl = getServerUrl();
+
+  const handleDownload = (currentRecord: IEventOrder) => {
+    // Generate the PDF using @react-pdf/renderer's pdf function
+    pdf(
+      <InvoiceDocumentFromClientSide
+        currentRecord={currentRecord as IEventOrder}
+      />
+    )
+      .toBlob()
+      .then((blob: any) => {
+        // Use file-saver to trigger the download
+        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
+      })
+      .catch((error: any) => {
+        console.error("Error generating PDF:", error);
+      });
+  };
 
   return (
     <Modal
@@ -203,7 +224,12 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               Cancle Order
             </ReuseButton>
           ) : activeModal === "delivered" ? (
-            <ReuseButton variant="secondary">Download Invoice</ReuseButton>
+            <ReuseButton
+              variant="secondary"
+              onClick={() => handleDownload(currentRecord as IEventOrder)}
+            >
+              Download Invoice
+            </ReuseButton>
           ) : null}
         </div>
       </div>
