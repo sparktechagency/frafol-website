@@ -170,6 +170,7 @@ const PendingEventOrdersPage = ({
           activeTab={"pending"}
         />
         <ProfessionalEventViewModal
+          showCancelAcceptModal={() => {}}
           showCreateOrderModal={showCreateOrderModal}
           showCancelModal={showCancelModal}
           showDeclineModal={showDeclineModal}
