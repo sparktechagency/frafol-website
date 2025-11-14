@@ -21,11 +21,7 @@ const page = async ({
       | "cancelled") || "currentOrder";
 
   const page = Number(params?.page) || 1;
-  const limit = 12;
-
-  console.log(
-    `/event-order/my-orders?role=user&tab=${tab}&page=${page}&limit=${limit}&sort=date`
-  );
+  const limit = 1;
 
   const eventRes = await fetchWithAuth(
     `/event-order/my-orders?role=user&tab=${tab}&page=${page}&limit=${limit}&sort=date`,

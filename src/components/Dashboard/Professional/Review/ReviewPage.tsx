@@ -1,19 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useState } from "react";
-import reportData from "../../../../../public/data/ReportData";
 import ProfessionalReviewTable from "@/components/ui/Table/ProfessionalReviewTable";
 import ReportViewModal from "./ReviewViewModal";
+import { IProfessionalReview } from "@/types";
 
-const ReviewPage = () => {
-  const feedbackData = reportData;
-
-  const limit = 12;
-
+const ReviewPage = ({
+  allReviews,
+  total,
+  page,
+  limit,
+}: {
+  allReviews: IProfessionalReview[];
+  total: number;
+  page: number;
+  limit: number;
+}) => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [currentRecord, setCurrentRecord] = useState(null);
+  const [currentRecord, setCurrentRecord] =
+    useState<IProfessionalReview | null>(null);
 
-  const showViewUserModal = (record: any) => {
+  const showViewUserModal = (record: IProfessionalReview) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
@@ -24,10 +30,7 @@ const ReviewPage = () => {
   };
   return (
     <div>
-      <div
-        className="mt-5 min-h-[80vh] bg-primary-color rounded-xl px-4"
-        style={{ boxShadow: "0px 0px 5px 1px #00000040" }}
-      >
+      <div className="mt-5 min-h-[80vh] rounded-xl px-4">
         <div className="bg-primary-color w-full p-4   rounded-tl-xl rounded-tr-xl">
           <div className=" flex items-center justify-between">
             <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold  my-5">
@@ -36,11 +39,11 @@ const ReviewPage = () => {
           </div>
         </div>
         <ProfessionalReviewTable
-          data={feedbackData}
+          data={allReviews}
           loading={false}
           showViewModal={showViewUserModal}
-          page={1}
-          total={feedbackData?.length}
+          page={page}
+          total={total}
           limit={limit}
         />
         <ReportViewModal

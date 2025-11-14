@@ -1,20 +1,33 @@
+import TagTypes from "@/helpers/config/TagTypes";
+import { fetchWithAuth } from "@/lib/fetchWraper";
 import { FaHourglassEnd, FaStar } from "react-icons/fa6";
 
-const UserReviewOverview = () => {
+const UserReviewOverview = async () => {
+  const allRes = await fetchWithAuth(`/review/my/stats`, {
+    next: {
+      tags: [TagTypes.review],
+    },
+  });
+
+  const allData = await allRes.json();
+
+  console.log(allData);
+
+  const allReviewsStates = allData?.data || [];
   const countData = [
     {
       id: 3,
       background: "#ffffff",
       name: "Total Reviews",
       icon: <FaStar className="size-6 text-secondary-color" />,
-      count: 5,
+      count: allReviewsStates?.totalReviews,
     },
     {
       id: 2,
       background: "#ffffff",
       name: "Pending Reviews",
       icon: <FaHourglassEnd className="size-5 text-secondary-color" />,
-      count: 2,
+      count: allReviewsStates?.pendingReviews,
     },
   ];
   return (

@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { IPendingReview } from "@/types";
+import { formatDate } from "@/utils/dateFormet";
 import { Rate } from "antd";
 import React from "react";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaClock } from "react-icons/fa6";
 
 const ReviewCard = ({
   activeTab,
@@ -8,45 +12,80 @@ const ReviewCard = ({
   openModal = () => {},
 }: {
   activeTab: string;
-  data: any;
-  openModal?: () => void;
+  data: IPendingReview;
+  openModal?: (data: IPendingReview) => void;
 }) => {
   console.log(data);
   return (
     <div className="p-4 rounded-md border border-[#E1E1E1] shadow-xs hover:shadow-md transition-all duration-200">
       <div>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row items-end justify-between">
           <div>
             {" "}
-            <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mb-1">
-              Standard Wedding Photography{" "}
-            </h3>
-            <p className="text-xs sm:text-sm lg:text-base font-semibold">
-              By Peter Kováč{" "}
-            </p>
-            <p className="text-xs sm:text-sm lg:text-base text-gray-700 mt-1">
-              Completed on June 24, 2025
-            </p>
-            <div className="text-xs sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-2">
-              <Rate disabled value={5} allowHalf />
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mb-1">
+                {data?.eventOrderId?.packageId?.title
+                  ? data?.eventOrderId?.packageId?.title
+                  : "Custom Order"}{" "}
+              </h3>{" "}
+              <p className="px-2 py-0.5 rounded-full bg-secondary-color text-primary-color w-fit capitalize text-xs">
+                {data?.eventOrderId?.orderType}
+              </p>
+              {activeTab !== "extension" && (
+                <p className="px-2 py-0.5 rounded-full bg-yellow-500 text-primary-color w-fit capitalize text-xs">
+                  {data?.status === "accepted"
+                    ? "Payment Required"
+                    : data?.status === "inProgress"
+                    ? "In Progress"
+                    : data?.status === "cancelRequest"
+                    ? "Cancel Requested"
+                    : data?.status}
+                </p>
+              )}
             </div>
-            <p className="ttext-xs sm:text-sm lg:text-base flex items-center gap-1 mt-2">
-              Peter did an absolutely amazing job capturing our special day! The
-              photos are stunning and she was so professional throughout the
-              entire process. Highly recommend!
+            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+              By {data?.serviceProviderId?.name}{" "}
             </p>
+            <div className="flex items-center text-nowrap gap-1 my-2">
+              <FaClock className="!text-[#5D5D5D]" />
+              Event Data: {formatDate(data?.eventOrderId?.date)}
+            </div>
+            <div className="flex items-center text-nowrap gap-1 my-2">
+              <FaClock className="!text-[#5D5D5D]" />
+              Completed on:{" "}
+              {formatDate(data?.eventOrderId?.statusTimestamps?.deliveredAt)}
+            </div>
+            <p className="text-xs sm:text-sm text-[#5D5D5D] flex items-start gap-2 my-2">
+              <div className="flex items-center text-nowrap  gap-1">
+                <FaMapMarkerAlt /> <span>Location : </span>
+              </div>
+              {data?.eventOrderId?.location}
+            </p>
+            <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mt-1">
+              <span>{data?.eventOrderId?.totalPrice}€</span>
+            </p>
+            {activeTab === "allReviews" && (
+              <div>
+                <div className="text-xs sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-2">
+                  <Rate disabled value={data?.rating} allowHalf />
+                </div>
+                <p className="ttext-xs sm:text-sm lg:text-base flex items-center gap-1 mt-2">
+                  {data?.message}
+                </p>
+              </div>
+            )}
           </div>
           <div>
             {activeTab === "allReviews" ? (
               <button
-                onClick={() => openModal()}
+                onClick={() => openModal(data)}
                 className="flex items-center gap-1 px-3 py-1 border border-secondary-color rounded bg-secondary-color text-white text-sm transition cursor-pointer"
               >
                 Edit
               </button>
             ) : (
               <button
-                onClick={() => openModal()}
+                onClick={() => openModal(data)}
                 className="flex items-center gap-1 px-3 py-1 border border-secondary-color rounded bg-secondary-color text-white text-sm transition cursor-pointer"
               >
                 Write Review

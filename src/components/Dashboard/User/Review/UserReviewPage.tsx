@@ -3,9 +3,56 @@ import React from "react";
 import UserAllReviews from "./UserAllReviews";
 import UserAllPendingReview from "./UserAllPendingReview";
 import UserReviewOverview from "./UserReviewOverview";
+import { fetchWithAuth } from "@/lib/fetchWraper";
+import TagTypes from "@/helpers/config/TagTypes";
 
-const UserReviewPage = () => {
-  const activeTab = "allReviews";
+const UserReviewPage = async ({
+  activeTab,
+  page,
+  limit,
+}: {
+  activeTab: "allReviews" | "pendingReviews";
+  page: number;
+  limit: number;
+}) => {
+  console.log(page, limit);
+  let allReviews = [];
+  let total: number = 0;
+
+  if (activeTab === "allReviews") {
+    const allReviewRes = await fetchWithAuth(
+      `/review/my?page=${page}&limit=${limit}`,
+      {
+        next: {
+          tags: [TagTypes.review],
+        },
+      }
+    );
+
+    const allReviewData = await allReviewRes.json();
+
+    console.log(allReviewData);
+
+    allReviews = allReviewData?.data?.result || [];
+    total = allReviewData?.data?.meta?.total;
+  } else if (activeTab === "pendingReviews") {
+    const allPendingReviewRes = await fetchWithAuth(
+      `/review/my/pending?page=${page}&limit=${limit}`,
+      {
+        next: {
+          tags: [TagTypes.review],
+        },
+      }
+    );
+
+    const allPendingReviewData = await allPendingReviewRes.json();
+
+    console.log(allPendingReviewData);
+
+    allReviews = allPendingReviewData?.data || [];
+    total = allPendingReviewData?.data?.meta?.total;
+  }
+
   return (
     <div>
       <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl  font-bold mb-10">
@@ -21,12 +68,28 @@ const UserReviewPage = () => {
             {
               label: "All Reviews",
               value: "allReviews",
-              content: <UserAllReviews activeTab={activeTab} />,
+              content: (
+                <UserAllReviews
+                  activeTab={activeTab}
+                  total={total}
+                  allReviews={allReviews}
+                  page={page}
+                  limit={limit}
+                />
+              ),
             },
             {
               label: "Pending Reviews",
               value: "pendingReviews",
-              content: <UserAllPendingReview activeTab={activeTab} />,
+              content: (
+                <UserAllPendingReview
+                  activeTab={activeTab}
+                  total={total}
+                  allReviews={allReviews}
+                  page={page}
+                  limit={limit}
+                />
+              ),
             },
           ]}
         />

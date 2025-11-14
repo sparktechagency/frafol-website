@@ -2,36 +2,37 @@ import { FaHourglassEnd } from "react-icons/fa6";
 import { LuShoppingBag } from "react-icons/lu";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { IDashboardStats } from "./Overview";
 
-const OverviewCard = () => {
+const OverviewCard = ({ overview }: { overview: IDashboardStats }) => {
   const countData = [
     {
       id: 1,
       background: "#ffffff",
       name: "Active Order",
       icon: <LuShoppingBag className="size-5 text-secondary-color" />,
-      count: 4,
+      count: overview.totalActiveOrders,
     },
     {
       id: 2,
       background: "#ffffff",
       name: "Pending Confirmation",
       icon: <FaHourglassEnd className="size-5 text-secondary-color" />,
-      count: 2,
+      count: overview.totalPendingConfirmation,
     },
     {
       id: 3,
       background: "#ffffff",
       name: "Total Spent",
       icon: <RiMoneyDollarCircleFill className="size-6 text-secondary-color" />,
-      count: "$500",
+      count: `$${overview.totalSpent}`,
     },
     {
       id: 4,
       background: "#ffffff",
       name: "Completed Orders",
       icon: <IoCheckmarkDoneCircle className="size-6 text-secondary-color" />,
-      count: 12,
+      count: overview.totalCompletedOrders,
     },
   ];
   return (

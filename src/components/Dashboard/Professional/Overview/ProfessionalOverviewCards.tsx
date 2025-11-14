@@ -21,6 +21,8 @@ const ProfessionalOverviewCards = async () => {
   );
 
   const overviewData = await overviewRes.json();
+
+  console.log(overviewData);
   const overview = overviewData.data;
   const countData = [
     {
@@ -54,29 +56,40 @@ const ProfessionalOverviewCards = async () => {
     },
   ];
   return (
-    <div className="flex flex-row flex-wrap gap-1 lg:gap-5 mb-5 ">
-      {/* Company  */}
-      {countData.map((item) => (
-        <div
-          key={item.id}
-          className={`flex rounded-2xl w-full my-2 lg:my-0 flex-1 border border-[#E1E1E1] p-6`}
-          style={{
-            backgroundColor: item.background,
-          }}
-        >
-          <div className="!w-full">
-            <div className="flex items-center justify-between w-full">
-              <p className="text-base sm:text-lg lg:text-xl  font-medium mb-1  tracking-tight w-full text-nowrap">
-                {item.name}
+    <div>
+      <div className="mb-10">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl  font-bold mb-5 ">
+          Welcome back, {overview?.user}!
+        </h1>
+        <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-34xl font-semibold mb-5">
+          Here&apos;s what&apos;s happening with your photography business
+          today.
+        </h3>
+      </div>
+      <div className="flex flex-row flex-wrap gap-1 lg:gap-5 mb-5 ">
+        {/* Company  */}
+        {countData.map((item) => (
+          <div
+            key={item.id}
+            className={`flex rounded-2xl w-full my-2 lg:my-0 flex-1 border border-[#E1E1E1] p-6`}
+            style={{
+              backgroundColor: item.background,
+            }}
+          >
+            <div className="!w-full">
+              <div className="flex items-center justify-between w-full">
+                <p className="text-base sm:text-lg lg:text-xl  font-medium mb-1  tracking-tight w-full text-nowrap">
+                  {item.name}
+                </p>
+                <p>{item?.icon}</p>
+              </div>
+              <p className="text-lg sm:text-xl lg:text-2xl  font-bold capitalize tracking-wider">
+                {item.count}
               </p>
-              <p>{item?.icon}</p>
             </div>
-            <p className="text-lg sm:text-xl lg:text-2xl  font-bold capitalize tracking-wider">
-              {item.count}
-            </p>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

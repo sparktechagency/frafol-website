@@ -21,29 +21,28 @@ any) => {
     },
     {
       title: "Client Name",
-      dataIndex: "reportedBy", // Data key for reportedBy
-      key: "reportedBy",
+      dataIndex: "userId",
+      key: "userId",
+      render: (user: any) => user?.name || "N/A", // uses actual user name
     },
     {
       title: "Feedback",
-      dataIndex: "comment", // Data key for comment
-      key: "comment",
-      render: () => (
+      dataIndex: "message",
+      key: "message",
+      render: (message: string) => (
         <div className="max-w-[200px] truncate">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat
-          maiores provident quae eligendi...
+          {message || "No feedback provided"}
         </div>
       ),
     },
     {
       title: "Rating",
-      dataIndex: "rating", // Data key for rating
+      dataIndex: "rating",
       key: "rating",
       render: (rating: number) => (
-        <div>
+        <div className="flex items-center gap-2">
           <Rate
             disabled
-            defaultValue={rating}
             value={rating}
             allowHalf
             className="!text-secondary-color"
@@ -54,11 +53,10 @@ any) => {
     },
     {
       title: "Date",
-      dataIndex: "createdAt", // Data key for createdAt
+      dataIndex: "createdAt",
       key: "createdAt",
-      render: () => <p>2021-01-01</p>,
+      render: (date: string) => <p>{new Date(date).toLocaleDateString()}</p>,
     },
-
     {
       title: "Action",
       key: "action",
@@ -68,7 +66,7 @@ any) => {
             {/* View Details Tooltip */}
             <Tooltip placement="right" title="View Details">
               <button
-                className="!p-0 !bg-transparent !border-none !text-secondary-color"
+                className="!p-0 !bg-transparent !border-none !text-secondary-color !cursor-pointer"
                 onClick={() => showViewModal(record)}
               >
                 <GoEye style={{ fontSize: "24px" }} />

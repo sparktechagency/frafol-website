@@ -2,31 +2,21 @@
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
-import { updateReview } from "@/services/ReviewService/ReviewServiceApi";
-import { IPendingReview } from "@/types";
+import { addNewReview } from "@/services/ReviewService/ReviewServiceApi";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { Form, Modal, Rate, Typography } from "antd";
-import { useEffect } from "react";
-interface UserReviewEditModalProps {
+interface UserReviewCreateModalProps {
   isViewModalVisible: boolean;
   handleCancel: () => void;
-  currentRecord: IPendingReview | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  currentRecord: any | null;
 }
-const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
+const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
   isViewModalVisible,
   handleCancel,
   currentRecord,
 }) => {
   const [form] = Form.useForm();
-
-  useEffect(() => {
-    if (currentRecord) {
-      form.setFieldsValue({
-        review: currentRecord?.rating,
-        message: currentRecord?.message,
-      });
-    }
-  }, [currentRecord, form]);
 
   const onSubmit = async (values: any) => {
     console.log("values", values);
@@ -38,20 +28,17 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
 
     console.log(data);
     const res = await tryCatchWrapper(
-      updateReview,
+      addNewReview,
       { body: data, params: currentRecord?._id },
-      "Updating Review...",
-      "Review Updated Successfully!",
+      "Providing Review...",
+      "Review Provided Successfully!",
       "Something went wrong! Please try again."
     );
-
-    console.log(res);
 
     if (res?.success) {
       handleCancel();
     }
   };
-
   return (
     <Modal
       open={isViewModalVisible}
@@ -63,13 +50,13 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
       <div className="p-5">
         <div className="text-base-color">
           <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-secondary-color">
-            Update Review
+            Share Your Experience
           </h3>
         </div>
         <ReusableForm
-          form={form}
           handleFinish={onSubmit}
           defaultValues={currentRecord}
+          form={form}
         >
           <div className="mt-5">
             <Typography.Title
@@ -79,7 +66,11 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
               Rating
             </Typography.Title>
             <Form.Item name={"review"} rules={[{ required: true }]}>
-              <Rate className="!text-3xl" allowHalf />
+              <Rate
+                className="!text-3xl"
+                allowHalf
+                value={currentRecord?.review}
+              />
             </Form.Item>
           </div>
           <ReuseInput
@@ -99,4 +90,4 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
   );
 };
 
-export default UserReviewEditModal;
+export default UserReviewCreateModal;

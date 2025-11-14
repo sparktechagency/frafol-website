@@ -3,65 +3,11 @@
 import { GoBellFill } from "react-icons/go";
 import { formatDateTime } from "../../../../utils/dateFormet";
 
-const RecentNotification = () => {
-  const notificationData = [
-    {
-      id: "1",
-      message: {
-        text: "You have a order confirmation from John Doe",
-        time: "5 minutes ago",
-      },
-      createdAt: new Date(),
-    },
-    {
-      id: "2",
-      message: {
-        text: "You have a new message from John Doe",
-        time: "5 minutes ago",
-      },
-      createdAt: new Date(),
-    },
-    {
-      id: "3",
-      message: {
-        text: "You have a new message from John Doe",
-        time: "5 minutes ago",
-      },
-      createdAt: new Date(),
-    },
-    {
-      id: "4",
-      message: {
-        text: "You have a new message from John Doe",
-        time: "5 minutes ago",
-      },
-      createdAt: new Date(),
-    },
-    {
-      id: "5",
-      message: {
-        text: "You have a new message from John Doe",
-        time: "5 minutes ago",
-      },
-      createdAt: new Date(),
-    },
-    {
-      id: "6",
-      message: {
-        text: "You have a new message from John Doe",
-        time: "5 minutes ago",
-      },
-      createdAt: new Date(),
-    },
-    {
-      id: "7",
-      message: {
-        text: "You have a new message from John Doe",
-        time: "5 minutes ago",
-      },
-      createdAt: new Date(),
-    },
-  ];
+const RecentNotification = ({
+  notificationData,
+}: {
+  notificationData: any;
+}) => {
   return (
     <div
       className="w-full max-h-[300px] xl:max-h-[600px] overflow-y-auto rounded-xl relative  border border-[#E1E1E1]"
