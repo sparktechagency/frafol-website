@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Image from "next/image";
 import { AllImages } from "../../../public/assets/AllImages";
@@ -11,23 +12,49 @@ import { useUser } from "@/context/UserContext";
 import { useState } from "react";
 import ReportModal from "../ui/Modal/ReportModal";
 import { FaYoutube } from "react-icons/fa6";
+import { Checkbox, Form } from "antd";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { subscribe } from "@/services/Others/OthersApi";
+import FeedbackModal from "../ui/Modal/FeedbackModal";
 
 export default function Footer() {
+  const [form] = Form.useForm();
+  const isChecked = Form.useWatch("newsletter", form);
+
+  console.log(isChecked);
   const currentYear = new Date().getFullYear();
   const user = useUser();
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
 
   const showReportModal = () => {
     setIsReportModalOpen(true);
   };
 
-  const hancleCancel = () => {
-    setIsReportModalOpen(false);
+  const showFeedbackModal = () => {
+    setIsFeedbackModalOpen(true);
   };
 
+  const hancleCancel = () => {
+    setIsReportModalOpen(false);
+    setIsFeedbackModalOpen(false);
+  };
+  const submit = async (values: any) => {
+    const res = await tryCatchWrapper(
+      subscribe,
+      { body: { email: values.email } },
+      "Wait a moment...",
+      "Subscribed successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    if (res?.success) {
+      form.resetFields();
+    }
+  };
   return (
     <div
-      className="relative  lg:h-[470px]"
+      className="relative  lg:h-[500px]"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
       <div className="lg:fixed lg:bottom-0 h-auto w-full">
@@ -47,36 +74,46 @@ export default function Footer() {
                   <h4 className="font-bold mb-2 text-base sm:text-lg lg:text-xl xl:text-2xl">
                     Join our
                   </h4>
-                  <ReusableForm
-                    handleFinish={() => {}}
-                    className="flex gap-2 items-center"
-                  >
-                    <ReuseInput
-                      formItemClassName="!m-0 !p-0 !min-w-[200px] lg:!min-w-[350px]"
-                      inputClassName=""
-                      type="email"
-                      name="email"
-                      placeholder="Enter your email"
-                    />
-                    <ReuseButton
-                      htmlType="submit"
-                      className="!text-sm sm:!text-base lg:!text-lg !bg-third-color !text-secondary-color !w-fit !border-none !px-3 !py-5 !-mt-1 !font-bold"
-                    >
-                      Subscribe
-                    </ReuseButton>
-                  </ReusableForm>
-                  <div className="flex items-center gap-2 mt-2 text-primary-color ">
-                    <input
-                      type="checkbox"
+                  <ReusableForm form={form} handleFinish={submit} className="">
+                    <div className="flex gap-2 items-center">
+                      <ReuseInput
+                        formItemClassName="!m-0 !p-0 !min-w-[200px] lg:!min-w-[350px]"
+                        inputClassName=""
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                      />
+                      <ReuseButton
+                        disabled={!isChecked}
+                        htmlType="submit"
+                        className="!text-sm sm:!text-base lg:!text-lg !bg-third-color !text-secondary-color !w-fit !border-none !px-3 !py-5 !-mt-1 !font-bold"
+                      >
+                        Subscribe
+                      </ReuseButton>
+                    </div>
+                    <Form.Item
+                      className="!mb-0"
                       name="newsletter"
-                      id="newsletter"
-                      className="w-4 h-4 accent-yellow-400 rounded-full"
-                    />
-                    <label htmlFor="newsletter" className="cursor-pointer">
-                      I hereby consent to receiving a free newsletter to the
-                      email address provided
-                    </label>
-                  </div>
+                      valuePropName="checked"
+                    >
+                      <Checkbox className="!text-primary-color">
+                        I hereby consent to receiving a free newsletter to the
+                        email address provided
+                      </Checkbox>
+                    </Form.Item>
+                    {/* <div className="flex items-center gap-2 mt-2 text-primary-color ">
+                      <input
+                        type="checkbox"
+                        name="newsletter"
+                        id="newsletter"
+                        className="w-4 h-4 accent-yellow-400 rounded-full"
+                      />
+                      <label htmlFor="newsletter" className="cursor-pointer">
+                        I hereby consent to receiving a free newsletter to the
+                        email address provided
+                      </label>
+                    </div>{" "} */}
+                  </ReusableForm>
                 </div>
               </div>
               <div className="my-2  border-b border-primary-color"></div>
@@ -97,6 +134,16 @@ export default function Footer() {
                     </li>
                     <li>
                       <Link href="/terms-of-service">Terms & Condition</Link>
+                    </li>
+                    <li>
+                      <Link href="/website-functionality-compatibility">
+                        Funkčnosť a kompatibilita webu{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/search-algorithm">
+                        Algoritmus vyhľadávania
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -160,6 +207,16 @@ export default function Footer() {
                         Report a Problem
                       </p>
                     </li>
+                    <li>
+                      <p
+                        className="cursor-pointer"
+                        onClick={() =>
+                          user?.user?.userId && showFeedbackModal()
+                        }
+                      >
+                        Give Feedback
+                      </p>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -201,6 +258,10 @@ export default function Footer() {
         isReportModalVisible={isReportModalOpen}
         handleCancel={hancleCancel}
         description="Something went wrong? Please let us know."
+      />
+      <FeedbackModal
+        isFeedbackModalVisible={isFeedbackModalOpen}
+        handleCancel={hancleCancel}
       />
     </div>
   );

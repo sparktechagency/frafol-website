@@ -8,7 +8,7 @@ const PrivacyPolicy = async () => {
   const data = await res.json();
   return (
     <Container>
-      <div className=" py-10 text-gray-800 min-h-[95vh]">
+      <div className=" py-10 text-gray-800 min-h-[100vh]">
         <SectionHeader title="Privacy Policy" />
         <div dangerouslySetInnerHTML={{ __html: data?.data?.content }}></div>
       </div>

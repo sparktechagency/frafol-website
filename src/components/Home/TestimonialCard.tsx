@@ -12,7 +12,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
   const serverUrl = getServerUrl();
 
   return (
-    <div className=" px-4 rounded-3xl flex flex-col justify-between mb-20 min-h-[220px]">
+    <div className=" p-5 rounded-xl flex flex-col justify-between mb-20 min-h-[220px] hover:shadow-sm border border-[#E1E1E1]">
       <p className="font-semibold text-sm sm:text-base lg:text-lg mb-5">
         {testimonial.text}
       </p>
@@ -26,7 +26,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
           alt={testimonial?.userId?.name || "Profile Image"}
           width={64}
           height={64}
-          className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full "
+          className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full object-cover"
         />
         <div>
           <p className=" text-sm sm:text-base lg:text-lg text-secondary-color font-semibold ">

@@ -13,7 +13,8 @@ const Testimonial = async () => {
     },
   });
   const data = await res.json();
-  const testimonials: ITestimonial[] = data?.data?.results || [];
+  console.log(data);
+  const testimonials: ITestimonial[] = data?.data?.result || [];
 
   console.log(testimonials);
   return (

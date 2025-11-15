@@ -13,7 +13,7 @@ const TestimonialSlider = ({ data = [] }: { data: ITestimonial[] }) => {
   return (
     <Swiper
       slidesPerView={1}
-      spaceBetween={50}
+      spaceBetween={10}
       loop={true}
       autoplay={{
         delay: 2500,
@@ -26,15 +26,15 @@ const TestimonialSlider = ({ data = [] }: { data: ITestimonial[] }) => {
       breakpoints={{
         540: {
           slidesPerView: 2,
-          spaceBetween: 50,
+          spaceBetween: 10,
         },
         1024: {
           slidesPerView: 3,
-          spaceBetween: 50,
+          spaceBetween: 10,
         },
         1440: {
           slidesPerView: 4,
-          spaceBetween: 50,
+          spaceBetween: 10,
         },
       }}
       modules={[EffectFade, Pagination, Autoplay]}
