@@ -59,7 +59,7 @@ const ProfessionalPageDetails = async ({
           </h2>
 
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-semibold">
-            Hourly Rate: {professionalUser?.minHourlyRate}€ -{" "}
+            Average price: {professionalUser?.minHourlyRate}€ -{" "}
             {professionalUser?.maxHourlyRate}€
           </p>
           <p className=" text-xs sm:text-sm lg:text-base xl:text-lg text-secondary-color font-medium mt-1">

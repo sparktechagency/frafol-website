@@ -2,7 +2,6 @@ import React from "react";
 import SectionHeader from "../ui/SectionHeader";
 import { AllImages } from "../../../public/assets/AllImages";
 import AboutUsCard from "./AboutUsCard";
-import Image from "next/image";
 
 const data = [
   {
@@ -27,6 +26,7 @@ const data = [
       "This is not just a platform but a community that connects creators, including through a forum for discussions on various topics. We don’t take any commission from your earnings — you receive the full agreed amount Your own professional portfolio Clients who know what they are looking for",
     buttonText: "Join As a Photographer/Videographer",
     reverse: true,
+    redirectUrl: "/join",
   },
   {
     image: AllImages.aboutUs4,
@@ -34,6 +34,7 @@ const data = [
     description:
       "Looking for a photographer or videographer for a wedding, baptism, corporate event, or prom? You’re in the right place. Because: Every profile is verified You communicate directly with the creator You get exactly what you agreed on before ordering",
     buttonText: "Find a Photographer/Videographer",
+    redirectUrl: "/photography",
   },
   {
     image: AllImages.aboutUs5,
@@ -43,15 +44,6 @@ const data = [
     reverse: true,
     buttonText: null,
   },
-];
-
-const images = [
-  AllImages.heyFafol1,
-  AllImages.heyFafol2,
-  AllImages.heyFafol3,
-  AllImages.heyFafol4,
-  AllImages.heyFafol5,
-  AllImages.heyFafol6,
 ];
 
 const AboutUsPage = () => {
@@ -65,24 +57,6 @@ const AboutUsPage = () => {
         {data.map((item, index) => (
           <AboutUsCard key={index} data={item} />
         ))}
-      </section>
-      <section
-        className="mt-10 border-t border-secondary-color
-      py-10"
-      >
-        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-secondary-color mb-10">
-          Say Hay @FRAFOL
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 items-center gap-4">
-          {images.map((item, index) => (
-            <Image
-              key={index}
-              src={item}
-              alt=""
-              className="w-full h-full object-cover"
-            />
-          ))}
-        </div>
       </section>
     </div>
   );

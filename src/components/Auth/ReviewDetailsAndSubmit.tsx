@@ -180,20 +180,6 @@ const ReviewDetailsAndSubmit = () => {
           </Checkbox>
         </Form.Item>
 
-        <div className="w-full rounded-lg bg-background-color p-4 text-secondary-color">
-          <p className="flex items-center gap-2 text-sm sm:text-base lg:text-lg">
-            <span className="h-3 w-3 rounded-full bg-secondary-color"></span>
-            <span className=" font-semibold">
-              Why do you need to agree to ramcova zmluva?
-            </span>
-          </p>
-          <p className="text-xs sm:text-sm lg:text-base mt-1">
-            Ramcova zmluva allows us to work together, handle payments, and
-            issue invoices properly. It&apos;s just a legal agreement to use the
-            platform as intended.
-          </p>
-        </div>
-
         <div className="flex justify-end items-end w-full mt-5">
           <ReuseButton
             variant="secondary"

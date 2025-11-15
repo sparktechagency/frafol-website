@@ -1,13 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Form, Input } from "antd";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FiSearch } from "react-icons/fi";
 
 const BannerSearch = () => {
+  const router = useRouter();
+  const handleSearch = (values: any) => {
+    console.log(values);
+    router.push(`/professionals?search=${values.search}`);
+  };
   return (
     <div>
       <Form
-        // onFinish={() => handleSearch({ search: address })}
+        onFinish={handleSearch}
         className="flex items-center  shadow !bg-background-color !rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-50 "
       >
         {/* Google Autocomplete SearchBox */}

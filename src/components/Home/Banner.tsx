@@ -71,8 +71,8 @@ export default function Banner() {
           objectPosition="center"
         />
         {/* White overlay */}
-        <div className="absolute inset-0 bg-black opacity-80"></div>
-        <div className="absolute px-4 lg:px-0 inset-0 flex items-center m-auto">
+        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+        <div className="absolute px-4 lg:px-0 inset-0 flex items-center justify-center m-auto">
           <div className="text-center flex flex-col items-center justify-center">
             <Revel>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-6 w-[90%] sm:w-[80%] md:w-[70%] mx-auto leading-8 lg:leading-12 xl:leading-14 text-secondary-color">

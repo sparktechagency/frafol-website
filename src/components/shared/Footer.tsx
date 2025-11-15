@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useUser } from "@/context/UserContext";
 import { useState } from "react";
 import ReportModal from "../ui/Modal/ReportModal";
+import { FaYoutube } from "react-icons/fa6";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -149,7 +150,7 @@ export default function Footer() {
                   </h4>
                   <ul className="space-y-1">
                     <li>
-                      <Link href="/contact">Contact Us</Link>
+                      <Link href="/contact-us">Contact Us</Link>
                     </li>
                     <li>
                       <p
@@ -170,9 +171,27 @@ export default function Footer() {
                 © {currentYear} FRAFOL. All rights reserved.
               </p>
               <div className="flex gap-4 text-lg">
-                <FaFacebookF />
-                <FaInstagram />
-                <FaTiktok />
+                <Link
+                  href="https://www.facebook.com/people/Frafol/61582695734917"
+                  target="_blank"
+                >
+                  <FaFacebookF />
+                </Link>{" "}
+                <Link
+                  href="https://www.instagram.com/frafol.sk"
+                  target="_blank"
+                >
+                  <FaInstagram />{" "}
+                </Link>{" "}
+                <Link
+                  href="https://www.tiktok.com/@frafol.sk?is_from_webapp=1&sender_device=pc"
+                  target="_blank"
+                >
+                  <FaTiktok />
+                </Link>
+                <Link href="/" target="_blank">
+                  <FaYoutube />
+                </Link>
               </div>
             </div>
           </Container>

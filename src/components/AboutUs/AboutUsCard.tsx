@@ -10,6 +10,7 @@ interface Idata {
   description: string;
   reverse?: boolean;
   buttonText?: string | null;
+  redirectUrl?: string;
 }
 
 interface AboutUsCardProps {
@@ -35,6 +36,7 @@ const AboutUsCard = ({ data }: AboutUsCardProps) => {
         {data?.buttonText && (
           <ReuseButton
             variant="secondary"
+            url={data?.redirectUrl}
             className="mt-4 !w-fit !text-xs sm:!text-sm lg:!text-base"
           >
             {data?.buttonText}

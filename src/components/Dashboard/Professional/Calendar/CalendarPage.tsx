@@ -1,56 +1,85 @@
 "use client";
 
+import { formetTime } from "@/utils/dateFormet";
 import { Calendar, Badge } from "antd";
 import type { Dayjs } from "dayjs";
 
 // Define the event interface
 interface Event {
-  type: "success" | "warning" | "error";
+  type: "success" | "warning" | "error" | "processing" | "default";
   content: string;
   time: string;
   more?: string;
 }
 
-// Empty events object since you don't want to show events
-const events: Record<string, Event[]> = {};
+// Props interface
+interface AppCalendarProps {
+  calander: {
+    date: string;
+    events: {
+      eventName: string;
+      eventDate: string;
+      status: "delivered" | "cancelled" | "pending" | "inProgress";
+      serviceType: string;
+      eventTime: string;
+    }[];
+  }[];
+}
 
-const getListData = (value: Dayjs): Event[] => {
-  const dateStr = value.format("YYYY-MM-DD");
-  return events[dateStr] || [];
+// Map your status to AntD badge type
+const statusMap: Record<string, Event["type"]> = {
+  delivered: "success",
+  pending: "warning",
+  cancelled: "error",
+  inProgress: "processing",
 };
 
-const dateCellRender = (value: Dayjs) => {
-  const listData = getListData(value);
-  return (
-    <ul className="events">
-      {listData.map((item, index) => (
-        <li key={index} className="mb-1">
-          <Badge
-            status={item.type}
-            text={
-              <span className="flex justify-between">
-                <span>
-                  {item.time} {item.content}
-                </span>
-                {item.more && (
-                  <span className="text-gray-500">{item.more}</span>
-                )}
-              </span>
-            }
-          />
-        </li>
-      ))}
-    </ul>
-  );
-};
+export default function AppCalendar({ calander }: AppCalendarProps) {
+  // Transform API data into a lookup object
+  const events: Record<string, Event[]> = {};
+  calander.forEach((day) => {
+    events[day.date] = day.events.map((e) => ({
+      type: statusMap[e.status] || "default",
+      content: e.eventName,
+      time: formetTime(e.eventTime),
+    }));
+  });
 
-export default function AppCalendar() {
+  const getListData = (value: Dayjs): Event[] => {
+    const dateStr = value.format("YYYY-MM-DD");
+    return events[dateStr] || [];
+  };
+
+  const dateCellRender = (value: Dayjs) => {
+    const listData = getListData(value);
+    return (
+      <ul className="events">
+        {listData.map((item, index) => (
+          <li key={index} className="mb-1 w-full">
+            <Badge
+              status={item.type}
+              className="!flex !p-1 !bg-neutral-100 !rounded-lg !w-full mx-0.5"
+              text={
+                <div className=" !text-xs">
+                  <p>{item.content}</p>
+                  <p className=" text-gray-400 !text-[11px]">{item.time}</p>
+                </div>
+              }
+            />
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
-    <div className="container mx-auto p-4">
+    <div className="  p-4 min-h-[90vh]">
       <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-10">
         Calendar
       </h1>
-      <Calendar dateCellRender={dateCellRender} />
+      <div className="bg-primary-color rounded-xl p-5">
+        <Calendar dateCellRender={dateCellRender} mode="month" />
+      </div>{" "}
     </div>
   );
 }

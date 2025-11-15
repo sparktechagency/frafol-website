@@ -104,7 +104,6 @@ const companyInputStructure = [
     label: "IČO",
     placeholder: "Enter IČO",
     labelClassName: "!font-semibold",
-    rules: [{ required: true, message: "IČO is required" }],
   },
   {
     name: "DIC",

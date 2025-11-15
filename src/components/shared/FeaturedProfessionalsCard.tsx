@@ -55,7 +55,7 @@ const FeaturedProfessionalsCard: React.FC<FeaturedProfessionalsCardProps> = ({
             <IoLocationSharp /> {item?.address}
           </p>
           <p className="text-base-color text-xs lg:text-sm font-medium mt-1">
-            {item?.minHourlyRate}€ - ${item?.maxHourlyRate}€ /hr
+            {item?.minHourlyRate}€ - {item?.maxHourlyRate}€
           </p>
         </div>
       </Link>

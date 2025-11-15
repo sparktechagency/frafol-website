@@ -19,13 +19,20 @@ const BusinessInputStructure = [
     rules: [{ required: true, message: "Company Name is required" }],
   },
   {
+    name: "phoneNumber",
+    type: "number",
+    inputType: "normal",
+    label: "Phone number",
+    placeholder: "Enter Phone number Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+  },
+  {
     name: "ico",
     type: "text",
     inputType: "normal",
     label: "IČO",
     placeholder: "Enter IČO Name",
     labelClassName: "!font-semibold !text-secondary-color",
-    rules: [{ required: true, message: "IČO is required" }],
   },
   {
     name: "dic",
@@ -66,6 +73,15 @@ const AddressInputStructure = [
     rules: [{ required: true, message: "Town is required" }],
   },
   {
+    name: "zipCode",
+    type: "text",
+    inputType: "normal",
+    label: "Zip Code",
+    placeholder: "Enter Zip Code Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    rules: [{ required: true, message: "Zip Code is required" }],
+  },
+  {
     name: "country",
     type: "text",
     inputType: "normal",
@@ -86,10 +102,12 @@ const LegalInvoiceDetails = () => {
 
   form.setFieldsValue({
     companyName: parseData.companyName,
-    ico: parseData.ico,
+    phoneNumber: parseData.phoneNumber,
+    ico: parseData.ico || "",
     dic: parseData.dic,
     ic_dph: parseData.ic_dph,
     address: parseData.address,
+    zipCode: parseData.zipCode,
     town: parseData.town,
     country: parseData.country,
   });

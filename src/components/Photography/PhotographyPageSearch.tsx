@@ -1,11 +1,13 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import ReuseInput from "../ui/Form/ReuseInput";
 import { FiSearch } from "react-icons/fi";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Form } from "antd";
 
 const PhotographyPageSearch = () => {
+  const [form] = Form.useForm();
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const router = useRouter();
@@ -39,16 +41,27 @@ const PhotographyPageSearch = () => {
     };
   }
 
+  useEffect(() => {
+    const text = searchParams.get("search");
+    if (text) {
+      form.setFieldsValue({ search: text });
+    } else {
+      form.resetFields();
+    }
+  }, [searchParams, form]);
+
   return (
     <div className="flex justify-end mb-3">
-      <ReuseInput
-        prefix={<FiSearch className="text-base-color size-4.5" />}
-        name="search"
-        onChange={handleSearch}
-        inputClassName="!bg-background-color !rounded-lg !text-base-color !border-none !shadow-none text-lg font-semibold !w-96 !py-2.5"
-        placeholder="Search"
-        type="text"
-      />
+      <Form form={form}>
+        <ReuseInput
+          prefix={<FiSearch className="text-base-color size-4.5" />}
+          name="search"
+          onChange={handleSearch}
+          inputClassName="!bg-background-color !rounded-lg !text-base-color !border-none !shadow-none text-lg font-semibold !w-96 !py-2.5"
+          placeholder="Search"
+          type="text"
+        />
+      </Form>
     </div>
   );
 };

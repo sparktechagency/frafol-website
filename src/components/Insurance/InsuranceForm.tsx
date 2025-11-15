@@ -65,7 +65,6 @@ const InsuranceForm = () => {
           placeholder="Enter your IČO"
           label="IČO"
           labelClassName="!font-semibold"
-          rules={[{ required: true, message: "IČO is required" }]}
         />
         <ReuseInput
           type="email"

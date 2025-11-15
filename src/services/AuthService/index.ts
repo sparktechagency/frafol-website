@@ -329,3 +329,22 @@ export const changeUserPassword = async (
     return Error(error);
   }
 };
+export const switchRole = async () => {
+  try {
+    const res = await fetchWithAuth(`/users/switch-role`, {
+      method: "PATCH",
+    });
+    const result = await res.json();
+
+    // if (result.success) {
+    //   (await cookies()).delete("frafolMainAccessToken");
+    //   (await cookies()).delete("frafolMainRefreshToken");
+    // }
+
+    console.log(result);
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

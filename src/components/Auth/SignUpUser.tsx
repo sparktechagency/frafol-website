@@ -163,7 +163,6 @@ const companyInputStructure = [
     placeholder: "Enter IČO",
     labelClassName: "!font-semibold !text-secondary-color",
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "IČO is required" }],
   },
   {
     name: "dic",

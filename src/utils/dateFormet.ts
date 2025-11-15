@@ -12,9 +12,7 @@ export const formatDateTime = (date: string | Date | undefined): string => {
   if (now.diff(messageDate, "hour") < 1)
     return `${now.diff(messageDate, "minute")} minutes ago`;
   if (now.diff(messageDate, "day") < 1) return messageDate.format("HH:mm");
-  if (now.diff(messageDate, "year") < 1)
-    return messageDate.format("DD / MM  HH:mm");
-  return messageDate.format("DD / MM / YYYY HH:mm"); // Fixed: used "DD / MM / YYYY"
+  return messageDate.format("DD / MMM / YYYY"); // Fixed: used "DD / MM / YYYY"
 };
 
 export const formatDate = (date: string | Date | undefined): string => {

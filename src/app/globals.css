@@ -193,3 +193,21 @@ body {
   background-color: #ad2b08 !important;
   color: #ffffff !important;
 }
+
+.ant-picker-calendar-mode-switch {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.ant-picker-calendar-header {
+  margin-bottom: 20px !important;
+  justify-content: flex-start !important;
+}
+
+.ant-badge-status-dot {
+  margin: 0px !important;
+  margin-top: 6px !important;
+  padding: 0px !important;
+  width: 7px !important;
+  height: 7px !important;
+}
