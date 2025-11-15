@@ -157,7 +157,7 @@ const Navbar: React.FC = () => {
     },
     {
       key: "4",
-      label: <Link href="#">Insurance</Link>,
+      label: <Link href="/insurance">Insurance</Link>,
       icon: (
         <RiMoneyDollarCircleLine className="text-secondary-color !text-base" />
       ),
