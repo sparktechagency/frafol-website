@@ -11,7 +11,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
   return (
     <div>
       <div className="">
-        <div className="sticky top-0 w-full !z-[99999] ">
+        <div className="sticky top-0 w-full !z-[9999999] ">
           <Navbar />
         </div>
         <Layout className="flex !bg-[#F9FAFB] relative">

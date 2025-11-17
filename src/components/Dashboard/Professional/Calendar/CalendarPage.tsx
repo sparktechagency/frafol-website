@@ -37,11 +37,11 @@ const statusMap: Record<string, Event["type"]> = {
 export default function AppCalendar({ calander }: AppCalendarProps) {
   // Transform API data into a lookup object
   const events: Record<string, Event[]> = {};
-  calander.forEach((day) => {
-    events[day.date] = day.events.map((e) => ({
-      type: statusMap[e.status] || "default",
-      content: e.eventName,
-      time: formetTime(e.eventTime),
+  calander?.forEach((day) => {
+    events[day?.date] = day?.events?.map((e) => ({
+      type: statusMap[e?.status] || "default",
+      content: e?.eventName,
+      time: formetTime(e?.eventTime),
     }));
   });
 
@@ -54,15 +54,15 @@ export default function AppCalendar({ calander }: AppCalendarProps) {
     const listData = getListData(value);
     return (
       <ul className="events">
-        {listData.map((item, index) => (
+        {listData?.map((item, index) => (
           <li key={index} className="mb-1 w-full">
             <Badge
-              status={item.type}
+              status={item?.type}
               className="!flex !p-1 !bg-neutral-100 !rounded-lg !w-full mx-0.5"
               text={
                 <div className=" !text-xs">
-                  <p>{item.content}</p>
-                  <p className=" text-gray-400 !text-[11px]">{item.time}</p>
+                  <p>{item?.content}</p>
+                  <p className=" text-gray-400 !text-[11px]">{item?.time}</p>
                 </div>
               }
             />
