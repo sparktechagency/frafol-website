@@ -53,8 +53,6 @@ const page = async ({
   const stateData = await stateRes.json();
 
   const states = stateData?.data;
-  console.log("data", states);
-  console.log(myEventData?.length);
 
   return (
     <EventOrdersPage

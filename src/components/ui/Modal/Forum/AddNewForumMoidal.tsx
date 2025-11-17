@@ -31,13 +31,10 @@ const AddNewForumMoidal: React.FC<AddNewForumMoidalProps> = ({
       // shortText: shortText,
     };
 
-    console.log("data", data);
-
     formData.append("data", JSON.stringify(data));
 
     if (values.image) {
       values?.image?.forEach((file: any) => {
-        console.log("Image", file?.originFileObj);
         formData.append("images", file?.originFileObj);
       });
     }
@@ -49,8 +46,6 @@ const AddNewForumMoidal: React.FC<AddNewForumMoidalProps> = ({
       "Your post uploaded successfully!",
       "Something went wrong! Please try again."
     );
-
-    // console.log("Add New Gear Response:", res);
 
     if (res?.success) {
       form.resetFields();

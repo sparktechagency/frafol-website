@@ -63,10 +63,6 @@ const EditForumModal: React.FC<EditForumModalProps> = ({
       "Something went wrong! Please try again."
     );
 
-    console.log(res);
-
-    // console.log("Add New Gear Response:", res);
-
     if (res?.success) {
       form.resetFields();
       handleCancel();

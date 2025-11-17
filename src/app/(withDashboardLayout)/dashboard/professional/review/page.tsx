@@ -29,12 +29,9 @@ const page = async ({
 
   const allReviewData = await allReviewRes.json();
 
-  console.log(allReviewData);
-
   const allReviews = allReviewData?.data?.reviews || [];
   const total = allReviewData?.data?.meta?.total;
 
-  console.log(allReviewData);
   return (
     <ReviewPage
       allReviews={allReviews}

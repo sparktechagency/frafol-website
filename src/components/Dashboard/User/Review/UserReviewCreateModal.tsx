@@ -8,7 +8,6 @@ import { Form, Modal, Rate, Typography } from "antd";
 interface UserReviewCreateModalProps {
   isViewModalVisible: boolean;
   handleCancel: () => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   currentRecord: any | null;
 }
 const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
@@ -19,14 +18,11 @@ const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
   const [form] = Form.useForm();
 
   const onSubmit = async (values: any) => {
-    console.log("values", values);
-
     const data = {
       rating: values.review,
       message: values.message,
     };
 
-    console.log(data);
     const res = await tryCatchWrapper(
       addNewReview,
       { body: data, params: currentRecord?._id },

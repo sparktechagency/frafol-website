@@ -373,7 +373,6 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
       if (file) {
         setImageUrl(URL.createObjectURL(file)); // Set the preview URL of the selected image
       } else {
-        console.error("No file selected or file object missing");
       }
     }
   };

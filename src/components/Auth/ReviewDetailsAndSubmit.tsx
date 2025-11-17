@@ -68,9 +68,9 @@ const ReviewDetailsAndSubmit = () => {
         form.resetFields();
         router.push("/sign-up/professional/otp-verify");
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       // If validation fails, error will be caught here
-      console.log("Form validation failed:", error);
     }
   };
 

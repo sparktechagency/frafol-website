@@ -6,8 +6,6 @@ import TransactionTable from "@/components/ui/Table/TransactionTable";
 import TransactionViewModal from "./TransactionViewModal";
 
 const EarningsPage = ({ earning, totalData }: any) => {
-  console.log(earning);
-
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);

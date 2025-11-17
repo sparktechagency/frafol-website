@@ -19,7 +19,6 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
   showDeliverModal,
 }) => {
   const serverUrl = getServerUrl();
-  console.log(`Current Record in Modal:`, currentRecord);
   return (
     <Modal
       open={isViewModalVisible}

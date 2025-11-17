@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { Modal } from "antd";
@@ -44,7 +45,6 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
 }) => {
   const serverUrl = getServerUrl();
   const user = useUser();
-  console.log(user);
 
   const extensionLength = currentRecord?.extensionRequests?.length || 0;
 
@@ -81,7 +81,6 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
         toast.success("Downloaded successfully!", { id: toastId });
       })
       .catch((error: any) => {
-        console.error("Error generating PDF:", error);
         toast.error("Download failed", { id: toastId });
       });
   };
@@ -102,7 +101,6 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
         toast.success("Downloaded successfully!", { id: toastId });
       })
       .catch((error: any) => {
-        console.error("Error generating PDF:", error);
         toast.error("Download failed", { id: toastId });
       });
   };

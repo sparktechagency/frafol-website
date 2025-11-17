@@ -82,8 +82,6 @@ const PersonalInformation = () => {
   });
 
   const onFinish = (values: any) => {
-    console.log("Received values of login form:", values);
-
     const personalInfo = {
       name: values.name,
       email: values.email,

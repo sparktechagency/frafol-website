@@ -23,8 +23,6 @@ const MyAvailabilitySection = ({ myData }: { myData: IProfile }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
 
-  console.log("myData in MyAvailabilitySection", myData?.unAvailability);
-
   useEffect(() => {
     if (myData?.unAvailability) {
       setSelectedDates(myData?.unAvailability);
@@ -126,7 +124,6 @@ const MyAvailabilitySection = ({ myData }: { myData: IProfile }) => {
     const formattedDates = selectedDates.map((date) =>
       format(date, "yyyy-MM-dd")
     );
-    console.log(formattedDates);
 
     const res = await tryCatchWrapper(
       updateUnavailableDates,
@@ -140,14 +137,10 @@ const MyAvailabilitySection = ({ myData }: { myData: IProfile }) => {
       "Something went wrong! Please try again."
     );
 
-    console.log("Res", res);
-
     if (res?.success) {
       setSelectedDates([]);
     }
   };
-
-  console.log("Selectd Dates.", selectedDates);
 
   return (
     <div className="bg-white rounded-lg p-4">

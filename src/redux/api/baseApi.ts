@@ -6,7 +6,7 @@ import { getBaseUrl } from "../../helpers/config/envConfig";
 const baseQuery = fetchBaseQuery({
   baseUrl: getBaseUrl(),
   prepareHeaders: (headers) => {
-    const token = Cookies.get("oriboshi_main_accessToken");
+    const token = Cookies.get("frafolMainAccessToken");
 
     if (token) {
       headers.set("authorization", `Bearer ${token}`);

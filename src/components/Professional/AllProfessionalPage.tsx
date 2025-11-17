@@ -40,7 +40,6 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const totalData = data?.data?.meta?.total;
   const professionals: IProfessional[] = data?.data?.result;
 
-  console.log("Professionals:", professionals);
   return (
     <section className="py-16">
       <Container>

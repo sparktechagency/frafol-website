@@ -39,8 +39,6 @@ const page = async ({
     allMessages = roomResdata?.data?.data || [];
     totalMessages = roomResdata?.data?.meta || {};
   }
-  console.log(allMessages);
-  console.log(totalMessages);
 
   return (
     <div>

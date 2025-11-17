@@ -30,8 +30,6 @@ const page = async ({
   const myGearOrderData = gearOrderData?.data?.data || [];
   const totalData = gearOrderData?.data?.meta?.total || 0;
 
-  console.log("myGearOrderData", { myGearOrderData, totalData });
-
   return (
     <UserGearOrderPage
       activeTab={tab}

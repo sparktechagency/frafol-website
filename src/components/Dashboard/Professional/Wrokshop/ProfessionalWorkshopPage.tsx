@@ -83,11 +83,8 @@ const ProfessionalWorkshopPage = ({
     setCurrentRecord(null);
   };
 
-  console.log("currentRecord", currentRecord);
-
   const handleDelete = async (record: IWorkshop) => {
     if (record) {
-      console.log("record", record?._id);
       const res = await tryCatchWrapper(
         deleteWrokshop,
         { params: record?._id },

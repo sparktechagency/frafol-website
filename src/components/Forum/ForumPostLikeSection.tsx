@@ -20,8 +20,6 @@ const ForumPostLikeSection = ({
   const [like, setLike] = React.useState(communityPosts?.totalLikes || 0);
   const handleLike = async () => {
     if (isLike) {
-      console.log("SSS");
-
       const res = await tryCatchWrapper(
         removeLike,
         { params: { id } },
@@ -29,8 +27,6 @@ const ForumPostLikeSection = ({
         "Removed Like Successfully!",
         "Something went wrong! Please try again."
       );
-
-      // console.log("Add New Gear Response:", res);
 
       if (res?.success) {
         setIsLike(!isLike);
@@ -44,8 +40,6 @@ const ForumPostLikeSection = ({
         "Liked Successfully!",
         "Something went wrong! Please try again."
       );
-
-      // console.log("Add New Gear Response:", res);
 
       if (res?.success) {
         setIsLike(!isLike);

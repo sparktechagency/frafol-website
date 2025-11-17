@@ -23,7 +23,6 @@ const page = async ({
   );
 
   const earningData = await earningRes.json();
-  console.log(earningData);
   const earning = earningData?.data?.data || [];
   const totalData = earningData?.data?.meta?.total;
   return <EarningsPage earning={earning} totalData={totalData} />;

@@ -28,7 +28,6 @@ const page = async ({
   const myCommunityPosts: ICommunityPost[] = communityData?.data?.result || [];
   const totalData = communityData?.data?.meta?.total;
 
-  console.log(communityData);
   return (
     <div>
       <MyCommunityPostsPage

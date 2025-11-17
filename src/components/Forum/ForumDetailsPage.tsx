@@ -18,7 +18,6 @@ const ForumDetailsPage = ({
   id: string;
   page: number;
 }) => {
-  console.log(communityPosts);
   const serverUrl = getServerUrl();
   return (
     <div className="py-16">

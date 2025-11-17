@@ -13,10 +13,8 @@ const Testimonial = async () => {
     },
   });
   const data = await res.json();
-  console.log(data);
   const testimonials: ITestimonial[] = data?.data?.result || [];
 
-  console.log(testimonials);
   return (
     <section className="pb-28">
       <Container>

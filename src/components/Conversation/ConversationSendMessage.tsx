@@ -43,7 +43,6 @@ const ConversationSendMessage = ({
     setIsUploadLoading(true);
     const formData = new FormData();
     formData.append("images", file.originFileObj);
-    console.log(file?.originFileObj);
 
     const res = await tryCatchWrapper(
       sendFiles,
@@ -53,16 +52,12 @@ const ConversationSendMessage = ({
       "Something went wrong! Please try again."
     );
 
-    console.log(res);
-
     if (res?.success && res?.data?.length > 0) {
       // Add the new image URL to the list of uploaded images
       setUploadedImages((prev) => [...prev, res?.data[0]]);
     }
     setIsUploadLoading(false);
   };
-
-  console.log(uploadedImages);
 
   const handleDeleteImage = (imageUrl: string) => {
     // Remove the image from the uploaded images list
@@ -77,11 +72,8 @@ const ConversationSendMessage = ({
       ...(uploadedImages.length > 0 ? { images: uploadedImages } : {}),
     };
 
-    console.log(data);
-
     try {
       socket?.emit("send-message", data, (res: any) => {
-        console.log(res);
         if (res?.success) {
           setUploadedImages([]); // Clear uploaded images after sending
           form.resetFields();

@@ -105,8 +105,6 @@ const GearMarketPlaceEditNewGear = ({
       "Something went wrong! Please try again."
     );
 
-    // console.log("Add New Gear Response:", res);
-
     if (res?.success) {
       form.resetFields();
       handleCancel();

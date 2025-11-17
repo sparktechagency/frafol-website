@@ -26,7 +26,6 @@ const ConversationPage = ({
 }) => {
   const userData = useUser();
   const onlineUsers = useAppSelector((state) => state.conversation.onlineUser);
-  console.log(onlineUsers);
 
   return (
     <div className="">

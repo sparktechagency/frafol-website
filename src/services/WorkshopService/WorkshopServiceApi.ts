@@ -14,7 +14,6 @@ export const addNewWrokshop = async (req = { body: FormData, params: {} }) => {
     const result = await res.json();
     revalidateTag(TagTypes.workshop);
 
-    console.log(result, " =====>");
     return result;
   } catch (error: any) {
     return Error(error);
@@ -38,7 +37,6 @@ export const updateWrokshop = async (req = { body: FormData, params: {} }) => {
 
 export const deleteWrokshop = async (req = { body: {}, params: {} }) => {
   try {
-    console.log("req.params", req.params);
     const res = await fetchWithAuth(`/workshop/${req.params}`, {
       method: "DELETE",
     });

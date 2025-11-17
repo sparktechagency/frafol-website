@@ -60,7 +60,6 @@ const MyCommunityPostsPage = ({
   //     values: { reason: string },
   //     data: IGearOrder
   //   ) => {
-  //     console.log({ body: values, params: data?._id });
   //     const res = await tryCatchWrapper(
   //       cancelGearOrder,
   //       { body: values, params: data?._id },
@@ -68,8 +67,6 @@ const MyCommunityPostsPage = ({
   //       "Order Canceled Successfully!",
   //       "Something went wrong! Please try again."
   //     );
-
-  //     console.log("res", res);
 
   //     if (res?.success) {
   //       setIsCancelModalVisible(false);

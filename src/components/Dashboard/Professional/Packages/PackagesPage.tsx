@@ -55,11 +55,8 @@ const PackagesPage = ({
     setCurrentRecord(null);
   };
 
-  console.log("currentRecord", currentRecord);
-
   const handleDelete = async (record: IPackage) => {
     if (record) {
-      console.log("record", record?._id);
       const res = await tryCatchWrapper(
         deletePackage,
         { params: record?._id },

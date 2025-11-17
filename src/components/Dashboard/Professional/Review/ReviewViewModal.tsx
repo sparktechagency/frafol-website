@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal, Rate } from "antd";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import Image from "next/image";

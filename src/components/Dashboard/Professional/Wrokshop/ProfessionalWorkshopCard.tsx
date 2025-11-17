@@ -23,7 +23,6 @@ const ProfessionalWorkshopCard = ({
   showViewParticipantModal: (record: IWorkshop) => void;
 }) => {
   const serverUrl = getServerUrl();
-  console.log(workshop);
   return (
     <div className="p-1.5 rounded-xl border border-background-color">
       <div className="relative">

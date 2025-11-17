@@ -57,8 +57,6 @@ const EventCreateOrderModal = ({
       description: values.description,
     };
 
-    console.log({ data, values }); // Debugging: Log both `data` and `values` for inspection
-
     // Try catching API call and handling errors
     const res = await tryCatchWrapper(
       acceptCustomOrder,

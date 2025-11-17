@@ -18,8 +18,6 @@ const IncomeOverview = async ({ year }: { year: number }) => {
   const earningStateData = await earningStateRes.json();
   const earningState = earningStateData.data?.monthlyEarnings;
 
-  console.log("earningState", earningState);
-
   return (
     <div className="w-full p-3 rounded-lg flex flex-col bg-primary-color">
       <div className="flex justify-between text-base-color mt-4">

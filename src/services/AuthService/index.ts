@@ -60,8 +60,6 @@ export const registerUserOtp = async (
       (await cookies()).delete("frafolSignUpToken");
     }
 
-    console.log(result);
-
     return result;
   } catch (error: any) {
     return Error(error);
@@ -81,8 +79,6 @@ export const resendOtp = async (
     params: {},
   }
 ) => {
-  console.log(req.body);
-
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/otp/resend-otp`,
@@ -107,8 +103,6 @@ export const resendOtp = async (
     //   });
     // }
 
-    console.log(result);
-
     return result;
   } catch (error: any) {
     return Error(error);
@@ -131,8 +125,6 @@ export const loginUser = async (
     });
 
     const result = await res.json();
-
-    console.log(result);
 
     if (result?.success) {
       const threeMonths = 1000 * 60 * 60 * 24 * 30 * 3; // 3 months in milliseconds
@@ -226,8 +218,6 @@ export const forgetPasswordOtp = async (
       );
     }
 
-    console.log(result);
-
     return result;
   } catch (error: any) {
     return Error(error);
@@ -256,8 +246,6 @@ export const changePassword = async (
     if (result.success) {
       (await cookies()).delete("forgetOtpMatchToken");
     }
-
-    console.log(result);
 
     return result;
   } catch (error: any) {
@@ -322,8 +310,6 @@ export const changeUserPassword = async (
       (await cookies()).delete("frafolMainRefreshToken");
     }
 
-    console.log(result);
-
     return result;
   } catch (error: any) {
     return Error(error);
@@ -340,8 +326,6 @@ export const switchRole = async () => {
     //   (await cookies()).delete("frafolMainAccessToken");
     //   (await cookies()).delete("frafolMainRefreshToken");
     // }
-
-    console.log(result);
 
     return result;
   } catch (error: any) {

@@ -22,16 +22,17 @@ const AddToCardButton = ({ gear }: { gear: IGear }) => {
   };
   return (
     <>
-      {userData?.user?.userId !== gear?.authorId?._id && (
-        <ReuseButton
-          variant="secondary"
-          className="!px-6 !py-5 mt-4 flex justify-center items-center gap-2"
-          onClick={() => handleAddToCart(gear)}
-        >
-          <IoCartOutline className="text-2xl" />
-          <p>Add To Cart</p>
-        </ReuseButton>
-      )}
+      {!userData?.user?.userId ||
+        (userData?.user?.userId !== gear?.authorId?._id && (
+          <ReuseButton
+            variant="secondary"
+            className="!px-6 !py-5 mt-4 flex justify-center items-center gap-2"
+            onClick={() => handleAddToCart(gear)}
+          >
+            <IoCartOutline className="text-2xl" />
+            <p>Add To Cart</p>
+          </ReuseButton>
+        ))}
     </>
   );
 };

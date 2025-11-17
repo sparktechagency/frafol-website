@@ -133,7 +133,6 @@ const CartDeliveryOption = ({
       ...value,
       loginAsCompany,
     };
-    console.log(data);
     const res = await tryCatchWrapper(
       gearOrder,
       { body: data },
@@ -141,7 +140,6 @@ const CartDeliveryOption = ({
       "Redirecting to Stripe to Complete Payment From Stripe",
       "Something went wrong! Please try again."
     );
-    console.log("res", res);
     if (res?.success) {
       window.open(res?.data?.checkoutUrl, "_blank"); // Opens in a new tab
       form.resetFields();

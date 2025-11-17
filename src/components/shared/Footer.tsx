@@ -21,7 +21,6 @@ export default function Footer() {
   const [form] = Form.useForm();
   const isChecked = Form.useWatch("newsletter", form);
 
-  console.log(isChecked);
   const currentYear = new Date().getFullYear();
   const user = useUser();
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);

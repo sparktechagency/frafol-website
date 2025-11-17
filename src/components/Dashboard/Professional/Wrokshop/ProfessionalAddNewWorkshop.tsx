@@ -70,7 +70,6 @@ const ProfessionalAddNewWorkshop = ({
       "Workshop added successfully!",
       "Something went wrong! Please try again."
     );
-    console.log("res", res);
     if (res?.success) {
       form.resetFields();
       handleCancel();

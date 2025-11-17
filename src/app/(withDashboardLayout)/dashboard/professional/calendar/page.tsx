@@ -35,7 +35,6 @@ const page = async ({
   );
 
   const calanderData = await calendarRes.json();
-  console.log(calanderData);
   const calander = calanderData?.data || [];
   return <AppCalendar calander={calander} />;
 };

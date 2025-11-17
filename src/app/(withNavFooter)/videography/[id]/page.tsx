@@ -31,8 +31,6 @@ const VideographyCategoryDetailsPage = async ({
     src,
   };
 
-  console.log({ data });
-
   const res = await fetchWithAuth(
     `/users/professionalsByCategory?role=${role}&categoryType=${title}&searchTerm=${search}`,
     {

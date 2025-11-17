@@ -57,7 +57,6 @@ const UserConfirmOrder = ({
   };
 
   const handleDeclineOrder = async (values: any, data: IEventOrder) => {
-    console.log({ body: values, params: data?._id });
     const res = await tryCatchWrapper(
       declineEventOrder,
       {
@@ -68,8 +67,6 @@ const UserConfirmOrder = ({
       "Redirecting to Stripe to Complete Payment From Stripe",
       "Something went wrong! Please try again."
     );
-
-    console.log("res", res);
 
     if (res?.success) {
       setIsDeclineOrderRequestModalVisible(false);
@@ -85,8 +82,6 @@ const UserConfirmOrder = ({
       "Delivery Request Accept Successfully!",
       "Something went wrong! Please try again."
     );
-
-    console.log("res", res);
 
     if (res?.success) {
       setIsConfirmModalVisible(false);

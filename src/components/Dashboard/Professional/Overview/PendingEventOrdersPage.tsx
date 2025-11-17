@@ -55,7 +55,6 @@ const PendingEventOrdersPage = ({
   };
 
   const showCreateOrderModal = ({ record }: { record: any }) => {
-    console.log("Accept Order Record:", record);
     setCurrentRecord(record);
     setIsViewModalVisible(false);
     setIsCreateOrderModalVisible(true);
@@ -86,7 +85,6 @@ const PendingEventOrdersPage = ({
   };
 
   const handleCancelOrder = async (values: any, data: IEventOrder) => {
-    console.log({ body: values, params: data?._id });
     const res = await tryCatchWrapper(
       cancelEventOrder,
       { body: values, params: data?._id },
@@ -95,8 +93,6 @@ const PendingEventOrdersPage = ({
       "Something went wrong! Please try again."
     );
 
-    console.log("res", res);
-
     if (res?.success) {
       setIsCancelModalVisible(false);
       handleCancel();
@@ -104,7 +100,6 @@ const PendingEventOrdersPage = ({
   };
 
   const handleDeclineOrder = async (values: any, data: IEventOrder) => {
-    console.log({ body: values, params: data?._id });
     const res = await tryCatchWrapper(
       declineEventOrder,
       {
@@ -116,8 +111,6 @@ const PendingEventOrdersPage = ({
       "Something went wrong! Please try again."
     );
 
-    console.log("res", res);
-
     if (res?.success) {
       setIsDeclineOrderRequestModalVisible(false);
       handleCancel();
@@ -128,7 +121,6 @@ const PendingEventOrdersPage = ({
     data: IEventOrder,
     form: any
   ) => {
-    console.log({ body: values, params: data?._id });
     const res = await tryCatchWrapper(
       sendExtensionRequest,
       {
@@ -139,8 +131,6 @@ const PendingEventOrdersPage = ({
       "Request Sent Successfully!",
       "Something went wrong! Please try again."
     );
-
-    console.log("res", res);
 
     if (res?.success) {
       setIsExtenstionRequestModalVisible(false);

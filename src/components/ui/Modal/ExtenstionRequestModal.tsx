@@ -35,8 +35,6 @@ const ExtenstionRequestModal: React.FC<ExtenstionRequestModalProps<any>> = ({
     handleExtenstion(data, currentRecord, form);
   };
 
-  console.log("currentRecord", currentRecord?.extensionRequests);
-
   const disabledDate = (current: any) => {
     // Ensure both dates are dayjs objects before comparing
     const deliveryDate = dayjs(currentRecord?.deliveryDate);

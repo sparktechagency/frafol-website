@@ -9,7 +9,6 @@ import { ITestimonial } from "@/types/testimonial.type";
 import TestimonialCard from "./TestimonialCard";
 
 const TestimonialSlider = ({ data = [] }: { data: ITestimonial[] }) => {
-  console.log("data in slider", data);
   return (
     <Swiper
       slidesPerView={1}

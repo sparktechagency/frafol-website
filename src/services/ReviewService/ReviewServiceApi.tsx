@@ -24,7 +24,6 @@ export const addNewReview = async (req: { body: any; params: any }) => {
 };
 
 export const updateReview = async (req: { body: any; params: any }) => {
-  console.log({ body: req?.body });
   try {
     const res = await fetchWithAuth(`/review/update/${req.params}`, {
       method: "PATCH",

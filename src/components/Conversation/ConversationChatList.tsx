@@ -26,15 +26,11 @@ const ConversationChatList = ({
   const seletedConversation = useAppSelector(selectSelectedChatUser);
   const [chatList, setChatList] = useState<IConversation[]>([]);
 
-  console.log("chatList", chatList);
-
   const handleNewMessage = useCallback((message: any) => {
     const { chatId, text, sender, time } = message;
-    console.log(message);
 
     // Find if this conversation already exists
     setChatList((prevChatList: IConversation[]) => {
-      console.log(prevChatList);
       const existingIndex = prevChatList.findIndex(
         (item) => item.chat._id === chatId
       );
@@ -50,7 +46,6 @@ const ConversationChatList = ({
           unreadMessageCount: updatedList[existingIndex].unreadMessageCount + 1,
         };
 
-        console.log(updatedList);
         return updatedList;
       } else {
         // If this is a new conversation
@@ -71,7 +66,6 @@ const ConversationChatList = ({
           unreadMessageCount: 1,
           lastMessageCreatedAt: time,
         };
-        console.log(newConversation);
 
         return [newConversation, ...prevChatList];
       }
@@ -80,17 +74,14 @@ const ConversationChatList = ({
 
   useEffect(() => {
     if (!socket) {
-      console.warn("❌ Socket not ready yet.");
       return;
     }
 
     if (!socket.connected) {
       socket.connect();
     }
-    console.log("🧠 Checking socket:", socket);
 
     socket.on(`newMessage`, (message: any) => {
-      console.log(" New Message Received from socket:", message);
       handleNewMessage(message);
     });
     socket.on("onlineUser", (online: any) => {
@@ -98,16 +89,11 @@ const ConversationChatList = ({
     });
 
     // const handleNewMessageSocket = (message: any) => {
-    //   console.log("📨 New Message Received from socket:", message);
     // };
 
     return () => {
-      socket.off("onlineUser", (message: any) => {
-        console.log("📨 onlineUser Received from socket:", message);
-      });
-      socket.off("newMessage", (message: any) => {
-        console.log("📨New Message Off:", message);
-      });
+      socket.off("onlineUser");
+      socket.off("newMessage");
     };
   }, [dispatch, handleNewMessage, socket, user?.user?.userId]);
 

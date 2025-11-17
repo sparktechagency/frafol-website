@@ -59,8 +59,6 @@ const ExtensionRequest = ({ myEventData }: { myEventData: IEventOrder[] }) => {
       "Something went wrong! Please try again."
     );
 
-    console.log("res", res);
-
     if (res?.success) {
       handleCancel();
     }

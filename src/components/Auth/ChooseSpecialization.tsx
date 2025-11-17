@@ -88,7 +88,6 @@ const ChooseSpecialization = ({ categories }: { categories: ICategory[] }) => {
             videographerSpecializations: selectedVideographySpecializations,
           };
 
-    console.log(updatedInformation);
     Cookies.set(
       "information",
       JSON.stringify({ ...parseData, ...updatedInformation }),

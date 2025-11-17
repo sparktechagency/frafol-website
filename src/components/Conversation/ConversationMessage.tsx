@@ -107,7 +107,6 @@ const ConversationMessage = ({
       if (!container) return;
 
       if (container.scrollTop === 0) {
-        console.log("totalMessages?.totalPage", totalMessages?.totalPage);
         if (room === selectedConversation?.chat?._id) {
           if (totalMessages?.totalPage && page < totalMessages?.totalPage) {
             const curentPage = page;
@@ -141,7 +140,6 @@ const ConversationMessage = ({
 
   // New socket message handler
   const handleMessage = useCallback((message: any) => {
-    console.log(message);
     setMessages((prev) => [...prev, message]);
 
     setTimeout(() => {
@@ -170,8 +168,6 @@ const ConversationMessage = ({
     (a: IMessage, b: IMessage) =>
       new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
   );
-
-  console.log(messages);
 
   return (
     <div

@@ -20,7 +20,6 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
   activeModal,
   showAcceptDeliverModal,
 }) => {
-  console.log(currentRecord);
   const serverUrl = getServerUrl();
   return (
     <Modal

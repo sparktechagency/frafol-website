@@ -22,7 +22,6 @@ const ProfessionalOverviewCards = async () => {
 
   const overviewData = await overviewRes.json();
 
-  console.log(overviewData);
   const overview = overviewData.data;
   const countData = [
     {

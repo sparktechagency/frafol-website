@@ -28,7 +28,6 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
   activeModal,
   showCancelModal,
 }) => {
-  console.log(currentRecord);
   const serverUrl = getServerUrl();
 
   const handleDownload = (currentRecord: IEventOrder) => {
@@ -43,9 +42,8 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
         // Use file-saver to trigger the download
         saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
       })
-      .catch((error: any) => {
-        console.error("Error generating PDF:", error);
-      });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .catch((error: any) => {});
   };
 
   return (

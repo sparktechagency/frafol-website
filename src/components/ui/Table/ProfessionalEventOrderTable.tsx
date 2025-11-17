@@ -24,7 +24,6 @@ const ProfessionalEventOrderTable: React.FC<
   ProfessionalEventOrderTableProps
 > = ({ data, loading, showViewModal, page, total, limit, activeTab }) => {
   const user = useUser();
-  console.log(activeTab);
 
   const checkExtension = (extensionReq: any) => {
     const extensionLength = extensionReq?.length;

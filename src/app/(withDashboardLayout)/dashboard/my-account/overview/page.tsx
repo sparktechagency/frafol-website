@@ -17,7 +17,6 @@ const page = async () => {
   });
 
   const overviewData = await overviewRes.json();
-  console.log(overviewData);
   const overview = overviewData?.data || [];
 
   return (

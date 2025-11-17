@@ -11,8 +11,6 @@ const UserReviewOverview = async () => {
 
   const allData = await allRes.json();
 
-  console.log(allData);
-
   const allReviewsStates = allData?.data || [];
   const countData = [
     {

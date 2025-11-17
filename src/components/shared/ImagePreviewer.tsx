@@ -31,15 +31,13 @@ const ImagePreviewer = ({
     const toastId = toast.loading("Downloading...", {
       duration: 2000,
     });
-    console.log(url);
     try {
       const response = await fetch(url);
-      console.log(response);
       const blob = await response.blob();
       saveAs(blob, filename);
       toast.success("Downloaded successfully!", { id: toastId });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
-      console.error("Download failed", err);
       toast.error("Download failed", { id: toastId });
     }
   };

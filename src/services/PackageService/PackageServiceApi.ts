@@ -37,7 +37,6 @@ export const updatePackage = async (req = { body: FormData, params: {} }) => {
 
 export const deletePackage = async (req = { body: {}, params: {} }) => {
   try {
-    console.log("req.params", req.params);
     const res = await fetchWithAuth(`/package/${req.params}`, {
       method: "DELETE",
     });

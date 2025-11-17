@@ -46,7 +46,6 @@ const ConversationChatListCard = ({
 
   const handleConversationSelect = (conversation: IConversation) => {
     const conversationId = conversation?.chat?._id;
-    console.log(":", conversationId);
 
     // Create a new URLSearchParams object to modify search params
     const params = new URLSearchParams(searchParams);
@@ -60,7 +59,6 @@ const ConversationChatListCard = ({
       params.delete("page");
     }
     // Log the parameters to verify they are being set correctly
-    console.log("Updated Params:", params.toString());
 
     // Replace the URL with the new params
     replace(`${pathName}?${params.toString()}`, { scroll: false });
@@ -68,8 +66,6 @@ const ConversationChatListCard = ({
     // Dispatch the selected conversation to Redux
     dispatch(setSelectedChatUser(conversation));
   };
-
-  console.log(conversation?.chat?.users?.[0]);
 
   return (
     <div

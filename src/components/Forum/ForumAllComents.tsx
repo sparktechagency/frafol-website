@@ -20,7 +20,6 @@ const ForumAllComents = async ({ id, page }: { id: string; page: number }) => {
 
   const paginatedData =
     allComments?.slice((page - 1) * limit, page * limit) || [];
-  console.log(page);
   return (
     <div className="rounded-xl border border-background-color flex flex-col gap-2 p-5 items-start mt-16">
       <p className="text-base sm:text-lg lg:text-xl font-bold">Replies</p>

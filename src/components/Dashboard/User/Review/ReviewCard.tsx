@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IPendingReview } from "@/types";
 import { formatDate } from "@/utils/dateFormet";
 import { Rate } from "antd";
@@ -15,7 +14,6 @@ const ReviewCard = ({
   data: IPendingReview;
   openModal?: (data: IPendingReview) => void;
 }) => {
-  console.log(data);
   return (
     <div className="p-4 rounded-md border border-[#E1E1E1] shadow-xs hover:shadow-md transition-all duration-200">
       <div>

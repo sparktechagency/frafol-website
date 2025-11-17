@@ -42,7 +42,6 @@ const PendingPayment = ({
   };
 
   const handleCancelOrder = async (values: any, data: IEventOrder) => {
-    console.log({ body: values, params: data?._id });
     const res = await tryCatchWrapper(
       cancelEventOrder,
       { body: values, params: data?._id },
@@ -50,8 +49,6 @@ const PendingPayment = ({
       "Redirecting to Stripe to Complete Payment From Stripe",
       "Something went wrong! Please try again."
     );
-
-    console.log("res", res);
 
     if (res?.success) {
       setIsCancelModalVisible(false);

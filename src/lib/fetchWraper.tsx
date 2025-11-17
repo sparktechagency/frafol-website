@@ -44,7 +44,6 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
     //     });
     //   } else {
     //     // Handle refresh failure (e.g., redirect to login page)
-    //     console.error("Failed to refresh token");
     //     window.location.href = "/login"; // Redirect to login
     //   }
     // }

@@ -54,8 +54,6 @@ const UserOrderCard = ({
       "Something went wrong! Please try again."
     );
 
-    console.log("res", res);
-
     if (res?.success) {
       window.open(res?.data?.checkoutUrl, "_blank"); // Opens in a new tab
     }

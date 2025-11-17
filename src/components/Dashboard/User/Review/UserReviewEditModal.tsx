@@ -29,14 +29,11 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
   }, [currentRecord, form]);
 
   const onSubmit = async (values: any) => {
-    console.log("values", values);
-
     const data = {
       rating: values.review,
       message: values.message,
     };
 
-    console.log(data);
     const res = await tryCatchWrapper(
       updateReview,
       { body: data, params: currentRecord?._id },
@@ -44,8 +41,6 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
       "Review Updated Successfully!",
       "Something went wrong! Please try again."
     );
-
-    console.log(res);
 
     if (res?.success) {
       handleCancel();

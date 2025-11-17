@@ -8,7 +8,6 @@ import { FiSearch } from "react-icons/fi";
 const BannerSearch = () => {
   const router = useRouter();
   const handleSearch = (values: any) => {
-    console.log(values);
     router.push(`/professionals?search=${values.search}`);
   };
   return (

@@ -30,7 +30,6 @@ export const acceptDirectOrder = async (req: {
   body: ICreateEventOrder;
   params: any;
 }) => {
-  console.log(req?.params);
   try {
     const res = await fetchWithAuth(
       `/event-order/direct/accept/${req.params}`,
@@ -51,7 +50,6 @@ export const acceptCustomOrder = async (req: {
   body: ICreateEventOrder;
   params: any;
 }) => {
-  console.log(req?.params);
   try {
     const res = await fetchWithAuth(
       `/event-order/custom/accept/${req.params}`,
@@ -139,7 +137,6 @@ export const declineEventOrder = async (req: {
   body: ICreateEventOrder;
   params: any;
 }) => {
-  console.log(req?.body);
   try {
     const res = await fetchWithAuth(
       `/event-order/decline-request/${req.params}`,
@@ -183,7 +180,6 @@ export const sendExtensionRequest = async (req: {
   body: ICreateEventOrder;
   params: any;
 }) => {
-  console.log(req);
   try {
     const res = await fetchWithAuth(`/event-order/extension/${req.params}`, {
       method: "PATCH",
@@ -247,7 +243,6 @@ export const declineExtensionRequest = async (req: {
   body: ICreateEventOrder;
   params: any;
 }) => {
-  console.log(req);
   try {
     const res = await fetchWithAuth(
       `/event-order/extension/reject/${req.params}`,

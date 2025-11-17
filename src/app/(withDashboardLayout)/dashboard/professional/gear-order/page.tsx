@@ -28,7 +28,6 @@ const page = async ({
   const myGearOrderData: IGearOrder[] = gearOrderData?.data?.data || [];
   const totalData = gearOrderData?.data?.meta?.total;
 
-  console.log(myGearOrderData);
   return (
     <GearOrderPage
       myGearOrderData={myGearOrderData}

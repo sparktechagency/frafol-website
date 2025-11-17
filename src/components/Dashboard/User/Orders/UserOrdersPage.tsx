@@ -32,7 +32,6 @@ const UserOrdersPage = ({
   myEventData: IEventOrder[];
   limit: number;
 }) => {
-  console.log(myEventData);
   return (
     <div>
       <div className="flex lg:flex-row flex-col justify-between items-center ">

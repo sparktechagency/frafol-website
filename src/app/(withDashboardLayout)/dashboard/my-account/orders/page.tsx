@@ -37,8 +37,6 @@ const page = async ({
   const myEventData = eventData?.data?.data || [];
   const totalData = eventData?.data?.meta?.total;
 
-  console.log("myEventData", { myEventData, totalData });
-
   return (
     <UserOrdersPage
       activeTab={tab}

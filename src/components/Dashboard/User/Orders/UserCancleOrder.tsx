@@ -56,7 +56,6 @@ const UserCancleOrder = ({
   };
 
   const handleAcceptCancel = async (data: IEventOrder) => {
-    console.log({ params: data?._id });
     const res = await tryCatchWrapper(
       acceptCancelRequest,
       { params: data?._id },
@@ -65,15 +64,12 @@ const UserCancleOrder = ({
       "Something went wrong! Please try again."
     );
 
-    console.log("res", res);
-
     if (res?.success) {
       handleCancel();
     }
   };
 
   const handleRejectCancelOrder = async (data: IEventOrder) => {
-    console.log({ params: data?._id });
     const res = await tryCatchWrapper(
       declineCancelRequest,
       {
@@ -83,8 +79,6 @@ const UserCancleOrder = ({
       "Rejected Successfully!",
       "Something went wrong! Please try again."
     );
-
-    console.log("res", res);
 
     if (res?.success) {
       handleCancel();

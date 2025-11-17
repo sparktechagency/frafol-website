@@ -18,7 +18,6 @@ const UserGearOrderCard = ({
   showAcceptDeliverModal?: (record: IGearOrder) => void;
 }) => {
   const serverUrl = getServerUrl();
-  console.log(data);
   return (
     <div className="p-4 rounded-md border border-[#E1E1E1] shadow-xs hover:shadow-md transition-all duration-200 flex gap-2 items-center">
       <Image

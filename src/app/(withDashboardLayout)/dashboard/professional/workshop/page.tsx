@@ -59,8 +59,6 @@ const page = async ({
     participantsData = undefined;
   }
 
-  console.log(participantsData);
-
   return (
     <ProfessionalWorkshopPage
       tab={tab as "approved" | "pending"}

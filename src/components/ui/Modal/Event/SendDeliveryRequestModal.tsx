@@ -34,8 +34,6 @@ const SendDeliveryRequestModal: React.FC<
       "Something went wrong! Please try again."
     );
 
-    console.log("res", res);
-
     if (res?.success) {
       setIsSendDeliveryRequestModalVisible(false);
       handleCancel();

@@ -101,7 +101,6 @@ const ProfessionalEditWorkshop = ({
       "Package added successfully!",
       "Something went wrong! Please try again."
     );
-    console.log("res", res);
     if (res?.success) {
       form.resetFields();
       handleCancel();

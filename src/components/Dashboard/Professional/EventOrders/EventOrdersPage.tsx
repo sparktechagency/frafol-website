@@ -49,7 +49,6 @@ const EventOrdersPage = ({
   page: number;
   serviceCharge: number;
 }) => {
-  console.log(myEventData);
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -82,7 +81,6 @@ const EventOrdersPage = ({
   };
 
   const showCreateOrderModal = ({ record }: { record: any }) => {
-    console.log("Accept Order Record:", record);
     setCurrentRecord(record);
     setIsViewModalVisible(false);
     setIsCreateOrderModalVisible(true);
@@ -118,7 +116,6 @@ const EventOrdersPage = ({
   };
 
   const handleCancelOrder = async (values: any, data: IEventOrder) => {
-    console.log({ body: values, params: data?._id });
     const res = await tryCatchWrapper(
       cancelEventOrder,
       { body: values, params: data?._id },
@@ -127,15 +124,12 @@ const EventOrdersPage = ({
       "Something went wrong! Please try again."
     );
 
-    console.log("res", res);
-
     if (res?.success) {
       setIsCancelModalVisible(false);
       handleCancel();
     }
   };
   const handleAcceptCancel = async (data: IEventOrder) => {
-    console.log({ params: data?._id });
     const res = await tryCatchWrapper(
       acceptCancelRequest,
       { params: data?._id },
@@ -144,8 +138,6 @@ const EventOrdersPage = ({
       "Something went wrong! Please try again."
     );
 
-    console.log("res", res);
-
     if (res?.success) {
       setIsAcceptModalVisible(false);
       handleCancel();
@@ -153,7 +145,6 @@ const EventOrdersPage = ({
   };
 
   const handleDeclineOrder = async (values: any, data: IEventOrder) => {
-    console.log({ body: values, params: data?._id });
     const res = await tryCatchWrapper(
       declineEventOrder,
       {
@@ -165,15 +156,12 @@ const EventOrdersPage = ({
       "Something went wrong! Please try again."
     );
 
-    console.log("res", res);
-
     if (res?.success) {
       setIsDeclineOrderRequestModalVisible(false);
       handleCancel();
     }
   };
   const handleRejectCancelOrder = async (data: IEventOrder) => {
-    console.log({ params: data?._id });
     const res = await tryCatchWrapper(
       declineCancelRequest,
       {
@@ -183,8 +171,6 @@ const EventOrdersPage = ({
       "Rejected Successfully!",
       "Something went wrong! Please try again."
     );
-
-    console.log("res", res);
 
     if (res?.success) {
       setIsDeclineOrderRequestModalVisible(false);
@@ -196,7 +182,6 @@ const EventOrdersPage = ({
     data: IEventOrder,
     form: any
   ) => {
-    console.log({ body: values, params: data?._id });
     const res = await tryCatchWrapper(
       sendExtensionRequest,
       {
@@ -207,8 +192,6 @@ const EventOrdersPage = ({
       "Request Sent Successfully!",
       "Something went wrong! Please try again."
     );
-
-    console.log("res", res);
 
     if (res?.success) {
       setIsExtenstionRequestModalVisible(false);

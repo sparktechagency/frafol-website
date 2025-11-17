@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { jwtDecode } from "jwt-decode";
 
@@ -9,7 +10,6 @@ export const decodedToken = (token: string): any => {
   try {
     return jwtDecode(token);
   } catch (error) {
-    console.error("Error decoding token:", error);
     return null;
   }
 };

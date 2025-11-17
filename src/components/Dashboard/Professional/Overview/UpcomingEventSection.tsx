@@ -13,7 +13,6 @@ const UpcomingEventSection = async () => {
   const upcomingEventData = await res.json();
   const upcomingEvents = upcomingEventData.data;
 
-  console.log("earningState", upcomingEvents);
   return (
     <div>
       <h2 className="text-center text-red-800 font-semibold mb-2 text-base sm:text-lg lg:text-xl xl:text-2xl ">

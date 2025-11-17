@@ -47,7 +47,6 @@ export const updateGallery = async (
 export const updateUnavailableDates = async (
   req = { body: FormData, params: {} }
 ) => {
-  console.log("Request Body", req.body);
   try {
     const res = await fetchWithAuth(`/users/setUnAvailability`, {
       method: "PATCH",

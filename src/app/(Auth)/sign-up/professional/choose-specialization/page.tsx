@@ -25,7 +25,6 @@ const page = async ({
   const data = await res.json();
   const categories: ICategory[] = data?.data || [];
 
-  console.log("categories", categories);
   return (
     <div>
       <AuthSectionTemplate

@@ -80,8 +80,6 @@ const ProfessionalAddNewPackageModal = ({
       duration: `${Number(values.durationUnit)} ${values.durationType}`,
     };
 
-    console.log("data", data);
-
     formData.append("data", JSON.stringify(data));
 
     if (values?.image?.[0]?.originFileObj) {
