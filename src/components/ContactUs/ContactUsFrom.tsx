@@ -3,13 +3,25 @@
 
 import { Form, Input, Typography } from "antd";
 import ReuseButton from "../ui/Button/ReuseButton";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { contactUs } from "@/services/Others/OthersApi";
 
 const ContactUsForm = () => {
   const [form] = Form.useForm();
   const TextArea = Input.TextArea;
 
   const onFinish = async (values: any) => {
-    console.log("Received values of Contact form:", values);
+    const res = await tryCatchWrapper(
+      contactUs,
+      { body: values },
+      "Wait a moment...",
+      "Message sent successfully!",
+      "Something went wrong! Please try again."
+    );
+
+    if (res?.success) {
+      form.resetFields();
+    }
   };
   return (
     <Form form={form} layout="vertical" className="" onFinish={onFinish}>
@@ -79,7 +91,7 @@ const ContactUsForm = () => {
       </div>
 
       <Form.Item className="lg:col-span-2">
-        <ReuseButton variant="secondary">
+        <ReuseButton htmlType="submit" variant="secondary">
           <span className="text-white">Send Message</span>
         </ReuseButton>
       </Form.Item>

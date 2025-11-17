@@ -36,6 +36,14 @@ const ReviewDetailsAndSubmit = () => {
       }`,
     },
     {
+      label: "Phone Number",
+      value: parseData.phoneNumber || "",
+    },
+    {
+      lebel: "zipCode",
+      value: parseData.zipCode || "",
+    },
+    {
       label: "Specializations",
       value:
         parseData?.role === "photographer"

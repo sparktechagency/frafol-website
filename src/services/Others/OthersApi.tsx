@@ -51,3 +51,20 @@ export const subscribe = async (req: { body: any }) => {
     return Error(error);
   }
 };
+
+export const contactUs = async (req: { body: any; params: any }) => {
+  try {
+    const res = await fetchWithAuth(`/contact-us`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Add content type header for JSON
+      },
+      body: JSON.stringify(req.body),
+    });
+    const result = await res.json();
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

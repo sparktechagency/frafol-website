@@ -28,6 +28,8 @@ const page = async ({
   const gearOrderData = await gearOrderRes.json();
 
   const myGearOrderData = gearOrderData?.data?.data || [];
+
+  console.log(myGearOrderData);
   const totalData = gearOrderData?.data?.meta?.total || 0;
 
   return (

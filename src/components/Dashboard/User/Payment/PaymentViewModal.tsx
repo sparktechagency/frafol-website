@@ -1,10 +1,13 @@
+import { IPayment } from "@/types";
+import { formatDate } from "@/utils/dateFormet";
 import { Modal } from "antd";
+
 interface PaymenViewModalProps {
   isViewModalVisible: boolean;
   handleCancel: () => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  currentRecord: any | null;
+  currentRecord: IPayment | null;
 }
+
 const PaymenViewModal: React.FC<PaymenViewModalProps> = ({
   isViewModalVisible,
   handleCancel,
@@ -25,26 +28,40 @@ const PaymenViewModal: React.FC<PaymenViewModalProps> = ({
           </h3>
 
           <div className="text-xs sm:text-sm lg:text-base mt-3">
-            <div className="flex items-center justify-between border-b border-[#E1E1E1] pb-2 gap-2 mb-2">
-              <span className="font-semibold">Date: </span>
-              <span className="">March 13, 2023</span>
+            {/* Date */}
+            <div className="flex items-center justify-between border-b border-[#E1E1E1] pb-2 mb-2 gap-2">
+              <span className="font-semibold">Date:</span>
+              <span>
+                {currentRecord ? formatDate(currentRecord?.createdAt) : "--"}
+              </span>
             </div>
 
-            <div className="flex items-center justify-between border-b border-[#E1E1E1] pb-2 gap-2 mb-2">
-              <span className="font-semibold">Method:</span>
-              <span>Photography</span>
+            {/* Payment Type */}
+            <div className="flex items-center justify-between border-b border-[#E1E1E1] pb-2 mb-2 gap-2">
+              <span className="font-semibold">Type:</span>
+              <span>{currentRecord?.paymentType || "--"}</span>
             </div>
-            <div className="flex items-center justify-between border-b border-[#E1E1E1] pb-2 gap-2 mb-2">
-              <span className="font-semibold">Transaction ID: </span>
-              <span>4646123456789</span>
+
+            {/* Transaction ID */}
+            <div className="flex items-center justify-between border-b border-[#E1E1E1] pb-2 mb-2 gap-2 overflow-x-scroll">
+              <span className="font-semibold">Transaction ID:</span>
+              <span className="text-wrap">
+                {currentRecord?.transactionId || "--"}
+              </span>
             </div>
-            <div className="flex items-center justify-between border-b border-[#E1E1E1] pb-2 gap-2 mb-2">
-              <span className="font-semibold">Payment Method: </span>
-              <span>Card</span>
+
+            {/* Payment Method */}
+            <div className="flex items-center justify-between border-b border-[#E1E1E1] pb-2 mb-2 gap-2">
+              <span className="font-semibold">Payment Method:</span>
+              <span>{currentRecord?.paymentMethod || "--"}</span>
             </div>
-            <div className="flex items-center justify-between pb-2 gap-2 mb-2 font-bold">
-              <span className=" text-secondary-color">Amount: </span>
-              <span className="text-success">{currentRecord?.amount}</span>
+
+            {/* Amount */}
+            <div className="flex items-center justify-between pb-2 mb-2 gap-2 font-bold">
+              <span className="text-secondary-color">Amount:</span>
+              <span className="text-success">
+                {currentRecord?.amount ? `${currentRecord.amount}€` : "--"}
+              </span>
             </div>
           </div>
         </div>

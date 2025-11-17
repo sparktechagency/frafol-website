@@ -68,12 +68,12 @@ const Bar_Chart = ({ data }: { data: ChartData[] }) => {
             tickMargin={16}
           />
           {/* Add several horizontal black lines using ReferenceLine */}
-          <ReferenceLine y={10} stroke="#20202055" />
-          <ReferenceLine y={20} stroke="#20202055" />
-          <ReferenceLine y={30} stroke="#20202055" />
-          <ReferenceLine y={40} stroke="#20202055" />
-          <ReferenceLine y={50} stroke="#20202055" />
-          <ReferenceLine y={60} stroke="#20202055" />
+          <ReferenceLine y={100} stroke="#20202055" />
+          <ReferenceLine y={200} stroke="#20202055" />
+          <ReferenceLine y={300} stroke="#20202055" />
+          <ReferenceLine y={400} stroke="#20202055" />
+          <ReferenceLine y={500} stroke="#20202055" />
+          <ReferenceLine y={600} stroke="#20202055" />
 
           <Bar
             dataKey="totalEarnings" // Make sure this matches your data key

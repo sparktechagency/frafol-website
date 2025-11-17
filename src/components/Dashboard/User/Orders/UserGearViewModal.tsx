@@ -1,9 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "antd";
 
 import Image from "next/image";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { IGearOrder } from "@/types";
+import InvoiceGearFromClientSide from "@/utils/InvoiceGearFromClientSide";
+import { pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
+import { toast } from "sonner";
 
 interface UserGearViewModalProps {
   isViewModalVisible: boolean;
@@ -21,6 +27,26 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
   showAcceptDeliverModal,
 }) => {
   const serverUrl = getServerUrl();
+
+  const handleClientGearInvoiceDownload = (currentRecord: IGearOrder) => {
+    const toastId = toast.loading("Downloading...", {
+      duration: 2000,
+    });
+    // Generate the PDF using @react-pdf/renderer's pdf function
+    pdf(
+      <InvoiceGearFromClientSide currentRecord={currentRecord as IGearOrder} />
+    )
+      .toBlob()
+      .then((blob: any) => {
+        // Use file-saver to trigger the download
+        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
+        toast.success("Downloaded successfully!", { id: toastId });
+      })
+      .catch((error: any) => {
+        console.log(error);
+        toast.error("Download failed", { id: toastId });
+      });
+  };
   return (
     <Modal
       open={isViewModalVisible}
@@ -135,6 +161,16 @@ const UserGearViewModal: React.FC<UserGearViewModalProps> = ({
               className="!bg-success hover:!bg-success text-white px-4 py-2 rounded !cursor-pointer"
             >
               Accept Delivery
+            </button>
+          )}
+          {activeModal === "delivered" && (
+            <button
+              onClick={() =>
+                handleClientGearInvoiceDownload(currentRecord as IGearOrder)
+              }
+              className="!bg-secondary-color hover:!bg-secondary-color text-white px-4 py-2 rounded !cursor-pointer w-full"
+            >
+              Download Invoice
             </button>
           )}
         </div>

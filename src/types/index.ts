@@ -10,3 +10,4 @@ export * from "./review.type";
 export * from "./gear.type";
 export * from "./workshop.type";
 export * from "./testimonial.type";
+export * from "./payment.type";

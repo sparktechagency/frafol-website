@@ -1,8 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "antd";
 import Image from "next/image";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { IGearOrder } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
+import InvoiceGearFromClientSide from "@/utils/InvoiceGearFromClientSide";
+import InvoiceGearFromAdminSide from "@/utils/InvoiceGearFromAdminSide";
+import { pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
+import { toast } from "sonner";
 
 interface GearOrderViewModalProps {
   isViewModalVisible: boolean;
@@ -19,6 +25,47 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
   showDeliverModal,
 }) => {
   const serverUrl = getServerUrl();
+
+  console.log(currentRecord);
+
+  const handleClientGearInvoiceDownload = (currentRecord: IGearOrder) => {
+    const toastId = toast.loading("Downloading...", {
+      duration: 2000,
+    });
+    // Generate the PDF using @react-pdf/renderer's pdf function
+    pdf(
+      <InvoiceGearFromClientSide currentRecord={currentRecord as IGearOrder} />
+    )
+      .toBlob()
+      .then((blob: any) => {
+        // Use file-saver to trigger the download
+        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
+        toast.success("Downloaded successfully!", { id: toastId });
+      })
+      .catch((error: any) => {
+        console.log(error);
+        toast.error("Download failed", { id: toastId });
+      });
+  };
+  const handleAdminGearInvoiceDownload = (currentRecord: IGearOrder) => {
+    const toastId = toast.loading("Downloading...", {
+      duration: 2000,
+    });
+    // Generate the PDF using @react-pdf/renderer's pdf function
+    pdf(
+      <InvoiceGearFromAdminSide currentRecord={currentRecord as IGearOrder} />
+    )
+      .toBlob()
+      .then((blob: any) => {
+        // Use file-saver to trigger the download
+        saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
+        toast.success("Downloaded successfully!", { id: toastId });
+      })
+      .catch((error: any) => {
+        console.log(error);
+        toast.error("Download failed", { id: toastId });
+      });
+  };
   return (
     <Modal
       open={isViewModalVisible}
@@ -136,13 +183,36 @@ const GearOrderViewModal: React.FC<GearOrderViewModalProps> = ({
                 Mark as Shipped
               </button>
             )}
-
-          <button
-            onClick={() => showCancelModal?.(currentRecord!)}
-            className="!bg-error hover:!bg-error text-white px-4 py-2 rounded !cursor-pointer"
-          >
-            Cancel Order
-          </button>
+          {currentRecord?.orderStatus !== "delivered" && (
+            <button
+              onClick={() => showCancelModal?.(currentRecord!)}
+              className="!bg-error hover:!bg-error text-white px-4 py-2 rounded !cursor-pointer"
+            >
+              Cancel Order
+            </button>
+          )}
+        </div>
+        <div className="flex gap-4">
+          {currentRecord?.orderStatus === "delivered" && (
+            <button
+              onClick={() =>
+                handleClientGearInvoiceDownload(currentRecord as IGearOrder)
+              }
+              className="!bg-secondary-color hover:!bg-secondary-color text-white px-4 py-2 rounded !cursor-pointer"
+            >
+              Download Invoice Client
+            </button>
+          )}
+          {currentRecord?.orderStatus === "delivered" && (
+            <button
+              onClick={() =>
+                handleAdminGearInvoiceDownload(currentRecord as IGearOrder)
+              }
+              className="!bg-secondary-color hover:!bg-secondary-color text-white px-4 py-2 rounded !cursor-pointer"
+            >
+              Download Invoice Admin
+            </button>
+          )}
         </div>
       </div>
     </Modal>
