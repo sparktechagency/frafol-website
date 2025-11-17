@@ -5,18 +5,18 @@ const ActionRequired = ({ actionData }: { actionData: IActionRequired }) => {
   const list = [
     {
       title: "Payment Pending",
-      message: `${actionData.totalPaymentPending} order(s) need payment.`,
-      count: actionData.totalPaymentPending,
+      message: `${actionData?.totalPaymentPending} order(s) need payment.`,
+      count: actionData?.totalPaymentPending,
     },
     {
       title: "Delivery Confirmation",
-      message: `${actionData.totalDeliveryConfirmation} order(s) waiting for delivery confirmation.`,
-      count: actionData.totalDeliveryConfirmation,
+      message: `${actionData?.totalDeliveryConfirmation} order(s) waiting for delivery confirmation.`,
+      count: actionData?.totalDeliveryConfirmation,
     },
     {
       title: "Cancel Request",
-      message: `${actionData.totalCancelRequestConfirmation} order(s) need cancel approval.`,
-      count: actionData.totalCancelRequestConfirmation,
+      message: `${actionData?.totalCancelRequestConfirmation} order(s) need cancel approval.`,
+      count: actionData?.totalCancelRequestConfirmation,
     },
   ]; // only show items that need action
 

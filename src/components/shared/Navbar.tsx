@@ -179,8 +179,8 @@ const Navbar: React.FC = () => {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`z-[99999999]  ${
-        scrolled ? "  duration-300  py-1.5" : " duration-300  py-1.5"
+      className={`!z-[99999]  ${
+        scrolled ? " !z-[99999] duration-300  py-1.5" : " duration-300  py-1.5"
       } ${
         mobileMenuOpen || scrolled
           ? "bg-secondary-color !text-primary-color"

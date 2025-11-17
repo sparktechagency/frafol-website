@@ -48,7 +48,7 @@ const SideBar = () => {
         overflowY: "auto",
         backgroundColor: "#ffffff",
       }}
-      className={`!border-l border-r !border-[#E1E1E1] !fixed !z-[60] !shadow-2xl !top-16  ${
+      className={`!border-l border-r !border-[#E1E1E1] !fixed !z-[60] !shadow-2xl !top-12  ${
         isCollapsed ? "!left-[-300px]" : "!left-0"
       }`}
     >
