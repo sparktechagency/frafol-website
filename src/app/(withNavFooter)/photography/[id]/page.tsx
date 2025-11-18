@@ -20,6 +20,8 @@ const PhotographyCategoryDetailsPage = async ({
   const title = (paramsData?.title as string) || "";
   const src = (paramsData?.src as string) || "";
   const search = (paramsData?.search as string) || "";
+  const minPrice = (paramsData?.min as string) || null;
+  const maxPrice = (paramsData?.max as string) || null;
 
   const data: {
     id: string;
@@ -34,7 +36,7 @@ const PhotographyCategoryDetailsPage = async ({
   };
 
   const res = await fetchWithAuth(
-    `/users/professionalsByCategory?role=${role}&categoryType=${title}&searchTerm=${search}`,
+    `/users/professionalsByCategory?role=${role}&categoryType=${title}&searchTerm=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}`,
     {
       next: {
         tags: [TagTypes.category],

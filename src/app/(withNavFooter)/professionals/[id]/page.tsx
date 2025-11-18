@@ -24,6 +24,7 @@ const page = async ({
   });
   const data = await res.json();
   const professionalUser: IProfessionalUser = data?.data;
+  console.log(professionalUser);
 
   return (
     <ProfessionalPageDetails

@@ -17,6 +17,11 @@ interface IProfessionalUser {
   _id: string;
   profileId: IProfileId;
   name: string;
+  companyName: string;
+  email: string;
+  dic?: string;
+  ico?: string;
+  phone: string;
   sureName: string;
   profileImage: string;
   role: string;
