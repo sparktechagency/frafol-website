@@ -39,7 +39,7 @@ jobs:
             npm -v
             pm2 -v
             # Go to website directory
-            cd ~/applications/Frafol-Website || exit 1
+            cd ~/applications/frafol-website || exit 1
 
             # Get latest code
             git fetch --all
