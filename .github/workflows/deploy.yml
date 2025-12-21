@@ -1,0 +1,64 @@
+name: Deploy Website to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy Website to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            # Ensure Node.js & npm are available
+            # export PATH=$PATH:/usr/bin:/usr/local/bin:/root/.local/share/fnm/node-versions/v24.12.0/installation/bin
+
+            # Initialize fnm Node environment
+            export FNM_DIR="/root/.local/share/fnm"
+            export PATH="$FNM_DIR:$PATH"
+            eval "$(fnm env)"
+
+            # Verify Node, npm, pm2
+            node -v
+            npm -v
+            pm2 -v
+            # Go to website directory
+            cd ~/applications/Frafol-Website || exit 1
+
+            # Get latest code
+            git fetch --all
+            git reset --hard origin/main
+
+            # Install dependencies
+            npm install
+
+            # Build Next.js app
+            npm run build
+
+            # Restart if exists, otherwise start (production)
+            if pm2 describe Frafol-Website > /dev/null 2>&1; then
+              pm2 restart Frafol-Website 
+            else
+              pm2 start npm --name "Frafol-Website " -- run dev -- --port 3000
+            fi
+
+            # Save PM2 process list
+            pm2 save
+
+            echo "✅ Website deployment (build + start) finished!"
