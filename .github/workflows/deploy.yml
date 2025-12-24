@@ -55,7 +55,8 @@ jobs:
             if pm2 describe Frafol-Website > /dev/null 2>&1; then
               pm2 restart Frafol-Website 
             else
-              pm2 start npm --name "Frafol-Website " -- run dev -- --port 3000
+              # pm2 start npm --name "Frafol-Website " -- run dev -- --port 3000
+              pm2 start npm --name "frafol-website" -- start -- --port 3000
             fi
 
             # Save PM2 process list
