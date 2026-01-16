@@ -13,6 +13,9 @@ export const mainTheme = {
       iconColor: "#262621",
       subMenuItemBg: "#ffffff11",
     },
+    Modal: {
+      zIndexBase: 999999,
+    },
     Form: {
       colorError: "#E53935",
     },

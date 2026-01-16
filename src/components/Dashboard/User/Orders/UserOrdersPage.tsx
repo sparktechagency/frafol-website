@@ -10,25 +10,28 @@ import UserOrderOffer from "./UserOrderOffer";
 import UserCancleOrder from "./UserCancleOrder";
 import PendingPayment from "../Payment/PendingPayment";
 import { IEventOrder } from "@/types";
+import { IUserEventOrderStats } from "@/app/(withDashboardLayout)/dashboard/my-account/orders/page";
 
 const UserOrdersPage = ({
   activeTab,
   page,
+  states,
   totalData,
   myEventData,
   limit = 12,
 }: {
   activeTab:
-    | "currentOrder"
-    | "toConfirm"
-    | "delivered"
-    | "pending"
-    | "orderOffer"
-    | "accepted"
-    | "cancelRequest"
-    | "cancelled";
+  | "currentOrder"
+  | "toConfirm"
+  | "delivered"
+  | "pending"
+  | "orderOffer"
+  | "accepted"
+  | "cancelRequest"
+  | "cancelled";
   page: number;
   totalData: number;
+  states: IUserEventOrderStats;
   myEventData: IEventOrder[];
   limit: number;
 }) => {
@@ -39,7 +42,7 @@ const UserOrdersPage = ({
           Orders
         </h1>
       </div>
-      <UserOrdersOverview />
+      <UserOrdersOverview states={states} />
       <div className="mt-10">
         <ReusableTabs
           activeTab={activeTab}

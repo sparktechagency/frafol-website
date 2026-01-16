@@ -11,6 +11,7 @@ type ReusableFormProps = {
   className?: string;
   handleFinish: (values: any) => void;
   onValuesChange?: (changedValues: any, allValues: any) => void; // ✅ new
+
 };
 
 const ReusableForm = ({
@@ -29,6 +30,7 @@ const ReusableForm = ({
       onFinish={handleFinish}
       onValuesChange={onValuesChange} // ✅ allow value tracking
       className={cn("space-y-1", className)}
+      validateTrigger="onSubmit"
     >
       {children}
     </Form>

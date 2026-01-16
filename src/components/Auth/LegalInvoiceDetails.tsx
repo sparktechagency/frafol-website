@@ -47,10 +47,10 @@ const BusinessInputStructure = [
     name: "ic_dph",
     type: "text",
     inputType: "normal",
-    label: "IČ DPH",
+    label: "IČ DPH (Optional)",
     placeholder: "Enter IČ DPH Name",
     labelClassName: "!font-semibold !text-secondary-color",
-    rules: [{ required: true, message: "IČ DPH is required" }],
+    rules: [{ required: false, message: "IČ DPH is required" }],
   },
 ];
 const AddressInputStructure = [
@@ -120,7 +120,7 @@ const LegalInvoiceDetails = () => {
     router.push("/sign-up/professional/review-details");
   };
   return (
-    <div className=" flex flex-col justify-center gap-3 h-full w-full sm:w-3/4 mx-auto mt-10">
+    <div className=" flex flex-col justify-center gap-3 h-full w-full sm:w-3/4 mx-auto mt-32">
       <div className="mb-3">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-secondary-color mb-5">
           Legal & Invoice Details

@@ -77,7 +77,11 @@ const userInputStructure = [
     placeholder: "Enter your password",
     prefix: <RiLockPasswordFill className="mr-1 !text-secondary-color" />,
     labelClassName: "!font-bold !text-secondary-color",
-    rules: [{ required: true, message: "Password is required" }],
+    rules: [{ required: true, message: "Password is required" }, { min: 8, message: "Password must be at least 8 characters" },
+    {
+      pattern: /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/,
+      message: "Password must include at least one uppercase letter and one special character",
+    },],
   },
   {
     name: "confirmPassword",
@@ -178,11 +182,11 @@ const companyInputStructure = [
     name: "ic_dph",
     type: "text",
     inputType: "normal",
-    label: "IČ DPH",
+    label: "IČ DPH (Optional)",
     placeholder: "Enter IČ DPH",
     labelClassName: "!font-semibold !text-secondary-color",
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "IČ DPH is required" }],
+    rules: [{ required: false, message: "IČ DPH is required" }],
   },
 
   {
@@ -193,7 +197,11 @@ const companyInputStructure = [
     placeholder: "Enter your password",
     prefix: <RiLockPasswordFill className="mr-1 !text-secondary-color" />,
     labelClassName: "!font-semibold !text-secondary-color",
-    rules: [{ required: true, message: "Password is required" }],
+    rules: [{ required: true, message: "Password is required" }, { min: 8, message: "Password must be at least 8 characters" },
+    {
+      pattern: /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/,
+      message: "Password must include at least one uppercase letter and one special character",
+    },],
   },
   {
     name: "confirmPassword",
@@ -258,7 +266,7 @@ const SignUpUser = () => {
           Tell us about yourself
         </p>
       </div>
-      <ReusableForm handleFinish={onFinish} form={form}>
+      <ReusableForm handleFinish={onFinish} form={form}  >
         <div className="mb-5">
           <Checkbox
             className="!text-lg !font-semibold"
@@ -275,35 +283,35 @@ const SignUpUser = () => {
         </div>
         {type !== "company"
           ? userInputStructure.map((input, index) => (
-              <ReuseInput
-                key={index}
-                name={input.name}
-                Typolevel={5}
-                inputType={input.inputType}
-                type={input.type}
-                prefix={input.prefix}
-                label={input.label}
-                placeholder={input.placeholder}
-                labelClassName={input.labelClassName}
-                inputClassName="!py-2.5"
-                rules={input.rules}
-              />
-            ))
+            <ReuseInput
+              key={index}
+              name={input.name}
+              Typolevel={5}
+              inputType={input.inputType}
+              type={input.type}
+              prefix={input.prefix}
+              label={input.label}
+              placeholder={input.placeholder}
+              labelClassName={input.labelClassName}
+              inputClassName="!py-2.5"
+              rules={input.rules}
+            />
+          ))
           : companyInputStructure.map((input, index) => (
-              <ReuseInput
-                key={index}
-                name={input.name}
-                Typolevel={5}
-                inputType={input.inputType}
-                type={input.type}
-                prefix={input.prefix}
-                label={input.label}
-                placeholder={input.placeholder}
-                labelClassName={input.labelClassName}
-                inputClassName="!py-2.5"
-                rules={input.rules}
-              />
-            ))}
+            <ReuseInput
+              key={index}
+              name={input.name}
+              Typolevel={5}
+              inputType={input.inputType}
+              type={input.type}
+              prefix={input.prefix}
+              label={input.label}
+              placeholder={input.placeholder}
+              labelClassName={input.labelClassName}
+              inputClassName="!py-2.5"
+              rules={input.rules}
+            />
+          ))}
         {/* Agree to rámcová zmluva contract Checkbox */}
         <Form.Item
           name="acceptTerms"
@@ -314,8 +322,8 @@ const SignUpUser = () => {
                 value
                   ? Promise.resolve()
                   : Promise.reject(
-                      new Error("Should accept with rámcová zmluva contract")
-                    ),
+                    new Error("Should accept with rámcová zmluva contract")
+                  ),
             },
           ]}
         >
@@ -325,9 +333,9 @@ const SignUpUser = () => {
             <div>
               <p className="text-sm sm:text-base lg:text-lg font-semibold">
                 Agree to{" "}
-                <span className="text-secondary-color underline">
+                <Link href="/terms-of-service" className="text-secondary-color! underline">
                   rámcová zmluva
-                </span>{" "}
+                </Link>{" "}
                 contract
               </p>
             </div>

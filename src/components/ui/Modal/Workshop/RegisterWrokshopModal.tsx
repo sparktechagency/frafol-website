@@ -1,0 +1,251 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Checkbox, Form, Modal } from "antd";
+import ReuseButton from "../../Button/ReuseButton";
+import Link from "next/link";
+import ReusableForm from "../../Form/ReuseForm";
+import { useUser } from "@/context/UserContext";
+import { IWorkshop } from "@/types";
+import { toast } from "sonner";
+import tryCatchWrapper from "@/utils/tryCatchWrapper";
+import { createWorkshopOrder } from "@/services/WorkshopOrderService/WorkshopOrderServiceApi";
+import { useRouter } from "next/navigation";
+import { getServerUrl } from "@/helpers/config/envConfig";
+import Image from "next/image";
+import { IoCalendarOutline } from "react-icons/io5";
+import { LuClock, LuUsers } from "react-icons/lu";
+import { FaLocationDot } from "react-icons/fa6";
+import { AllImages } from "../../../../../public/assets/AllImages";
+import { formatDate, formetTime } from "@/utils/dateFormet";
+
+interface RegisterWrokshopModalProps<T> {
+    isModalVisible: boolean;
+    handleCancel: () => void;
+    currentRecord: T | null;
+    description?: string;
+}
+
+const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
+    isModalVisible,
+    handleCancel,
+    currentRecord,
+}) => {
+    const [form] = Form.useForm();
+
+    const acceptTerms = Form.useWatch("acceptTerms", form);
+    const výslovneSúhlasím = Form.useWatch("výslovneSúhlasím", form);
+    const bolSom = Form.useWatch("bolSom", form);
+
+    const router = useRouter();
+    const serverUrl = getServerUrl();
+    const userData = useUser();
+
+    const handleRegister = async (workshopData: IWorkshop) => {
+        if (userData?.user?.userId) {
+            const data = {
+                paymentType: "workshop",
+                workshopId: workshopData?._id,
+            };
+
+            if (!acceptTerms || !výslovneSúhlasím || !bolSom) {
+                toast.error("Please accept all terms and conditions");
+                return;
+            }
+
+            const res = await tryCatchWrapper(
+                createWorkshopOrder,
+                { body: data },
+                "Registering for workshop...",
+                "Redirecting to Stripe to Complete Payment From Stripe",
+                "Something went wrong! Please try again."
+            );
+
+            if (res?.success) {
+                window.open(res?.data?.checkoutUrl, "_blank");
+            }
+        } else {
+            router.push("/sign-in");
+        }
+    };
+
+    return (
+        <Modal
+            // title="Confirm Delete"
+            open={isModalVisible}
+            onCancel={handleCancel}
+            okText="Unblock"
+            cancelText="Cancel"
+            centered
+            footer={
+                null
+            }
+            className="max-w-[1000px] lg:min-w-[800px]"
+        // styles.body={{ textAlign: "center" }}
+        >
+            <div className="p-1.5 rounded-xl border border-background-color flex flex-col justify-between mt-5">
+                <div>
+                    <Image
+                        width={1000}
+                        height={1000}
+                        src={currentRecord?.image ? serverUrl + currentRecord?.image : AllImages?.dummyCover}
+                        alt="workspace"
+                        className="w-full h-80 sm:h-60 lg:h-72 xl:h-80 object-cover rounded-lg "
+                    />
+                    <div className="px-1 flex flex-col justify-between">
+                        <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3">
+                            {currentRecord?.title}
+                        </p>
+                        <p className="text-xs sm:text-sm lg:text-base mt-1">
+                            {currentRecord?.description?.length > 100 && currentRecord?.description?.substring(0, 100) + "..." || currentRecord?.description}
+                        </p>
+                        <div className="flex items-center gap-2 mt-3">
+                            <Image
+                                width={1000}
+                                height={1000}
+                                src={
+                                    currentRecord?.authorId?.profileImage
+                                        ? serverUrl + currentRecord?.authorId?.profileImage
+                                        : AllImages?.dummyProfile
+                                }
+                                alt={currentRecord?.authorId?.name || "Profile Image"}
+                                className="w-8 h-8 object-cover rounded-full "
+                            />
+                            <p className="text-xs sm:text-sm lg:text-base font-bold">
+                                {currentRecord?.authorId?.name}
+                            </p>
+                        </div>
+                        <div className="flex items-center gap-2 mt-2">
+                            <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+                            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                                {formatDate(currentRecord?.date)}
+                            </p>
+                        </div>
+                        <div className="flex items-center gap-2 mt-1">
+                            <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+                            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                                {formetTime(currentRecord?.time)}
+                            </p>
+                        </div>
+                        <div className="flex items-center gap-2 mt-1">
+                            <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+                            <p className="text-xs sm:text-sm lg:text-base font-semibold capitalize">
+                                {currentRecord?.locationType}
+                            </p>
+                        </div>
+                        {currentRecord?.locationType !== "online" && (
+                            <div className="flex items-center gap-2 mt-1">
+                                <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+                                <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                                    {currentRecord?.location}
+                                </p>
+                            </div>
+                        )}
+
+                        <div className="flex items-center gap-2 mt-1">
+                            <LuUsers className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+                            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                                {currentRecord?.maxParticipant} participants
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <ReusableForm
+                    form={form}
+                    handleFinish={() => { }}
+                    className="!mt-5"
+                >
+                    <Form.Item
+                        name="acceptTerms"
+                        valuePropName="checked"
+                        rules={[
+                            {
+                                validator: (_, value) =>
+                                    value
+                                        ? Promise.resolve()
+                                        : Promise.reject(
+                                            new Error("Should accept with terms and conditions")
+                                        ),
+                            },
+                        ]}
+                    >
+                        <Checkbox
+                        // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+                        >
+                            <div>
+                                <p className="text-sm">
+                                    Agree to <Link target="_blank" href="/terms-of-service" className="text-secondary-color!">Terms and Conditions</Link>
+                                </p>
+
+                            </div>
+                        </Checkbox>
+                    </Form.Item>
+                    <Form.Item
+                        name="výslovneSúhlasím"
+                        valuePropName="checked"
+                        rules={[
+                            {
+                                validator: (_, value) =>
+                                    value
+                                        ? Promise.resolve()
+                                        : Promise.reject(
+                                            new Error("Should accept with terms and conditions")
+                                        ),
+                            },
+                        ]}
+                    >
+                        <Checkbox
+                        // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+                        >
+                            <div>
+                                <p className="text-sm">
+                                    Výslovne súhlasím so začatím poskytovania služby alebo so začatím dodávania digitálneho obsahu pred uplynutím lehoty na odstúpenie od zmluvy v súlade s § 17 ods. 10 písm. c zákona č. 108/2024 Z.z. o ochrane spotrebiteľa a o zmene a doplnení niektorých zákonov.
+                                </p>
+
+                            </div>
+                        </Checkbox>
+                    </Form.Item>
+                    <Form.Item
+                        name="bolSom"
+                        valuePropName="checked"
+                        rules={[
+                            {
+                                validator: (_, value) =>
+                                    value
+                                        ? Promise.resolve()
+                                        : Promise.reject(
+                                            new Error("Should accept with terms and conditions")
+                                        ),
+                            },
+                        ]}
+                    >
+                        <Checkbox
+                        // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+                        >
+                            <div>
+                                <p className="text-sm">
+                                    Bol som riadne poučený o tom, že udelením tohto súhlasu so začatím poskytovania služieb pred uplynutím lehoty na odstúpenie od zmluvy strácam po úplnom poskytnutí služby právo na odstúpenie od zmluvy (§ 17 ods. 10 písm. b) zákona č. 108/2024 Z.z. o ochrane spotrebiteľa a o zmene a doplnení niektorých zákonov.
+                                </p>
+
+                            </div>
+                        </Checkbox>
+                    </Form.Item>
+                </ReusableForm>
+                <div className="flex items-center gap-2 pt-5 justify-between">
+                    <p className="text-base sm:text-lg lg:text-xl font-semibold">
+                        {currentRecord?.mainPrice}€
+                    </p>
+                    {userData?.user?.userId !== currentRecord?.authorId?._id && (
+                        <ReuseButton
+                            variant="secondary"
+                            className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
+                            onClick={() => handleRegister(currentRecord)}
+                        >
+                            Register Now
+                        </ReuseButton>
+                    )}
+                </div>
+            </div>
+        </Modal>
+    );
+};
+
+export default RegisterWrokshopModal;

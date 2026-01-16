@@ -20,7 +20,17 @@ const ProfessionalPackageCard = ({
   showDeleteModal: (record: any) => void;
 }) => {
   const serverUrl = getServerUrl();
+  console.log(item)
 
+  // vatAmount: 10,
+  //   price: 200,
+  //     mainPrice: 236,
+
+  const priceWithoutServiceFee = item?.price + (item?.price * (item?.vatAmount / 100));
+
+  const serviceFee = item?.mainPrice - priceWithoutServiceFee;
+
+  console.log(serviceFee)
   return (
     <div className="p-1.5 rounded-xl border border-background-color">
       <div className="relative">
@@ -68,7 +78,29 @@ const ProfessionalPackageCard = ({
             <div className="flex items-center gap-1">
               <BsCurrencyDollar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
               <p className="text-xs sm:text-sm lg:text-base font-semibold">
-                Price:
+                Price Without Service Fee:
+              </p>
+            </div>
+            <p className="text-xs sm:text-sm lg:text-base">
+              {priceWithoutServiceFee}€
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1">
+              <BsCurrencyDollar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+              <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                Service Fee:
+              </p>
+            </div>
+            <p className="text-xs sm:text-sm lg:text-base">
+              {serviceFee}€
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1">
+              <BsCurrencyDollar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
+              <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                Total Price:
               </p>
             </div>
             <p className="text-xs sm:text-sm lg:text-base">

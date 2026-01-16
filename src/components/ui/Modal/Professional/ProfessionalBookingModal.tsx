@@ -23,15 +23,15 @@ const userInputStructure = [
     labelClassName: "!font-semibold",
     rules: [{ required: true, message: "Name is required" }],
   },
-  {
-    name: "sureName",
-    type: "text",
-    inputType: "normal",
-    label: "Surname",
-    placeholder: "Enter Full Surname",
-    labelClassName: "!font-semibold",
-    rules: [{ required: true, message: "Surname is required" }],
-  },
+  // {
+  //   name: "sureName",
+  //   type: "text",
+  //   inputType: "normal",
+  //   label: "Surname",
+  //   placeholder: "Enter Full Surname",
+  //   labelClassName: "!font-semibold",
+  //   rules: [{ required: true, message: "Surname is required" }],
+  // },
   {
     name: "streetAddress",
     type: "text",
@@ -118,10 +118,10 @@ const companyInputStructure = [
     name: "IC_DPH",
     type: "text",
     inputType: "normal",
-    label: "IČ DPH",
+    label: "IČ DPH (Optional)",
     placeholder: "Enter IČ DPH",
     labelClassName: "!font-semibold",
-    rules: [{ required: true, message: "IČ DPH is required" }],
+    rules: [{ required: false, message: "IČ DPH is required" }],
   },
 ];
 
@@ -158,6 +158,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
 
   const onSubmit = async (values: ICreateEventOrder) => {
     const data = {
+      title: values.title,
       orderType: "custom",
       serviceProviderId: professionalUser?._id,
 
@@ -171,7 +172,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
 
       isRegisterAsCompany: type === "company" ? true : false,
       name: values.name,
-      sureName: values.sureName,
+      // sureName: values.sureName,
       streetAddress: values.streetAddress,
       town: values.town,
       country: values.country,
@@ -180,7 +181,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
 
       ICO: values.ICO,
       DIC: values.DIC,
-      IC_DPH: values.IC_DPH,
+      IC_DPH: values.IC_DPH || "",
     };
 
     const res = await tryCatchWrapper(
@@ -230,6 +231,15 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
           }}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 mt-6">
+            <ReuseInput
+              name="title"
+              label="Event Name"
+              placeholder="Enter Event Name"
+              rules={[
+                { required: true, message: "Event Name is required" },
+              ]}
+              labelClassName="!font-semibold"
+            />
             <ReuseInput
               name="location"
               label="Event Location"
@@ -300,6 +310,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
                   <div>
                     <Radio value="photography">Photography</Radio>
                     <Radio value="videography">Videography</Radio>
+                    <Radio value="both">Both</Radio>
                   </div>
                 ) : professionalUser?.role === "photographer" ? (
                   <Radio value="photography">Photography</Radio>
@@ -337,33 +348,33 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
           </div>
           {type !== "company"
             ? userInputStructure.map((input, index) => (
-                <ReuseInput
-                  key={index}
-                  name={input.name}
-                  Typolevel={5}
-                  inputType={input.inputType}
-                  type={input.type}
-                  label={input.label}
-                  placeholder={input.placeholder}
-                  labelClassName={input.labelClassName}
-                  inputClassName="!py-2.5"
-                  rules={input.rules}
-                />
-              ))
+              <ReuseInput
+                key={index}
+                name={input.name}
+                Typolevel={5}
+                inputType={input.inputType}
+                type={input.type}
+                label={input.label}
+                placeholder={input.placeholder}
+                labelClassName={input.labelClassName}
+                inputClassName="!py-2.5"
+                rules={input.rules}
+              />
+            ))
             : companyInputStructure.map((input, index) => (
-                <ReuseInput
-                  key={index}
-                  name={input.name}
-                  Typolevel={5}
-                  inputType={input.inputType}
-                  type={input.type}
-                  label={input.label}
-                  placeholder={input.placeholder}
-                  labelClassName={input.labelClassName}
-                  inputClassName="!py-2.5"
-                  rules={input.rules}
-                />
-              ))}
+              <ReuseInput
+                key={index}
+                name={input.name}
+                Typolevel={5}
+                inputType={input.inputType}
+                type={input.type}
+                label={input.label}
+                placeholder={input.placeholder}
+                labelClassName={input.labelClassName}
+                inputClassName="!py-2.5"
+                rules={input.rules}
+              />
+            ))}
 
           <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
             Send Booking Request

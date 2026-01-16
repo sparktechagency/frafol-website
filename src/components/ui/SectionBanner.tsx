@@ -18,7 +18,7 @@ const SectionBanner: React.FC<SectionBannerProps> = ({
   return (
     <section>
       {" "}
-      <motion.div className="relative  h-full lg:h-[55vh] object-cover flex items-center justify-center select-none">
+      <motion.div className="relative h-[55vh] object-cover flex items-center justify-center select-none">
         <Image
           width={2000}
           height={2000}

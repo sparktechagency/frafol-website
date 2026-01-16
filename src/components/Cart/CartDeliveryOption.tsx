@@ -11,6 +11,7 @@ import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { useAppDispatch } from "@/redux/hooks";
 import { clearCart } from "@/redux/features/cart/cartSlice";
 import { gearOrder } from "@/services/GearOrder/GearOrderApi";
+import Link from "next/link";
 
 const inputFields: {
   name: string;
@@ -21,55 +22,55 @@ const inputFields: {
   inputType?: "normal" | "password" | "textarea";
   disabled?: boolean;
 }[] = [
-  {
-    name: "name",
-    label: "Name",
-    placeholder: "Placeholder",
-    required: true,
-    rules: [{ required: true, message: "Name is required" }] as Rule[],
-  },
-  {
-    name: "shippingAddress",
-    label: "Shipping Address",
-    placeholder: "Placeholder",
-    required: true,
-    rules: [
-      { required: true, message: "Shipping Address is required" },
-    ] as Rule[],
-  },
-  {
-    name: "postCode",
-    label: "Post code",
-    placeholder: "Placeholder",
-    required: true,
-    rules: [{ required: true, message: "Post code is required" }] as Rule[],
-  },
-  {
-    name: "town",
-    label: "Town",
-    placeholder: "Placeholder",
-    required: true,
-    rules: [{ required: true, message: "Town is required" }] as Rule[],
-  },
-  {
-    name: "mobileNumber",
-    label: "Mobile Number",
-    placeholder: "Placeholder",
-    required: true,
-    rules: [{ required: true, message: "Mobile Number is required" }] as Rule[],
-  },
-  {
-    name: "email",
-    label: "Email address",
-    placeholder: "Placeholder",
-    required: true,
-    rules: [
-      { required: true, message: "Email is required" },
-      { type: "email", message: "Enter a valid email" },
-    ] as Rule[],
-    disabled: true,
-  },
-];
+    {
+      name: "name",
+      label: "Name",
+      placeholder: "Placeholder",
+      required: true,
+      rules: [{ required: true, message: "Name is required" }] as Rule[],
+    },
+    {
+      name: "shippingAddress",
+      label: "Shipping Address",
+      placeholder: "Placeholder",
+      required: true,
+      rules: [
+        { required: true, message: "Shipping Address is required" },
+      ] as Rule[],
+    },
+    {
+      name: "postCode",
+      label: "Post code",
+      placeholder: "Placeholder",
+      required: true,
+      rules: [{ required: true, message: "Post code is required" }] as Rule[],
+    },
+    {
+      name: "town",
+      label: "Town",
+      placeholder: "Placeholder",
+      required: true,
+      rules: [{ required: true, message: "Town is required" }] as Rule[],
+    },
+    {
+      name: "mobileNumber",
+      label: "Mobile Number",
+      placeholder: "Placeholder",
+      required: true,
+      rules: [{ required: true, message: "Mobile Number is required" }] as Rule[],
+    },
+    {
+      name: "email",
+      label: "Email address",
+      placeholder: "Placeholder",
+      required: true,
+      rules: [
+        { required: true, message: "Email is required" },
+        { type: "email", message: "Enter a valid email" },
+      ] as Rule[],
+      disabled: true,
+    },
+  ];
 const otherFields: {
   name: string;
   label: string;
@@ -78,27 +79,34 @@ const otherFields: {
   rules?: Rule[];
   inputType?: "normal" | "password" | "textarea";
 }[] = [
-  {
-    name: "ico",
-    label: "IČO (Optional)",
-    placeholder: "Placeholder",
-  },
-  {
-    name: "dic",
-    label: "DIČ (Optional)",
-    placeholder: "Placeholder",
-  },
-  {
-    name: "ic_dph",
-    label: "IČ DHP (Optional)",
-    placeholder: "Placeholder",
-  },
-  {
-    name: "companyAddress",
-    label: "Company Address (Optional)",
-    placeholder: "Placeholder",
-  },
-];
+    {
+      name: "companyName",
+      label: "Company Name",
+      placeholder: "Enter Company Name",
+      required: true,
+      rules: [{ required: true, message: "Company Name is required" }] as Rule[],
+    },
+    {
+      name: "ico",
+      label: "IČO (Optional)",
+      placeholder: "Placeholder",
+    },
+    {
+      name: "dic",
+      label: "DIČ (Optional)",
+      placeholder: "Placeholder",
+    },
+    {
+      name: "ic_dph",
+      label: "IČ DHP (Optional)",
+      placeholder: "Placeholder",
+    },
+    {
+      name: "companyAddress",
+      label: "Company Address (Optional)",
+      placeholder: "Placeholder",
+    },
+  ];
 
 const CartDeliveryOption = ({
   cartProducts,
@@ -107,6 +115,7 @@ const CartDeliveryOption = ({
   cartProducts: any;
   myData: IProfile;
 }) => {
+  console.log(myData)
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const loginAsCompany = Form.useWatch("loginAsCompany", form) || false;
@@ -118,7 +127,7 @@ const CartDeliveryOption = ({
       mobileNumber: myData?.phone || "",
       shippingAddress: myData?.address || "",
       postCode: "",
-      town: "",
+      town: myData?.town || "",
       ico: myData?.ico || "",
       dic: myData?.dic || "",
       ic_dph: myData?.ic_dph || "",
@@ -186,6 +195,31 @@ const CartDeliveryOption = ({
           rules={[]}
           inputType={"textarea"}
         />
+        <Form.Item
+          name="acceptTerms"
+          valuePropName="checked"
+          rules={[
+            {
+              validator: (_, value) =>
+                value
+                  ? Promise.resolve()
+                  : Promise.reject(
+                    new Error("Should accept with terms and conditions")
+                  ),
+            },
+          ]}
+        >
+          <Checkbox
+          // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+          >
+            <div>
+              <p className="text-sm">
+                Agree to <Link target="_blank" href="/terms-of-service" className="text-secondary-color!">Terms and Conditions</Link>
+              </p>
+
+            </div>
+          </Checkbox>
+        </Form.Item>
         <div className="flex justify-end">
           <ReuseButton
             htmlType="submit"

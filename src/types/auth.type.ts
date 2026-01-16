@@ -3,6 +3,7 @@ interface ISignInUser {
   name: string;
   sureName: string;
   companyName: string;
+  profileImage: string;
   email: string;
   role: string;
   iat: number; // issued at (UNIX timestamp)

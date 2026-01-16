@@ -20,10 +20,10 @@ const PaymentsCard = ({
               ? "Custom Order"
               : data?.eventOrderId?.packageId?.title || "Event"
             : data.paymentType === "gear"
-            ? data?.gearOrderIds?.map((gear) => gear?.gearMarketplaceId?.name)
-            : data.paymentType === "workshop"
-            ? data.workshopId?.title || "Workshop"
-            : ""}
+              ? data?.gearOrderIds?.map((gear) => gear?.gearMarketplaceId?.name)
+              : data.paymentType === "workshop"
+                ? data.workshopId?.title || "Workshop"
+                : ""}
         </h3>
 
         {/* User or Seller Info */}

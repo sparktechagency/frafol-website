@@ -30,7 +30,7 @@ interface IProfile {
   minHourlyRate: number;
   ico: string;
   dic: string;
-  ic_dph: string;
+  ic_dph?: string;
   rating: number;
   photographerSpecializations: string[];
   videographerSpecializations: string[];

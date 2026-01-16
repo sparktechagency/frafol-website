@@ -17,6 +17,10 @@ import { FaEuroSign } from "react-icons/fa6";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { completePayment } from "@/services/PaymentService/PaymentServiceApi";
 import { useUser } from "@/context/UserContext";
+import ReusableForm from "@/components/ui/Form/ReuseForm";
+import { Checkbox, Form } from "antd";
+import Link from "next/link";
+import { toast } from "sonner";
 
 const UserOrderCard = ({
   activeTab,
@@ -37,6 +41,10 @@ const UserOrderCard = ({
   showAcceptModal?: any;
   showDeclineModal?: any;
 }) => {
+  const [form] = Form.useForm();
+  const acceptTerms = Form.useWatch("acceptTerms", form);
+  const výslovneSúhlasím = Form.useWatch("výslovneSúhlasím", form);
+  const bolSom = Form.useWatch("bolSom", form);
   const user = useUser();
   const serverUrl = getServerUrl();
 
@@ -45,6 +53,11 @@ const UserOrderCard = ({
       paymentType: "event", //"event" || "gear" || "workshop"
       eventOrderId: data?._id, // "eventOrderId" || "gearOrderId" || "workshopId"
     };
+
+    if (!acceptTerms || !výslovneSúhlasím || !bolSom) {
+      toast.error("Please accept all terms and conditions");
+      return;
+    }
 
     const res = await tryCatchWrapper(
       completePayment,
@@ -68,7 +81,7 @@ const UserOrderCard = ({
       <div>
         <div className="flex items-center gap-2 text-xs">
           <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mb-1">
-            {data?.packageId?.title || "Custom Order"}
+            {data?.packageId?.title || data?.title}
           </h3>{" "}
           <p className="px-2 py-0.5 rounded-full bg-secondary-color text-primary-color w-fit capitalize">
             {data?.orderType}
@@ -78,10 +91,10 @@ const UserOrderCard = ({
               {data?.status === "accepted"
                 ? "Payment Required"
                 : data?.status === "inProgress"
-                ? "In Progress"
-                : data?.status === "cancelRequest"
-                ? "Cancel Requested"
-                : data?.status}
+                  ? "In Progress"
+                  : data?.status === "cancelRequest"
+                    ? "Cancel Requested"
+                    : data?.status}
             </p>
           )}
         </div>
@@ -156,16 +169,106 @@ const UserOrderCard = ({
           </div>
         )}
         <div className="flex items-center justify-between">
-          <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mt-1">
-            {data?.totalPrice ? (
-              <span>{data?.totalPrice}€</span>
-            ) : (
-              <span>
-                {budgetLabels[data?.budget_range as string] ||
-                  data?.budget_range}
-              </span>
+          <div>
+            <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mt-1">
+              {data?.totalPrice ? (
+                <span>{data?.totalPrice}€</span>
+              ) : (
+                <span>
+                  {budgetLabels[data?.budget_range as string] ||
+                    data?.budget_range}
+                </span>
+              )}
+            </p>
+            {(activeTab === "accepted" || activeTab === "orderOffer") && (
+              <ReusableForm
+                form={form}
+                handleFinish={() => { }}
+                className="!mt-5"
+              >
+                <Form.Item
+                  name="acceptTerms"
+                  valuePropName="checked"
+                  rules={[
+                    {
+                      validator: (_, value) =>
+                        value
+                          ? Promise.resolve()
+                          : Promise.reject(
+                            new Error("Should accept with terms and conditions")
+                          ),
+                    },
+                  ]}
+                >
+                  <Checkbox
+                  // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+                  >
+                    <div>
+                      <p className="text-sm">
+                        Agree to <Link target="_blank" href="/terms-of-service" className="text-secondary-color!">Terms and Conditions</Link>
+                      </p>
+
+                    </div>
+                  </Checkbox>
+                </Form.Item>
+                <Form.Item
+                  name="výslovneSúhlasím"
+                  valuePropName="checked"
+                  rules={[
+                    {
+                      validator: (_, value) =>
+                        value
+                          ? Promise.resolve()
+                          : Promise.reject(
+                            new Error("Should accept with terms and conditions")
+                          ),
+                    },
+                  ]}
+                >
+                  <Checkbox
+                  // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+                  >
+                    <div>
+                      <p className="text-sm">
+                        Výslovne súhlasím so začatím poskytovania služby alebo so začatím dodávania digitálneho obsahu pred uplynutím lehoty na odstúpenie od zmluvy v súlade s § 17 ods. 10 písm. c zákona č. 108/2024 Z.z. o ochrane spotrebiteľa a o zmene a doplnení niektorých zákonov.
+                      </p>
+
+                    </div>
+                  </Checkbox>
+                </Form.Item>
+                <Form.Item
+                  name="bolSom"
+                  valuePropName="checked"
+                  rules={[
+                    {
+                      validator: (_, value) =>
+                        value
+                          ? Promise.resolve()
+                          : Promise.reject(
+                            new Error("Should accept with terms and conditions")
+                          ),
+                    },
+                  ]}
+                >
+                  <Checkbox
+                  // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+                  >
+                    <div>
+                      <p className="text-sm">
+                        Bol som riadne poučený o tom, že udelením tohto súhlasu so začatím poskytovania služieb pred uplynutím lehoty na odstúpenie od zmluvy strácam po úplnom poskytnutí služby právo na odstúpenie od zmluvy (§ 17 ods. 10 písm. b) zákona č. 108/2024 Z.z. o ochrane spotrebiteľa a o zmene a doplnení niektorých zákonov.
+                      </p>
+
+                    </div>
+                  </Checkbox>
+                </Form.Item>
+              </ReusableForm>
             )}
-          </p>
+          </div>
+
+
+        </div>
+        <div className="w-fit ml-auto">
+          <></>
           {activeTab === "toConfirm" ? (
             <div className="flex items-center gap-2">
               <button
@@ -187,7 +290,7 @@ const UserOrderCard = ({
             <div className="flex items-center gap-2">
               <button
                 onClick={() => handlePayment(data)}
-                className="flex items-center gap-1 px-3 py-1 border border-[#00C566] text-primary-color rounded bg-[#00C566] text-sm transition cursor-pointer"
+                className="disabled:cursor-not-allowed flex items-center gap-1 px-3 py-1 border border-[#00C566] text-primary-color rounded bg-[#00C566] text-sm transition cursor-pointer"
               >
                 <IoCheckmarkSharp size={16} />
                 Accept Order
@@ -204,7 +307,7 @@ const UserOrderCard = ({
             <div className="flex items-center gap-2">
               <button
                 onClick={() => handlePayment(data)}
-                className="flex items-center gap-1 px-3 py-1 border border-[#00C566] text-primary-color rounded bg-[#00C566] text-sm transition cursor-pointer"
+                className="disabled:cursor-not-allowed flex items-center gap-1 px-3 py-1 border border-[#00C566] text-primary-color rounded bg-[#00C566] text-sm transition cursor-pointer"
               >
                 <FaEuroSign size={16} />
                 Pay
@@ -280,6 +383,8 @@ const UserOrderCard = ({
               </button>
             </div>
           )}
+
+
         </div>
       </div>
     </div>

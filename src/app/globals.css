@@ -211,3 +211,10 @@ body {
   width: 7px !important;
   height: 7px !important;
 }
+
+/* .ant-modal-mask {
+  z-index: 9999999 !important;
+}
+.ant-modal-wrap {
+  z-index: 9999999 !important;
+} */

@@ -32,7 +32,9 @@ const ProfessionalAddNewWorkshop = ({
     const serviceChagePercentage = serviceCharge / 100;
     const vatAmountPercentage = vatAmountValue / 100;
 
-    const totalServiceCharge = Number(priceValue) * serviceChagePercentage;
+    const serviceChargeAmmount = Number(priceValue) * serviceChagePercentage;
+
+    const totalServiceCharge = serviceChargeAmmount > 5 ? serviceChargeAmmount : 5;
     const totalVatAmount = Number(priceValue) * vatAmountPercentage;
 
     const mainPriceValue =

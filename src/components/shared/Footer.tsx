@@ -245,7 +245,7 @@ export default function Footer() {
                 >
                   <FaTiktok />
                 </Link>
-                <Link href="/" target="_blank">
+                <Link href="https://www.youtube.com/@frafolsk" target="_blank">
                   <FaYoutube />
                 </Link>
               </div>

@@ -43,7 +43,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
         saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .catch((error: any) => {});
+      .catch((error: any) => { });
   };
 
   return (
@@ -56,17 +56,24 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
       className="lg:!w-[600px]"
     >
       <div className="p-5 text-[#1a1a1a]">
-        <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-5">
+        <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-1">
           Order Details
         </h3>
-
+        <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold mb-5">
+          {currentRecord?.orderId}
+        </p>
         {/* Title & Category */}
         <div className="mb-3">
-          <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
-            {currentRecord?.packageId?.title || "Custom Order"}
-          </p>
+          <div className="flex items-center gap-x-2">
+            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
+              {currentRecord?.packageId?.title || currentRecord?.title}
+            </p>
+            <p className={`text-xs sm:text-sm font-bold border w-fit rounded-2xl py-0.5 px-2 mt-1 ${currentRecord?.orderType === "custom" ? "text-secondary-color" : "border-base-color text-base-color"}`}>
+              {currentRecord?.orderType === "custom" ? "Custom" : "Direct"}
+            </p>
+          </div>
           <p className="text-sm sm:text-base lg:text-kg xl:text-xl font-medium">
-            {currentRecord?.serviceType}
+            {currentRecord?.serviceType === "both" ? "Photography & Videography" : currentRecord?.serviceType}
           </p>
           <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
             By {currentRecord?.serviceProviderId?.name}
@@ -93,14 +100,12 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
             </p>
             <p className="text-xs sm:text-sm lg:text-base">
               <span className="font-semibold">Event Date :</span>{" "}
-              {formatDate(currentRecord?.date)} -{" "}
-              {formetTime(currentRecord?.time)}
+              {formatDate(currentRecord?.date)}
             </p>
             {currentRecord?.status !== "cancelled" && (
               <p className="text-xs sm:text-sm lg:text-base">
                 <span className="font-semibold">Expected Delivery Date :</span>{" "}
-                {formatDate(currentRecord?.deliveryDate)} -{" "}
-                {formetTime(currentRecord?.deliveryDate)}
+                {formatDate(currentRecord?.deliveryDate)}
               </p>
             )}
           </div>
@@ -156,13 +161,15 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
           </h4>
           <p className="text-xs sm:text-sm lg:text-base xl:text-lg mt-2">
             <span className="font-semibold">
-              {currentRecord?.totalPrice ? "Amount" : "Budget Range"} :
+              {currentRecord?.totalPrice ? "Total Amount" : "Budget Range"} :
             </span>{" "}
             {currentRecord?.totalPrice ||
               budgetLabels[currentRecord?.budget_range as string] ||
               currentRecord?.budget_range}
           </p>
         </div>
+
+
 
         {activeModal === "cancelled" && (
           <div className="mb-4">

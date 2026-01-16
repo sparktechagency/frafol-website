@@ -3,6 +3,13 @@ import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import React from "react";
 
+export interface IUserEventOrderStats {
+  totalCurrentOrders: number,
+  totalToConfirm: number,
+  totalDelivered: number,
+  totalPendingEvents: number
+}
+
 const page = async ({
   searchParams,
 }: {
@@ -37,10 +44,24 @@ const page = async ({
   const myEventData = eventData?.data?.data || [];
   const totalData = eventData?.data?.meta?.total;
 
+
+  const stateRes = await fetchWithAuth(`/event-order/user/stats`, {
+    next: {
+      tags: [TagTypes.eventOrder],
+    },
+  });
+
+  const stateData = await stateRes.json();
+
+  const states = stateData?.data;
+
+  console.log(states)
+
   return (
     <UserOrdersPage
       activeTab={tab}
       page={page}
+      states={states}
       totalData={totalData}
       limit={limit}
       myEventData={myEventData}

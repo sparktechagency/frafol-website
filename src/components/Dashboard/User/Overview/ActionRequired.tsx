@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { IActionRequired } from "./Overview";
 
 const ActionRequired = ({ actionData }: { actionData: IActionRequired }) => {
@@ -7,16 +8,19 @@ const ActionRequired = ({ actionData }: { actionData: IActionRequired }) => {
       title: "Payment Pending",
       message: `${actionData?.totalPaymentPending} order(s) need payment.`,
       count: actionData?.totalPaymentPending,
+      link: "/dashboard/my-account/orders?tab=accepted",
     },
     {
       title: "Delivery Confirmation",
       message: `${actionData?.totalDeliveryConfirmation} order(s) waiting for delivery confirmation.`,
       count: actionData?.totalDeliveryConfirmation,
+      link: "/dashboard/my-account/orders?tab=toConfirm",
     },
     {
       title: "Cancel Request",
       message: `${actionData?.totalCancelRequestConfirmation} order(s) need cancel approval.`,
       count: actionData?.totalCancelRequestConfirmation,
+      link: "/dashboard/my-account/orders?tab=cancelRequest",
     },
   ]; // only show items that need action
 
@@ -37,17 +41,21 @@ const ActionRequired = ({ actionData }: { actionData: IActionRequired }) => {
         )}
 
         {list?.map((activity, i) => (
-          <div
+          <Link
             key={i}
-            className="p-3 flex items-center gap-2 bg-warning/10 border-l-6 border-warning"
+            href={activity?.link}
           >
-            <div>
-              <p className="text-[#242424] text-base font-medium">
-                {activity.title}
-              </p>
-              <p className="text-sm text-[#8A8D8E] mt-1">{activity.message}</p>
+            <div
+              className="p-3 flex items-center gap-2 bg-warning/10 border-l-6 border-warning"
+            >
+              <div>
+                <p className="text-[#242424] text-base font-medium">
+                  {activity.title}
+                </p>
+                <p className="text-sm text-[#8A8D8E] mt-1">{activity.message}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

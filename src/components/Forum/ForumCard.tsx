@@ -64,7 +64,7 @@ const ForumCard = ({
           />
           <div>
             <p className="text-base-color text-xs sm:text-sm lg:text-base font-medium cursor-pointer">
-              {item?.title}
+              {item?.authorId?.name}
             </p>
             <p className="text-base-color text-xs sm:text-sm lg:text-base font-medium  cursor-pointer">
               {formatDateTime(item?.createdAt)}

@@ -37,6 +37,8 @@ const page = async ({
 
   const packages: IPackage[] = data?.data?.result || [];
 
+  console.log(packages)
+
   const serviceChargeRes = await fetchWithAuth(`/commissionSetup`, {
     next: {
       tags: [TagTypes.package],

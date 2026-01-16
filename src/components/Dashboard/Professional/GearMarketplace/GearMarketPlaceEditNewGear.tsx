@@ -61,7 +61,9 @@ const GearMarketPlaceEditNewGear = ({
     const serviceChagePercentage = serviceCharge / 100;
     const vatAmountPercentage = vatAmountValue / 100;
 
-    const totalServiceCharge = Number(priceValue) * serviceChagePercentage;
+    const serviceChargeAmmount = Number(priceValue) * serviceChagePercentage;
+
+    const totalServiceCharge = serviceChargeAmmount > 5 ? serviceChargeAmmount : 5;
     const totalVatAmount = Number(priceValue) * vatAmountPercentage;
 
     const mainPriceValue =
@@ -245,12 +247,12 @@ const GearMarketPlaceEditNewGear = ({
                     onClick={() => {
                       setDeletedImages((prev) => [...prev, img]);
                     }}
-                    // onClick={() => {
-                    //   const updatedGallery = currentRecord?.gallery?.filter(
-                    //     (imgUrl: string) => imgUrl !== img
-                    //   );
-                    //   form.setFieldsValue({ gallery: updatedGallery });
-                    // }}
+                  // onClick={() => {
+                  //   const updatedGallery = currentRecord?.gallery?.filter(
+                  //     (imgUrl: string) => imgUrl !== img
+                  //   );
+                  //   form.setFieldsValue({ gallery: updatedGallery });
+                  // }}
                   />
                 </div>
               ))}

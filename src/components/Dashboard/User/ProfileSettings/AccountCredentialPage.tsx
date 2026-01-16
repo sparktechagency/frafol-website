@@ -15,7 +15,6 @@ const AccountCredentialPage = ({ myData }: { myData: IProfile }) => {
     form.setFieldsValue({
       bankName: myData?.profileId?.bankName,
       accountNumber: myData?.profileId?.accountNumber,
-      routingNumber: myData?.profileId?.routingNumber,
     });
   }, [form, myData]);
 
@@ -54,13 +53,6 @@ const AccountCredentialPage = ({ myData }: { myData: IProfile }) => {
           label="Account Number"
           placeholder="Enter Account Number"
           rules={[{ required: true, message: "Account Number is required" }]}
-          labelClassName="!font-semibold"
-        />
-        <ReuseInput
-          name="routingNumber"
-          label="Routing Number"
-          placeholder="Enter Routing Number"
-          rules={[{ required: true, message: "Routing Number is required" }]}
           labelClassName="!font-semibold"
         />
 

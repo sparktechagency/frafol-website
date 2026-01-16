@@ -21,33 +21,36 @@ const ProfessionalAddNewPackageModal = ({
   userData: ISignInUser;
   serviceCharge: number;
 }) => {
+
+  console.log(serviceCharge)
+
   const categoryOptions =
     userData?.role === "both"
       ? [
-          {
-            label: "Photography",
-            value: "photography",
-          },
-          {
-            label: "Videography",
-            value: "videography",
-          },
-        ]
+        {
+          label: "Photography",
+          value: "photography",
+        },
+        {
+          label: "Videography",
+          value: "videography",
+        },
+      ]
       : userData?.role === "photographer"
-      ? [
+        ? [
           {
             label: "Photography",
             value: "photography",
           },
         ]
-      : userData?.role === "videographer"
-      ? [
-          {
-            label: "Videography",
-            value: "videography",
-          },
-        ]
-      : [];
+        : userData?.role === "videographer"
+          ? [
+            {
+              label: "Videography",
+              value: "videography",
+            },
+          ]
+          : [];
 
   const [form] = Form.useForm();
   const priceValue = Form.useWatch("price", form) || 0;
@@ -57,7 +60,9 @@ const ProfessionalAddNewPackageModal = ({
     const serviceChagePercentage = serviceCharge / 100;
     const vatAmountPercentage = vatAmountValue / 100;
 
-    const totalServiceCharge = Number(priceValue) * serviceChagePercentage;
+    const serviceChargeAmmount = Number(priceValue) * serviceChagePercentage;
+
+    const totalServiceCharge = serviceChargeAmmount > 5 ? serviceChargeAmmount : 5;
     const totalVatAmount = Number(priceValue) * vatAmountPercentage;
 
     const mainPriceValue =

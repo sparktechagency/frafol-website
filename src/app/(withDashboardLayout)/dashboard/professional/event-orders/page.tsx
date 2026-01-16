@@ -32,6 +32,8 @@ const page = async ({
 
   const eventData = await eventRes.json();
 
+  console.log(eventData)
+
   const myEventData = eventData?.data?.data || [];
   const totalData = eventData?.data?.meta?.total;
 

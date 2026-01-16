@@ -1,22 +1,24 @@
+import { IUserEventOrderStats } from "@/app/(withDashboardLayout)/dashboard/my-account/orders/page";
 import { FaHourglassEnd } from "react-icons/fa6";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 
-const UserOrdersOverview = () => {
+const UserOrdersOverview = ({ states }: { states: IUserEventOrderStats }) => {
+
   const countData = [
     {
       id: 3,
       background: "#ffffff",
       name: "Current Order",
       icon: <RiMoneyDollarCircleFill className="size-6 text-secondary-color" />,
-      count: 4,
+      count: states?.totalCurrentOrders,
     },
     {
       id: 2,
       background: "#ffffff",
       name: "To Confirm",
       icon: <FaHourglassEnd className="size-5 text-secondary-color" />,
-      count: 2,
+      count: states?.totalToConfirm,
     },
     {
       id: 1,
@@ -25,23 +27,23 @@ const UserOrdersOverview = () => {
       icon: (
         <IoCheckmarkDoneCircleOutline className="size-6 text-secondary-color" />
       ),
-      count: 4,
+      count: states?.totalDelivered,
     },
     {
       id: 4,
       background: "#ffffff",
       name: "Pending",
       icon: <FaHourglassEnd className="size-6 text-secondary-color" />,
-      count: 4,
+      count: states?.totalPendingEvents,
     },
   ];
   return (
-    <div className="flex flex-row flex-wrap gap-1 lg:gap-5 mb-5 !w-fit">
+    <div className="flex flex-row flex-wrap gap-1 lg:gap-5 mb-5 ">
       {/* Company  */}
       {countData.map((item) => (
         <div
           key={item.id}
-          className={`flex rounded-2xl !w-fit my-2 lg:my-0 flex-1 border border-[#E1E1E1] p-6 gap-5`}
+          className={`flex rounded-2xl  my-2 lg:my-0 flex-1 border border-[#E1E1E1] p-6 gap-5`}
           style={{
             backgroundColor: item.background,
           }}

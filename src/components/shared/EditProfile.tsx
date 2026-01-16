@@ -184,13 +184,13 @@ const companyInputStructure = [
     name: "ic_dph",
     type: "text",
     inputType: "normal",
-    label: "IČ DPH",
+    label: "IČ DPH (Optional)",
     placeholder: "Enter IČ DPH",
     labelClassName: "!font-semibold !text-secondary-color",
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "IČ DPH is required" }],
+    rules: [{ required: false, message: "IČ DPH is required" }],
   },
 ];
 
@@ -358,10 +358,10 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
     myData?.role === "user"
       ? userInputStructure
       : myData?.role === "company"
-      ? companyInputStructure
-      : myData?.role === "photographer" || "videographer" || "both"
-      ? professionalInputStructure
-      : [];
+        ? companyInputStructure
+        : myData?.role === "photographer" || "videographer" || "both"
+          ? professionalInputStructure
+          : [];
 
   const [imageUrl, setImageUrl] = useState<string>(AllImages.dummyProfile?.src);
 
@@ -417,6 +417,8 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
       "Profile updated successfully!",
       "Something went wrong! Please try again."
     );
+
+    console.log(res)
 
     if (res?.success) {
       form.resetFields();

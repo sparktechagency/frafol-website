@@ -1,4 +1,5 @@
 interface ICreateEventOrder {
+  title: string;
   orderType: "direct" | "custom"; // Can be either 'direct' or 'custom'
   packageId?: string; // Only required for 'direct' orders
   location: string;
@@ -58,6 +59,7 @@ interface IStatusHistory {
 interface IEventOrder {
   _id: string;
   orderId: string;
+  title?: string;
   userId: {
     _id: string;
     name: string;
@@ -76,7 +78,7 @@ interface IEventOrder {
     email: string;
     profileImage: string;
     phone: string;
-    ic_dph: string;
+    ic_dph?: string;
     dic: string;
     ico: string;
     address: string;
@@ -84,7 +86,7 @@ interface IEventOrder {
   };
   date: Date;
   orderType: "direct" | "custom"; // The type of the order
-  serviceType: "photography" | "videography"; // Type of service
+  serviceType: "photography" | "videography" | "both"; // Type of service
   location: string; // The location for the order
   time: string; // The time for the order
   price?: number; // Optional, price of the order
@@ -95,6 +97,7 @@ interface IEventOrder {
     _id: string;
     title: string;
     price: string;
+    description: string;
   }; // Optional, if order is related to a package
   packageName?: string; // Optional, name of the package
   deliveryDate?: Date; // Optional, expected delivery date

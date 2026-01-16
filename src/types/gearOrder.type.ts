@@ -54,7 +54,7 @@ interface IGearOrder {
   loginAsCompany: boolean;
   ico: string;
   dic: string;
-  ic_dph: string;
+  ic_dph?: string;
   companyAddress: string;
   deliveryNote: string;
   isDeleted: boolean;

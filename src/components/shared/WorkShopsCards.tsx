@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Image from "next/image";
 import React from "react";
@@ -11,36 +12,13 @@ import { IWorkshop } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import { useUser } from "@/context/UserContext";
-import { useRouter } from "next/navigation";
-import tryCatchWrapper from "@/utils/tryCatchWrapper";
-import { createWorkshopOrder } from "@/services/WorkshopOrderService/WorkshopOrderServiceApi";
 
-const WorkShopsCards = ({ data }: { data: IWorkshop }) => {
-  const router = useRouter();
+const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModalOpen: any }) => {
+
   const serverUrl = getServerUrl();
   const userData = useUser();
 
-  const handleRegister = async (workshopData: IWorkshop) => {
-    if (userData?.user?.userId) {
-      const data = {
-        paymentType: "workshop",
-        workshopId: workshopData?._id,
-      };
-      const res = await tryCatchWrapper(
-        createWorkshopOrder,
-        { body: data },
-        "Registering for workshop...",
-        "Redirecting to Stripe to Complete Payment From Stripe",
-        "Something went wrong! Please try again."
-      );
 
-      if (res?.success) {
-        window.open(res?.data?.checkoutUrl, "_blank");
-      }
-    } else {
-      router.push("/sign-in");
-    }
-  };
   return (
     <div className="p-1.5 rounded-xl border border-background-color flex flex-col justify-between">
       <div>
@@ -56,7 +34,7 @@ const WorkShopsCards = ({ data }: { data: IWorkshop }) => {
             {data?.title}
           </p>
           <p className="text-xs sm:text-sm lg:text-base mt-1">
-            {data?.description}
+            {data?.description?.length > 100 && data?.description?.substring(0, 100) + "..." || data?.description}
           </p>
           <div className="flex items-center gap-2 mt-3">
             <Image
@@ -109,15 +87,16 @@ const WorkShopsCards = ({ data }: { data: IWorkshop }) => {
           </div>
         </div>
       </div>
+
       <div className="flex items-center gap-2 pt-5 justify-between">
         <p className="text-base sm:text-lg lg:text-xl font-semibold">
           {data?.mainPrice}€
         </p>
-        {userData?.user?.userId !== data?.authorId?._id && (
+        {(userData?.user?.userId && userData?.user?.userId !== data?.authorId?._id) && (
           <ReuseButton
             variant="secondary"
             className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
-            onClick={() => handleRegister(data)}
+            onClick={() => handleModalOpen(data)}
           >
             Register Now
           </ReuseButton>

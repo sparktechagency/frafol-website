@@ -27,7 +27,11 @@ const inputStructure = [
     placeholder: "Enter your new password",
     labelClassName: "!font-medium",
     inputClassName: "!py-2",
-    rules: [{ required: true, message: "New password is required" }],
+    rules: [{ required: true, message: "Password is required" }, { min: 8, message: "Password must be at least 8 characters" },
+    {
+      pattern: /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/,
+      message: "Password must include at least one uppercase letter and one special character",
+    },],
     showPasswordToggle: true,
   },
   {

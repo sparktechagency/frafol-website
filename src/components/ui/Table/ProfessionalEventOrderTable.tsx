@@ -59,18 +59,18 @@ const ProfessionalEventOrderTable: React.FC<
       title: "Service Type",
       dataIndex: "serviceType",
       key: "serviceType",
-      render: (text: string) => <span className="capitalize">{text}</span>,
+      render: (text: string) => <span className="capitalize">{text === "both" ? "Photography & Videography" : text}</span>,
     },
     {
-      title: "Package Name",
+      title: "Event Name",
       dataIndex: ["packageId", "title"],
       key: "packageId",
-      render: (text: string) => (
+      render: (_: unknown, record: IEventOrder) => (
         <div>
-          {text ? (
-            <p className="capitalize">{text}</p>
+          {record?.orderType === "custom" ? (
+            <p className="capitalize">{record?.title}</p>
           ) : (
-            <p className="capitalize text-center">-</p>
+            <p className="capitalize">{record?.packageId?.title}</p>
           )}
         </div>
       ),
@@ -136,51 +136,51 @@ const ProfessionalEventOrderTable: React.FC<
     },
     ...(activeTab === "inProgress"
       ? [
-          {
-            title: "Extension Status",
-            dataIndex: "status",
-            key: "status",
-            render: (_: unknown, record: IEventOrder) => (
-              <span className="font-semibold capitalize">
-                {record?.extensionRequests?.length < 1
-                  ? "Request Not Sent"
-                  : checkExtension(record?.extensionRequests)?.status ===
-                    "pending"
+        {
+          title: "Extension Status",
+          dataIndex: "status",
+          key: "status",
+          render: (_: unknown, record: IEventOrder) => (
+            <span className="font-semibold capitalize">
+              {record?.extensionRequests?.length < 1
+                ? "Request Not Sent"
+                : checkExtension(record?.extensionRequests)?.status ===
+                  "pending"
                   ? "Request On Pending"
                   : checkExtension(record?.extensionRequests)?.status ===
                     "accepted"
-                  ? " Request Approved"
-                  : " Request Decline"}
-              </span>
-            ),
-          },
-        ]
+                    ? " Request Approved"
+                    : " Request Decline"}
+            </span>
+          ),
+        },
+      ]
       : []),
     ...(activeTab === "cancelRequest"
       ? [
-          {
-            title: "Reason",
-            dataIndex: "cancelReason",
-            key: "cancelReason",
-            width: 300,
-          },
-        ]
+        {
+          title: "Reason",
+          dataIndex: "cancelReason",
+          key: "cancelReason",
+          width: 300,
+        },
+      ]
       : []),
     ...(activeTab === "cancelRequest"
       ? [
-          {
-            title: "Canceled By",
-            dataIndex: "cancelRequestedBy",
-            key: "cancelRequestedBy",
-            render: (_: unknown, record: IEventOrder) => (
-              <span className="font-semibold capitalize">
-                {record?.cancelRequestedBy === user?.user?.userId
-                  ? "Me"
-                  : record?.userId?.name}
-              </span>
-            ),
-          },
-        ]
+        {
+          title: "Canceled By",
+          dataIndex: "cancelRequestedBy",
+          key: "cancelRequestedBy",
+          render: (_: unknown, record: IEventOrder) => (
+            <span className="font-semibold capitalize">
+              {record?.cancelRequestedBy === user?.user?.userId
+                ? "Me"
+                : record?.userId?.name}
+            </span>
+          ),
+        },
+      ]
       : []),
     {
       title: "Action",

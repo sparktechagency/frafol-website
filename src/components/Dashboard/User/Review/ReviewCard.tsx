@@ -8,7 +8,7 @@ import { FaClock } from "react-icons/fa6";
 const ReviewCard = ({
   activeTab,
   data,
-  openModal = () => {},
+  openModal = () => { },
 }: {
   activeTab: string;
   data: IPendingReview;
@@ -34,10 +34,10 @@ const ReviewCard = ({
                   {data?.status === "accepted"
                     ? "Payment Required"
                     : data?.status === "inProgress"
-                    ? "In Progress"
-                    : data?.status === "cancelRequest"
-                    ? "Cancel Requested"
-                    : data?.status}
+                      ? "In Progress"
+                      : data?.status === "cancelRequest"
+                        ? "Cancel Requested"
+                        : data?.status}
                 </p>
               )}
             </div>

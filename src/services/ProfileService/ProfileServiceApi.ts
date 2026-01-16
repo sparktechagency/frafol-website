@@ -3,6 +3,7 @@
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
 
 export const updateProfile = async (
   req = {
@@ -17,6 +18,28 @@ export const updateProfile = async (
     });
     const result = await res.json();
     revalidateTag(TagTypes.profile);
+
+    if (result?.success) {
+      const threeMonths = 1000 * 60 * 60 * 24 * 30 * 3; // 3 months in milliseconds
+
+      (await cookies()).set(
+        "frafolMainAccessToken",
+        result?.data?.accessToken,
+        {
+          path: "/",
+          expires: new Date(Date.now() + threeMonths),
+        }
+      );
+
+      (await cookies()).set(
+        "frafolMainRefreshToken",
+        result?.data?.refreshToken,
+        {
+          path: "/",
+          expires: new Date(Date.now() + threeMonths),
+        }
+      );
+    }
 
     return result;
   } catch (error: any) {

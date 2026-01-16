@@ -15,48 +15,80 @@ const ReviewDetailsAndSubmit = () => {
   const storedInformation = Cookies.get("information");
 
   const parseData = JSON.parse(storedInformation || "{}");
+  console.log(parseData)
 
   const details = [
     {
       label: "Name",
-      value: parseData.name || "",
+      value: parseData.name || "N/A",
     },
     {
       label: "Email",
-      value: parseData.email || "",
+      value: parseData.email || "N/A",
     },
     {
       label: "Role",
-      value: parseData.role || "",
-    },
-    {
-      label: "Location",
-      value: `${parseData.address || ""}, ${parseData.town || ""}, ${
-        parseData.country || ""
-      }`,
+      value: parseData.role ? parseData.role.charAt(0).toUpperCase() + parseData.role.slice(1) : "N/A",
     },
     {
       label: "Phone Number",
-      value: parseData.phoneNumber || "",
+      value: parseData.phoneNumber || "N/A",
     },
     {
-      lebel: "zipCode",
-      value: parseData.zipCode || "",
+      label: "Address",
+      value: [parseData.address, parseData.town, parseData.country]
+        .filter(Boolean)
+        .join(", ") || "N/A",
+    },
+    {
+      label: "Zip Code",
+      value: parseData.zipCode || "N/A",
+    },
+    {
+      label: "About",
+      value: parseData.about || "N/A",
+    },
+    {
+      label: "Hourly Rate",
+      value: parseData.minHourlyRate && parseData.maxHourlyRate
+        ? `$${parseData.minHourlyRate} - $${parseData.maxHourlyRate}`
+        : "N/A",
     },
     {
       label: "Specializations",
-      value:
-        parseData?.role === "photographer"
-          ? parseData.photographerSpecializations.join(", ")
-          : parseData?.role === "videographer"
-          ? parseData.videographerSpecializations.join(", ")
-          : parseData?.role === "both" &&
-            [
-              ...parseData.photographerSpecializations,
-              ...parseData.videographerSpecializations,
-            ].join(", "),
+      value: (() => {
+        if (parseData?.role === "photographer") {
+          return parseData.photographerSpecializations?.join(", ") || "N/A";
+        } else if (parseData?.role === "videographer") {
+          return parseData.videographerSpecializations?.join(", ") || "N/A";
+        } else if (parseData?.role === "both") {
+          return [
+            ...(parseData.photographerSpecializations || []),
+            ...(parseData.videographerSpecializations || []),
+          ].join(", ") || "N/A";
+        }
+        return "N/A";
+      })(),
     },
+    // Company-specific fields (conditionally included)
+    ...(parseData.companyName ? [{
+      label: "Company Name",
+      value: parseData.companyName,
+    }] : []),
+    ...(parseData.ico ? [{
+      label: "IČO",
+      value: parseData.ico,
+    }] : []),
+    ...(parseData.dic ? [{
+      label: "DIČ",
+      value: parseData.dic,
+    }] : []),
+    ...(parseData.ic_dph ? [{
+      label: "IČ DPH",
+      value: parseData.ic_dph,
+    }] : []),
   ];
+
 
   const onFinish = async () => {
     try {
@@ -83,7 +115,7 @@ const ReviewDetailsAndSubmit = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center gap-3 h-full w-full sm:w-3/4 mx-auto">
+    <div className="flex flex-col justify-center gap-3 h-full w-full sm:w-3/4 mx-auto pb-10">
       <div className="mb-3">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-secondary-color mb-5">
           Review & Submit
@@ -97,9 +129,8 @@ const ReviewDetailsAndSubmit = () => {
         {details.map((detail, index) => (
           <div
             key={index}
-            className={`flex flex-col justify-start items-start gap-1 ${
-              index === 4 ? "sm:col-span-2" : ""
-            }`}
+            className={`flex flex-col justify-start items-start gap-1 ${index === 4 ? "sm:col-span-2" : ""
+              }`}
           >
             <p className="text-xs sm:text-sm lg:text-base font-semibold">
               {detail.label}
@@ -121,8 +152,8 @@ const ReviewDetailsAndSubmit = () => {
                 value
                   ? Promise.resolve()
                   : Promise.reject(
-                      new Error("Should accept with terms and conditions")
-                    ),
+                    new Error("Should accept with terms and conditions")
+                  ),
             },
           ]}
         >
@@ -157,8 +188,8 @@ const ReviewDetailsAndSubmit = () => {
                 value
                   ? Promise.resolve()
                   : Promise.reject(
-                      new Error("Should accept with rámcová zmluva contract")
-                    ),
+                    new Error("Should accept with rámcová zmluva contract")
+                  ),
             },
           ]}
         >

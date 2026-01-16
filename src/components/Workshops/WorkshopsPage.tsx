@@ -1,8 +1,10 @@
+"use client";
 import React, { Suspense } from "react";
 import SectionHeader from "../ui/SectionHeader";
 import WorkShopsCards from "../shared/WorkShopsCards";
 import { IWorkshop } from "@/types";
 import PaginationSection from "../shared/PaginationSection";
+import RegisterWrokshopModal from "../ui/Modal/Workshop/RegisterWrokshopModal";
 
 const WorkshopsPage = ({
   workshops,
@@ -15,6 +17,20 @@ const WorkshopsPage = ({
   page: number;
   limit: number;
 }) => {
+
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [currentRecord, setCurrentRecord] = React.useState<IWorkshop | null>(null);
+
+  const openModal = (record: IWorkshop) => {
+    setIsModalOpen(true);
+    setCurrentRecord(record);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setCurrentRecord(null);
+  };
+
   return (
     <div className="py-20">
       <SectionHeader
@@ -23,7 +39,7 @@ const WorkshopsPage = ({
       />
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {workshops.map((item) => (
-          <WorkShopsCards key={item._id} data={item} />
+          <WorkShopsCards key={item._id} data={item} handleModalOpen={openModal} />
         ))}
       </div>
       <div className="mt-16 flex justify-center items-center">
@@ -31,6 +47,7 @@ const WorkshopsPage = ({
           <PaginationSection page={page} limit={limit} totalData={totalData} />
         </Suspense>
       </div>
+      <RegisterWrokshopModal isModalVisible={isModalOpen} handleCancel={closeModal} currentRecord={currentRecord} />
     </div>
   );
 };

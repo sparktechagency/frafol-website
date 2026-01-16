@@ -39,7 +39,11 @@ const inputStructure = [
     placeholder: "Enter your password",
     prefix: <RiLockPasswordFill className="mr-1 !text-secondary-color" />,
     labelClassName: "!font-semibold !text-secondary-color",
-    rules: [{ required: true, message: "Password is required" }],
+    rules: [{ required: true, message: "Password is required" }, { min: 8, message: "Password must be at least 8 characters" },
+    {
+      pattern: /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/,
+      message: "Password must include at least one uppercase letter and one special character",
+    },],
   },
   {
     name: "confirmPassword",
@@ -97,8 +101,7 @@ const PersonalInformation = () => {
     );
     form.resetFields();
     router.push(
-      `/sign-up/professional/choose-specialization?tab=${
-        parseData?.role === "videographer" ? "videography" : "photography"
+      `/sign-up/professional/choose-specialization?tab=${parseData?.role === "videographer" ? "videography" : "photography"
       }`
     );
   };

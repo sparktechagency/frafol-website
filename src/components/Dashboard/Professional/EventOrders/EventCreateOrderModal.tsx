@@ -30,13 +30,23 @@ const EventCreateOrderModal = ({
     const serviceChagePercentage = serviceCharge / 100;
     const vatAmountPercentage = vatAmountValue / 100;
 
-    const totalServiceCharge = Number(priceValue) * serviceChagePercentage;
+    const serviceChargeAmmount = Number(priceValue) * serviceChagePercentage;
+
+    const totalServiceCharge = serviceChargeAmmount > 5 ? serviceChargeAmmount : 5;
     const totalVatAmount = Number(priceValue) * vatAmountPercentage;
 
-    setPriceWithServiceCharge(priceValue + totalServiceCharge);
+    setPriceWithServiceCharge(Number(priceValue) + Number(totalServiceCharge));
 
     const mainPriceValue =
       Number(priceValue) + totalServiceCharge + totalVatAmount;
+
+    console.log({
+      serviceChagePercentage,
+      vatAmountPercentage,
+      totalServiceCharge,
+      totalVatAmount,
+      mainPriceValue
+    })
 
     form.setFieldValue("totalPrice", Number(mainPriceValue?.toFixed(2)));
   }, [form, priceValue, serviceCharge, vatAmountValue]);
@@ -68,6 +78,8 @@ const EventCreateOrderModal = ({
       "Package added successfully!",
       "Something went wrong! Please try again."
     );
+
+    console.log(res)
 
     if (res?.success) {
       form.resetFields();

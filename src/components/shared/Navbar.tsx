@@ -11,7 +11,7 @@ import { Button, Dropdown, MenuProps } from "antd";
 import * as motion from "motion/react-client";
 import { useScroll, useMotionValueEvent } from "motion/react";
 import { TbLogout2 } from "react-icons/tb";
-import { HiOutlineLogin, HiOutlineSwitchHorizontal } from "react-icons/hi";
+import { HiOutlineLogin } from "react-icons/hi";
 import { IoMdCart } from "react-icons/io";
 import { GoBellFill } from "react-icons/go";
 import { AiFillMessage } from "react-icons/ai";
@@ -22,6 +22,7 @@ import { ISignInUser } from "@/types";
 import { decodedToken } from "@/utils/jwt";
 import { logout } from "@/services/AuthService";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import { getServerUrl } from "@/helpers/config/envConfig";
 
 // import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
@@ -85,6 +86,7 @@ const notificationMenu = (
 );
 
 const Navbar: React.FC = () => {
+  const serverUrl = getServerUrl();
   const token = Cookies.get("frafolMainAccessToken");
   const userData: ISignInUser | null = decodedToken(token || "");
 
@@ -126,6 +128,10 @@ const Navbar: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
+  console.log(userData?.role)
+  const isProfessional = userData?.role === "both" ||
+    userData?.role === "videographer" ||
+    userData?.role === "photographer";
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -141,27 +147,22 @@ const Navbar: React.FC = () => {
         ),
       icon: <MdOutlineDashboard className="text-secondary-color !text-base" />,
     },
-    {
-      key: "2",
-      label: <div onClick={() => {}}>Switch Profile</div>,
-      icon: (
-        <HiOutlineSwitchHorizontal className="text-secondary-color !text-base" />
-      ),
-    },
-    {
-      key: "3",
-      label: <Link href="#">Documents</Link>,
-      icon: (
-        <IoDocumentTextOutline className="text-secondary-color !text-base" />
-      ),
-    },
-    {
-      key: "4",
-      label: <Link href="/insurance">Insurance</Link>,
-      icon: (
-        <RiMoneyDollarCircleLine className="text-secondary-color !text-base" />
-      ),
-    },
+    ...(isProfessional ? [
+      {
+        key: "2",
+        label: <Link href="#">Documents</Link>,
+        icon: (
+          <IoDocumentTextOutline className="text-secondary-color !text-base" />
+        ),
+      },
+      {
+        key: "3",
+        label: <Link href="/insurance">Insurance</Link>,
+        icon: (
+          <RiMoneyDollarCircleLine className="text-secondary-color !text-base" />
+        ),
+      },
+    ] : []),
   ];
 
   const handleLogOut = () => {
@@ -179,13 +180,11 @@ const Navbar: React.FC = () => {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`!z-[99999]  ${
-        scrolled ? " !z-[99999] duration-300  py-1.5" : " duration-300  py-1.5"
-      } ${
-        mobileMenuOpen || scrolled
+      className={`!z-[99999]  ${scrolled ? " !z-[99999] duration-300  py-1.5" : " duration-300  py-1.5"
+        } ${mobileMenuOpen || scrolled
           ? "bg-secondary-color !text-primary-color"
           : "bg-secondary-color !text-primary-color"
-      }`}
+        }`}
     >
       <Container>
         <header className="text-base mx-auto  flex justify-between items-center z-[99999] ">
@@ -242,9 +241,8 @@ const Navbar: React.FC = () => {
                   <li
                     key={i}
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className={`lg:mb-0 mb-0 cursor-pointer hover:text-third-color group relative  transition-all duration-300 ${
-                      path === navItem.route ? "!text-third-color " : " "
-                    }`}
+                    className={`lg:mb-0 mb-0 cursor-pointer hover:text-third-color group relative  transition-all duration-300 ${path === navItem.route ? "!text-third-color " : " "
+                      }`}
                   >
                     <Link
                       href={navItem.route}
@@ -313,7 +311,7 @@ const Navbar: React.FC = () => {
                   className="cursor-pointer"
                 >
                   <Image
-                    src={AllImages.dummyProfile}
+                    src={userData?.profileImage ? serverUrl + userData?.profileImage : AllImages.dummyProfile}
                     alt="profile_img"
                     width={0}
                     height={0}
@@ -336,30 +334,26 @@ const Navbar: React.FC = () => {
               <div className="w-full flex items-center gap-5">
                 <Link
                   href="/sign-in"
-                  className={` "!text-lg px-2 py-1 font-semibold  mt-0.5 " ${
-                    scrolled ? "text-primary-color" : "text-primary-color"
-                  } `}
+                  className={` "!text-lg px-2 py-1 font-semibold  mt-0.5 " ${scrolled ? "text-primary-color" : "text-primary-color"
+                    } `}
                 >
                   Sign In
                 </Link>
                 <Link href="/join">
                   <Button
-                    className={`group flex items-center !py-4 !px-1 gap-1 border-2 rounded-full ${
-                      scrolled
-                        ? "!border-primary-color !bg-primary-color !text-secondary-color "
-                        : "!border-primary-color !bg-primary-color !text-secondary-color "
-                    }`}
+                    className={`group flex items-center !py-4 !px-1 gap-1 border-2 rounded-full ${scrolled
+                      ? "!border-primary-color !bg-primary-color !text-secondary-color "
+                      : "!border-primary-color !bg-primary-color !text-secondary-color "
+                      }`}
                   >
                     <p className="font-semibold text-base">Join</p>
                     <div
-                      className={`${
-                        scrolled ? "bg-secondary-color" : "bg-secondary-color"
-                      } p-0.5 rounded-full`}
+                      className={`${scrolled ? "bg-secondary-color" : "bg-secondary-color"
+                        } p-0.5 rounded-full`}
                     >
                       <HiOutlineLogin
-                        className={`text-lg ${
-                          scrolled ? "text-primary-color" : "text-primary-color"
-                        }`}
+                        className={`text-lg ${scrolled ? "text-primary-color" : "text-primary-color"
+                          }`}
                       />
                     </div>
                   </Button>
@@ -370,16 +364,44 @@ const Navbar: React.FC = () => {
           {/* //*Icons */}
           <div className="lg:hidden select-none flex items-center gap-5">
             {userData?.email && (
-              <Link href="/profile">
-                <Image
-                  src={AllImages.dummyProfile}
-                  alt="profile_img"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  className="xl:h-[35px] h-[30px] w-[30px] xl:w-[35px] rounded-full cursor-pointer border-2 border-[#2B4257]"
-                />
-              </Link>
+              <div className="flex items-center gap-5">
+                <Link href="/message">
+                  <AiFillMessage className="text-2xl cursor-pointer" />
+                </Link>
+
+                <Dropdown
+                  overlay={notificationMenu}
+                  trigger={["hover"]}
+                  // onOpenChange={(open: boolean) => {
+                  //   setOpen(open);
+                  // }}
+                  placement="bottomRight"
+                  className="cursor-pointer"
+                >
+                  <GoBellFill className="text-2xl cursor-pointer" />
+                </Dropdown>
+                <Link href="/cart">
+                  <IoMdCart className="text-2xl cursor-pointer" />
+                </Link>
+                <Dropdown
+                  menu={{ items }}
+                  trigger={["hover"]}
+                  // onOpenChange={(open: boolean) => {
+                  //   setOpen(open);
+                  // }}
+                  placement="bottomRight"
+                  className="cursor-pointer"
+                >
+                  <Image
+                    src={userData?.profileImage ? serverUrl + userData?.profileImage : AllImages.dummyProfile}
+                    alt="profile_img"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="xl:h-[35px] h-[30px] w-[30px] xl:w-[35px] rounded-full cursor-pointer border-2 border-[#2B4257]"
+                  />
+                </Dropdown>
+              </div>
             )}
             {mobileMenuOpen ? (
               <div onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
