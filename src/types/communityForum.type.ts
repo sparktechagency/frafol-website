@@ -29,13 +29,25 @@ interface IUser {
   profileImage: string;
 }
 
+export interface IReply {
+  _id: string;
+  user: {
+    _id: string;
+    name: string;
+    sureName: string;
+    profileImage: string;
+  };
+  text: string;
+  createdAt: string;
+}
+
 interface ICommunityComment {
   _id: string;
   user: IUser;
   text: string;
   isAnonymous: boolean;
   createdAt: string; // ISO date string
-  replies: ICommunityComment[]; // recursive for replies
+  replies: IReply[]; // recursive for replies
 }
 
 export type { ICommunityPost, ICommunityComment };

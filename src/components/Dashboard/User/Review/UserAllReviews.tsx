@@ -30,7 +30,7 @@ const UserAllReviews = ({
     setCurrentRecord(null);
   };
   return (
-    <div>
+    <div className="space-y-10">
       <div className="space-y-5">
         {allReviews?.map((review, index) => (
           <ReviewCard

@@ -15,6 +15,7 @@ export const addNewReview = async (req: { body: any; params: any }) => {
       body: JSON.stringify(req.body),
     });
     const result = await res.json();
+    console.log(result)
     revalidateTag(TagTypes.review);
 
     return result;

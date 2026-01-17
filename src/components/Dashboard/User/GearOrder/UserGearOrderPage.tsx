@@ -4,7 +4,7 @@ import UserCancleGearOrder from "../Orders/UserCancleGearOrder";
 import UserConfirmGearOrder from "../Orders/UserConfirmGearOrder";
 import UserCurrentGearOrder from "../Orders/UserCurrentGearOrder";
 import UserDeliveriedGearOrder from "../Orders/UserDeliveriedGearOrder";
-import UserOrdersOverview from "../Orders/UserOrdersOverview";
+// import UserOrdersOverview from "../Orders/UserOrdersOverview";
 import { IGearOrder } from "@/types";
 
 const UserGearOrderPage = ({
@@ -27,7 +27,7 @@ const UserGearOrderPage = ({
           Orders
         </h1>
       </div>
-      <UserOrdersOverview />
+      {/* <UserOrdersOverview /> */}
 
       <div className="mt-10">
         <ReusableTabs

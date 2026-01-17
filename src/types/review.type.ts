@@ -6,6 +6,7 @@ interface IUser {
 }
 
 interface IReview {
+  isAnonymous: boolean;
   _id: string;
   userId: IUser;
   serviceProviderId: string;
@@ -17,6 +18,7 @@ interface IReview {
 }
 
 interface IPendingReview {
+  isAnonymous: boolean;
   _id: string;
   userId: {
     _id: string;

@@ -49,7 +49,7 @@ const ProfessionalReviewRating = ({
       {/* Right side: Average rating */}
       <div className="flex flex-col items-center justify-center">
         <div className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold">
-          {professionalUser?.averageRating}
+          {professionalUser?.averageRating?.toFixed(1)}
         </div>
         <Rate
           disabled

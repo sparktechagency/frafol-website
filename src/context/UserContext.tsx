@@ -8,6 +8,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import Cookies from "js-cookie";
 
 interface IUserProviderValues {
   user: ISignInUser | null;
@@ -19,18 +20,26 @@ interface IUserProviderValues {
 const UserContext = createContext<IUserProviderValues | undefined>(undefined);
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const cookies = Cookies.get("frafolMainAccessToken");
+  console.log(cookies)
   const [user, setUser] = useState<ISignInUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleUser = async () => {
-    const user = await getCurrentUser();
-    setUser(user);
-    setIsLoading(false);
-  };
-
   useEffect(() => {
+    const handleUser = async () => {
+      try {
+        const userData = await getCurrentUser();
+        setUser(userData);
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     handleUser();
-  }, [isLoading]);
+  }, [cookies]); // Runs only once
 
   return (
     <UserContext.Provider value={{ user, setUser, isLoading, setIsLoading }}>
@@ -38,6 +47,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     </UserContext.Provider>
   );
 };
+
 
 export const useUser = () => {
   const context = useContext(UserContext);

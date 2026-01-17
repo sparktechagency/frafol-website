@@ -30,13 +30,13 @@ const ReviewCard = ({ review }: { review: IReview }) => {
             alt="avatar"
             className="rounded-full w-6 sm:w-8 lg:w-10  h-6 sm:h-8 lg:h-10  object-cover"
             src={
-              review?.userId?.profileImage
-                ? serverUrl + review?.userId?.profileImage
-                : AllImages.dummyProfile
+              review?.isAnonymous || !review?.userId?.profileImage
+                ? AllImages.dummyProfile
+                : serverUrl + review?.userId?.profileImage
             }
           />
           <div className="text-xs sm:text-sm lg:text-base xl:text-lg font-semibold">
-            {review?.userId?.name}
+            {review?.isAnonymous ? "Anonymous" : review?.userId?.name}
           </div>
           <span className="text-xs sm:text-sm lg:text-base font-light">
             · {formatDateTime(review?.createdAt)}

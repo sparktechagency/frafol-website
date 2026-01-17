@@ -18,7 +18,8 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
   const serverUrl = getServerUrl();
   const userData = useUser();
 
-
+  console.log(userData?.user?.userId)
+  console.log(data?.authorId?._id)
   return (
     <div className="p-1.5 rounded-xl border border-background-color flex flex-col justify-between">
       <div>

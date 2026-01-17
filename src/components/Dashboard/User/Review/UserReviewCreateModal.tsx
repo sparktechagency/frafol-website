@@ -4,7 +4,7 @@ import ReusableForm from "@/components/ui/Form/ReuseForm";
 import ReuseInput from "@/components/ui/Form/ReuseInput";
 import { addNewReview } from "@/services/ReviewService/ReviewServiceApi";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
-import { Form, Modal, Rate, Typography } from "antd";
+import { Checkbox, Form, Modal, Rate, Typography } from "antd";
 interface UserReviewCreateModalProps {
   isViewModalVisible: boolean;
   handleCancel: () => void;
@@ -16,12 +16,16 @@ const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
   currentRecord,
 }) => {
   const [form] = Form.useForm();
+  const isAnonymous = Form.useWatch("isAnonymous", form);
 
   const onSubmit = async (values: any) => {
     const data = {
       rating: values.review,
       message: values.message,
+      isAnonymous: isAnonymous,
     };
+
+    console.log(data)
 
     const res = await tryCatchWrapper(
       addNewReview,
@@ -30,6 +34,8 @@ const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
       "Review Provided Successfully!",
       "Something went wrong! Please try again."
     );
+
+    console.log(res)
 
     if (res?.success) {
       handleCancel();
@@ -66,6 +72,10 @@ const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
                 className="!text-3xl"
                 allowHalf
                 value={currentRecord?.review}
+                onChange={(value) => {
+                  const clamped = Math.min(5, Math.max(1, value)); // 1–5, can be 0.5 steps
+                  form.setFieldsValue({ review: clamped });
+                }}
               />
             </Form.Item>
           </div>
@@ -77,6 +87,10 @@ const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
             type="text"
             placeholder="Enter Review"
           />
+          <Form.Item name="isAnonymous" valuePropName="checked">
+            <Checkbox>Review Annonimously</Checkbox>
+          </Form.Item>
+
           <ReuseButton variant="secondary" htmlType="submit">
             Submit
           </ReuseButton>

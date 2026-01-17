@@ -5,7 +5,7 @@ import ReuseInput from "@/components/ui/Form/ReuseInput";
 import { updateReview } from "@/services/ReviewService/ReviewServiceApi";
 import { IPendingReview } from "@/types";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
-import { Form, Modal, Rate, Typography } from "antd";
+import { Checkbox, Form, Modal, Rate, Typography } from "antd";
 import { useEffect } from "react";
 interface UserReviewEditModalProps {
   isViewModalVisible: boolean;
@@ -18,12 +18,16 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
   currentRecord,
 }) => {
   const [form] = Form.useForm();
+  const isAnonymous = Form.useWatch("isAnonymous", form);
+
+  console.log(currentRecord)
 
   useEffect(() => {
     if (currentRecord) {
       form.setFieldsValue({
         review: currentRecord?.rating,
         message: currentRecord?.message,
+        isAnonymous: currentRecord?.isAnonymous,
       });
     }
   }, [currentRecord, form]);
@@ -32,7 +36,10 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
     const data = {
       rating: values.review,
       message: values.message,
+      isAnonymous: isAnonymous,
     };
+
+    console.log(data)
 
     const res = await tryCatchWrapper(
       updateReview,
@@ -74,7 +81,10 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
               Rating
             </Typography.Title>
             <Form.Item name={"review"} rules={[{ required: true }]}>
-              <Rate className="!text-3xl" allowHalf />
+              <Rate className="!text-3xl" allowHalf onChange={(value) => {
+                const clamped = Math.min(5, Math.max(1, value)); // 1–5, can be 0.5 steps
+                form.setFieldsValue({ review: clamped });
+              }} />
             </Form.Item>
           </div>
           <ReuseInput
@@ -85,6 +95,9 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
             type="text"
             placeholder="Enter Review"
           />
+          <Form.Item name="isAnonymous" valuePropName="checked">
+            <Checkbox>Review Annonimously</Checkbox>
+          </Form.Item>
           <ReuseButton variant="secondary" htmlType="submit">
             Submit
           </ReuseButton>
