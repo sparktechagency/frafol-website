@@ -21,7 +21,6 @@ import Cookies from "js-cookie";
 import { ISignInUser } from "@/types";
 import { decodedToken } from "@/utils/jwt";
 import { logout } from "@/services/AuthService";
-import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { getServerUrl } from "@/helpers/config/envConfig";
 
 // import { RiMoneyDollarCircleLine } from "react-icons/ri";
@@ -153,13 +152,6 @@ const Navbar: React.FC = () => {
         label: <Link href="#">Documents</Link>,
         icon: (
           <IoDocumentTextOutline className="text-secondary-color !text-base" />
-        ),
-      },
-      {
-        key: "3",
-        label: <Link href="/insurance">Insurance</Link>,
-        icon: (
-          <RiMoneyDollarCircleLine className="text-secondary-color !text-base" />
         ),
       },
     ] : []),

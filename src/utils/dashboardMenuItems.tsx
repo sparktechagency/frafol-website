@@ -331,6 +331,23 @@ export const useProfessionalPaths = () => {
       ),
     },
     {
+      key: "frafol-choice",
+      label: <Link href="/dashboard/professional/frafol-choice">Frafol Choice</Link>,
+      icon: (
+        <Image
+          src={packages}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/frafol-choice")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
       key: "workshop",
       label: <Link href="/dashboard/professional/workshop">Workshop</Link>,
       icon: (

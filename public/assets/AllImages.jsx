@@ -2,6 +2,7 @@ import logo from "./logo/logo.png";
 import logo2 from "./logo/logo2.png";
 import dummyCover from "./images/defaultCover.png";
 import dummyProfile from "./images/dummyProfile.jpg";
+import batch from "./images/batch.png";
 
 import joinFrafol from "./images/joinFrafol.png";
 import signupuser from "./images/signup-user.png";
@@ -74,6 +75,7 @@ export const AllImages = {
   logo2,
   dummyProfile,
   dummyCover,
+  batch,
 
   joinFrafol,
   signupuser,

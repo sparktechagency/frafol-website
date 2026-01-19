@@ -17,6 +17,7 @@ const TagTypes = {
   earning: "EARNING",
   review: "REVIEW",
   insurange: "INSURANGE",
+  subscriptionOrder: "SUBSCRIPTION_ORDER",
 };
 
 export default TagTypes;

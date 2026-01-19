@@ -15,8 +15,9 @@ export const completePayment = async (req: { body: any; params: any }) => {
     });
     const result = await res.json();
     revalidateTag(TagTypes.eventOrder);
-    // revalidateTag(TagTypes.eventOrder);
-    // revalidateTag(TagTypes.eventOrder);
+    revalidateTag(TagTypes.workshopOrders);
+    revalidateTag(TagTypes.gearOrder);
+    revalidateTag(TagTypes.subscriptionOrder);
 
     return result;
   } catch (error: any) {
