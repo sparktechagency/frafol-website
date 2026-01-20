@@ -42,9 +42,11 @@ const AddNewForumMoidal: React.FC<AddNewForumMoidalProps> = ({
     const res = await tryCatchWrapper(
       addNewCommunityPost,
       { body: formData },
-      "Uploading Your Post...",
-      "Your post uploaded successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Uploading Your Post...",
+        toastSuccessMessage: "Your post uploaded successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

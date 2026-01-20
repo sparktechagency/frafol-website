@@ -25,9 +25,11 @@ const AccountCredentialPage = ({ myData }: { myData: IProfile }) => {
     const res = await tryCatchWrapper(
       updateProfile,
       { body: formData },
-      "Updating Account Information...",
-      "Account Information updated successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Updating Account Information...",
+        toastSuccessMessage: "Account Information updated successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

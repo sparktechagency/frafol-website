@@ -54,9 +54,11 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
             const res = await tryCatchWrapper(
                 createWorkshopOrder,
                 { body: data },
-                "Registering for workshop...",
-                "Redirecting to Stripe to Complete Payment From Stripe",
-                "Something went wrong! Please try again."
+                {
+                    toastLoadingMessage: "Registering for workshop...",
+                    toastSuccessMessage: "Redirecting to Stripe to Complete Payment From Stripe",
+                    toastErrorMessage: "Something went wrong! Please try again.",
+                }
             );
 
             if (res?.success) {

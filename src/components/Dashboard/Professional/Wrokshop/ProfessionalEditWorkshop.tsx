@@ -99,9 +99,11 @@ const ProfessionalEditWorkshop = ({
     const res = await tryCatchWrapper(
       updateWrokshop,
       { body: formData, params: currentRecord?._id },
-      "Adding new package...",
-      "Package added successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Adding new package...",
+        toastSuccessMessage: "Package added successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
     if (res?.success) {
       form.resetFields();

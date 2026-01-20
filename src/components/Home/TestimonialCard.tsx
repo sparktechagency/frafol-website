@@ -12,7 +12,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
   const serverUrl = getServerUrl();
 
   return (
-    <div className=" p-5 rounded-xl flex flex-col justify-between mb-20 min-h-[220px] hover:shadow-sm border border-[#E1E1E1]">
+    <div className=" p-5 rounded-xl flex flex-col justify-between min-h-[220px] hover:shadow-sm border border-[#E1E1E1]">
       <p className="font-semibold text-sm sm:text-base lg:text-lg mb-5">
         {testimonial.text}
       </p>

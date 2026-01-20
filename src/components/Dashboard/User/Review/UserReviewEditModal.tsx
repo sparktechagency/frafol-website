@@ -44,9 +44,11 @@ const UserReviewEditModal: React.FC<UserReviewEditModalProps> = ({
     const res = await tryCatchWrapper(
       updateReview,
       { body: data, params: currentRecord?._id },
-      "Updating Review...",
-      "Review Updated Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Updating Review...",
+        toastSuccessMessage: "Review Updated Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

@@ -35,9 +35,11 @@ const ProfessionalServiceBookingModal: React.FC<
     const res = await tryCatchWrapper(
       createEventOrder,
       { body: data },
-      "Adding new package...",
-      "Order Placed successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Adding new package...",
+        toastSuccessMessage: "Order Placed successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

@@ -68,9 +68,11 @@ const ProfessionalAddNewWorkshop = ({
     const res = await tryCatchWrapper(
       addNewWrokshop,
       { body: formData },
-      "Adding new workshop...",
-      "Workshop added successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Adding new workshop...",
+        toastSuccessMessage: "Workshop added successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
     if (res?.success) {
       form.resetFields();

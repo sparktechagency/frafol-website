@@ -88,9 +88,11 @@ const ProfessionalWorkshopPage = ({
       const res = await tryCatchWrapper(
         deleteWrokshop,
         { params: record?._id },
-        "Deleting Package...",
-        "Package deleted successfully!",
-        "Something went wrong! Please try again."
+        {
+          toastLoadingMessage: "Deleting Package...",
+          toastSuccessMessage: "Package deleted successfully!",
+          toastErrorMessage: "Something went wrong! Please try again.",
+        }
       );
 
       if (res?.success) {

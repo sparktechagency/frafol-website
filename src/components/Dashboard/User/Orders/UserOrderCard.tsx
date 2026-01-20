@@ -62,9 +62,11 @@ const UserOrderCard = ({
     const res = await tryCatchWrapper(
       completePayment,
       { body: value },
-      "Waiting for payment...",
-      "Redirecting to Stripe to Complete Payment From Stripe",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Please wait...",
+        toastSuccessMessage: "Redirecting to Stripe to Complete Payment From Stripe",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

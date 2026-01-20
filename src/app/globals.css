@@ -64,16 +64,19 @@ body {
   height: 10px !important;
   background-color: #ad2b08 !important;
 }
+.swiper-pagination {
+  bottom: var(--swiper-pagination-bottom, -5px) !important;
+}
 
 .swiper-button-next:after,
 .swiper-rtl .swiper-button-prev:after {
   color: #ffb31f;
   padding: 8px 12px;
   font-size: 1.2rem !important;
-  background-color: #ad2b08;
+  background-color: #ad2b0899;
   border-radius: 100%;
   z-index: 100;
-  margin-right: 0px;
+  margin-right: -10px;
 }
 
 .swiper-button-prev:after,
@@ -81,10 +84,10 @@ body {
   color: #ffb31f;
   padding: 8px 12px;
   font-size: 1rem !important;
-  background-color: #ad2b08;
+  background-color: #ad2b0899;
   border-radius: 100%;
   z-index: 100;
-  margin-left: 0px;
+  margin-left: -10px;
 }
 
 /* Media query for screens larger than 768px */

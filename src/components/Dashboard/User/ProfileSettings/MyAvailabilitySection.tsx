@@ -132,9 +132,11 @@ const MyAvailabilitySection = ({ myData }: { myData: IProfile }) => {
           unAvailability: formattedDates,
         },
       },
-      "Updating Unavailable Dates...",
-      "Unavailable Dates Updated Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Updating Unavailable Dates...",
+        toastSuccessMessage: "Unavailable Dates Updated Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

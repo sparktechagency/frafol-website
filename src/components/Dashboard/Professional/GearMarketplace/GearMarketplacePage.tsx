@@ -66,9 +66,11 @@ const GearMarketplacePage = ({
       const res = await tryCatchWrapper(
         deleteGear,
         { params: record?._id },
-        "Deleting Gear...",
-        "Gear deleted successfully!",
-        "Something went wrong! Please try again."
+        {
+          toastLoadingMessage: "Deleting Gear...",
+          toastSuccessMessage: "Gear deleted successfully!",
+          toastErrorMessage: "Something went wrong! Please try again.",
+        }
       );
 
       if (res?.success) {

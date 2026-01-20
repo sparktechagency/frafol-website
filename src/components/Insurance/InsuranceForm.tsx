@@ -16,9 +16,11 @@ const InsuranceForm = () => {
     const res = await tryCatchWrapper(
       registerInsurance,
       { body: values },
-      "Sending request...",
-      "Insurance Registered Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request...",
+        toastSuccessMessage: "Insurance Registered Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

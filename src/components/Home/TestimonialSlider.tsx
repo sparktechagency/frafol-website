@@ -1,10 +1,10 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectFade, Pagination, Autoplay } from "swiper/modules";
+import { EffectFade, Navigation, Autoplay } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/effect-fade";
-import "swiper/css/pagination";
+import "swiper/css/navigation";
 import { ITestimonial } from "@/types/testimonial.type";
 import TestimonialCard from "./TestimonialCard";
 
@@ -19,9 +19,7 @@ const TestimonialSlider = ({ data = [] }: { data: ITestimonial[] }) => {
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       }}
-      pagination={{
-        clickable: true,
-      }}
+      navigation={true}
       breakpoints={{
         540: {
           slidesPerView: 2,
@@ -36,7 +34,7 @@ const TestimonialSlider = ({ data = [] }: { data: ITestimonial[] }) => {
           spaceBetween: 10,
         },
       }}
-      modules={[EffectFade, Pagination, Autoplay]}
+      modules={[EffectFade, Navigation, Autoplay]}
       className="mySwiper"
     >
       {data?.map((item, index) => (

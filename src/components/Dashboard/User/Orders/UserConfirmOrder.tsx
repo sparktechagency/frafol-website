@@ -63,9 +63,11 @@ const UserConfirmOrder = ({
         body: { ...values, status: "deliveryRequestDeclined" },
         params: data?._id,
       },
-      "Waiting for payment...",
-      "Redirecting to Stripe to Complete Payment From Stripe",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request... ",
+        toastSuccessMessage: "Request Sent Successfully! ",
+        toastErrorMessage: "Something went wrong! Please try again. ",
+      }
     );
 
     if (res?.success) {
@@ -78,9 +80,11 @@ const UserConfirmOrder = ({
     const res = await tryCatchWrapper(
       acceptDeliveryRequest,
       { params: data?._id },
-      "Accepting Delivery Request...",
-      "Delivery Request Accept Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request... ",
+        toastSuccessMessage: "Request Sent Successfully! ",
+        toastErrorMessage: "Something went wrong! Please try again. ",
+      }
     );
 
     if (res?.success) {

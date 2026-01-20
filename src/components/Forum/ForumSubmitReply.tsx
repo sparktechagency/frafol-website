@@ -41,9 +41,12 @@ const ForumSubmitReply = ({ id }: { id: string }) => {
     const res = await tryCatchWrapper(
       addNewComment,
       { body: data, params: { id } },
-      "Please wait a moment...",
-      "Your comment posted successfully!",
-      "Something went wrong! Please try again."
+      {
+        showToast: false,
+        toastLoadingMessage: "Saving your changes...",
+        toastSuccessMessage: "Changes saved successfully!",
+        toastErrorMessage: "Failed to save changes",
+      }
     );
 
     if (res?.success) {

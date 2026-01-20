@@ -49,9 +49,11 @@ const PortfolioPage = ({ myData }: { myData: IProfile }) => {
     const res = await tryCatchWrapper(
       updateGallery,
       { body: formData },
-      "Deleting Image...",
-      "Gallery updated successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Deleting Image...",
+        toastSuccessMessage: "Gallery updated successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

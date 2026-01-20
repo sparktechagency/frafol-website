@@ -62,8 +62,10 @@ const UpdatePassword = () => {
     const res = await tryCatchWrapper(
       changePassword,
       { body: values },
-      "Resetting Password...",
-      "Password reset successfully!"
+      {
+        toastLoadingMessage: "wait a moment...",
+        toastSuccessMessage: "Password changed successfully!",
+      }
     );
     if (res?.success) {
       form.resetFields();

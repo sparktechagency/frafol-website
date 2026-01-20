@@ -74,9 +74,11 @@ const EventCreateOrderModal = ({
         params: currentRecord?._id,
         body: data,
       },
-      "Adding new package...",
-      "Package added successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Adding new package...",
+        toastSuccessMessage: "Package added successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     console.log(res)

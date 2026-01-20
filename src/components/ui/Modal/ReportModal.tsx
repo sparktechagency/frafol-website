@@ -24,9 +24,11 @@ const ReportModal: React.FC<ReportModalProps> = ({
     const res = await tryCatchWrapper(
       addReport,
       { body: values },
-      "Wait a moment...",
-      "submitted successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Wait a moment...",
+        toastSuccessMessage: "submitted successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

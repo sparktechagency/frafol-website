@@ -54,9 +54,11 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
       {
         params: record?._id,
       },
-      "Accepting Order...",
-      "Order accepted successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Accepting Order...",
+        toastSuccessMessage: "Order accepted successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

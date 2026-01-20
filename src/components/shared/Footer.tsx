@@ -42,9 +42,11 @@ export default function Footer() {
     const res = await tryCatchWrapper(
       subscribe,
       { body: { email: values.email } },
-      "Wait a moment...",
-      "Subscribed successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "wait a moment...",
+        toastSuccessMessage: "Subscribed successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

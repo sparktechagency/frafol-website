@@ -23,9 +23,12 @@ const ForumPostLikeSection = ({
       const res = await tryCatchWrapper(
         removeLike,
         { params: { id } },
-        "Please wait a moment...",
-        "Removed Like Successfully!",
-        "Something went wrong! Please try again."
+        {
+          showToast: false,
+          toastLoadingMessage: "Removing Like...",
+          toastSuccessMessage: "Removed Like Successfully!",
+          toastErrorMessage: "Something went wrong! Please try again.",
+        }
       );
 
       if (res?.success) {
@@ -36,9 +39,12 @@ const ForumPostLikeSection = ({
       const res = await tryCatchWrapper(
         giveLike,
         { params: { id } },
-        "Please wait a moment...",
-        "Liked Successfully!",
-        "Something went wrong! Please try again."
+        {
+          showToast: false,
+          toastLoadingMessage: "Adding Like...",
+          toastSuccessMessage: "Added Like Successfully!",
+          toastErrorMessage: "Something went wrong! Please try again.",
+        }
       );
 
       if (res?.success) {

@@ -52,9 +52,11 @@ const GearOrderPage = ({
     const res = await tryCatchWrapper(
       sendGearDeliveryRequest,
       { params: data?._id },
-      "Sending request...",
-      "Request Sent Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request...",
+        toastSuccessMessage: "Request Sent Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {
@@ -69,9 +71,11 @@ const GearOrderPage = ({
     const res = await tryCatchWrapper(
       cancelGearOrder,
       { body: values, params: data?._id },
-      "Please wait...",
-      "Order Canceled Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request...",
+        toastSuccessMessage: "Request Sent Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

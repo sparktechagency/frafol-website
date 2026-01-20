@@ -145,9 +145,11 @@ const CartDeliveryOption = ({
     const res = await tryCatchWrapper(
       gearOrder,
       { body: data },
-      "Please wait...",
-      "Redirecting to Stripe to Complete Payment From Stripe",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Please wait...",
+        toastSuccessMessage: "Redirecting to Stripe to Complete Payment From Stripe",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
     if (res?.success) {
       window.open(res?.data?.checkoutUrl, "_blank"); // Opens in a new tab

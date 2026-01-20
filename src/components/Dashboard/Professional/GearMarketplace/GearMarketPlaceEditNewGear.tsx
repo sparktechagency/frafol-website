@@ -102,9 +102,11 @@ const GearMarketPlaceEditNewGear = ({
     const res = await tryCatchWrapper(
       updateGear,
       { body: formData, params: currentRecord?._id },
-      "Updating gear...",
-      "Gear updated successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Updating gear...",
+        toastSuccessMessage: "Gear updated successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

@@ -14,9 +14,11 @@ const ContactUsForm = () => {
     const res = await tryCatchWrapper(
       contactUs,
       { body: values },
-      "Wait a moment...",
-      "Message sent successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Wait a moment...",
+        toastSuccessMessage: "Message sent successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

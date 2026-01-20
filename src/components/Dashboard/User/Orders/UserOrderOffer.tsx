@@ -45,9 +45,11 @@ const UserOrderOffer = ({
     const res = await tryCatchWrapper(
       cancelEventOrder,
       { body: values, params: data?._id },
-      "Waiting for payment...",
-      "Redirecting to Stripe to Complete Payment From Stripe",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request... ",
+        toastSuccessMessage: "Request Sent Successfully! ",
+        toastErrorMessage: "Something went wrong! Please try again ",
+      }
     );
 
     if (res?.success) {

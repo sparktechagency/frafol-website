@@ -1,20 +1,49 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from "sonner";
 
+interface TryCatchWrapperOptions {
+  body?: any;
+  params?: any;
+}
+
+interface TryCatchConfig {
+  showToast?: boolean;
+  setLoading?: (loading: boolean) => void;
+  toastLoadingMessage?: string;
+  toastSuccessMessage?: string;
+  toastErrorMessage?: string;
+}
+
 const tryCatchWrapper = async (
   asyncFunction: any,
-  reqData?: any,
-  toastLoadingMessage: string = "Processing...",
-  toastSuccessMessage?: string,
-  toastErrorMessage: string = "Something went wrong! Please try again."
+  reqData?: TryCatchWrapperOptions,
+  config: TryCatchConfig = {
+    showToast: true,
+  },
 ) => {
-  const toastId = toast.loading(toastLoadingMessage, {
-    duration: 2000,
-  });
+  const {
+    showToast = true,
+    setLoading,
+    toastLoadingMessage = "Processing...",
+    toastSuccessMessage,
+    toastErrorMessage = "Something went wrong! Please try again.",
+  } = config;
+
+  // Set loading state
+  setLoading?.(true);
+
+  // Show loading toast only if showToast is true
+  const toastId = showToast
+    ? toast.loading(toastLoadingMessage, {
+        duration: 2000,
+      })
+    : undefined;
+
   try {
-    // Call the async function
-    let req;
-    if (reqData.body && reqData?.params) {
+    // Build request object
+    let req: any = {};
+
+    if (reqData?.body && reqData?.params) {
       req = { body: reqData.body, params: reqData.params };
     } else if (reqData?.body) {
       req = { body: reqData.body };
@@ -27,32 +56,40 @@ const tryCatchWrapper = async (
     if (!res.success) {
       throw new Error(res.message);
     } else {
-      if (toastSuccessMessage) {
-        toast.success(toastSuccessMessage, {
-          id: toastId,
-          duration: 2000,
-        });
-      } else {
-        toast.success(res.message, {
-          id: toastId,
-          duration: 2000,
-        });
+      // Show success toast only if showToast is true
+      if (showToast) {
+        if (toastSuccessMessage) {
+          toast.success(toastSuccessMessage, {
+            id: toastId,
+            duration: 2000,
+          });
+        } else {
+          toast.success(res.message, {
+            id: toastId,
+            duration: 2000,
+          });
+        }
       }
     }
-    return res;
 
-    // Return the actual data
+    setLoading?.(false);
+    return res;
   } catch (error: any) {
-    toast.error(
-      error?.data?.message ||
-        error?.message ||
-        error?.error ||
-        toastErrorMessage,
-      {
-        id: toastId,
-        duration: 2000,
-      }
-    );
+    // Show error toast only if showToast is true
+    if (showToast) {
+      toast.error(
+        error?.data?.message ||
+          error?.message ||
+          error?.error ||
+          toastErrorMessage,
+        {
+          id: toastId,
+          duration: 2000,
+        },
+      );
+    }
+
+    setLoading?.(false);
     return { success: false, message: error };
   }
 };

@@ -23,9 +23,11 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({
     const res = await tryCatchWrapper(
       addFeedback,
       { body: values },
-      "Wait a moment...",
-      "submitted successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Wait a moment...",
+        toastSuccessMessage: "Feedback submitted successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

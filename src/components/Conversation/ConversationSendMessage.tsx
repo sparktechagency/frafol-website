@@ -47,9 +47,11 @@ const ConversationSendMessage = ({
     const res = await tryCatchWrapper(
       sendFiles,
       { body: formData },
-      "Uploading...",
-      "Uploaded successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Uploading...",
+        toastSuccessMessage: "Uploaded successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success && res?.data?.length > 0) {

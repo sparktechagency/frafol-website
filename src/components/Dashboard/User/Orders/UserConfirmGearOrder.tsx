@@ -43,9 +43,11 @@ const UserConfirmGearOrder = ({
     const res = await tryCatchWrapper(
       acceptGearDeliveryRequest,
       { params: data?._id },
-      "Accepting Delivery Request...",
-      "Delivery Request Accepted Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Accepting Delivery Request...",
+        toastSuccessMessage: "Delivery Request Accepted Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

@@ -30,9 +30,11 @@ const UserReviewCreateModal: React.FC<UserReviewCreateModalProps> = ({
     const res = await tryCatchWrapper(
       addNewReview,
       { body: data, params: currentRecord?._id },
-      "Providing Review...",
-      "Review Provided Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Saving your changes...",
+        toastSuccessMessage: "Changes saved successfully!",
+        toastErrorMessage: "Failed to save changes",
+      }
     );
 
     console.log(res)

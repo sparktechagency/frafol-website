@@ -28,9 +28,11 @@ const ProfileProtfolioUploadImageModal: React.FC<
     const res = await tryCatchWrapper(
       updateGallery,
       { body: formData },
-      "Uploading Image...",
-      "Gallery updated successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Uploading Image...",
+        toastSuccessMessage: "Gallery updated successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

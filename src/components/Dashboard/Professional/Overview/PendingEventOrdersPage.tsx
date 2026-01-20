@@ -88,9 +88,11 @@ const PendingEventOrdersPage = ({
     const res = await tryCatchWrapper(
       cancelEventOrder,
       { body: values, params: data?._id },
-      "Sending request...",
-      "Request Sent Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request...",
+        toastSuccessMessage: "Request Sent Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {
@@ -106,9 +108,11 @@ const PendingEventOrdersPage = ({
         body: { ...values, status: "declined" },
         params: data?._id,
       },
-      "Sending request...",
-      "Request Sent Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request...",
+        toastSuccessMessage: "Request Sent Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {
@@ -127,9 +131,11 @@ const PendingEventOrdersPage = ({
         body: { ...values },
         params: data?._id,
       },
-      "Sending request...",
-      "Request Sent Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request... ",
+        toastSuccessMessage: "Request Sent Successfully! ",
+        toastErrorMessage: "Something went wrong! Please try again. ",
+      }
     );
 
     if (res?.success) {
@@ -160,7 +166,7 @@ const PendingEventOrdersPage = ({
           activeTab={"pending"}
         />
         <ProfessionalEventViewModal
-          showCancelAcceptModal={() => {}}
+          showCancelAcceptModal={() => { }}
           showCreateOrderModal={showCreateOrderModal}
           showCancelModal={showCancelModal}
           showDeclineModal={showDeclineModal}

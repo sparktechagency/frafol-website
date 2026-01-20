@@ -35,8 +35,10 @@ const ForgotPassword = () => {
     const res = await tryCatchWrapper(
       forgetPassword,
       { body: values },
-      "wait a moment...",
-      "OTP sent To your email!"
+      {
+        toastLoadingMessage: "wait a moment...",
+        toastSuccessMessage: "OTP sent To your email!",
+      }
     );
     if (res?.success) {
       form.resetFields();

@@ -17,8 +17,10 @@ const ForgetPasswordOTPVerify = () => {
     const res = await tryCatchWrapper(
       forgetPasswordOtp,
       { body: { otp } },
-      "Verifying...",
-      "Verified successfully!"
+      {
+        toastLoadingMessage: "Verifying...",
+        toastSuccessMessage: "Verified successfully!",
+      }
     );
     if (res?.success) {
       router.push("/update-password");
@@ -29,8 +31,10 @@ const ForgetPasswordOTPVerify = () => {
     await tryCatchWrapper(
       resendOtp,
       { body: { purpose: "forget-password" } },
-      "wait a moment...",
-      "OTP sent successfully!"
+      {
+        toastLoadingMessage: "wait a moment...",
+        toastSuccessMessage: "OTP sent successfully!",
+      }
     );
   };
   return (

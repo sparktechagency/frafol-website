@@ -37,13 +37,13 @@ const EventOrdersPage = ({
     totalPendingEvents: number;
   };
   activeTab:
-    | "delivered"
-    | "inProgress"
-    | "upcoming"
-    | "pending"
-    | "accepted"
-    | "cancelRequest"
-    | "cancelled";
+  | "delivered"
+  | "inProgress"
+  | "upcoming"
+  | "pending"
+  | "accepted"
+  | "cancelRequest"
+  | "cancelled";
   myEventData: IEventOrder[];
   totalData: number;
   page: number;
@@ -119,9 +119,11 @@ const EventOrdersPage = ({
     const res = await tryCatchWrapper(
       cancelEventOrder,
       { body: values, params: data?._id },
-      "Sending request...",
-      "Request Sent Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request... ",
+        toastSuccessMessage: "Request Sent Successfully! ",
+        toastErrorMessage: "Something went wrong! Please try again. ",
+      }
     );
 
     if (res?.success) {
@@ -133,9 +135,11 @@ const EventOrdersPage = ({
     const res = await tryCatchWrapper(
       acceptCancelRequest,
       { params: data?._id },
-      "Cancelling...",
-      "Cancelled Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Cancelling... ",
+        toastSuccessMessage: "Cancelled Successfully! ",
+        toastErrorMessage: "Something went wrong! Please try again. ",
+      }
     );
 
     if (res?.success) {
@@ -151,9 +155,11 @@ const EventOrdersPage = ({
         body: { ...values, status: "declined" },
         params: data?._id,
       },
-      "Sending request...",
-      "Request Sent Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request... ",
+        toastSuccessMessage: "Request Sent Successfully! ",
+        toastErrorMessage: "Something went wrong! Please try again. ",
+      }
     );
 
     if (res?.success) {
@@ -167,9 +173,11 @@ const EventOrdersPage = ({
       {
         params: data?._id,
       },
-      "Rejecting...",
-      "Rejected Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Rejecting... ",
+        toastSuccessMessage: "Rejected Successfully! ",
+        toastErrorMessage: "Something went wrong! Please try again. ",
+      }
     );
 
     if (res?.success) {
@@ -188,9 +196,11 @@ const EventOrdersPage = ({
         body: { ...values },
         params: data?._id,
       },
-      "Sending request...",
-      "Request Sent Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Sending request... ",
+        toastSuccessMessage: "Request Sent Successfully! ",
+        toastErrorMessage: "Something went wrong! Please try again. ",
+      }
     );
 
     if (res?.success) {

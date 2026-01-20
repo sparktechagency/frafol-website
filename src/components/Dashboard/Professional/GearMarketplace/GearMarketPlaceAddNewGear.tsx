@@ -68,9 +68,11 @@ const GearMarketPlaceAddNewGear = ({
     const res = await tryCatchWrapper(
       addNewGear,
       { body: formData },
-      "Adding new gear...",
-      "New gear added successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Adding new gear...",
+        toastSuccessMessage: "New gear added successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

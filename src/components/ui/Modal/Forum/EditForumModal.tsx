@@ -58,9 +58,11 @@ const EditForumModal: React.FC<EditForumModalProps> = ({
     const res = await tryCatchWrapper(
       updateCommunityPost,
       { body: formData, params: currentRecord?._id },
-      "Uploading Your Post...",
-      "Your post uploaded successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Uploading Your Post...",
+        toastSuccessMessage: "Your post uploaded successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

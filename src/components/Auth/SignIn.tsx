@@ -62,8 +62,10 @@ const SignIn = () => {
     const res = await tryCatchWrapper(
       loginUser,
       { body: values },
-      "Signing in...",
-      "Signed in successfully!"
+      {
+        toastLoadingMessage: "Signing in...",
+        toastSuccessMessage: "Signed in successfully!",
+      }
     );
     if (res?.success) {
       router.push("/");

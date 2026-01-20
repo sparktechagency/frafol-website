@@ -59,9 +59,11 @@ const UserCancleOrder = ({
     const res = await tryCatchWrapper(
       acceptCancelRequest,
       { params: data?._id },
-      "Cancelling...",
-      "Cancelled Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Cancelling...",
+        toastSuccessMessage: "Cancelled Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again",
+      }
     );
 
     if (res?.success) {
@@ -75,9 +77,11 @@ const UserCancleOrder = ({
       {
         params: data?._id,
       },
-      "Rejecting...",
-      "Rejected Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Rejecting...",
+        toastSuccessMessage: "Rejected Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again",
+      }
     );
 
     if (res?.success) {

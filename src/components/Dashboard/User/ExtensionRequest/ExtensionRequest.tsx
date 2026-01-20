@@ -54,9 +54,11 @@ const ExtensionRequest = ({ myEventData }: { myEventData: IEventOrder[] }) => {
         },
         params: record?._id,
       },
-      "Accepting Extension Request...",
-      "Extension Request Accept Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Accepting Extension Request...",
+        toastSuccessMessage: "Extension Request Accept Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {
@@ -75,9 +77,11 @@ const ExtensionRequest = ({ myEventData }: { myEventData: IEventOrder[] }) => {
         },
         params: record?._id,
       },
-      "Rejecting Extension Request...",
-      "Extension Requested Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Rejecting Extension Request...",
+        toastSuccessMessage: "Extension Requested Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

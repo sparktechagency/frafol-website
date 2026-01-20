@@ -17,9 +17,11 @@ const CreateConversionButton = ({
     const res = await tryCatchWrapper(
       createConversation,
       { body: { users: [data?._id] } },
-      "Please wait a moment...",
-      "Chat created successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Creating Conversation... ",
+        toastSuccessMessage: "Conversation Created Successfully! ",
+        toastErrorMessage: "Something went wrong! Please try again ",
+      }
     );
 
     if (res?.success) {

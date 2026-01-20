@@ -76,9 +76,10 @@ const ChangePassword = () => {
       {
         body: data,
       },
-      "Changing Password...",
-      "Password Changed Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "wait a moment...",
+        toastSuccessMessage: "Password changed successfully!",
+      }
     );
 
     if (res?.success) {

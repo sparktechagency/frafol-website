@@ -413,9 +413,11 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
     const res = await tryCatchWrapper(
       updateProfile,
       { body: formData },
-      "Updating profile...",
-      "Profile updated successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Updating profile...",
+        toastSuccessMessage: "Profile updated successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     console.log(res)

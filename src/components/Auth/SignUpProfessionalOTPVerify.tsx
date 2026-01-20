@@ -17,8 +17,10 @@ const SignUpProfessionalOTPVerify = () => {
     const res = await tryCatchWrapper(
       registerUserOtp,
       { body: { otp } },
-      "Verifying...",
-      "Verified successfully!"
+      {
+        toastLoadingMessage: "Verifying...",
+        toastSuccessMessage: "Verified successfully!",
+      }
     );
     if (res?.success) {
       router.push("/sign-in");
@@ -29,8 +31,10 @@ const SignUpProfessionalOTPVerify = () => {
     await tryCatchWrapper(
       resendOtp,
       { body: { purpose: "email-verification" } },
-      "wait a moment...",
-      "OTP sent successfully!"
+      {
+        toastLoadingMessage: "wait a moment...",
+        toastSuccessMessage: "OTP sent successfully!",
+      }
     );
   };
   return (

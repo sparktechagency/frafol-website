@@ -47,9 +47,11 @@ const MyCommunityPostsPage = ({
     const res = await tryCatchWrapper(
       deleteCommunityPost,
       { params: data?._id },
-      "Deleting...",
-      "Deleted Successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Deleting...",
+        toastSuccessMessage: "Deleted Successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

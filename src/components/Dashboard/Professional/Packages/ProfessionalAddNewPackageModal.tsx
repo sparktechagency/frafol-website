@@ -94,9 +94,11 @@ const ProfessionalAddNewPackageModal = ({
     const res = await tryCatchWrapper(
       addNewPackage,
       { body: formData },
-      "Adding new package...",
-      "Package added successfully!",
-      "Something went wrong! Please try again."
+      {
+        toastLoadingMessage: "Adding new package...",
+        toastSuccessMessage: "Package added successfully!",
+        toastErrorMessage: "Something went wrong! Please try again.",
+      }
     );
 
     if (res?.success) {

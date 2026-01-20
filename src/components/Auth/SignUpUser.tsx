@@ -245,8 +245,10 @@ const SignUpUser = () => {
     const res = await tryCatchWrapper(
       registerUser,
       { body: data },
-      "Creating account...",
-      "OTP sent To your email!"
+      {
+        toastLoadingMessage: "Creating account...",
+        toastSuccessMessage: "OTP sent To your email!",
+      }
     );
     if (res?.success) {
       form.resetFields();
