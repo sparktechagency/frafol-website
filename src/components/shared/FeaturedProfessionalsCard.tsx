@@ -17,8 +17,21 @@ const FeaturedProfessionalsCard: React.FC<FeaturedProfessionalsCardProps> = ({
   const serverUrl = getServerUrl();
 
   return (
-    <div className="flex flex-col gap-2">
-      <Link href={`/professionals/${item?._id}`}>
+    <div className="flex flex-col gap-2 bg-base-color/[0.01] rounded-lg">
+      <div className="relative">
+        {
+          item?.hasActiveSubscription && <div className="absolute top-2 left-2 flex items-center gap-1 bg-secondary-color p-1 rounded-3xl">
+            <Image
+              src={AllImages?.batch}
+              width={2000}
+              height={2000}
+              alt={item?.name || "item Image"}
+              className="size-2.5 sm:size-3 lg:size-4"
+            />
+            <p className="text-white text-[8px] sm:text-[10px] lg:text-xs font-bold">Frafol Choice</p>
+          </div>
+        }
+
         <Image
           width={2000}
           height={2000}
@@ -28,9 +41,13 @@ const FeaturedProfessionalsCard: React.FC<FeaturedProfessionalsCardProps> = ({
               : AllImages.dummyProfile
           }
           alt={item?.name || "item Image"}
-          className="w-full !h-[350px] sm:!h-[400px] lg:!h-[450px] object-cover object-top rounded-tl-lg rounded-tr-lg "
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          priority={false}
+          className="w-full !max-h-[250px] sm:!max-h-[250px] lg:!max-h-[300px] aspect-video object-cover rounded-tl-lg rounded-tr-lg "
         />
-        <div className="p-1">
+      </div>
+      <Link href={`/professionals/${item?._id}`}>
+        <div className="p-2">
           <div className="flex justify-between">
             <h3 className="text-secondary-color text-sm sm:text-base lg:text-lg font-bold">
               {item?.name}
@@ -39,7 +56,7 @@ const FeaturedProfessionalsCard: React.FC<FeaturedProfessionalsCardProps> = ({
               <div className="flex items-center gap-1">
                 <FaStar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
                 <p className="text-secondary-color text-sm sm:text-base lg:text-lg">
-                  {item?.averageRating}
+                  {item?.averageRating?.toFixed(1)}
                 </p>
               </div>
             )}
@@ -48,8 +65,8 @@ const FeaturedProfessionalsCard: React.FC<FeaturedProfessionalsCardProps> = ({
             {item?.role === "both"
               ? "Videographer & Photographer"
               : item?.role === "photographer"
-              ? "Photographer"
-              : "Videographer"}
+                ? "Photographer"
+                : "Videographer"}
           </p>
           <p className="flex items-center gap-1 text-base-color text-xs lg:text-sm font-medium mt-1">
             <IoLocationSharp /> {item?.address}

@@ -17,6 +17,7 @@ const PhotographyCategoryDetails = ({
   data: { id: string; title: string | string[]; src: string | string[] };
 }) => {
   const serverUrl: string = getServerUrl() || "";
+
   return (
     <main className="pb-20">
       <SectionBanner

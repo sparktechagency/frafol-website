@@ -43,7 +43,7 @@ const ProfessionalPageDetails = async ({
   return (
     <main className="pb-20 pt-16">
       <Container>
-        <div className="flex flex-col gap-2 justify-center items-center">
+        <div className="flex flex-col gap-1 justify-center items-center">
           <Image
             width={2000}
             height={2000}
@@ -53,9 +53,22 @@ const ProfessionalPageDetails = async ({
                 : AllImages?.dummyProfile
             }
             alt="user"
-            className="w-32 h-32 object-cover rounded-full "
+            className="w-32 h-32 object-cover rounded-full border border-secondary-color"
           />
-          <h2 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-secondary-color mt-3">
+          {
+            professionalUser?.hasActiveSubscription &&
+            <div className="flex items-center gap-1 bg-secondary-color p-1 rounded-3xl mt-3">
+              <Image
+                src={AllImages?.batch}
+                width={2000}
+                height={2000}
+                alt={professionalUser?.name || "item Image"}
+                className="size-3 sm:size-4 lg:size-5"
+              />
+              <p className="text-white text-xs sm:text-sm font-bold">Frafol Choice</p>
+            </div>
+          }
+          <h2 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-secondary-color mt-1">
             {professionalUser?.name}
           </h2>
 
@@ -63,7 +76,7 @@ const ProfessionalPageDetails = async ({
             Average price: {professionalUser?.minHourlyRate}€ -{" "}
             {professionalUser?.maxHourlyRate}€
           </p>
-          <p className=" text-xs sm:text-sm lg:text-base xl:text-lg text-secondary-color font-medium mt-1">
+          <p className=" text-xs sm:text-sm lg:text-base xl:text-lg text-secondary-color font-medium mt-0">
             {professionalUser?.role === "both"
               ? "Videographer & Photographer"
               : professionalUser?.role === "photographer"
@@ -76,12 +89,12 @@ const ProfessionalPageDetails = async ({
               <FaStar className="text-[#FFD700] text-sm sm:text-base lg:text-lg -mt-0.5" />{" "}
               <span>
                 {" "}
-                {professionalUser?.averageRating} (
+                {professionalUser?.averageRating?.toFixed(1)} (
                 {professionalUser?.totalReview} Reviews)
               </span>
             </p>{" "}
           </Link>
-          <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium flex items-center gap-2">
+          <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium flex items-center gap-2 mb-3">
             <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg -mt-0.5" />{" "}
             <span>{professionalUser?.address}</span>
           </p>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IPackage } from "./package.type";
 
 interface IProfileId {
@@ -14,6 +15,10 @@ interface IStarCounts {
 }
 
 interface IProfessionalUser {
+  subscriptionId: any;
+  hasActiveSubscription: boolean;
+  subscriptionExpiryDate: any;
+  subscriptionDays: number;
   _id: string;
   profileId: IProfileId;
   name: string;
@@ -38,6 +43,10 @@ interface IProfessionalUser {
 }
 
 interface IProfessional {
+  subscriptionId: any;
+  hasActiveSubscription: boolean;
+  subscriptionExpiryDate: any;
+  subscriptionDays: number;
   _id: string; // MongoDB ObjectId or string
   name: string;
   sureName: string;

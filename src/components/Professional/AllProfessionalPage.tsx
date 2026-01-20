@@ -18,18 +18,21 @@ import NoResultFound from "../shared/NoResultFound";
 const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const params = await searchParams;
   const search = params?.search || "";
+  const type = params?.type || null;
+  console.log(type)
+
   const role =
     params?.role === "videographer"
       ? "videographer"
       : params?.role === "photographer"
-      ? "photographer"
-      : "";
+        ? "photographer"
+        : "";
 
   const page = params?.page || 1;
   const limit = 12;
 
   const res = await fetchWithAuth(
-    `/users/professionals?page=${page}&limit=${limit}&role=${role}&searchTerm=${search}`,
+    `/users/professionals?page=${page}&limit=${limit}&role=${role}&searchTerm=${search}${type ? `&hasActiveSubscription=true` : ''}`,
     {
       next: {
         tags: [TagTypes.prfessional],
@@ -51,7 +54,7 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
           <PhotographyPageSearch />
         </div>
         {professionals?.length > 0 ? (
-          <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {professionals?.map((item, index) => (
               <FeaturedProfessionalsCard key={index} item={item} />
             ))}

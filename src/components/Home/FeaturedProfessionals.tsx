@@ -15,6 +15,9 @@ const FeaturedProfessionals = async () => {
   });
   const data = await res.json();
   const professionals: IProfessional[] = data?.data?.result;
+
+  console.log(professionals)
+
   return (
     <section className="pb-28">
       <Container>

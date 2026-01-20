@@ -24,6 +24,10 @@ const FeaturedProfessionalSlider = ({ data }: { data: IProfessional[] }) => {
       navigation={true}
       breakpoints={{
         540: {
+          slidesPerView: 1.5,
+          spaceBetween: 50,
+        },
+        768: {
           slidesPerView: 2,
           spaceBetween: 50,
         },
