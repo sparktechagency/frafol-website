@@ -16,6 +16,8 @@ import { LuClock, LuUsers } from "react-icons/lu";
 import { FaLocationDot } from "react-icons/fa6";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { formatDate, formetTime } from "@/utils/dateFormet";
+import ApplyCouponOption from "@/components/shared/ApplyCouponOption";
+import { useState } from "react";
 
 interface RegisterWrokshopModalProps<T> {
     isModalVisible: boolean;
@@ -30,6 +32,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
     currentRecord,
 }) => {
     const [form] = Form.useForm();
+    const [couponStatus, setCouponStatus] = useState<any>(null);
 
     const acceptTerms = Form.useWatch("acceptTerms", form);
     const výslovneSúhlasím = Form.useWatch("výslovneSúhlasím", form);
@@ -44,7 +47,9 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
             const data = {
                 paymentType: "workshop",
                 workshopId: workshopData?._id,
+                ...(couponStatus && { couponCode: couponStatus?.data?.code }),
             };
+            // console.log(data)
 
             if (!acceptTerms || !výslovneSúhlasím || !bolSom) {
                 toast.error("Please accept all terms and conditions");
@@ -60,7 +65,6 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                     toastErrorMessage: "Something went wrong! Please try again.",
                 }
             );
-
             if (res?.success) {
                 window.open(res?.data?.checkoutUrl, "_blank");
             }
@@ -97,7 +101,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                             {currentRecord?.title}
                         </p>
                         <p className="text-xs sm:text-sm lg:text-base mt-1">
-                            {currentRecord?.description?.length > 100 && currentRecord?.description?.substring(0, 100) + "..." || currentRecord?.description}
+                            {currentRecord?.description}
                         </p>
                         <div className="flex items-center gap-2 mt-3">
                             <Image
@@ -231,10 +235,26 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                         </Checkbox>
                     </Form.Item>
                 </ReusableForm>
-                <div className="flex items-center gap-2 pt-5 justify-between">
-                    <p className="text-base sm:text-lg lg:text-xl font-semibold">
-                        {currentRecord?.mainPrice}€
-                    </p>
+                <ApplyCouponOption successStatus={couponStatus} setSuccessStatus={setCouponStatus} />
+                <div className="flex items-end gap-2 pt-5 justify-between">
+                    <div className={`${couponStatus && "w-40 text-end"}`}>
+                        <p className="text-base sm:text-lg lg:text-xl font-semibold">
+                            {currentRecord?.mainPrice}€
+                        </p>
+                        {
+                            couponStatus &&
+                            <>
+                                <p className="text-base sm:text-lg lg:text-xl font-semibold text-red-500">
+                                    -{couponStatus?.data?.amount}€
+                                </p>
+                                <hr className="" />
+                                <p className="text-base sm:text-lg lg:text-xl font-semibold">
+                                    {currentRecord?.mainPrice - couponStatus?.data?.amount}€
+                                </p>
+                            </>
+                        }
+
+                    </div>
                     {userData?.user?.userId !== currentRecord?.authorId?._id && (
                         <ReuseButton
                             variant="secondary"

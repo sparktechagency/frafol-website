@@ -2,15 +2,58 @@ import React from 'react';
 import { AllImages } from '../../../../../public/assets/AllImages';
 import PricingCard, { IPricingPlan } from './PricingCard';
 import { ISubscriptionData } from '@/app/(withDashboardLayout)/dashboard/professional/frafol-choice/page';
+import { FaRegCircleCheck } from 'react-icons/fa6';
+import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 
 
 const FrafolChoiceSection = ({ subscriptionData }: { subscriptionData: ISubscriptionData }) => {
     const features = [
-        { text: "Profile visibility on the Frafol homepage", included: true },
-        { text: "Higher placement in client search results", included: true },
-        { text: "Recommended by Frafol badge", included: true },
-        { text: "Priority visibility compared to standard profiles", included: true },
+        {
+            text: <span
+                className="text-base leading-relaxed"
+
+            >
+                Profile visibility on the Frafol homepage
+            </span>,
+            included: true
+        },
+        {
+            text: <span
+                className="text-base leading-relaxed"
+
+            >
+                Higher placement in client search results
+            </span>,
+            included: true
+        },
+        {
+            text: <div className='flex items-center gap-2'> <span
+                className="text-base leading-relaxed"
+
+            >
+                Badge
+            </span><div className="flex items-center gap-1 bg-secondary-color px-2 py-1 rounded-full z-20 shadow-md">
+                    <Image
+                        src={AllImages?.batch}
+                        width={16}
+                        height={16}
+                        alt="Frafol Choice Badge"
+                        className="size-2.5 sm:size-3 lg:size-4"
+                    />
+                    <p className="text-white text-[8px] sm:text-[10px] lg:text-xs font-bold">
+                        Frafol Choice
+                    </p>
+                </div></div>, included: true
+        },
+        {
+            text: <span
+                className="text-base leading-relaxed"
+            >
+                Priority visibility compared to standard profiles
+            </span>, included: true
+        },
 
     ]
     const pricingPlans: IPricingPlan[] = [
@@ -20,7 +63,6 @@ const FrafolChoiceSection = ({ subscriptionData }: { subscriptionData: ISubscrip
             price: 15,
             period: 1,
             icon: AllImages?.batch,
-            features,
             description: "Short-term profile highlighting."
         },
         {
@@ -29,7 +71,6 @@ const FrafolChoiceSection = ({ subscriptionData }: { subscriptionData: ISubscrip
             price: 45,
             period: 3,
             icon: AllImages?.batch,
-            features,
             description: "More stable profile visibility over a longer period."
         },
         {
@@ -38,7 +79,6 @@ const FrafolChoiceSection = ({ subscriptionData }: { subscriptionData: ISubscrip
             price: 90,
             period: 6,
             icon: AllImages?.batch,
-            features,
             popular: true,
             badge: "Best Value",
             description: "Long-term visibility with the best monthly price."
@@ -49,7 +89,6 @@ const FrafolChoiceSection = ({ subscriptionData }: { subscriptionData: ISubscrip
             price: 180,
             period: 12,
             icon: AllImages?.batch,
-            features,
             description: "Full-year profile highlighting without interruptions."
         },
     ];
@@ -68,7 +107,19 @@ const FrafolChoiceSection = ({ subscriptionData }: { subscriptionData: ISubscrip
                     Frafol Boost is a paid profile highlighting feature that makes your profile more visible to clients on the Frafol platform.
                 </p>
             </div>
-            <div className="flex flex-wrap gap-8 mt-16 items-baseline">
+            <ul className="mt-5 flex-1 space-y-4 p-2 mb-3 rounded-lg">
+                {/* <ReuseButton variant="secondary" className="cursor-pointer bg-warning! border-warning! py-2! !w-fit px-4! text-base! text-secondary-color! font-bold! shadow" disabled>Included</ReuseButton> */}
+                {features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3">
+
+                        <FaRegCircleCheck className="size-4 mt-1.5 shrink-0 text-secondary-color" />
+
+
+                        {feature.text}
+                    </li>
+                ))}
+            </ul>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-16 items-baseline">
                 {pricingPlans.map((plan) => (
                     <PricingCard key={plan?.id} plan={plan} subscriptionData={subscriptionData} />
                 ))}

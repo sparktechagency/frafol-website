@@ -9,6 +9,7 @@ interface TryCatchWrapperOptions {
 interface TryCatchConfig {
   showToast?: boolean;
   setLoading?: (loading: boolean) => void;
+  setError?: (error: string | null) => void;
   toastLoadingMessage?: string;
   toastSuccessMessage?: string;
   toastErrorMessage?: string;
@@ -24,6 +25,7 @@ const tryCatchWrapper = async (
   const {
     showToast = true,
     setLoading,
+    setError,
     toastLoadingMessage = "Processing...",
     toastSuccessMessage,
     toastErrorMessage = "Something went wrong! Please try again.",
@@ -54,6 +56,7 @@ const tryCatchWrapper = async (
     const res = await asyncFunction(req);
 
     if (!res.success) {
+      // setError?.(res.message);
       throw new Error(res.message);
     } else {
       // Show success toast only if showToast is true
@@ -73,9 +76,16 @@ const tryCatchWrapper = async (
     }
 
     setLoading?.(false);
+    setError?.(null);
     return res;
   } catch (error: any) {
     // Show error toast only if showToast is true
+    setError?.(
+      error?.data?.message ||
+        error?.message ||
+        error?.error ||
+        toastErrorMessage,
+    );
     if (showToast) {
       toast.error(
         error?.data?.message ||

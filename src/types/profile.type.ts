@@ -13,6 +13,8 @@ interface IProfileId {
 
 interface IProfile {
   _id: string;
+  introVideo: string;
+  bannerImages: string[];
   profileId: IProfileId;
   name: string;
   sureName: string;

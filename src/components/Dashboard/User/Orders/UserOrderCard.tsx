@@ -21,6 +21,8 @@ import ReusableForm from "@/components/ui/Form/ReuseForm";
 import { Checkbox, Form } from "antd";
 import Link from "next/link";
 import { toast } from "sonner";
+import ApplyCouponOption from "@/components/shared/ApplyCouponOption";
+import { useState } from "react";
 
 const UserOrderCard = ({
   activeTab,
@@ -48,10 +50,14 @@ const UserOrderCard = ({
   const user = useUser();
   const serverUrl = getServerUrl();
 
+  const [couponStatus, setCouponStatus] = useState<any>(null);
+
   const handlePayment = async (data: IEventOrder) => {
+    console.log(couponStatus)
     const value = {
       paymentType: "event", //"event" || "gear" || "workshop"
       eventOrderId: data?._id, // "eventOrderId" || "gearOrderId" || "workshopId"
+      ...(couponStatus && { couponCode: couponStatus?.data?.code }),
     };
 
     if (!acceptTerms || !výslovneSúhlasím || !bolSom) {
@@ -174,7 +180,24 @@ const UserOrderCard = ({
           <div>
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mt-1">
               {data?.totalPrice ? (
-                <span>{data?.totalPrice}€</span>
+                <div className={`${couponStatus && "w-40 text-end"}`}>
+                  <p className="text-base sm:text-lg lg:text-xl font-semibold">
+                    {data?.totalPrice}€
+                  </p>
+                  {
+                    couponStatus &&
+                    <>
+                      <p className="text-base sm:text-lg lg:text-xl font-semibold text-red-500">
+                        -{couponStatus?.data?.amount}€
+                      </p>
+                      <hr className="" />
+                      <p className="text-base sm:text-lg lg:text-xl font-semibold">
+                        {data?.totalPrice as number - couponStatus?.data?.amount}€
+                      </p>
+                    </>
+                  }
+
+                </div>
               ) : (
                 <span>
                   {budgetLabels[data?.budget_range as string] ||
@@ -182,6 +205,7 @@ const UserOrderCard = ({
                 </span>
               )}
             </p>
+
             {(activeTab === "accepted" || activeTab === "orderOffer") && (
               <ReusableForm
                 form={form}
@@ -268,7 +292,9 @@ const UserOrderCard = ({
           </div>
 
 
+
         </div>
+        <ApplyCouponOption successStatus={couponStatus} setSuccessStatus={setCouponStatus} />
         <div className="w-fit ml-auto">
           <></>
           {activeTab === "toConfirm" ? (

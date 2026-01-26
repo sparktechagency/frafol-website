@@ -14,6 +14,7 @@ import { HiLocationMarker } from "react-icons/hi";
 import { IoMdMail } from "react-icons/io";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { updateProfile } from "@/services/ProfileService/ProfileServiceApi";
+import ReuseUpload from "../ui/Form/ReuseUpload";
 
 const userInputStructure = [
   {
@@ -440,7 +441,7 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
         <ReusableForm
           form={form}
           handleFinish={onFinish}
-          className="p-10 w-full lg:w-[70%]"
+          className="p-10 w-full lg:w-[80%]"
         >
           <div className="mt-5 flex flex-col justify-center items-start gap-x-4">
             <div className=" relative">
@@ -490,21 +491,26 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
             </div>
           </div>
 
-          {inputStructure?.map((input, index) => (
-            <ReuseInput
-              key={index}
-              name={input.name}
-              Typolevel={5}
-              inputType={input.inputType}
-              type={input.type}
-              label={input.label}
-              placeholder={input.placeholder}
-              labelClassName={input.labelClassName}
-              inputClassName={input.inputClassName}
-              rules={input.rules}
-              disabled={input.disable}
-            />
-          ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
+
+            {inputStructure?.map((input, index) => (
+              <ReuseInput
+                key={index}
+                name={input.name}
+                Typolevel={5}
+                inputType={input.inputType}
+                type={input.type}
+                label={input.label}
+                placeholder={input.placeholder}
+                labelClassName={input.labelClassName}
+                inputClassName={input.inputClassName}
+                rules={input.rules}
+                disabled={input.disable}
+              />
+            ))}
+
+
+          </div>
 
           <ReuseButton
             htmlType="submit"

@@ -1,6 +1,5 @@
 // components/PricingCard.tsx
 import { cn } from "@/lib/utils";
-import { FaRegCircleCheck } from "react-icons/fa6";
 import { StaticImageData } from "next/image";
 import PricingCardPaymentButton from "./PricingCardPaymentButton";
 import { ISubscriptionData } from "@/app/(withDashboardLayout)/dashboard/professional/frafol-choice/page";
@@ -11,10 +10,6 @@ export interface IPricingPlan {
     id: number;
     name: string;
     price: number;
-    features: {
-        text: string;
-        included: boolean;
-    }[];
     period: number;
     popular?: boolean;
     badge?: string;
@@ -31,7 +26,6 @@ export default function PricingCard({
 }: PricingCardProps) {
     const {
         price,
-        features,
         period,
         badge,
     } = plan;
@@ -64,19 +58,11 @@ export default function PricingCard({
                 </div>
 
             </div>
-            {/* Subscription Status */}
-            {isSubscribed && (
-                <div className="mt-4 px-4 py-2.5 bg-green-50 border border-green-200 rounded-lg">
-                    <p className="text-center text-sm">
-                        <span className="font-semibold text-green-700">Active until: </span>
-                        <span className="text-green-600">{formatDate(subscriptionData?.subscriptionExpiryDate)}</span>
-                    </p>
-                </div>
-            )}
+
 
             {/* Features List */}
-            <ul className="mt-8 flex-1 space-y-4 p-2 border border-[#E1E1E1] shadow-inner mb-3 rounded-lg">
-                <ReuseButton variant="secondary" className="cursor-pointer bg-warning! border-warning! py-2! !w-fit px-4! text-base! text-secondary-color! font-bold! shadow" disabled>Included</ReuseButton>
+            {/* <ReuseButton variant="secondary" className="cursor-pointer bg-warning! border-warning! py-2! !w-fit px-4! text-base! text-secondary-color! font-bold! shadow" disabled>Included</ReuseButton> */}
+            {/* <ul className="mt-8 flex-1 space-y-4 p-2 border border-[#E1E1E1] shadow-inner mb-3 rounded-lg">
                 {features.map((feature, i) => (
                     <li key={i} className="flex items-start gap-3">
 
@@ -92,11 +78,19 @@ export default function PricingCard({
                         </span>
                     </li>
                 ))}
-            </ul>
-            <p className="text-sm text-[#99A1AF] mb-5">{plan?.description}</p>
-
+            </ul> */}
+            <p className="text-lg text-[#99A1AF] my-5">{plan?.description}</p>
+            {/* Subscription Status */}
+            {isSubscribed && (
+                <div className=" px-4 py-2.5 bg-green-50 border border-green-200 rounded-lg">
+                    <p className="text-center text-sm">
+                        <span className="font-semibold text-green-700">Active until: </span>
+                        <span className="text-green-600">{formatDate(subscriptionData?.subscriptionExpiryDate)}</span>
+                    </p>
+                </div>
+            )}
             <div className="">
-                {(subscriptionData?.hasActiveSubscription && subscriptionData?.subscriptionDays === plan?.id) ? <ReuseButton variant="secondary" className="cursor-default! bg-success! border-success!">Active</ReuseButton> : <PricingCardPaymentButton plan={plan} />}
+                {!(subscriptionData?.hasActiveSubscription && subscriptionData?.subscriptionDays === plan?.id) && <PricingCardPaymentButton plan={plan} />}
             </div>
         </div>
     );

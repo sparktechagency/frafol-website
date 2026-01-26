@@ -70,10 +70,10 @@ body {
 
 .swiper-button-next:after,
 .swiper-rtl .swiper-button-prev:after {
-  color: #ffb31f;
+  color: #ad2b08;
   padding: 8px 12px;
   font-size: 1.2rem !important;
-  background-color: #ad2b0899;
+  background-color: #ad2b0800;
   border-radius: 100%;
   z-index: 100;
   margin-right: -10px;
@@ -81,10 +81,10 @@ body {
 
 .swiper-button-prev:after,
 .swiper-rtl .swiper-button-next:after {
-  color: #ffb31f;
+  color: #ad2b08;
   padding: 8px 12px;
   font-size: 1rem !important;
-  background-color: #ad2b0899;
+  background-color: #ad2b0800;
   border-radius: 100%;
   z-index: 100;
   margin-left: -10px;

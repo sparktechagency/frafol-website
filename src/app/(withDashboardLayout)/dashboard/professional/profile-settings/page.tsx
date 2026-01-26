@@ -17,6 +17,7 @@ const page = async ({
       | "accountCredentials"
       | "unavailability"
       | "changePassword") || "profile";
+  const portfolio = (params?.portfolio as "introVideo" | "bannerImage" | "galleryImage") || "introVideo";
 
   const res = await fetchWithAuth("/users/my-profile", {
     next: {
@@ -27,7 +28,8 @@ const page = async ({
   const data = await res.json();
 
   const myData: IProfile = data?.data;
-  return <ProfileSettingsPage activeTab={tab} myData={myData} />;
+  console.log(myData)
+  return <ProfileSettingsPage activeTab={tab} portfolio={portfolio} myData={myData} />;
 };
 
 export default page;

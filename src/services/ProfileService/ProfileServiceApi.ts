@@ -9,7 +9,7 @@ export const updateProfile = async (
   req = {
     body: FormData,
     params: {},
-  }
+  },
 ) => {
   try {
     const res = await fetchWithAuth(`/users/update-my-profile`, {
@@ -28,7 +28,7 @@ export const updateProfile = async (
         {
           path: "/",
           expires: new Date(Date.now() + threeMonths),
-        }
+        },
       );
 
       (await cookies()).set(
@@ -37,7 +37,7 @@ export const updateProfile = async (
         {
           path: "/",
           expires: new Date(Date.now() + threeMonths),
-        }
+        },
       );
     }
 
@@ -47,11 +47,49 @@ export const updateProfile = async (
   }
 };
 
+export const updateIntroVIdeo = async (
+  req = {
+    body: FormData,
+    params: {},
+  },
+) => {
+  try {
+    const res = await fetchWithAuth(`/users/upload-new-video`, {
+      method: "PATCH",
+      body: req.body as any,
+    });
+    const result = await res.json();
+    revalidateTag(TagTypes.profile);
+    console.log(result);
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const updateBannerImage = async (
+  req = {
+    body: FormData,
+    params: {},
+  },
+) => {
+  try {
+    const res = await fetchWithAuth(`/users/upload-new-banner`, {
+      method: "PATCH",
+      body: req.body as any,
+    });
+    const result = await res.json();
+    revalidateTag(TagTypes.profile);
+    console.log(result);
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
 export const updateGallery = async (
   req = {
     body: FormData,
     params: {},
-  }
+  },
 ) => {
   try {
     const res = await fetchWithAuth(`/users/upload-new-photo`, {
@@ -60,7 +98,7 @@ export const updateGallery = async (
     });
     const result = await res.json();
     revalidateTag(TagTypes.profile);
-
+    console.log(result);
     return result;
   } catch (error: any) {
     return Error(error);
@@ -68,7 +106,7 @@ export const updateGallery = async (
 };
 
 export const updateUnavailableDates = async (
-  req = { body: FormData, params: {} }
+  req = { body: FormData, params: {} },
 ) => {
   try {
     const res = await fetchWithAuth(`/users/setUnAvailability`, {

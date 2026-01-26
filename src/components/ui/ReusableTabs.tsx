@@ -17,6 +17,8 @@ type ReusableTabsProps<T extends string> = {
   align?: "left" | "center" | "right";
   resetPage?: boolean;
   tabContentStyle?: string;
+  tabName?: string;
+  variant?: "default" | "bordered";
 };
 
 const ReusableTabs = <T extends string>({
@@ -25,6 +27,8 @@ const ReusableTabs = <T extends string>({
   align = "center",
   resetPage = false,
   tabContentStyle = "",
+  tabName = "tab",
+  variant = "default",
 }: ReusableTabsProps<T>) => {
   const tabRowRef = useRef<HTMLDivElement | null>(null);
   const indicatorRef = useRef<HTMLDivElement | null>(null);
@@ -60,20 +64,20 @@ const ReusableTabs = <T extends string>({
     align === "left"
       ? "justify-start"
       : align === "right"
-      ? "justify-end"
-      : "justify-center";
+        ? "justify-end"
+        : "justify-center";
 
   const handleTabChange = (value: string) => {
     const text = value;
     const params = new URLSearchParams(searchParams);
     if (text) {
-      params.set("tab", text);
+      params.set(tabName, text);
       if (resetPage) {
         params.set("page", "1");
         params.delete("search");
       }
     } else {
-      params.delete("tab");
+      params.delete(tabName);
     }
 
     replace(`${pathName}?${params.toString()}`, { scroll: false });
@@ -90,7 +94,7 @@ const ReusableTabs = <T extends string>({
       <div className={`w-full flex ${justifyClass}`}>
         <div
           ref={tabRowRef}
-          className="bg-[#f3f3f3] p-1 rounded-xl flex gap-2 relative"
+          className={`${variant === "bordered" ? " p-1 rounded-xl flex gap-2 relative" : "bg-[#f3f3f3] p-1 rounded-xl flex gap-2 relative"}`}
         >
           {tabs.map((tab) => (
             <button
@@ -98,16 +102,16 @@ const ReusableTabs = <T extends string>({
               tab-value={tab.value}
               disabled={tab.disabled || false}
               onClick={() => handleTabChange(tab.value)}
-              className={`px-4 z-10 py-1.5 rounded-md bg-transparent text-[#a13200] font-medium text-sm sm:text-base transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer
-                ${activeTab === tab.value ? "text-white" : "text-[#a13200]"}
-                `}
+              className={`px-4 z-10 py-1.5 rounded-md bg-transparent font-medium text-sm sm:text-base transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer
+                ${activeTab === tab.value ? (variant !== "bordered" ? "text-white" : "text-[#a13200]") : (variant !== "bordered" ? "text-[#a13200]" : "text-[#707070]")}
+            `}
             >
               {tab.label}
             </button>
           ))}
           <motion.div
             ref={indicatorRef}
-            className={`indicator absolute bottom-1 top-1 rounded-md bg-secondary-color z-0`}
+            className={`${variant === "bordered" ? "indicator absolute bottom-1 top-1 border-b-2 border-secondary-color z-0" : "indicator absolute bottom-1 top-1 rounded-md bg-secondary-color z-0"} `}
             animate={{
               transform: `translateX(${indicatorStyle.offset - 4}px)`,
               width: `${indicatorStyle.width}px`,

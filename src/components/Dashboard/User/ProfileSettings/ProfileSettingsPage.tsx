@@ -11,14 +11,16 @@ import { IProfile } from "@/types";
 const ProfileSettingsPage = ({
   activeTab,
   myData,
+  portfolio
 }: {
   activeTab:
-    | "profile"
-    | "portfolio"
-    | "accountCredentials"
-    | "unavailability"
-    | "changePassword";
+  | "profile"
+  | "portfolio"
+  | "accountCredentials"
+  | "unavailability"
+  | "changePassword";
   myData: IProfile;
+  portfolio: "introVideo" | "bannerImage" | "galleryImage";
 }) => {
   return (
     <div>
@@ -35,7 +37,7 @@ const ProfileSettingsPage = ({
             {
               label: "Portfolio",
               value: "portfolio",
-              content: <PortfolioPage myData={myData} />, // Placeholder for portfolio content
+              content: <PortfolioPage activeTab={portfolio} myData={myData} />, // Placeholder for portfolio content
             },
             {
               label: "Account Credentials",

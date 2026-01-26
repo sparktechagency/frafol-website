@@ -18,6 +18,7 @@ export const createWorkshopOrder = async (req: {
       body: JSON.stringify(req.body),
     });
     const result = await res.json();
+    console.log(result)
     revalidateTag(TagTypes.workshopOrders);
 
     return result;

@@ -68,3 +68,20 @@ export const contactUs = async (req: { body: any; params: any }) => {
     return Error(error);
   }
 };
+
+export const applyCoupon = async (req: { body: any }) => {
+  try {
+    const res = await fetchWithAuth(`/coupon/validate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Add content type header for JSON
+      },
+      body: JSON.stringify(req.body),
+    });
+    const result = await res.json();
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
