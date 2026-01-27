@@ -8,7 +8,6 @@ import ReusableForm from "../ui/Form/ReuseForm";
 import ReuseInput from "../ui/Form/ReuseInput";
 import ReuseButton from "../ui/Button/ReuseButton";
 import Link from "next/link";
-import { useUser } from "@/context/UserContext";
 import { useState } from "react";
 import ReportModal from "../ui/Modal/ReportModal";
 import { FaYoutube } from "react-icons/fa6";
@@ -16,13 +15,14 @@ import { Checkbox, Form } from "antd";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { subscribe } from "@/services/Others/OthersApi";
 import FeedbackModal from "../ui/Modal/FeedbackModal";
+import { useGetUserData } from "@/context/useGetUserData";
 
 export default function Footer() {
   const [form] = Form.useForm();
   const isChecked = Form.useWatch("newsletter", form);
 
   const currentYear = new Date().getFullYear();
-  const user = useUser();
+  const user = useGetUserData();
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
 
@@ -203,7 +203,7 @@ export default function Footer() {
                     <li>
                       <p
                         className="cursor-pointer"
-                        onClick={() => user?.user?.userId && showReportModal()}
+                        onClick={() => user?.userId && showReportModal()}
                       >
                         Report a Problem
                       </p>
@@ -212,7 +212,7 @@ export default function Footer() {
                       <p
                         className="cursor-pointer"
                         onClick={() =>
-                          user?.user?.userId && showFeedbackModal()
+                          user?.userId && showFeedbackModal()
                         }
                       >
                         Give Feedback

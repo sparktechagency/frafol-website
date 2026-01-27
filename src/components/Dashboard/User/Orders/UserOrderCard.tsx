@@ -16,13 +16,13 @@ import { AllImages } from "../../../../../public/assets/AllImages";
 import { FaEuroSign } from "react-icons/fa6";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { completePayment } from "@/services/PaymentService/PaymentServiceApi";
-import { useUser } from "@/context/UserContext";
 import ReusableForm from "@/components/ui/Form/ReuseForm";
 import { Checkbox, Form } from "antd";
 import Link from "next/link";
 import { toast } from "sonner";
 import ApplyCouponOption from "@/components/shared/ApplyCouponOption";
 import { useState } from "react";
+import { useGetUserData } from "@/context/useGetUserData";
 
 const UserOrderCard = ({
   activeTab,
@@ -47,7 +47,7 @@ const UserOrderCard = ({
   const acceptTerms = Form.useWatch("acceptTerms", form);
   const výslovneSúhlasím = Form.useWatch("výslovneSúhlasím", form);
   const bolSom = Form.useWatch("bolSom", form);
-  const user = useUser();
+  const user = useGetUserData();
   const serverUrl = getServerUrl();
 
   const [couponStatus, setCouponStatus] = useState<any>(null);
@@ -118,7 +118,7 @@ const UserOrderCard = ({
             }
             width={1000}
             height={1000}
-            className="w-6 h-6 rounded-full object-cover"
+            className="w-6 h-6 rounded-full object-cover border border-secondary-color"
             alt="user"
           />
           <p>{data?.serviceProviderId?.name}</p>
@@ -170,7 +170,7 @@ const UserOrderCard = ({
               <div className="flex items-center text-nowrap gap-1">
                 Cancel By:{" "}
               </div>
-              {data?.cancelRequestedBy === user?.user?.userId
+              {data?.cancelRequestedBy === user?.userId
                 ? "You"
                 : data?.serviceProviderId?.name}
             </p>
@@ -294,7 +294,9 @@ const UserOrderCard = ({
 
 
         </div>
-        <ApplyCouponOption successStatus={couponStatus} setSuccessStatus={setCouponStatus} />
+        {(activeTab === "accepted" || activeTab === "orderOffer") && (
+          <ApplyCouponOption successStatus={couponStatus} setSuccessStatus={setCouponStatus} />
+        )}
         <div className="w-fit ml-auto">
           <></>
           {activeTab === "toConfirm" ? (
@@ -374,7 +376,7 @@ const UserOrderCard = ({
             </div>
           ) : activeTab === "cancelRequest" ? (
             <div className="flex items-center gap-2">
-              {data?.cancelRequestedBy !== user?.user?.userId && (
+              {data?.cancelRequestedBy !== user?.userId && (
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => showAcceptModal(data)}

@@ -8,9 +8,9 @@ import {
   setOnlineUsers,
 } from "../../redux/features/conversation/conversationSlice";
 import { useSocket } from "../../context/socket-context";
-import { useUser } from "@/context/UserContext";
 import { IConversation } from "@/types/conversation.type";
 import SearchInput from "../ui/Form/ReuseSearchInput";
+import { useGetUserData } from "@/context/useGetUserData";
 
 const ConversationChatList = ({
   conversation,
@@ -19,7 +19,7 @@ const ConversationChatList = ({
   conversation: IConversation[];
   onlineUsers: any;
 }) => {
-  const user = useUser();
+  const user = useGetUserData();
   const socket = useSocket()?.socket;
   const dispatch = useAppDispatch();
 
@@ -95,7 +95,7 @@ const ConversationChatList = ({
       socket.off("onlineUser");
       socket.off("newMessage");
     };
-  }, [dispatch, handleNewMessage, socket, user?.user?.userId]);
+  }, [dispatch, handleNewMessage, socket, user?.userId]);
 
   useEffect(() => {
     if (conversation) {
@@ -113,9 +113,8 @@ const ConversationChatList = ({
 
   return (
     <div
-      className={`w-full lg:w-[400px] overflow-y-auto px-3 border-r-2 border-secondary-color/20 ${
-        seletedConversation ? "hidden lg:block" : "block lg:block"
-      }`}
+      className={`w-full lg:w-[400px] overflow-y-auto px-3 border-r-2 border-secondary-color/20 ${seletedConversation ? "hidden lg:block" : "block lg:block"
+        }`}
     >
       <div className="sticky top-0 z-20   pt-5 !bg-primary-color">
         <div className=" flex justify-between items-center pe-4  text-base sm:text-xl md:text-2xl lg:text-3xl text-secondary-color font-bold mt-3">

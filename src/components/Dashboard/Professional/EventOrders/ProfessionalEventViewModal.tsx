@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { Modal } from "antd";
@@ -12,12 +11,12 @@ import { formatDate, formetTime } from "@/utils/dateFormet";
 import { acceptDirectOrder } from "@/services/EventOrderService/EventOrderServiceApi";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { budgetLabels } from "@/utils/budgetLabels";
-import { useUser } from "@/context/UserContext";
 import InvoiceDocumentFromClientSide from "@/utils/InvoiceDocumentFromClientSide";
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
 import { toast } from "sonner";
 import InvoiceDocumentFromAdminSide from "@/utils/InvoiceDocumentFromAdminSide";
+import { useGetUserData } from "@/context/useGetUserData";
 
 interface ProfessionalEventViewModalProps {
   showCreateOrderModal: ({ record }: { record: IEventOrder | null }) => void;
@@ -44,7 +43,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
   activeTab, // Default to "pending" if not provided
 }) => {
   const serverUrl = getServerUrl();
-  const user = useUser();
+  const user = useGetUserData();
 
   const extensionLength = currentRecord?.extensionRequests?.length || 0;
 
@@ -83,6 +82,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
         toast.success("Downloaded successfully!", { id: toastId });
       })
       .catch((error: any) => {
+        console.log(error)
         toast.error("Download failed", { id: toastId });
       });
   };
@@ -103,6 +103,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
         toast.success("Downloaded successfully!", { id: toastId });
       })
       .catch((error: any) => {
+        console.log(error)
         toast.error("Download failed", { id: toastId });
       });
   };
@@ -391,7 +392,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
             </ReuseButton>
           </div>
         ) : activeTab === "cancelRequest" &&
-          user?.user?.userId !== currentRecord?.cancelRequestedBy ? (
+          user?.userId !== currentRecord?.cancelRequestedBy ? (
           <div className="mt-5 flex gap-3 items-center justify-center flex-wrap">
             <ReuseButton
               onClick={() => showCancelAcceptModal({ record: currentRecord })}

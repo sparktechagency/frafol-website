@@ -51,6 +51,8 @@ const ConversationMessage = ({
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
 
+  console.log(allMessages)
+
   const handleBack = () => {
     const params = new URLSearchParams(searchParams);
     params.delete("room");
@@ -63,8 +65,8 @@ const ConversationMessage = ({
   useEffect(() => {
     if (!selectedConversation?.chat?._id) return;
     setMessages([]);
-    setTimeout(() => {}, 0);
-  }, [dispatch, selectedConversation?.chat?._id]);
+    setTimeout(() => { }, 0);
+  }, [selectedConversation?.chat?._id]);
 
   // Scroll to bottom when new messages loaded on first page
   useEffect(() => {
@@ -171,9 +173,8 @@ const ConversationMessage = ({
 
   return (
     <div
-      className={`w-full ${
-        selectedConversation ? "block lg:block" : "hidden lg:block"
-      }`}
+      className={`w-full ${selectedConversation ? "block lg:block" : "hidden lg:block"
+        }`}
     >
       {selectedConversation ? (
         <Layout className={`!bg-[#FFFAF5] lg:col-span-3 xl:col-span-4 h-full`}>
@@ -207,8 +208,8 @@ const ConversationMessage = ({
                       {onlineUsers.includes(
                         selectedConversation?.chat?.users?.[0]?._id
                       ) && (
-                        <div className="size-2 rounded-full bg-green-500"></div>
-                      )}
+                          <div className="size-2 rounded-full bg-green-500"></div>
+                        )}
                     </Tooltip>
                   </span>
                 </div>

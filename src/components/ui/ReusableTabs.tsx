@@ -38,13 +38,15 @@ const ReusableTabs = <T extends string>({
     const tabBounds = target.getBoundingClientRect();
     const rowBounds = tabRowRef.current?.getBoundingClientRect();
 
-    if (rowBounds && indicatorRef.current) {
-      const offset = tabBounds.left - rowBounds.left;
+    if (rowBounds && indicatorRef.current && tabRowRef.current) {
+      // Add scrollLeft to account for horizontal scroll
+      const offset = tabBounds.left - rowBounds.left + tabRowRef.current.scrollLeft;
       const width = tabBounds.width;
 
       setIndicatorStyle({ offset, width });
     }
   };
+
 
   useEffect(() => {
     const activeTabElement = document.querySelector(
@@ -53,7 +55,38 @@ const ReusableTabs = <T extends string>({
     if (activeTabElement) {
       updateIndicator(activeTabElement as HTMLElement);
     }
+
+    // Update indicator on window resize
+    const handleResize = () => {
+      const activeTabElement = document.querySelector(
+        `button[tab-value="${activeTab}"]`
+      );
+      if (activeTabElement) {
+        updateIndicator(activeTabElement as HTMLElement);
+      }
+    };
+
+    // Update indicator on scroll
+    const handleScroll = () => {
+      const activeTabElement = document.querySelector(
+        `button[tab-value="${activeTab}"]`
+      );
+      if (activeTabElement) {
+        updateIndicator(activeTabElement as HTMLElement);
+      }
+    };
+
+    const tabRowElement = tabRowRef.current;
+
+    window.addEventListener('resize', handleResize);
+    tabRowElement?.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      tabRowElement?.removeEventListener('scroll', handleScroll);
+    };
   }, [activeTab]);
+
 
   const searchParams = useSearchParams();
   const pathName = usePathname();
@@ -90,11 +123,11 @@ const ReusableTabs = <T extends string>({
   };
 
   return (
-    <div>
+    <div className="w-full overflow-hidden">
       <div className={`w-full flex ${justifyClass}`}>
         <div
           ref={tabRowRef}
-          className={`${variant === "bordered" ? " p-1 rounded-xl flex gap-2 relative" : "bg-[#f3f3f3] p-1 rounded-xl flex gap-2 relative"}`}
+          className={`scrollbar-thin scrollbar-thumb-[#a13200] scrollbar-track-gray-200 hover:scrollbar-thumb-[#d14200] ${variant === "bordered" ? " p-1 rounded-xl flex gap-2 relative overflow-x-auto" : "bg-[#f3f3f3] p-1 rounded-xl flex gap-2 relative overflow-x-auto"}`}
         >
           {tabs.map((tab) => (
             <button
@@ -102,7 +135,7 @@ const ReusableTabs = <T extends string>({
               tab-value={tab.value}
               disabled={tab.disabled || false}
               onClick={() => handleTabChange(tab.value)}
-              className={`px-4 z-10 py-1.5 rounded-md bg-transparent font-medium text-sm sm:text-base transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer
+              className={`px-4 z-10 py-1.5 rounded-md bg-transparent font-medium text-sm sm:text-base transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer text-nowrap
                 ${activeTab === tab.value ? (variant !== "bordered" ? "text-white" : "text-[#a13200]") : (variant !== "bordered" ? "text-[#a13200]" : "text-[#707070]")}
             `}
             >

@@ -51,43 +51,46 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
     };
 
 
-    // Combine images and videos into a single gallery array
+    // ✅ CORRECTED GALLERY LOGIC WITH PROPER PRIORITY
     const gallery = [
-        ...(item?.profileImage && item.profileImage.length > 0
-            ? [{ type: "video", src: "/assets/video.mp4", alt: "Profile" }]
+        // Priority 1: introVideo (if available)
+        ...(item?.introVideo && item.introVideo.length > 0
+            ? [{ type: "video", src: item.introVideo, alt: "Intro Video" }]
             : []),
-        ...(item?.profileImage && item.profileImage.length > 0
-            ? [{ type: "image", src: item.profileImage, alt: "Profile" }]
+
+        // Priority 2: bannerImages (show with introVideo OR alone if no introVideo)
+        ...(item?.bannerImages && item.bannerImages.length > 0
+            ? item.bannerImages.map((img) => ({ type: "image", src: img, alt: "Banner" }))
             : []),
-        ...(item?.profileImage && item.profileImage.length > 0
-            ? [{ type: "image", src: AllImages.dummyProfile, alt: "Profile" }]
-            : []),
-        ...(item?.profileImage && item.profileImage.length > 0
-            ? [{ type: "image", src: AllImages?.herobanner, alt: "Profile" }]
-            : []),
-        ...(item?.profileImage && item.profileImage.length > 0
-            ? [{ type: "image", src: AllImages?.aboutUs3, alt: "Profile" }]
-            : []),
-        ...(item?.profileImage && item.profileImage.length > 0
-            ? [{ type: "image", src: AllImages?.aboutUsBrife, alt: "Profile" }]
-            : []),
-        // ...(item?.portfolioImages && item.portfolioImages.length > 0
-        //   ? item.portfolioImages.map((img) => ({ type: "image", src: img, alt: "Portfolio" }))
-        //   : []),
-        // ...(item?.portfolioVideos && item.portfolioVideos.length > 0
-        //   ? item.portfolioVideos.map((vid) => ({ type: "video", src: vid, alt: "Portfolio Video" }))
-        //   : []),
     ];
 
-    // Fallback to dummy image if no gallery items
+    // Priority 3: If no introVideo and no bannerImages, use gallery images
+    const galleryImages =
+        (item?.introVideo || (item?.bannerImages && item.bannerImages.length > 0))
+            ? []
+            : (item?.gallery && item.gallery.length > 0
+                ? item.gallery?.slice(0, 3).map((img) => ({ type: "image", src: img, alt: "Gallery" }))
+                : []);
+
+    const finalGallery = [
+        ...gallery,
+        ...galleryImages,
+    ];
+
+    // Priority 4 & 5: Fallback to profileImage or dummyProfile
     const displayGallery =
-        gallery.length > 0
-            ? gallery
-            : [{ type: "image", src: AllImages.dummyProfile, alt: "Dummy Profile" }];
+        finalGallery.length > 0
+            ? finalGallery
+            : (item?.profileImage && item.profileImage.length > 0
+                ? [{ type: "image", src: item.profileImage, alt: "Profile" }]
+                : [{ type: "image", src: AllImages.dummyProfile, alt: "Dummy Profile" }]);
 
     const currentMedia = displayGallery[currentIndex];
     const hasMultipleItems = displayGallery.length > 1;
     const isCurrentMediaVideo = currentMedia.type === "video";
+
+
+    console.log(currentMedia)
 
     const handleNext = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -193,12 +196,13 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
                     alt={currentMedia.alt}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     priority={false}
+                    loading="lazy"
                     className="w-full !max-h-[250px] sm:!max-h-[250px] lg:!max-h-[300px] aspect-video object-cover rounded-tl-lg rounded-tr-lg "
                 />
             ) : (
                 <video
                     ref={videoRef}
-                    src={typeof currentMedia.src === 'string' ? currentMedia.src : ''} className="w-full h-full object-cover"
+                    src={typeof currentMedia.src === 'string' ? serverUrl + currentMedia.src : ''} className="w-full h-full object-cover"
                     muted={isVideoMuted}
                     loop
                     playsInline
@@ -211,7 +215,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
             )}
 
             {isCurrentMediaVideo && (
-                <div className="absolute bottom-5 flex items-center gap-4 px-3 bg-gradient-to-r from-black/20 via-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                <div className="absolute bottom-5 flex items-center gap-4 px-3 bg-gradient-to-r from-black/20 via-transparent to-black/20 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                     {/* Play/Pause Button */}
                     <button
                         onClick={handlePlayPause}
@@ -245,7 +249,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
             {hasMultipleItems && (
                 <button
                     onClick={handlePrev}
-                    className="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white p-1.5 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
+                    className="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white p-1.5 rounded-full transition-all duration-200 opacity-100 lg:opacity-0 group-hover:opacity-100"
                     aria-label="Previous media"
                 >
                     <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -256,7 +260,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
             {hasMultipleItems && (
                 <button
                     onClick={handleNext}
-                    className="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white p-1.5 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white p-1.5 rounded-full transition-all duration-200 opacity-100 lg:opacity-0 group-hover:opacity-100"
                     aria-label="Next media"
                 >
                     <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />

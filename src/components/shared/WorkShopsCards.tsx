@@ -11,14 +11,14 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import { IWorkshop } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { formatDate, formetTime } from "@/utils/dateFormet";
-import { useUser } from "@/context/UserContext";
+import { useGetUserData } from "@/context/useGetUserData";
 
 const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModalOpen: any }) => {
 
   const serverUrl = getServerUrl();
-  const userData = useUser();
+  const userData = useGetUserData();
 
-  console.log(userData?.user?.userId)
+  console.log(userData?.userId)
   console.log(data?.authorId?._id)
   return (
     <div className="p-1.5 rounded-xl border border-background-color flex flex-col justify-between">
@@ -93,7 +93,7 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
         <p className="text-base sm:text-lg lg:text-xl font-semibold">
           {data?.mainPrice}€
         </p>
-        {(userData?.user?.userId && userData?.user?.userId !== data?.authorId?._id) && (
+        {(userData?.userId && userData?.userId !== data?.authorId?._id) && (
           <ReuseButton
             variant="secondary"
             className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"

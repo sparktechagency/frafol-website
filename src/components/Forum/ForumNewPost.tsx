@@ -3,17 +3,17 @@ import React from "react";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { FaPlus } from "react-icons/fa6";
 import AddNewForumMoidal from "../ui/Modal/Forum/AddNewForumMoidal";
-import { useUser } from "@/context/UserContext";
+import { useGetUserData } from "@/context/useGetUserData";
 
 const ForumNewPost = () => {
-  const userData = useUser();
+  const userData = useGetUserData();
   const [isAddModalVisible, setIsAddModalOpen] = React.useState(false);
   const handleCancle = () => setIsAddModalOpen(false);
   console.log(userData)
   return (
     <div>
       {
-        userData?.user?.userId && (
+        userData?.userId && (
           <div className=" mt-5 flex justify-end">
             <ReuseButton
               variant="secondary"

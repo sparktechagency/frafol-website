@@ -10,6 +10,7 @@ const FrafolChoiceProfessional = async () => {
     const res = await fetchWithAuth(`/users/professionals?hasActiveSubscription={true}`, {
         next: {
             tags: [TagTypes.prfessional],
+            revalidate: 180
         },
     });
     const data = await res.json();

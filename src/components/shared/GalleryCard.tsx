@@ -25,7 +25,7 @@ const GalleryCard = ({
     <div className="relative group w-full">
       {photoView ? (
         <AntdImage
-          src={arrayOfImages ? serverUrl + gallery : gallery?.image}
+          src={arrayOfImages ? serverUrl + gallery : serverUrl + gallery?.image}
           alt={gallery?.name ? gallery?.name : gallery || "gallery Image"}
           className="w-full h-full object-cover rounded-lg"
         />
@@ -33,8 +33,8 @@ const GalleryCard = ({
         <Image
           width={2000}
           height={2000}
-          src={arrayOfImages ? serverUrl + gallery : gallery?.image}
-          alt={gallery?.name ? gallery?.name : gallery || "gallery Image"}
+          src={arrayOfImages ? serverUrl + gallery : serverUrl + gallery?.image}
+          alt={gallery?.name ? gallery?.name : gallery?.name || "gallery Image"}
           className="w-full h-full object-cover rounded-lg"
           fetchPriority="high"
           priority={true}
@@ -53,7 +53,7 @@ const GalleryCard = ({
   return (
     <div>
       {!showOnlyImage ? (
-        <Link href={`/professionals/${gallery?.id}`}>{content}</Link>
+        <Link href={`/professionals/${gallery?.userId}`}>{content}</Link>
       ) : (
         content
       )}

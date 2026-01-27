@@ -3,7 +3,6 @@ import { AllImages } from '../../../../../public/assets/AllImages';
 import PricingCard, { IPricingPlan } from './PricingCard';
 import { ISubscriptionData } from '@/app/(withDashboardLayout)/dashboard/professional/frafol-choice/page';
 import { FaRegCircleCheck } from 'react-icons/fa6';
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 

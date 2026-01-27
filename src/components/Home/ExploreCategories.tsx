@@ -24,6 +24,7 @@ const ExploreCategories = async ({
   const res = await fetchWithAuth(`/category/type/${activeTab}`, {
     next: {
       tags: [TagTypes.category],
+      revalidate: 30
     },
   });
   const data = await res.json();

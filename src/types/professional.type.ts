@@ -60,6 +60,9 @@ interface IProfessional {
   minHourlyRate: number;
   averageRating: number;
   totalReview: number;
+  introVideo: string;
+  bannerImages: string[];
+  gallery: string[];
 }
 
 export type { IProfessional, IProfessionalUser };

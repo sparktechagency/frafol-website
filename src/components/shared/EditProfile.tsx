@@ -14,7 +14,6 @@ import { HiLocationMarker } from "react-icons/hi";
 import { IoMdMail } from "react-icons/io";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { updateProfile } from "@/services/ProfileService/ProfileServiceApi";
-import ReuseUpload from "../ui/Form/ReuseUpload";
 
 const userInputStructure = [
   {

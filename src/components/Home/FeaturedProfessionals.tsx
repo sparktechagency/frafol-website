@@ -11,6 +11,7 @@ const FeaturedProfessionals = async () => {
   const res = await fetchWithAuth(`/users/professionals`, {
     next: {
       tags: [TagTypes.prfessional],
+      revalidate: 180
     },
   });
   const data = await res.json();

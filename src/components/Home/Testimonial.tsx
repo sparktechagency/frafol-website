@@ -10,6 +10,7 @@ const Testimonial = async () => {
   const res = await fetchWithAuth(`/feedback`, {
     next: {
       tags: [TagTypes.testimonial],
+      revalidate: 60
     },
   });
   const data = await res.json();

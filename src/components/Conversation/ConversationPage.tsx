@@ -1,10 +1,10 @@
 "use client";
-import { useUser } from "@/context/UserContext";
 import { useAppSelector } from "@/redux/hooks";
 import ConversationChatList from "./ConversationChatList";
 import ConversationMessage from "./ConversationMessage";
 import { IConversation, IMessage } from "@/types/conversation.type";
 import { ISignInUser } from "@/types";
+import { useGetUserData } from "@/context/useGetUserData";
 
 const ConversationPage = ({
   conversation,
@@ -24,7 +24,7 @@ const ConversationPage = ({
   room: string;
   page: number;
 }) => {
-  const userData = useUser();
+  const userData = useGetUserData();
   const onlineUsers = useAppSelector((state) => state.conversation.onlineUser);
 
   return (
@@ -37,7 +37,7 @@ const ConversationPage = ({
 
         <ConversationMessage
           allMessages={allMessages}
-          userData={userData?.user as ISignInUser}
+          userData={userData as ISignInUser}
           totalMessages={totalMessages}
           onlineUsers={onlineUsers}
           room={room}

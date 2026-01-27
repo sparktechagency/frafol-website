@@ -3,7 +3,6 @@ import { Checkbox, Form, Modal } from "antd";
 import ReuseButton from "../../Button/ReuseButton";
 import Link from "next/link";
 import ReusableForm from "../../Form/ReuseForm";
-import { useUser } from "@/context/UserContext";
 import { IWorkshop } from "@/types";
 import { toast } from "sonner";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
@@ -18,6 +17,7 @@ import { AllImages } from "../../../../../public/assets/AllImages";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import ApplyCouponOption from "@/components/shared/ApplyCouponOption";
 import { useState } from "react";
+import { useGetUserData } from "@/context/useGetUserData";
 
 interface RegisterWrokshopModalProps<T> {
     isModalVisible: boolean;
@@ -40,10 +40,10 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
 
     const router = useRouter();
     const serverUrl = getServerUrl();
-    const userData = useUser();
+    const userData = useGetUserData();
 
     const handleRegister = async (workshopData: IWorkshop) => {
-        if (userData?.user?.userId) {
+        if (userData?.userId) {
             const data = {
                 paymentType: "workshop",
                 workshopId: workshopData?._id,
@@ -255,7 +255,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                         }
 
                     </div>
-                    {userData?.user?.userId !== currentRecord?.authorId?._id && (
+                    {userData?.userId !== currentRecord?.authorId?._id && (
                         <ReuseButton
                             variant="secondary"
                             className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
