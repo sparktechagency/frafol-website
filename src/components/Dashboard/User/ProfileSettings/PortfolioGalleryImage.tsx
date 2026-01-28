@@ -219,6 +219,8 @@ const PortfolioGalleryImage = ({ myData }: { myData: IProfile }) => {
                                                 className="w-full h-full object-cover rounded-lg"
                                                 preload="metadata"
                                                 onPlay={() => handleVideoPlay(index)}
+                                                controlsList="nodownload noplaybackrate"
+
                                             >
                                                 Your browser does not support the video tag.
                                             </video>

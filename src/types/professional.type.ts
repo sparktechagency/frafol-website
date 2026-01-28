@@ -40,6 +40,10 @@ interface IProfessionalUser {
   starCounts: IStarCounts;
   package: IPackage[];
   gallery: string[]; // You can specify a more specific type for gallery if needed
+  introVideo: string;
+  bannerImages: string[];
+  country: string;
+  town: string;
 }
 
 interface IProfessional {

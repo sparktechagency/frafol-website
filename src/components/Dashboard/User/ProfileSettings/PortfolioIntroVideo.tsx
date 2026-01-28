@@ -40,6 +40,7 @@ const PortfolioIntroVideo = ({ myData }: { myData: IProfile }) => {
                         src={`${serverUrl}${myData?.introVideo}`}
                         className="w-full max-w-[768px] aspect-video object-cover rounded-lg"
                         controls
+                        controlsList="nodownload noplaybackrate"
                     />
                 </div>
 

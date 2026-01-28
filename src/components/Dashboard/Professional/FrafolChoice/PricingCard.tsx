@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import { StaticImageData } from "next/image";
 import PricingCardPaymentButton from "./PricingCardPaymentButton";
-import { ISubscriptionData } from "@/app/(withDashboardLayout)/dashboard/professional/frafol-choice/page";
+import { ISubscription, ISubscriptionData } from "@/app/(withDashboardLayout)/dashboard/professional/frafol-choice/page";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { formatDate } from "@/utils/dateFormet";
 
@@ -20,12 +20,12 @@ export interface IPricingPlan {
 interface PricingCardProps {
     plan: IPricingPlan;
     subscriptionData: ISubscriptionData
+    pack: ISubscription
 }
 export default function PricingCard({
-    plan, subscriptionData
+    plan, subscriptionData, pack
 }: PricingCardProps) {
     const {
-        price,
         period,
         badge,
     } = plan;
@@ -53,7 +53,7 @@ export default function PricingCard({
 
                 <div className="mt-2 flex items-baseline">
                     <p className="text-3xl sm:text-4xl lg:text-5xl text-[#2C2C2C] font-black ">
-                        €{price}
+                        €{pack?.price}
                     </p>
                 </div>
 
@@ -90,7 +90,7 @@ export default function PricingCard({
                 </div>
             )}
             <div className="">
-                {!(subscriptionData?.hasActiveSubscription && subscriptionData?.subscriptionDays === plan?.id) && <PricingCardPaymentButton plan={plan} />}
+                {!(subscriptionData?.hasActiveSubscription && subscriptionData?.subscriptionDays === plan?.id) && <PricingCardPaymentButton plan={plan} pack={pack} />}
             </div>
         </div>
     );

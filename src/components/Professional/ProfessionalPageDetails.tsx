@@ -29,7 +29,7 @@ const ProfessionalPageDetails = async ({
 }) => {
   const userData: ISignInUser = await getCurrentUser();
   const serverUrl = getServerUrl();
-  console.log(professionalUser);
+
   const res = await fetchWithAuth("/users/my-profile", {
     next: {
       tags: [TagTypes.profile],
@@ -37,13 +37,13 @@ const ProfessionalPageDetails = async ({
   });
 
   const data = await res.json();
-
   const myData: IProfile = data?.data;
 
   return (
-    <main className="pb-20 pt-16">
+    <main className="pb-20 pt-10">
       <Container>
         <div className="flex flex-col gap-1 justify-center items-center">
+          {/* <ProfessionalDetailsPageSlider item={professionalUser} /> */}
           <Image
             width={2000}
             height={2000}

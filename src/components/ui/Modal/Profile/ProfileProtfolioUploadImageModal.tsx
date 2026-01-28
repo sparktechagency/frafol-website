@@ -24,7 +24,7 @@ const ProfileProtfolioUploadImageModal: React.FC<
 
     console.log(values)
 
-    if (type === "gallery") {
+    if (type === "both") {
       values?.image?.forEach((file: any) => {
         formData.append("gallery", file?.originFileObj);
       });
@@ -102,7 +102,7 @@ const ProfileProtfolioUploadImageModal: React.FC<
         </h1>
 
         <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-semibold mb-5">
-          Upload your {type === "gallery" ? "Gallery Images" : type === "video" ? "Intro Video" : "Banner Image"}
+          Upload your {type === "both" ? "Gallery Images and Video" : type === "video" ? "Intro Video" : "Banner Image"}
         </p>
 
         <ReusableForm form={form} handleFinish={onSubmit}>

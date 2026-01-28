@@ -10,6 +10,16 @@ export interface ISubscriptionData {
     subscriptionDays: number
 }
 
+export interface ISubscription {
+    _id: string;
+    title: string;
+    duration: number;
+    price: number;
+    isActive: boolean;
+    createdAt: string; // or Date if you parse it
+    updatedAt: string; // or Date if you parse it
+}
+
 const page = async () => {
 
     const res = await fetchWithAuth(`/users/me/subscription`, {
@@ -20,12 +30,23 @@ const page = async () => {
 
     const data = await res.json();
 
-    console.log(data)
     const subscriptionData = data?.data
+
+
+    const packRes = await fetchWithAuth(`/subscription`, {
+        next: {
+            tags: [TagTypes.subscriptionOrder],
+        },
+    });
+
+    const packData = await packRes.json();
+
+    const allPacks = packData?.data
+    console.log(allPacks)
 
     return (
         <div>
-            <FrafolChoiceSection subscriptionData={subscriptionData} />
+            <FrafolChoiceSection subscriptionData={subscriptionData} allPacks={allPacks} />
         </div>
     );
 };

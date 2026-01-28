@@ -4,9 +4,10 @@ import { completePayment } from '@/services/PaymentService/PaymentServiceApi';
 import tryCatchWrapper from '@/utils/tryCatchWrapper';
 import React from 'react';
 import { IPricingPlan } from './PricingCard';
+import { ISubscription } from '@/app/(withDashboardLayout)/dashboard/professional/frafol-choice/page';
 
-const PricingCardPaymentButton = ({ plan }: { plan: IPricingPlan }) => {
-    const handlePayment = async (data: IPricingPlan) => {
+const PricingCardPaymentButton = ({ plan, pack }: { plan: IPricingPlan, pack: ISubscription }) => {
+    const handlePayment = async (data: { period: number, price: number }) => {
         const value = {
             paymentType: "subscription",
             "amount": data.price,
@@ -29,7 +30,7 @@ const PricingCardPaymentButton = ({ plan }: { plan: IPricingPlan }) => {
     };
     return (
         <div>
-            <ReuseButton variant="secondary" className="cursor-pointer" onClick={() => handlePayment(plan)}> €{plan.price}</ReuseButton>
+            <ReuseButton variant="secondary" className="cursor-pointer" onClick={() => handlePayment({ period: plan.period, price: pack.price })}> €{pack.price}</ReuseButton>
         </div>
     );
 };
