@@ -45,6 +45,7 @@ const page = async ({
 
   const serviceChargeData = await serviceChargeRes.json();
   const serviceCharge: number = serviceChargeData?.data?.photoVideoGrapy;
+  const minServiceCharge: number = serviceChargeData?.data?.minimumCharge;
 
   const stateRes = await fetchWithAuth(`/event-order/professional/stats`, {
     next: {
@@ -64,6 +65,7 @@ const page = async ({
       totalData={totalData}
       page={page}
       serviceCharge={serviceCharge}
+      minServiceCharge={minServiceCharge}
     />
   );
 };

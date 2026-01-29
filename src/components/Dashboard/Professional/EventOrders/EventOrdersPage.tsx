@@ -29,6 +29,7 @@ const EventOrdersPage = ({
   totalData,
   page,
   serviceCharge,
+  minServiceCharge
 }: {
   states: {
     totalCompletedEvents: number;
@@ -48,6 +49,7 @@ const EventOrdersPage = ({
   totalData: number;
   page: number;
   serviceCharge: number;
+  minServiceCharge: number
 }) => {
   const limit = 12;
 
@@ -353,6 +355,7 @@ const EventOrdersPage = ({
           handleCancel={handleCancel}
           currentRecord={currentRecord}
           serviceCharge={serviceCharge}
+          minServiceCharge={minServiceCharge}
         />
         <SendDeliveryRequestModal
           isSendDeliveryRequestModalVisible={isSendDeliveryRequestModalVisible}
