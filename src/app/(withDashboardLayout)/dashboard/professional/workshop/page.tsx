@@ -40,6 +40,7 @@ const page = async ({
 
   const serviceChargeData = await serviceChargeRes.json();
   const serviceCharge: number = serviceChargeData?.data?.workShop;
+  const minServiceCharge: number = serviceChargeData?.data?.minimumCharge;
 
   let participantsData = undefined;
 
@@ -69,6 +70,7 @@ const page = async ({
       totalData={totalData}
       serviceCharge={serviceCharge}
       participantsData={participantsData}
+      minServiceCharge={minServiceCharge}
     />
   );
 };

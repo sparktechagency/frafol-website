@@ -22,6 +22,7 @@ const ProfessionalWorkshopPage = ({
   workshops,
   totalData,
   serviceCharge,
+  minServiceCharge,
   participantsData,
 }: {
   tab: string;
@@ -31,6 +32,7 @@ const ProfessionalWorkshopPage = ({
   workshops: IWorkshop[];
   totalData: number;
   serviceCharge: number;
+  minServiceCharge: number;
   participantsData: IWorkshopParticipants[] | undefined;
 }) => {
   const searchParams = useSearchParams();
@@ -172,12 +174,14 @@ const ProfessionalWorkshopPage = ({
         isAddModalVisible={isAddModalVisible}
         handleCancel={handleCancel}
         serviceCharge={serviceCharge}
+        minServiceCharge={minServiceCharge}
       />
       <ProfessionalEditWorkshop
         isEditModalVisible={isEditModalVisible}
         handleCancel={handleCancel}
         currentRecord={currentRecord}
         serviceCharge={serviceCharge}
+        minServiceCharge={minServiceCharge}
       />
       <DeleteModal
         isDeleteModalVisible={isDeleteModalVisible}
