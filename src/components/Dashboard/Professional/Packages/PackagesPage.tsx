@@ -21,6 +21,7 @@ const PackagesPage = ({
   totalData,
   userData,
   serviceCharge,
+  minServiceCharge
 }: {
   tab: string;
   page: number;
@@ -29,6 +30,7 @@ const PackagesPage = ({
   totalData: number;
   userData: ISignInUser;
   serviceCharge: number;
+  minServiceCharge: number
 }) => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -165,6 +167,7 @@ const PackagesPage = ({
         handleCancel={handleCancel}
         userData={userData}
         serviceCharge={serviceCharge}
+        minServiceCharge={minServiceCharge}
       />
       <ProfessionalEditPackageModal
         isEditModalVisible={isEditModalVisible}
@@ -172,6 +175,7 @@ const PackagesPage = ({
         currentRecord={currentRecord}
         userData={userData}
         serviceCharge={serviceCharge}
+        minServiceCharge={minServiceCharge}
       />
       <DeleteModal
         isDeleteModalVisible={isDeleteModalVisible}

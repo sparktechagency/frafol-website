@@ -19,12 +19,14 @@ const ProfessionalEditPackageModal = ({
   currentRecord,
   userData,
   serviceCharge,
+  minServiceCharge
 }: {
   isEditModalVisible: boolean;
   handleCancel: () => void;
   currentRecord: IPackage | null;
   userData: ISignInUser;
   serviceCharge: number;
+  minServiceCharge: number
 }) => {
   const serverUrl = getServerUrl();
 
@@ -84,7 +86,7 @@ const ProfessionalEditPackageModal = ({
 
     const serviceChargeAmmount = Number(priceValue) * serviceChagePercentage;
 
-    const totalServiceCharge = serviceChargeAmmount > 5 ? serviceChargeAmmount : 5;
+    const totalServiceCharge = serviceChargeAmmount > minServiceCharge ? serviceChargeAmmount : minServiceCharge;
 
     const totalVatAmount = Number(priceValue) * vatAmountPercentage;
 
@@ -92,7 +94,7 @@ const ProfessionalEditPackageModal = ({
       Number(priceValue) + totalServiceCharge + totalVatAmount;
 
     form.setFieldValue("mainPrice", Number(mainPriceValue?.toFixed(2)));
-  }, [form, priceValue, serviceCharge, vatAmountValue]);
+  }, [form, minServiceCharge, priceValue, serviceCharge, vatAmountValue]);
 
   const onSubmit = async (values: any) => {
     const formData = new FormData();

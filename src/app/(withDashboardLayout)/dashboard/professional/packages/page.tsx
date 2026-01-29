@@ -47,6 +47,7 @@ const page = async ({
 
   const serviceChargeData = await serviceChargeRes.json();
   const serviceCharge: number = serviceChargeData?.data?.photoVideoGrapy;
+  const minServiceCharge: number = serviceChargeData?.data?.minimumCharge;
 
   return (
     <PackagesPage
@@ -57,6 +58,7 @@ const page = async ({
       totalData={totalData}
       userData={userData}
       serviceCharge={serviceCharge}
+      minServiceCharge={minServiceCharge}
     />
   );
 };
