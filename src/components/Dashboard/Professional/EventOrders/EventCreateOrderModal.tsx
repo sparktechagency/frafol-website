@@ -51,7 +51,7 @@ const EventCreateOrderModal = ({
     })
 
     form.setFieldValue("totalPrice", Number(mainPriceValue?.toFixed(2)));
-  }, [form, priceValue, serviceCharge, vatAmountValue]);
+  }, [form, minServiceCharge, priceValue, serviceCharge, vatAmountValue]);
 
   const onSubmit = async (values: any) => {
     // Ensure date is correctly formatted before sending to API

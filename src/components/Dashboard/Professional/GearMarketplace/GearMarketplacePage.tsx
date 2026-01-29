@@ -20,6 +20,7 @@ const GearMarketplacePage = ({
   myGears,
   totalData,
   serviceCharge,
+  minServiceCharge
 }: {
   page: number;
   limit: number;
@@ -27,6 +28,7 @@ const GearMarketplacePage = ({
   myGears: IGear[];
   totalData: number;
   serviceCharge: number;
+  minServiceCharge: number;
 }) => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -120,6 +122,7 @@ const GearMarketplacePage = ({
           handleCancel={handleCancel}
           categories={categories}
           serviceCharge={serviceCharge}
+          minServiceCharge={minServiceCharge}
         />
         <GearMarketPlaceEditNewGear
           isEditModalVisible={isEditModalVisible}
@@ -127,6 +130,7 @@ const GearMarketplacePage = ({
           currentRecord={currentRecord}
           categories={categories}
           serviceCharge={serviceCharge}
+          minServiceCharge={minServiceCharge}
         />
         <DeleteModal
           isDeleteModalVisible={isDeleteModalVisible}

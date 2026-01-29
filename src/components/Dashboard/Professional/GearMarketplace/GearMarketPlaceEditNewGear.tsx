@@ -19,12 +19,14 @@ const GearMarketPlaceEditNewGear = ({
   currentRecord,
   categories,
   serviceCharge,
+  minServiceCharge
 }: {
   isEditModalVisible: boolean;
   handleCancel: () => void;
   currentRecord: any | null;
   categories: ICategory[];
   serviceCharge: number;
+  minServiceCharge: number
 }) => {
   const serverUrl = getServerUrl();
   const [form] = Form.useForm();
@@ -63,14 +65,14 @@ const GearMarketPlaceEditNewGear = ({
 
     const serviceChargeAmmount = Number(priceValue) * serviceChagePercentage;
 
-    const totalServiceCharge = serviceChargeAmmount > 5 ? serviceChargeAmmount : 5;
+    const totalServiceCharge = serviceChargeAmmount > minServiceCharge ? serviceChargeAmmount : minServiceCharge;
     const totalVatAmount = Number(priceValue) * vatAmountPercentage;
 
     const mainPriceValue =
       Number(priceValue) + totalServiceCharge + totalVatAmount;
 
     form.setFieldValue("mainPrice", Number(mainPriceValue?.toFixed(2)));
-  }, [form, priceValue, serviceCharge, vatAmountValue]);
+  }, [form, minServiceCharge, priceValue, serviceCharge, vatAmountValue]);
 
   const onSubmit = async (values: any) => {
     const formData = new FormData();

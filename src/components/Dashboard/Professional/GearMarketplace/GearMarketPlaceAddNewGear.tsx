@@ -15,11 +15,13 @@ const GearMarketPlaceAddNewGear = ({
   handleCancel,
   categories,
   serviceCharge,
+  minServiceCharge
 }: {
   isAddModalVisible: boolean;
   handleCancel: () => void;
   categories: ICategory[];
   serviceCharge: number;
+  minServiceCharge: number
 }) => {
   const [form] = Form.useForm();
   const priceValue = Form.useWatch("price", form) || 0;
@@ -31,14 +33,14 @@ const GearMarketPlaceAddNewGear = ({
 
     const serviceChargeAmmount = Number(priceValue) * serviceChagePercentage;
 
-    const totalServiceCharge = serviceChargeAmmount > 5 ? serviceChargeAmmount : 5;
+    const totalServiceCharge = serviceChargeAmmount > minServiceCharge ? serviceChargeAmmount : minServiceCharge;
     const totalVatAmount = Number(priceValue) * vatAmountPercentage;
 
     const mainPriceValue =
       Number(priceValue) + totalServiceCharge + totalVatAmount;
 
     form.setFieldValue("mainPrice", Number(mainPriceValue?.toFixed(2)));
-  }, [form, priceValue, serviceCharge, vatAmountValue]);
+  }, [form, minServiceCharge, priceValue, serviceCharge, vatAmountValue]);
 
   const onSubmit = async (values: any) => {
     const formData = new FormData();

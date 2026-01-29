@@ -43,6 +43,7 @@ const page = async ({
 
   const serviceChargeData = await serviceChargeRes.json();
   const serviceCharge: number = serviceChargeData?.data?.gearOrders;
+  const minServiceCharge: number = serviceChargeData?.data?.minimumCharge;
 
   return (
     <GearMarketplacePage
@@ -52,6 +53,7 @@ const page = async ({
       myGears={myGears}
       totalData={totalData}
       serviceCharge={serviceCharge}
+      minServiceCharge={minServiceCharge}
     />
   );
 };
