@@ -18,8 +18,6 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
   const serverUrl = getServerUrl();
   const userData = useGetUserData();
 
-  console.log(userData?.userId)
-  console.log(data?.authorId?._id)
   return (
     <div className="p-1.5 rounded-xl border border-background-color flex flex-col justify-between">
       <div>
@@ -35,8 +33,17 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
             {data?.title}
           </p>
           <p className="text-xs sm:text-sm lg:text-base mt-1">
-            {data?.description?.length > 100 && data?.description?.substring(0, 100) + "..." || data?.description}
+            {data?.description?.length > 100
+              ? (
+                <>
+                  {data.description.substring(0, 100)}...
+                  <span className="font-medium text-secondary-color cursor-pointer" onClick={() => handleModalOpen(data)}> Show More</span>
+                </>
+              )
+              : data?.description
+            }
           </p>
+
           <div className="flex items-center gap-2 mt-3">
             <Image
               width={1000}

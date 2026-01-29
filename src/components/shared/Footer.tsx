@@ -128,13 +128,13 @@ export default function Footer() {
                   </h4>
                   <ul className="space-y-1">
                     <li>
-                      <Link href="/privacy-policy">Privacy Policy</Link>
+                      <Link href="/privacy-policy">Terms & Condition Marketplace</Link>
                     </li>
                     <li>
                       <Link href="/data-protection">GDPR</Link>
                     </li>
                     <li>
-                      <Link href="/terms-of-service">Terms & Condition</Link>
+                      <Link href="/terms-of-service">Terms & Condition Conceptural</Link>
                     </li>
                     <li>
                       <Link href="/website-functionality-compatibility">
@@ -205,7 +205,7 @@ export default function Footer() {
                         className="cursor-pointer"
                         onClick={() => user?.userId && showReportModal()}
                       >
-                        Report a Problem
+                        Report for a illegal content
                       </p>
                     </li>
                     <li>

@@ -6,12 +6,11 @@ export const addReport = async (req: { body: any; params: any }) => {
   try {
     const res = await fetchWithAuth(`/report/add`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json", // Add content type header for JSON
-      },
-      body: JSON.stringify(req.body),
+      body: req.body,
     });
     const result = await res.json();
+
+    console.log(result)
 
     return result;
   } catch (error: any) {

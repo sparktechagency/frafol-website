@@ -169,11 +169,11 @@ const ReviewDetailsAndSubmit = () => {
               <p className="text-xs sm:text-sm lg:text-base">
                 By creating an account, you agree to our{" "}
                 <span className="text-secondary-color underline">
-                  Terms of Service
+                  Terms & Condition Conceptural
                 </span>{" "}
                 and{" "}
                 <span className="text-secondary-color underline">
-                  Privacy Policy.
+                  Terms & Condition Marketplace.
                 </span>
               </p>
             </div>

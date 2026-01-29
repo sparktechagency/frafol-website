@@ -9,7 +9,7 @@ const PrivacyPolicy = async () => {
   return (
     <Container>
       <div className=" py-10 text-gray-800 min-h-[100vh]">
-        <SectionHeader title="Privacy Policy" />
+        <SectionHeader title="Terms & Condition Marketplace" />
         <div dangerouslySetInnerHTML={{ __html: data?.data?.content }}></div>
       </div>
     </Container>

@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function Banner() {
   return (
-    <section className="w-full min-h-screen z-10 text-secondary-color flex justify-center items-center mx-auto relative overflow-hidden">
+    <section className="w-full min-h-[50vh] max-h-[80vh] mb-10 lg:mb-0 h-fit lg:min-h-screen z-10 text-secondary-color flex justify-center items-center mx-auto relative overflow-hidden">
       <div className="hidden lg:block">
         {" "}
         <Container>
@@ -58,7 +58,7 @@ export default function Banner() {
         </Container>
       </div>
       <div
-        className="relative bg-cover bg-center h-screen block lg:hidden"
+        className="relative bg-cover bg-center min-h-[50vh] max-h-[80vh] h-fit lg:h-screen block lg:hidden"
         style={{
           width: "100%",
         }}

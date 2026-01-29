@@ -7,7 +7,7 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import FeaturedProfessionalSlider from "./FeaturedProfessionalSlider";
 
 const FrafolChoiceProfessional = async () => {
-    const res = await fetchWithAuth(`/users/professionals?hasActiveSubscription={true}`, {
+    const res = await fetchWithAuth(`/users/professionals?hasActiveSubscription=true`, {
         next: {
             tags: [TagTypes.prfessional],
             revalidate: 180

@@ -13,7 +13,7 @@ const FeaturedProfessionalsCard: React.FC<FeaturedProfessionalsCardProps> = ({
   item,
 }) => {
 
-
+  console.log(item)
   return (
     <div className="flex flex-col gap-2 bg-base-color/[0.01] rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 group" >
       {/* Image/Video Carousel Container */}

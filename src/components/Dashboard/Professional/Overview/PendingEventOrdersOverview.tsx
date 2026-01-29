@@ -26,12 +26,15 @@ const PendingEventOrdersOverview = async () => {
 
   const serviceChargeData = await serviceChargeRes.json();
   const serviceCharge: number = serviceChargeData?.data?.photoVideoGrapy;
+  const minServiceCharge: number = serviceChargeData?.data?.minimumCharge;
+
   return (
     <div>
       <PendingEventOrdersPage
         myEventData={myEventData}
         totalData={totalData}
         serviceCharge={serviceCharge}
+        minServiceCharge={minServiceCharge}
       />
     </div>
   );

@@ -20,10 +20,12 @@ const PendingEventOrdersPage = ({
   myEventData,
   totalData,
   serviceCharge,
+  minServiceCharge,
 }: {
   myEventData: IEventOrder[];
   totalData: number;
   serviceCharge: number;
+  minServiceCharge: number;
 }) => {
   const limit = 12;
 
@@ -182,6 +184,7 @@ const PendingEventOrdersPage = ({
           handleCancel={handleCancel}
           currentRecord={currentRecord}
           serviceCharge={serviceCharge}
+          minServiceCharge={minServiceCharge}
         />
         <SendDeliveryRequestModal
           isSendDeliveryRequestModalVisible={isSendDeliveryRequestModalVisible}

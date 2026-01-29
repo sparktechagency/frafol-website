@@ -32,6 +32,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({
 
     if (res?.success) {
       handleCancel();
+      form.resetFields();
     }
   };
 

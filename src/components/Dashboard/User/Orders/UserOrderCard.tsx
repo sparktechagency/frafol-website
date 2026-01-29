@@ -107,7 +107,7 @@ const UserOrderCard = ({
           )}
         </div>
         <h4 className="text-xs sm:text-sm lg:text-base xl:text-lg font-bold mb-1 capitalize">
-          {data?.serviceType}
+          {data?.serviceType === "both" ? "Photography & Videography" : data?.serviceType}
         </h4>
         <div className="text-sm sm:text-base lg:text-lg text-gray-700 flex items-center my-3 gap-1">
           <Image

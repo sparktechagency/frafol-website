@@ -163,7 +163,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               alt="photographer"
               width={50}
               height={50}
-              className="rounded-full object-cover"
+              className="rounded-full object-cover size-7"
             />
             <div>
               <p className="font-bold text-lg">
