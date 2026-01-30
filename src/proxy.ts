@@ -14,7 +14,7 @@ interface DecodedToken {
   role: string;
 }
 
-export async function middleware(request: Request) {
+export async function proxy(request: Request) {
   const { pathname } = request.nextUrl;
 
   // Await cookies() to get the cookies object

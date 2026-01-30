@@ -3,7 +3,7 @@
 
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 
 export const addNewReview = async (req: { body: any; params: any }) => {
   try {
@@ -16,7 +16,7 @@ export const addNewReview = async (req: { body: any; params: any }) => {
     });
     const result = await res.json();
     console.log(result)
-    revalidateTag(TagTypes.review);
+    updateTag(TagTypes.review);
 
     return result;
   } catch (error: any) {
@@ -34,7 +34,7 @@ export const updateReview = async (req: { body: any; params: any }) => {
       body: JSON.stringify(req.body),
     });
     const result = await res.json();
-    revalidateTag(TagTypes.review);
+    updateTag(TagTypes.review);
 
     return result;
   } catch (error: any) {

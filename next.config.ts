@@ -6,10 +6,11 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    dangerouslyAllowLocalIP: true,
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "**", // Matches all domains using HTTP
+        hostname: "10.10.10.32", // Matches all domains using HTTP
       },
       {
         protocol: "https",

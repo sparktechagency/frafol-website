@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 
 export const addNewCommunityPost = async (
   req = {
@@ -16,7 +16,7 @@ export const addNewCommunityPost = async (
       body: req.body as any,
     });
     const result = await res.json();
-    revalidateTag(TagTypes.communityForum);
+    updateTag(TagTypes.communityForum);
 
     return result;
   } catch (error: any) {
@@ -36,7 +36,7 @@ export const updateCommunityPost = async (
       body: req.body as any,
     });
     const result = await res.json();
-    revalidateTag(TagTypes.communityForum);
+    updateTag(TagTypes.communityForum);
 
     return result;
   } catch (error: any) {
@@ -55,7 +55,7 @@ export const deleteCommunityPost = async (
       method: "DELETE",
     });
     const result = await res.json();
-    revalidateTag(TagTypes.communityForum);
+    updateTag(TagTypes.communityForum);
 
     return result;
   } catch (error: any) {

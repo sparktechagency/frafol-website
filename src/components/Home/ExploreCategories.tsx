@@ -38,44 +38,50 @@ const ExploreCategories = async ({
           description="Frafol makes it easy to find and hire the perfect photographer or videographer for your project."
         />
         <div className="mt-16">
-          <ReusableTabs<"photoGraphy" | "videoGraphy">
-            align="center"
-            activeTab={activeTab}
-            tabs={[
-              {
-                label: "Photography",
-                value: "photoGraphy",
-                content: (
-                  <Suspense
-                    fallback={
-                      <div className="py-40 w-full flex justify-center items-center">
-                        <FadeLoader color="#ad2b08" />
-                      </div>
-                    }
-                  >
-                    <ExplorePhotographyCategory categories={categories} />
-                  </Suspense>
-                ),
-              },
+          <Suspense
+            fallback={
+              <div className="py-40 w-full flex justify-center items-center">
+                <FadeLoader color="#ad2b08" />
+              </div>
+            }
+          ><ReusableTabs<"photoGraphy" | "videoGraphy">
+              align="center"
+              activeTab={activeTab}
+              tabs={[
+                {
+                  label: "Photography",
+                  value: "photoGraphy",
+                  content: (
+                    <Suspense
+                      fallback={
+                        <div className="py-40 w-full flex justify-center items-center">
+                          <FadeLoader color="#ad2b08" />
+                        </div>
+                      }
+                    >
+                      <ExplorePhotographyCategory categories={categories} />
+                    </Suspense>
+                  ),
+                },
 
-              {
-                label: "Videography",
-                value: "videoGraphy",
-                content: (
-                  <Suspense
-                    fallback={
-                      <div className="py-40 w-full flex justify-center items-center">
-                        <FadeLoader color="#ad2b08" />
-                      </div>
-                    }
-                  >
-                    <ExploreVideographyCategory categories={categories} />
-                  </Suspense>
-                ),
-              },
-            ]}
-            tabContentStyle="mt-5"
-          />
+                {
+                  label: "Videography",
+                  value: "videoGraphy",
+                  content: (
+                    <Suspense
+                      fallback={
+                        <div className="py-40 w-full flex justify-center items-center">
+                          <FadeLoader color="#ad2b08" />
+                        </div>
+                      }
+                    >
+                      <ExploreVideographyCategory categories={categories} />
+                    </Suspense>
+                  ),
+                },
+              ]}
+              tabContentStyle="mt-5"
+            /></Suspense>
           {/* <ExploreCategoryTab /> */}
         </div>
       </Container>

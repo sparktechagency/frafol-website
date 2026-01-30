@@ -1,7 +1,7 @@
 "use server";
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const completePayment = async (req: { body: any; params: any }) => {
@@ -14,10 +14,10 @@ export const completePayment = async (req: { body: any; params: any }) => {
       body: JSON.stringify(req.body),
     });
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
-    revalidateTag(TagTypes.workshopOrders);
-    revalidateTag(TagTypes.gearOrder);
-    revalidateTag(TagTypes.subscriptionOrder);
+    updateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.workshopOrders);
+    updateTag(TagTypes.gearOrder);
+    updateTag(TagTypes.subscriptionOrder);
 
     return result;
   } catch (error: any) {

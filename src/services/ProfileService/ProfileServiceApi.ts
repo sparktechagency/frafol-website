@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const updateProfile = async (
@@ -17,7 +17,7 @@ export const updateProfile = async (
       body: req.body as any,
     });
     const result = await res.json();
-    revalidateTag(TagTypes.profile);
+    updateTag(TagTypes.profile);
 
     if (result?.success) {
       const threeMonths = 1000 * 60 * 60 * 24 * 30 * 3; // 3 months in milliseconds
@@ -59,7 +59,7 @@ export const updateIntroVIdeo = async (
       body: req.body as any,
     });
     const result = await res.json();
-    revalidateTag(TagTypes.profile);
+    updateTag(TagTypes.profile);
     console.log(result);
     return result;
   } catch (error: any) {
@@ -78,7 +78,7 @@ export const updateBannerImage = async (
       body: req.body as any,
     });
     const result = await res.json();
-    revalidateTag(TagTypes.profile);
+    updateTag(TagTypes.profile);
     console.log(result);
     return result;
   } catch (error: any) {
@@ -97,7 +97,7 @@ export const updateGallery = async (
       body: req.body as any,
     });
     const result = await res.json();
-    revalidateTag(TagTypes.profile);
+    updateTag(TagTypes.profile);
     console.log(result);
     return result;
   } catch (error: any) {
@@ -117,7 +117,7 @@ export const updateUnavailableDates = async (
       body: JSON.stringify(req.body),
     });
     const result = await res.json();
-    revalidateTag(TagTypes.profile);
+    updateTag(TagTypes.profile);
 
     return result;
   } catch (error: any) {

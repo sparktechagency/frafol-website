@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useTransition } from "react";
 import { motion } from "framer-motion";
 
 type Tab<T extends string> = {
@@ -33,6 +33,8 @@ const ReusableTabs = <T extends string>({
   const tabRowRef = useRef<HTMLDivElement | null>(null);
   const indicatorRef = useRef<HTMLDivElement | null>(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ offset: 0, width: 0 });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isPending, startTransition] = useTransition(); // 2. Initialize transition
 
   const updateIndicator = (target: HTMLElement) => {
     const tabBounds = target.getBoundingClientRect();
@@ -113,7 +115,9 @@ const ReusableTabs = <T extends string>({
       params.delete(tabName);
     }
 
-    replace(`${pathName}?${params.toString()}`, { scroll: false });
+    startTransition(() => {
+      replace(`${pathName}?${params.toString()}`, { scroll: false });
+    });
     const activeTabElement = document.querySelector(
       `button[tab-value="${value}"]`
     );

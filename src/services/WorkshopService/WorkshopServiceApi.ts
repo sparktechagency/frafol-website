@@ -3,7 +3,7 @@
 
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 
 export const addNewWrokshop = async (req = { body: FormData, params: {} }) => {
   try {
@@ -12,7 +12,7 @@ export const addNewWrokshop = async (req = { body: FormData, params: {} }) => {
       body: req.body as any,
     });
     const result = await res.json();
-    revalidateTag(TagTypes.workshop);
+    updateTag(TagTypes.workshop);
 
     return result;
   } catch (error: any) {
@@ -27,7 +27,7 @@ export const updateWrokshop = async (req = { body: FormData, params: {} }) => {
       body: req.body as any,
     });
     const result = await res.json();
-    revalidateTag(TagTypes.workshop);
+    updateTag(TagTypes.workshop);
 
     return result;
   } catch (error: any) {
@@ -41,7 +41,7 @@ export const deleteWrokshop = async (req = { body: {}, params: {} }) => {
       method: "DELETE",
     });
     const result = await res.json();
-    revalidateTag(TagTypes.workshop);
+    updateTag(TagTypes.workshop);
 
     return result;
   } catch (error: any) {

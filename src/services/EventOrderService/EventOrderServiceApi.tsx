@@ -3,7 +3,7 @@
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import { ICreateEventOrder } from "@/types";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 
 export const createEventOrder = async (req: {
   body: ICreateEventOrder;
@@ -18,7 +18,7 @@ export const createEventOrder = async (req: {
       body: JSON.stringify(req.body),
     });
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -38,7 +38,7 @@ export const acceptDirectOrder = async (req: {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -62,7 +62,7 @@ export const acceptCustomOrder = async (req: {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -85,7 +85,7 @@ export const cancelEventOrder = async (req: {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -105,7 +105,7 @@ export const acceptCancelRequest = async (req: {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -125,7 +125,7 @@ export const declineCancelRequest = async (req: {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -149,7 +149,7 @@ export const declineEventOrder = async (req: {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -169,7 +169,7 @@ export const sendDeliveryRequest = async (req: {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -189,7 +189,7 @@ export const sendExtensionRequest = async (req: {
       body: JSON.stringify(req.body),
     });
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -208,7 +208,7 @@ export const acceptDeliveryRequest = async (req: {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -231,7 +231,7 @@ export const acceptExtensionRequest = async (req: {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -255,7 +255,7 @@ export const declineExtensionRequest = async (req: {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.eventOrder);
+    updateTag(TagTypes.eventOrder);
 
     return result;
   } catch (error: any) {
@@ -275,7 +275,7 @@ export const declineExtensionRequest = async (req: {
 //       body: req.body as any,
 //     });
 //     const result = await res.json();
-//     revalidateTag(TagTypes.gear);
+//     updateTag(TagTypes.gear);
 
 //     return result;
 //   } catch (error: any) {
@@ -294,7 +294,7 @@ export const declineExtensionRequest = async (req: {
 //       method: "DELETE",
 //     });
 //     const result = await res.json();
-//     revalidateTag(TagTypes.gear);
+//     updateTag(TagTypes.gear);
 
 //     return result;
 //   } catch (error: any) {

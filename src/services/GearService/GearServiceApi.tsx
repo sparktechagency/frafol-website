@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 
 export const addNewGear = async (
   req = {
@@ -16,7 +16,7 @@ export const addNewGear = async (
       body: req.body as any,
     });
     const result = await res.json();
-    revalidateTag(TagTypes.gear);
+    updateTag(TagTypes.gear);
 
     return result;
   } catch (error: any) {
@@ -36,7 +36,7 @@ export const updateGear = async (
       body: req.body as any,
     });
     const result = await res.json();
-    revalidateTag(TagTypes.gear);
+    updateTag(TagTypes.gear);
 
     return result;
   } catch (error: any) {
@@ -55,7 +55,7 @@ export const deleteGear = async (
       method: "DELETE",
     });
     const result = await res.json();
-    revalidateTag(TagTypes.gear);
+    updateTag(TagTypes.gear);
 
     return result;
   } catch (error: any) {

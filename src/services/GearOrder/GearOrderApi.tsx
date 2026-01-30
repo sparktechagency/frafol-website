@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 
 export const gearOrder = async (
   req = {
@@ -19,8 +19,8 @@ export const gearOrder = async (
       body: JSON.stringify(req.body),
     });
     const result = await res.json();
-    revalidateTag(TagTypes.gear);
-    revalidateTag(TagTypes.gearOrder);
+    updateTag(TagTypes.gear);
+    updateTag(TagTypes.gearOrder);
 
     return result;
   } catch (error: any) {
@@ -37,7 +37,7 @@ export const sendGearDeliveryRequest = async (req: { params: any }) => {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.gearOrder);
+    updateTag(TagTypes.gearOrder);
 
     return result;
   } catch (error: any) {
@@ -54,7 +54,7 @@ export const acceptGearDeliveryRequest = async (req: { params: any }) => {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.gearOrder);
+    updateTag(TagTypes.gearOrder);
 
     return result;
   } catch (error: any) {
@@ -80,7 +80,7 @@ export const declineGearDeliveryRequest = async (req: {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.gearOrder);
+    updateTag(TagTypes.gearOrder);
 
     return result;
   } catch (error: any) {
@@ -102,7 +102,7 @@ export const cancelGearOrder = async (req: {
       body: JSON.stringify(req.body),
     });
     const result = await res.json();
-    revalidateTag(TagTypes.gearOrder);
+    updateTag(TagTypes.gearOrder);
 
     return result;
   } catch (error: any) {

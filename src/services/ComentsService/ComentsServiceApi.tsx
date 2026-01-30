@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 
 export const addNewComment = async (req: { body: any; params: any }) => {
   try {
@@ -18,7 +18,7 @@ export const addNewComment = async (req: { body: any; params: any }) => {
       }
     );
     const result = await res.json();
-    revalidateTag(TagTypes.comment);
+    updateTag(TagTypes.comment);
 
     return result;
   } catch (error: any) {

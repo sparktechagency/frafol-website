@@ -3,7 +3,7 @@
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import { ICreateEventOrder } from "@/types";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 
 export const createWorkshopOrder = async (req: {
   body: ICreateEventOrder;
@@ -19,7 +19,7 @@ export const createWorkshopOrder = async (req: {
     });
     const result = await res.json();
     console.log(result)
-    revalidateTag(TagTypes.workshopOrders);
+    updateTag(TagTypes.workshopOrders);
 
     return result;
   } catch (error: any) {
