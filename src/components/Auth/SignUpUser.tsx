@@ -314,7 +314,7 @@ const SignUpUser = () => {
               rules={input.rules}
             />
           ))}
-        {/* Agree to rámcová zmluva contract Checkbox */}
+        {/* Agree to GDPR contract Checkbox */}
         <Form.Item
           name="acceptTerms"
           valuePropName="checked"
@@ -324,7 +324,7 @@ const SignUpUser = () => {
                 value
                   ? Promise.resolve()
                   : Promise.reject(
-                    new Error("Should accept with rámcová zmluva contract")
+                    new Error("Should accept with GDPR contract")
                   ),
             },
           ]}
@@ -335,8 +335,8 @@ const SignUpUser = () => {
             <div>
               <p className="text-sm sm:text-base lg:text-lg font-semibold">
                 Agree to{" "}
-                <Link href="/terms-of-service" className="text-secondary-color! underline">
-                  rámcová zmluva
+                <Link href="/data-protection" className="text-secondary-color! underline">
+                  GDPR
                 </Link>{" "}
                 contract
               </p>

@@ -31,6 +31,7 @@ const ServiceCardBookNow = ({
         isModalVisible={isModalVisible}
         handleCancel={handleCancel}
         packageData={packageData}
+        myData={myData}
       />
     </>
   );

@@ -128,13 +128,13 @@ export default function Footer() {
                   </h4>
                   <ul className="space-y-1">
                     <li>
-                      <Link href="/privacy-policy">Terms & Condition Marketplace</Link>
+                      <Link href="/terms-of-service-marketplace">Terms of Service Marketplace</Link>
                     </li>
                     <li>
                       <Link href="/data-protection">GDPR</Link>
                     </li>
                     <li>
-                      <Link href="/terms-of-service">Terms & Condition Conceptural</Link>
+                      <Link href="/terms-of-service">Terms of Service Conceptural</Link>
                     </li>
                     <li>
                       <Link href="/website-functionality-compatibility">

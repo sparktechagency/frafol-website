@@ -8,8 +8,8 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/change-password")) {
     return ["change-password"];
   }
-  if (normalizedPath.includes("/privacy-policy")) {
-    return ["privacy-policy"];
+  if (normalizedPath.includes("/terms-of-service-marketplace")) {
+    return ["terms-of-service-marketplace"];
   }
   if (normalizedPath.includes("/add-feedback")) {
     return ["add-feedback"];

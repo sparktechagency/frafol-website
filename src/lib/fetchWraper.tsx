@@ -12,6 +12,8 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
       ...options.headers,
       Authorization: `${accessToken}`,
     };
+    const body = options
+    console.log(body)
 
     // Make the request
     //* Right now I make it const but when I use refresh token it will be changed to let

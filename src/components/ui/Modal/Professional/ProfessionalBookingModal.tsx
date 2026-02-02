@@ -13,7 +13,7 @@ import { ICreateEventOrder, IProfessionalUser, IProfile } from "@/types";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { createEventOrder } from "@/services/EventOrderService/EventOrderServiceApi";
 
-const userInputStructure = [
+export const userInputStructure = [
   {
     name: "name",
     type: "text",
@@ -60,7 +60,7 @@ const userInputStructure = [
     rules: [{ required: true, message: "Country is required" }],
   },
 ];
-const companyInputStructure = [
+export const companyInputStructure = [
   {
     name: "companyName",
     type: "text",

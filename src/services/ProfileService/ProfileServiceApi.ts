@@ -58,11 +58,14 @@ export const updateIntroVIdeo = async (
       method: "PATCH",
       body: req.body as any,
     });
+    console.log(res);
     const result = await res.json();
     updateTag(TagTypes.profile);
     console.log(result);
     return result;
   } catch (error: any) {
+    console.log(error);
+
     return Error(error);
   }
 };

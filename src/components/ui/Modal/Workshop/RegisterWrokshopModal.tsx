@@ -3,7 +3,6 @@ import { Checkbox, Form, Modal } from "antd";
 import ReuseButton from "../../Button/ReuseButton";
 import Link from "next/link";
 import ReusableForm from "../../Form/ReuseForm";
-import { IWorkshop } from "@/types";
 import { toast } from "sonner";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { createWorkshopOrder } from "@/services/WorkshopOrderService/WorkshopOrderServiceApi";
@@ -18,6 +17,8 @@ import { formatDate, formetTime } from "@/utils/dateFormet";
 import ApplyCouponOption from "@/components/shared/ApplyCouponOption";
 import { useState } from "react";
 import { useGetUserData } from "@/context/useGetUserData";
+import ReuseInput from "../../Form/ReuseInput";
+import { companyInputStructure, userInputStructure } from "../Professional/ProfessionalBookingModal";
 
 interface RegisterWrokshopModalProps<T> {
     isModalVisible: boolean;
@@ -33,6 +34,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
 }) => {
     const [form] = Form.useForm();
     const [couponStatus, setCouponStatus] = useState<any>(null);
+    const [type, setType] = useState<"user" | "company">("user");
 
     const acceptTerms = Form.useWatch("acceptTerms", form);
     const výslovneSúhlasím = Form.useWatch("výslovneSúhlasím", form);
@@ -42,14 +44,24 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
     const serverUrl = getServerUrl();
     const userData = useGetUserData();
 
-    const handleRegister = async (workshopData: IWorkshop) => {
+    const handleRegister = async (values: any) => {
         if (userData?.userId) {
             const data = {
                 paymentType: "workshop",
-                workshopId: workshopData?._id,
+                workshopId: currentRecord?._id,
                 ...(couponStatus && { couponCode: couponStatus?.data?.code }),
+
+                isRegisterAsCompany: type === "company" ? true : false,
+
+                name: values.name,
+                streetAddress: values.streetAddress,
+                town: values.town,
+                country: values.country,
+                companyName: values.companyName,
+                ICO: values.ICO,
+                DIC: values.DIC,
+                IC_DPH: values.IC_DPH || "",
             };
-            // console.log(data)
 
             if (!acceptTerms || !výslovneSúhlasím || !bolSom) {
                 toast.error("Please accept all terms and conditions");
@@ -66,7 +78,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                 }
             );
             if (res?.success) {
-                window.open(res?.data?.checkoutUrl, "_blank");
+                window.open(res?.data?.checkoutUrl);
             }
         } else {
             router.push("/sign-in");
@@ -77,7 +89,10 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
         <Modal
             // title="Confirm Delete"
             open={isModalVisible}
-            onCancel={handleCancel}
+            onCancel={() => {
+                handleCancel();
+                form.resetFields();
+            }}
             okText="Unblock"
             cancelText="Cancel"
             centered
@@ -156,9 +171,52 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                 </div>
                 <ReusableForm
                     form={form}
-                    handleFinish={() => { }}
+                    handleFinish={handleRegister}
                     className="!mt-5"
                 >
+                    <div className="my-5">
+                        <Checkbox
+                            className="!text-lg !font-semibold"
+                            onChange={(e) => {
+                                if (e.target.checked) {
+                                    setType("company");
+                                } else {
+                                    setType("user");
+                                }
+                            }}
+                        >
+                            Register as a company
+                        </Checkbox>
+                    </div>
+                    {type !== "company"
+                        ? userInputStructure?.map((input, index) => (
+                            <ReuseInput
+                                key={index}
+                                name={input.name}
+                                Typolevel={5}
+                                inputType={input.inputType}
+                                type={input.type}
+                                label={input.label}
+                                placeholder={input.placeholder}
+                                labelClassName={input.labelClassName}
+                                inputClassName="!py-2.5"
+                                rules={input.rules}
+                            />
+                        ))
+                        : companyInputStructure?.map((input, index) => (
+                            <ReuseInput
+                                key={index}
+                                name={input.name}
+                                Typolevel={5}
+                                inputType={input.inputType}
+                                type={input.type}
+                                label={input.label}
+                                placeholder={input.placeholder}
+                                labelClassName={input.labelClassName}
+                                inputClassName="!py-2.5"
+                                rules={input.rules}
+                            />
+                        ))}
                     <Form.Item
                         name="acceptTerms"
                         valuePropName="checked"
@@ -234,39 +292,39 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                             </div>
                         </Checkbox>
                     </Form.Item>
-                </ReusableForm>
-                <ApplyCouponOption successStatus={couponStatus} setSuccessStatus={setCouponStatus} />
-                <div className="flex items-end gap-2 pt-5 justify-between">
-                    <div className={`${couponStatus && "w-40 text-end"}`}>
-                        <p className="text-base sm:text-lg lg:text-xl font-semibold">
-                            {currentRecord?.mainPrice}€
-                        </p>
-                        {
-                            couponStatus &&
-                            <>
-                                <p className="text-base sm:text-lg lg:text-xl font-semibold text-red-500">
-                                    -{couponStatus?.data?.amount}€
-                                </p>
-                                <hr className="" />
-                                <p className="text-base sm:text-lg lg:text-xl font-semibold">
-                                    {currentRecord?.mainPrice - couponStatus?.data?.amount}€
-                                </p>
-                            </>
-                        }
+                    <ApplyCouponOption successStatus={couponStatus} setSuccessStatus={setCouponStatus} />
+                    <div className="flex items-end gap-2 pt-5 justify-between">
+                        <div className={`${couponStatus && "w-40 text-end"}`}>
+                            <p className="text-base sm:text-lg lg:text-xl font-semibold">
+                                {currentRecord?.mainPrice}€
+                            </p>
+                            {
+                                couponStatus &&
+                                <>
+                                    <p className="text-base sm:text-lg lg:text-xl font-semibold text-red-500">
+                                        -{couponStatus?.data?.amount}€
+                                    </p>
+                                    <hr className="" />
+                                    <p className="text-base sm:text-lg lg:text-xl font-semibold">
+                                        {currentRecord?.mainPrice - couponStatus?.data?.amount}€
+                                    </p>
+                                </>
+                            }
 
+                        </div>
+                        {userData?.userId !== currentRecord?.authorId?._id && (
+                            <ReuseButton
+                                variant="secondary"
+                                className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
+                                htmlType="submit"
+                            >
+                                Register Now
+                            </ReuseButton>
+                        )}
                     </div>
-                    {userData?.userId !== currentRecord?.authorId?._id && (
-                        <ReuseButton
-                            variant="secondary"
-                            className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
-                            onClick={() => handleRegister(currentRecord)}
-                        >
-                            Register Now
-                        </ReuseButton>
-                    )}
-                </div>
+                </ReusableForm>
             </div>
-        </Modal>
+        </Modal >
     );
 };
 

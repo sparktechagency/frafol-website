@@ -22,6 +22,8 @@ import { ISignInUser } from "@/types";
 import { decodedToken } from "@/utils/jwt";
 import { logout } from "@/services/AuthService";
 import { getServerUrl } from "@/helpers/config/envConfig";
+import { useAppSelector } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
 
 // import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
@@ -164,6 +166,15 @@ const Navbar: React.FC = () => {
     //   router.push("/");
     // }
   };
+
+  const cartProducts = useAppSelector(
+    (state: RootState) => state.cart.products
+  );
+
+  const totalCart = cartProducts?.length;
+
+  console.log(totalCart)
+
   return (
     <motion.div
       variants={{
@@ -290,9 +301,12 @@ const Navbar: React.FC = () => {
                 >
                   <GoBellFill className="text-2xl cursor-pointer" />
                 </Dropdown>
-                <Link href="/cart">
-                  <IoMdCart className="text-2xl cursor-pointer" />
-                </Link>
+                <div className="relative">
+                  <Link href="/cart">
+                    <IoMdCart className="text-2xl cursor-pointer" />
+                  </Link>
+                  <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-xs font-semibold flex justify-center items-center">{totalCart}</div>
+                </div>
                 <Dropdown
                   menu={{ items }}
                   trigger={["hover"]}

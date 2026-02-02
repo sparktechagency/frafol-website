@@ -56,6 +56,7 @@ const tryCatchWrapper = async (
     const res = await asyncFunction(req);
 
     if (!res.success) {
+      console.log(res);
       // setError?.(res.message);
       throw new Error(res.message);
     } else {
@@ -79,28 +80,40 @@ const tryCatchWrapper = async (
     setError?.(null);
     return res;
   } catch (error: any) {
+    console.log(error);
+
+    const errorMessage =
+      error?.data?.message || error?.message || error?.error || "";
+
+    let displayError = toastErrorMessage;
+
+    // Check if error is related to file size/body limit
+    if (
+      errorMessage.toLowerCase().includes("body size") ||
+      errorMessage.toLowerCase().includes("exceeded") ||
+      errorMessage.toLowerCase().includes("10mb") ||
+      errorMessage.toLowerCase().includes("body limit") ||
+      errorMessage.toLowerCase().includes("unexpected end of form") ||
+      errorMessage.toLowerCase().includes("too large")
+    ) {
+      displayError =
+        "File size exceeded! Maximum upload size is 25MB. Please upload smaller files.";
+    } else if (errorMessage) {
+      displayError = errorMessage;
+    }
+
     // Show error toast only if showToast is true
-    setError?.(
-      error?.data?.message ||
-        error?.message ||
-        error?.error ||
-        toastErrorMessage,
-    );
+    setError?.(displayError);
+
     if (showToast) {
-      toast.error(
-        error?.data?.message ||
-          error?.message ||
-          error?.error ||
-          toastErrorMessage,
-        {
-          id: toastId,
-          duration: 2000,
-        },
-      );
+      toast.error(displayError, {
+        id: toastId,
+        duration: 3000, // Increased duration for file size errors
+      });
     }
 
     setLoading?.(false);
-    return { success: false, message: error };
+    return { success: false, message: displayError };
   }
 };
 

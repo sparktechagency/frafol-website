@@ -43,9 +43,10 @@ const ProfileProtfolioUploadImageModal: React.FC<
         handleModalCancel();
       }
     } else if (type === "video") {
-      values?.image?.forEach((file: any) => {
-        formData.append("video", file?.originFileObj);
-      });
+      console.log(values?.image)
+
+      formData.append("video", values?.image?.[0]?.file?.originFileObj);
+
 
       const res = await tryCatchWrapper(
         updateIntroVIdeo,
@@ -56,6 +57,8 @@ const ProfileProtfolioUploadImageModal: React.FC<
           toastErrorMessage: "Something went wrong! Please try again.",
         }
       );
+
+      console.log(res)
 
       if (res?.success) {
         handleModalCancel();
@@ -108,11 +111,12 @@ const ProfileProtfolioUploadImageModal: React.FC<
         <ReusableForm form={form} handleFinish={onSubmit}>
           <ReuseUpload
             name="image"
+            buttonText={type === "video" ? "Upload Video (Max 20mb)" : "Upload Image"}
             label={type === "video" ? "Video" : "Image"}
             labelClassName="!font-semibold"
-            maxCount={10}
+            maxCount={type === "video" ? 1 : 10}
             accept={type === "both" ? "image/*,video/*" : type === "video" ? "video/*" : "image/*"}
-            multiple={true}
+            multiple={type === "video" ? false : true}
             rules={[{ required: true, message: type === "video" ? "Video is required" : "Image is required" }]}
           />
           <ReuseButton htmlType="submit" variant="secondary" className="mt-2">

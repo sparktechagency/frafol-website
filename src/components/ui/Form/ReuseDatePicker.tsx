@@ -31,7 +31,6 @@ const ReuseDatePicker = ({
   disabled = false,
   className,
   style,
-  format = "DD-MM-YYYY",
   placeholder = "Select date",
   labelClassName,
   wrapperClassName,
@@ -53,6 +52,7 @@ const ReuseDatePicker = ({
       )}
       <Form.Item name={name} rules={rules}>
         <DatePicker
+          format="DD-MM-YYYY"
           suffixIcon={<CiCalendarDate className="!text-secondary-color" />}
           value={value}
           onChange={(date, dateString) => {
@@ -66,7 +66,6 @@ const ReuseDatePicker = ({
             className
           )}
           style={style}
-          format={format}
           placeholder={placeholder}
           disabledDate={disabledDate} // Disable previous dates, months, and years
         />

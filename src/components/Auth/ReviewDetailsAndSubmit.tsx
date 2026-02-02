@@ -7,6 +7,7 @@ import { Checkbox, Form } from "antd";
 import Cookies from "js-cookie";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { registerUser } from "@/services/AuthService";
+import Link from "next/link";
 
 const ReviewDetailsAndSubmit = () => {
   const router = useRouter();
@@ -168,13 +169,13 @@ const ReviewDetailsAndSubmit = () => {
               </p>
               <p className="text-xs sm:text-sm lg:text-base">
                 By creating an account, you agree to our{" "}
-                <span className="text-secondary-color underline">
-                  Terms & Condition Conceptural
-                </span>{" "}
+                <Link href="/terms-of-service" target="_blank" className="text-secondary-color underline">
+                  Terms of Service Conceptural
+                </Link>{" "}
                 and{" "}
-                <span className="text-secondary-color underline">
-                  Terms & Condition Marketplace.
-                </span>
+                <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color underline">
+                  Terms of Service Marketplace.
+                </Link>
               </p>
             </div>
           </Checkbox>
@@ -201,9 +202,9 @@ const ReviewDetailsAndSubmit = () => {
             <div>
               <p className="text-sm sm:text-base lg:text-lg font-semibold">
                 Agree to{" "}
-                <span className="text-secondary-color underline">
-                  rámcová zmluva
-                </span>{" "}
+                <Link href="/data-protection" target="_blank" className="text-secondary-color underline">
+                  GDPR
+                </Link>{" "}
                 contract
               </p>
             </div>
