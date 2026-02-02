@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "10.10.10.32", // Matches all domains using HTTP
+        hostname: "**", // Matches all domains using HTTP
       },
       {
         protocol: "https",

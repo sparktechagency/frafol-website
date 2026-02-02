@@ -18,14 +18,23 @@ import earning from "../../public/assets/svg/earning.svg";
 import gearOrder from "../../public/assets/svg/gearOrder.svg";
 import gearMarketplace from "../../public/assets/svg/gearMarketplace.svg";
 import packages from "../../public/assets/svg/packages.svg";
+import { useAppDispatch } from "@/redux/hooks";
+import { toggleCollapse } from "@/redux/features/sidebar/sidebarSlice";
 
 export const useAdminPaths = () => {
   const pathname = usePathname();
 
+  const dispatch = useAppDispatch();
+  const handleToggleCollapse = () => {
+    dispatch(toggleCollapse());
+  };
+
   return [
     {
       key: "overview",
-      label: <Link href="/dashboard/my-account/overview">Overview</Link>,
+      label: <Link
+        onClick={handleToggleCollapse}
+        href="/dashboard/my-account/overview">Overview</Link>,
       icon: (
         <Image
           src={overview}
@@ -55,7 +64,8 @@ export const useAdminPaths = () => {
           }}
         />
       ),
-      label: <Link href="/dashboard/my-account/orders">Event Orders</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/my-account/orders">Event Orders</Link>,
     },
     {
       key: "gear-order",
@@ -72,7 +82,8 @@ export const useAdminPaths = () => {
           }}
         />
       ),
-      label: <Link href="/dashboard/my-account/gear-order">Gear Orders</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/my-account/gear-order">Gear Orders</Link>,
     },
     {
       key: "extension-requests",
@@ -90,7 +101,8 @@ export const useAdminPaths = () => {
         />
       ),
       label: (
-        <Link href="/dashboard/my-account/extension-requests">
+        <Link onClick={handleToggleCollapse}
+          href="/dashboard/my-account/extension-requests">
           Extension Requests
         </Link>
       ),
@@ -110,7 +122,8 @@ export const useAdminPaths = () => {
           }}
         />
       ),
-      label: <Link href="/dashboard/my-account/payments">My Payments</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/my-account/payments">My Payments</Link>,
     },
     {
       key: "my-workshop",
@@ -127,7 +140,8 @@ export const useAdminPaths = () => {
           }}
         />
       ),
-      label: <Link href="/dashboard/my-account/my-workshop">My Workshop</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/my-account/my-workshop">My Workshop</Link>,
     },
     {
       key: "reviews",
@@ -144,7 +158,8 @@ export const useAdminPaths = () => {
           }}
         />
       ),
-      label: <Link href="/dashboard/my-account/reviews">My Reviews</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/my-account/reviews">My Reviews</Link>,
     },
     {
       key: "profile-settings",
@@ -161,17 +176,22 @@ export const useAdminPaths = () => {
           }}
         />
       ),
-      label: <Link href="/dashboard/my-account/profile-settings">Profile</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/my-account/profile-settings">Profile</Link>,
     },
   ];
 };
 export const useProfessionalPaths = () => {
   const pathname = usePathname();
-
+  const dispatch = useAppDispatch();
+  const handleToggleCollapse = () => {
+    setTimeout(() => dispatch(toggleCollapse()), 100);
+  };
   return [
     {
       key: "overview",
-      label: <Link href="/dashboard/professional/overview">Overview</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/professional/overview">Overview</Link>,
       icon: (
         <Image
           src={overview}
@@ -189,7 +209,8 @@ export const useProfessionalPaths = () => {
     {
       key: "event-orders",
       label: (
-        <Link href="/dashboard/professional/event-orders">Event Orders</Link>
+        <Link onClick={handleToggleCollapse}
+          href="/dashboard/professional/event-orders">Event Orders</Link>
       ),
       icon: (
         <Image
@@ -207,7 +228,8 @@ export const useProfessionalPaths = () => {
     },
     {
       key: "calendar",
-      label: <Link href="/dashboard/professional/calendar">Calendar</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/professional/calendar">Calendar</Link>,
       icon: (
         <Image
           src={calendar}
@@ -224,7 +246,8 @@ export const useProfessionalPaths = () => {
     },
     {
       key: "earning",
-      label: <Link href="/dashboard/professional/earning">Earning</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/professional/earning">Earning</Link>,
       icon: (
         <Image
           src={earning}
@@ -241,7 +264,8 @@ export const useProfessionalPaths = () => {
     },
     {
       key: "review",
-      label: <Link href="/dashboard/professional/review">Review</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/professional/review">Review</Link>,
       icon: (
         <Image
           src={review}
@@ -258,7 +282,8 @@ export const useProfessionalPaths = () => {
     },
     {
       key: "gear-order",
-      label: <Link href="/dashboard/professional/gear-order">Gear Order</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/professional/gear-order">Gear Order</Link>,
       icon: (
         <Image
           src={gearOrder}
@@ -289,13 +314,15 @@ export const useProfessionalPaths = () => {
         />
       ),
       label: (
-        <Link href="/dashboard/professional/my-workshop">My Workshop</Link>
+        <Link onClick={handleToggleCollapse}
+          href="/dashboard/professional/my-workshop">My Workshop</Link>
       ),
     },
     {
       key: "gear-marketPlace",
       label: (
-        <Link href="/dashboard/professional/gear-marketPlace">
+        <Link onClick={handleToggleCollapse}
+          href="/dashboard/professional/gear-marketPlace">
           Gear MarketPlace
         </Link>
       ),
@@ -315,7 +342,8 @@ export const useProfessionalPaths = () => {
     },
     {
       key: "packages",
-      label: <Link href="/dashboard/professional/packages">Packages</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/professional/packages">Packages</Link>,
       icon: (
         <Image
           src={packages}
@@ -332,7 +360,8 @@ export const useProfessionalPaths = () => {
     },
     {
       key: "frafol-choice",
-      label: <Link href="/dashboard/professional/frafol-choice">Frafol Choice</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/professional/frafol-choice">Frafol Choice</Link>,
       icon: (
         <Image
           src={packages}
@@ -349,7 +378,8 @@ export const useProfessionalPaths = () => {
     },
     {
       key: "workshop",
-      label: <Link href="/dashboard/professional/workshop">Workshop</Link>,
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/professional/workshop">Workshop</Link>,
       icon: (
         <Image
           src={workshop}

@@ -1,6 +1,6 @@
 "use client";
-import { selectIsCollapsed } from "@/redux/features/sidebar/sidebarSlice";
-import { useAppSelector } from "@/redux/hooks";
+import { selectIsCollapsed, toggleCollapse } from "@/redux/features/sidebar/sidebarSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import getActiveKeys from "@/utils/activeKey";
 import {
   useAdminPaths,
@@ -9,16 +9,19 @@ import {
 import { Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useRef } from "react";
 import SidebarCollapsedIcon from "./SidebarCollapsedIcon";
 import { ISignInUser } from "@/types";
 import { decodedToken } from "@/utils/jwt";
 import Cookies from "js-cookie";
+import useOutsideClick from "@/hook/useOutsideClick";
 
 const SideBar = () => {
   const token = Cookies.get("frafolMainAccessToken");
   const userData: ISignInUser | null = decodedToken(token || "");
   const isCollapsed = useAppSelector(selectIsCollapsed);
+  const dispatch = useAppDispatch();
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
   const defaultUrl =
@@ -32,8 +35,14 @@ const SideBar = () => {
   const activeKeys = getActiveKeys(normalizedPath);
   const menuItems = userData?.role === "user" ? adminPaths : professionalPath;
 
+  useOutsideClick(sidebarRef as React.RefObject<HTMLElement>, () => {
+    if (!isCollapsed) {
+      dispatch(toggleCollapse());
+    }
+  });
+
   return (
-    <Sider
+    <Sider ref={sidebarRef}
       theme="light"
       width={300}
       trigger={null}
@@ -48,9 +57,8 @@ const SideBar = () => {
         overflowY: "auto",
         backgroundColor: "#ffffff",
       }}
-      className={`!border-l border-r !border-[#E1E1E1] !fixed !z-[60] !shadow-2xl !top-12  ${
-        isCollapsed ? "!left-[-300px]" : "!left-0"
-      }`}
+      className={`!border-l border-r !border-[#E1E1E1] !fixed !z-[60] !shadow-2xl !top-12  ${isCollapsed ? "!left-[-300px]" : "!left-0"
+        }`}
     >
       <div className="flex items-center justify-end my-5 px-4">
         <SidebarCollapsedIcon />
