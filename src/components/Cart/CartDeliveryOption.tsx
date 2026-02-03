@@ -152,7 +152,7 @@ const CartDeliveryOption = ({
       }
     );
     if (res?.success) {
-      window.open(res?.data?.checkoutUrl); // Opens in a new tab
+      window.location.replace(res?.data?.checkoutUrl); // Opens in a new tab
       form.resetFields();
       dispatch(clearCart());
     }

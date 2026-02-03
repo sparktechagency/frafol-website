@@ -4,7 +4,7 @@
 import Container from "@/components/ui/Container";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AllImages } from "../../../public/assets/AllImages";
 import { usePathname } from "next/navigation";
 import { Button, Dropdown, MenuProps } from "antd";
@@ -18,38 +18,15 @@ import { AiFillMessage } from "react-icons/ai";
 import { MdOutlineDashboard } from "react-icons/md";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import Cookies from "js-cookie";
-import { ISignInUser } from "@/types";
+import { INotification, ISignInUser } from "@/types";
 import { decodedToken } from "@/utils/jwt";
 import { logout } from "@/services/AuthService";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
-
-// import { RiMoneyDollarCircleLine } from "react-icons/ri";
-
-const notificationData = [
-  {
-    id: "1",
-    message: {
-      text: "You have a new message",
-      time: "Just now",
-    },
-  },
-  {
-    id: "2",
-    message: {
-      text: "You have a new message",
-      time: "Just now",
-    },
-  },
-  {
-    id: "3",
-    message: {
-      text: "You have a new message",
-      time: "Just now",
-    },
-  },
-];
+import { formatDateTime } from "@/utils/dateFormet";
+import { useSocket } from "@/context/socket-context";
+import { toast } from "sonner";
 
 const NavItems = [
   { id: "1", name: "Photography", route: "/photography" },
@@ -59,45 +36,28 @@ const NavItems = [
   { id: "1", name: "Workshops", route: "/workshops" },
 ];
 
-const notificationMenu = (
-  <div
-    className="flex flex-col gap-4 w-full text-center bg-white p-4 rounded-lg"
-    style={{ boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)" }}
-  >
-    {notificationData?.map((notification: any) => (
-      <div className="test-start" key={notification.id}>
-        <div className="flex items-center gap-2">
-          <div className="p-1 bg-secondary-color rounded-full w-fit h-fit">
-            <GoBellFill className="text-white cursor-pointer" />
-          </div>
-          <div className="flex flex-col items-start">
-            <p>{notification?.message?.text}</p>
-            <p className="text-gray-400">{notification?.message?.time}</p>
-          </div>
-        </div>
-      </div>
-    ))}
-    <Link
-      href={`/notifications`}
-      className="w-2/3 mx-auto !bg-secondary-color !text-primary-color rounded-xl h-8 py-1"
-    >
-      See More
-    </Link>
-  </div>
-);
 
-const Navbar: React.FC = () => {
+
+const Navbar = ({ notifications }: { notifications: INotification[] }) => {
   const serverUrl = getServerUrl();
   const token = Cookies.get("frafolMainAccessToken");
   const userData: ISignInUser | null = decodedToken(token || "");
-
+  const socket = useSocket()?.socket;
   const path = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [height, setHeight] = useState(0);
+  const [notificationCount, setNotificationCount] = useState(0);
+  const [allNotifications, setAllNotifications] = useState<INotification[]>([]);
   const navbarRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
+
+  useEffect(() => {
+    setAllNotifications(notifications);
+  }, [notifications]);
+
+
 
   const isDashboard = path.includes("dashboard");
 
@@ -129,7 +89,6 @@ const Navbar: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
-  console.log(userData?.role)
   const isProfessional = userData?.role === "both" ||
     userData?.role === "videographer" ||
     userData?.role === "photographer";
@@ -159,6 +118,33 @@ const Navbar: React.FC = () => {
     ] : []),
   ];
 
+  const notificationMenu = (
+    <div
+      className="flex flex-col gap-4 w-full bg-white p-4 rounded-lg"
+      style={{ boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)" }}
+    >
+      {allNotifications?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())?.slice(0, 6)?.map((notification: INotification) => (
+        <div className="test-start max-w-[300px]" key={notification?._id}>
+          <div className="flex items-start gap-2">
+            <div className="p-1 bg-secondary-color rounded-full w-fit h-fit mt-1">
+              <GoBellFill className="text-white cursor-pointer" />
+            </div>
+            <div className="flex flex-col items-start">
+              <p className="text-sm!">{notification?.message?.text}</p>
+              <p className="text-xs! mt-0.5 text-gray-400">{formatDateTime(notification?.createdAt)}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+      <Link
+        href={`/notifications`}
+        className="w-2/3 mx-auto text-center !bg-secondary-color !text-primary-color rounded-xl h-8 py-1"
+      >
+        See More
+      </Link>
+    </div>
+  );
+
   const handleLogOut = () => {
     logout();
     // setIsLoading(true);
@@ -173,7 +159,55 @@ const Navbar: React.FC = () => {
 
   const totalCart = cartProducts?.length;
 
-  console.log(totalCart)
+  // New socket message handler
+  const handleNotification = useCallback((notification: any) => {
+    console.log(notification)
+
+    if (!notification?.message?.text) {
+      setNotificationCount(notification?.unreadCount);
+    } else {
+      const newNotification: INotification = {
+        _id: Math.random().toString(36).substring(2, 9),
+        userId: Math.random().toString(36).substring(2, 9),
+        receiverId: Math.random().toString(36).substring(2, 9),
+        message: notification?.message,
+        type: "",
+        isRead: false,
+        createdAt: notification?.timestamp,
+        updatedAt: notification?.timestamp,
+        __v: 0,
+      }
+      setAllNotifications((prev) => [...prev, newNotification]);
+      setNotificationCount((prev) => prev + 1);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    if (!socket.connected) {
+      socket.connect();
+    }
+
+    socket.on(`notification`, handleNotification);
+
+    return () => {
+      socket.off(`notification`, handleNotification);
+    };
+  }, [socket, handleNotification]);
+
+  const handleResetNotification = async () => {
+    if (notificationCount > 0) {
+      try {
+        socket?.emit("readNotification");
+      } catch (error: any) {
+        toast.error(
+          error?.data?.message || error?.message || "Something went wrong!",
+          { duration: 2000 }
+        );
+      }
+    }
+  };
 
   return (
     <motion.div
@@ -293,13 +327,16 @@ const Navbar: React.FC = () => {
                 <Dropdown
                   overlay={notificationMenu}
                   trigger={["hover"]}
-                  // onOpenChange={(open: boolean) => {
-                  //   setOpen(open);
-                  // }}
+                  onOpenChange={() => {
+                    handleResetNotification();
+                  }}
                   placement="bottomRight"
-                  className="cursor-pointer"
+                  className="cursor-pointer "
                 >
-                  <GoBellFill className="text-2xl cursor-pointer" />
+                  <div className="relative">
+                    <GoBellFill className="text-2xl cursor-pointer" />
+                    <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-xs font-semibold flex justify-center items-center">{notificationCount}</div>
+                  </div>
                 </Dropdown>
                 <div className="relative">
                   <Link href="/cart">
@@ -378,17 +415,23 @@ const Navbar: React.FC = () => {
                 <Dropdown
                   overlay={notificationMenu}
                   trigger={["hover"]}
-                  // onOpenChange={(open: boolean) => {
-                  //   setOpen(open);
-                  // }}
+                  onOpenChange={() => {
+                    handleResetNotification();
+                  }}
                   placement="bottomRight"
-                  className="cursor-pointer"
+                  className="cursor-pointer "
                 >
-                  <GoBellFill className="text-2xl cursor-pointer" />
+                  <div className="relative">
+                    <GoBellFill className="text-2xl cursor-pointer" />
+                    <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-xs font-semibold flex justify-center items-center">{notificationCount}</div>
+                  </div>
                 </Dropdown>
-                <Link href="/cart">
-                  <IoMdCart className="text-2xl cursor-pointer" />
-                </Link>
+                <div className="relative">
+                  <Link href="/cart">
+                    <IoMdCart className="text-2xl cursor-pointer" />
+                  </Link>
+                  <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-xs font-semibold flex justify-center items-center">{totalCart}</div>
+                </div>
                 <Dropdown
                   menu={{ items }}
                   trigger={["hover"]}

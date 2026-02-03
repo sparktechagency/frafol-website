@@ -46,4 +46,24 @@ interface IProfile {
   __v: number;
 }
 
-export type { IProfile };
+interface NotificationMessage {
+  fullName: string;
+  image: string;
+  text: string;
+  photos: string[];
+  _id: string;
+}
+
+interface INotification {
+  _id: string;
+  userId: string;
+  receiverId: string;
+  message: NotificationMessage;
+  type: "DirectBookingRequest" | string;
+  isRead: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export type { IProfile, INotification };

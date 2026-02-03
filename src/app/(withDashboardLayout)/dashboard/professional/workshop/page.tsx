@@ -44,6 +44,8 @@ const page = async ({
 
   let participantsData = undefined;
 
+  console.log(participantsData)
+
   if (workshopId) {
     const participantsRes = await fetchWithAuth(
       `/workshop/participants/${workshopId}`,
@@ -59,6 +61,7 @@ const page = async ({
   } else {
     participantsData = undefined;
   }
+  console.log(participantsData)
 
   return (
     <ProfessionalWorkshopPage

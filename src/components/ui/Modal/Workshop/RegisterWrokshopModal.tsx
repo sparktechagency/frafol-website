@@ -78,7 +78,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                 }
             );
             if (res?.success) {
-                window.open(res?.data?.checkoutUrl);
+                window.location.replace(res?.data?.checkoutUrl);
             }
         } else {
             router.push("/sign-in");

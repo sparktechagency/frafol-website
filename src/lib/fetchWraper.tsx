@@ -12,7 +12,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
       ...options.headers,
       Authorization: `${accessToken}`,
     };
-    const body = options
+    const body = { ...options }
     console.log(body)
 
     // Make the request
@@ -21,6 +21,8 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
       ...options,
       headers,
     });
+
+    console.log()
 
     // Check if the access token expired (401 Unauthorized)
     // if (response.status === 401) {

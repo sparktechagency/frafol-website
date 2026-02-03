@@ -17,7 +17,7 @@ const PortfolioIntroVideo = ({ myData }: { myData: IProfile }) => {
     };
 
 
-
+    console.log(serverUrl + myData?.introVideo)
     return (
         <div>
             <div className="flex items-center justify-between mb-10">

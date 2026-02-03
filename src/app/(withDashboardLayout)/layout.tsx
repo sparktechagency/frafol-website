@@ -1,9 +1,8 @@
-import Navbar from "@/components/shared/Navbar";
-
 import { Layout } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import SideBar from "@/components/shared/SideBar";
 import SidebarCollapsedIcon from "@/components/shared/SidebarCollapsedIcon";
+// import NavbarWraper from "@/components/shared/NavbarWraper";
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -11,9 +10,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
   return (
     <div>
       <div className="">
-        <div className="sticky top-0 w-full z-[100]!">
-          <Navbar />
-        </div>
+
         <Layout className="flex !bg-[#F9FAFB] relative z-50!">
           <SideBar />
           <Layout className="!bg-[#F9FAFB]">

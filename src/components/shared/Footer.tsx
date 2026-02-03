@@ -174,7 +174,10 @@ export default function Footer() {
                       <Link href="/helpful-documents">Helpful Documents</Link>
                     </li> */}
                     <li>
-                      <Link href="#">Explore Categories</Link>
+                      <Link href="/photography">Explore Photography</Link>
+                    </li>
+                    <li>
+                      <Link href="/videography">Explore Videography</Link>
                     </li>
                   </ul>
                 </div>

@@ -48,7 +48,7 @@ const ProfessionalServiceCard = ({
             {data.title}
           </p>
           <p className="text-xs sm:text-sm lg:text-base mt-1.5">
-            {data.description}
+            {data.description?.length > 100 ? data.description.substring(0, 100) + "..." : data.description}
           </p>
           <div className="flex flex-col gap-1 mt-3">
             <div className="flex items-center gap-3">

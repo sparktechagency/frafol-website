@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import { ConfigProvider } from "antd";
 import { mainTheme } from "@/theme";
 import Providers from "@/providers/Providers";
+import NavbarWraper from "@/components/shared/NavbarWraper";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -79,7 +80,12 @@ export default function RootLayout({
         <Providers>
           <Toaster position="top-center" richColors />
           <AntdRegistry>
-            <ConfigProvider theme={mainTheme}>{children}</ConfigProvider>
+            <ConfigProvider theme={mainTheme}>
+              <div className="sticky top-0 w-full z-[100]!">
+                <NavbarWraper />
+              </div>
+              {children}
+            </ConfigProvider>
           </AntdRegistry>
         </Providers>
       </body>

@@ -123,7 +123,7 @@ const MarketPlaceSeacrhFiltre = () => {
           placeholder="Search"
           type="text"
         />
-        <div className="relative -mt-5 z-20 ">
+        <div className="relative z-10! -mt-5 ">
           <div
             ref={inputRef}
             style={{

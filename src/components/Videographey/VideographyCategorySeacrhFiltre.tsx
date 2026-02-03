@@ -35,7 +35,7 @@ const VideographyCategorySeacrhFiltre = () => {
         placeholder="Search"
         type="text"
       />
-      <div className="relative -mt-5">
+      <div className="relative z-10! -mt-5">
         <div
           ref={inputRef}
           style={{

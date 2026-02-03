@@ -55,13 +55,11 @@ export const updateIntroVIdeo = async (
 ) => {
   try {
     const res = await fetchWithAuth(`/users/upload-new-video`, {
-      method: "PATCH",
+      method: "POST",
       body: req.body as any,
     });
-    console.log(res);
     const result = await res.json();
     updateTag(TagTypes.profile);
-    console.log(result);
     return result;
   } catch (error: any) {
     console.log(error);
