@@ -115,7 +115,7 @@ const ProfessionalWorkshopCard = ({
         <div className="flex items-center gap-2 mt-1">
           <LuUsers className="text-secondary-color text-sm sm:text-base lg:text-lg" />
           <p className="text-xs sm:text-sm lg:text-base font-semibold">
-            {workshop?.totalParticipants || 0}
+            {workshop?.totalParticipants || 0} / {workshop?.maxParticipant || 0}
           </p>
         </div>
         <div className="flex items-center gap-2 mt-5 justify-between">

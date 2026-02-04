@@ -15,22 +15,25 @@ import { FaLocationDot } from "react-icons/fa6";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import ApplyCouponOption from "@/components/shared/ApplyCouponOption";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetUserData } from "@/context/useGetUserData";
 import ReuseInput from "../../Form/ReuseInput";
 import { companyInputStructure, userInputStructure } from "../Professional/ProfessionalBookingModal";
+import { IProfile } from "@/types";
 
 interface RegisterWrokshopModalProps<T> {
     isModalVisible: boolean;
     handleCancel: () => void;
     currentRecord: T | null;
     description?: string;
+    myData?: IProfile;
 }
 
 const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
     isModalVisible,
     handleCancel,
     currentRecord,
+    myData,
 }) => {
     const [form] = Form.useForm();
     const [couponStatus, setCouponStatus] = useState<any>(null);
@@ -43,6 +46,20 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
     const router = useRouter();
     const serverUrl = getServerUrl();
     const userData = useGetUserData();
+
+    useEffect(() => {
+        form.setFieldsValue({
+            name: myData?.name,
+            sureName: myData?.sureName,
+            companyName: myData?.companyName,
+            streetAddress: myData?.address,
+            town: myData?.town,
+            country: myData?.country,
+            ico: myData?.ico,
+            dic: myData?.dic,
+            ic_dph: myData?.ic_dph,
+        });
+    }, [form, myData, isModalVisible]);
 
     const handleRegister = async (values: any) => {
         if (userData?.userId) {

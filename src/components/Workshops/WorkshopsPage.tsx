@@ -2,7 +2,7 @@
 import React, { Suspense } from "react";
 import SectionHeader from "../ui/SectionHeader";
 import WorkShopsCards from "../shared/WorkShopsCards";
-import { IWorkshop } from "@/types";
+import { IProfile, IWorkshop } from "@/types";
 import PaginationSection from "../shared/PaginationSection";
 import RegisterWrokshopModal from "../ui/Modal/Workshop/RegisterWrokshopModal";
 
@@ -11,11 +11,13 @@ const WorkshopsPage = ({
   totalData,
   page,
   limit,
+  myData
 }: {
   workshops: IWorkshop[];
   totalData: number;
   page: number;
   limit: number;
+  myData: IProfile
 }) => {
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -47,7 +49,7 @@ const WorkshopsPage = ({
           <PaginationSection page={page} limit={limit} totalData={totalData} />
         </Suspense>
       </div>
-      <RegisterWrokshopModal isModalVisible={isModalOpen} handleCancel={closeModal} currentRecord={currentRecord} />
+      <RegisterWrokshopModal isModalVisible={isModalOpen} handleCancel={closeModal} currentRecord={currentRecord} myData={myData} />
     </div>
   );
 };

@@ -33,10 +33,10 @@ const ProfessionalAddNewWorkshop = ({
   useEffect(() => {
     const serviceChagePercentage = serviceCharge / 100;
     const vatAmountPercentage = vatAmountValue / 100;
-
+    console.log(serviceChagePercentage)
     const serviceChargeAmmount = Number(priceValue) * serviceChagePercentage;
 
-    const totalServiceCharge = serviceChargeAmmount > minServiceCharge ? serviceChargeAmmount : minServiceCharge;
+    const totalServiceCharge = Number(priceValue) > 0 ? serviceChargeAmmount > minServiceCharge ? serviceChargeAmmount : minServiceCharge : 0;
     const totalVatAmount = Number(priceValue) * vatAmountPercentage;
 
     const mainPriceValue =
@@ -52,6 +52,7 @@ const ProfessionalAddNewWorkshop = ({
       title: values.title,
       date: values.date,
       time: values.time,
+      maxParticipant: Number(values.maxParticipant),
       locationType: values.locationType,
       location: values.location,
       workshopLink: values.workshopLink,
@@ -60,6 +61,8 @@ const ProfessionalAddNewWorkshop = ({
       description: values.description,
       vatAmount: Number(values.vatAmount) || 0,
     };
+
+    console.log(data)
 
     formData.append("data", JSON.stringify(data));
 
@@ -129,6 +132,17 @@ const ProfessionalAddNewWorkshop = ({
             placeholder="Select Time"
             disabled={!selectedDate}
           />
+
+          <ReuseInput
+            name="maxParticipant"
+            label="Max Participant"
+            placeholder="Enter Max Participant"
+            type="number"
+            rules={[{ required: true, message: "Max Participant is required" }]}
+            labelClassName="!font-semibold"
+          />
+
+
           <ReuseSelect
             name="locationType"
             label="Select Location"

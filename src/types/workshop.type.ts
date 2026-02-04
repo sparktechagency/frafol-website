@@ -47,7 +47,13 @@ interface IWorkshopParticipants {
   clientId: Client;
   instructorId: string;
   workshopId: string;
-  paymentStatus: string; // 'completed' or 'pending', etc.
+  paymentStatus: "pending" | "completed";
+  streetAddress: string;
+  town: string;
+  country: string;
+  isRegisterAsCompany: boolean;
+  IC_DPH: string;
+  name: string;
   isDeleted: boolean;
   joinedAt: string;
   createdAt: string;

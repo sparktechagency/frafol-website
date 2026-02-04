@@ -4,7 +4,7 @@ import WorkshopsPage from "@/components/Workshops/WorkshopsPage";
 import React from "react";
 import { AllImages } from "../../../../public/assets/AllImages";
 import TagTypes from "@/helpers/config/TagTypes";
-import { IWorkshop } from "@/types";
+import { IProfile, IWorkshop } from "@/types";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 
 export const metadata = {
@@ -37,12 +37,22 @@ const page = async ({
 
   const workshops: IWorkshop[] = data?.data?.result || [];
 
+  const profileRes = await fetchWithAuth("/users/my-profile", {
+    next: {
+      tags: [TagTypes.profile],
+    },
+  });
+
+  const profiledata = await profileRes.json();
+  const myData: IProfile = profiledata?.data;
+
   return (
     <main>
       <SectionBanner image={AllImages.workspaceBanner?.src} title="Workshops" />
       <Container>
         <WorkshopsPage
           workshops={workshops}
+          myData={myData}
           totalData={totalData}
           page={page}
           limit={limit}

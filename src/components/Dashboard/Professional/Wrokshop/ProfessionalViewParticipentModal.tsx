@@ -20,13 +20,28 @@ const ProfessionalViewParticipentModal = ({
     },
     {
       title: "Client Name",
-      dataIndex: ["clientId", "name"],
-      key: "clientName",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Email",
       dataIndex: ["clientId", "email"],
       key: "email",
+    },
+    {
+      title: "Street Address",
+      dataIndex: "streetAddress",
+      key: "streetAddress",
+    },
+    {
+      title: "Town",
+      dataIndex: "town",
+      key: "town",
+    },
+    {
+      title: "Country",
+      dataIndex: "country",
+      key: "country",
     },
   ];
   return (

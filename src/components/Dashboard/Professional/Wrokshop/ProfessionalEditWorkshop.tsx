@@ -51,6 +51,7 @@ const ProfessionalEditWorkshop = ({
         locationType: currentRecord?.locationType,
         location: currentRecord?.location,
         workshopLink: currentRecord?.workshopLink,
+        maxParticipant: currentRecord?.maxParticipant,
         price: currentRecord?.price,
         mainPrice: currentRecord?.mainPrice,
         description: currentRecord?.description,
@@ -84,6 +85,7 @@ const ProfessionalEditWorkshop = ({
       date: values.date,
       time: values.time,
       locationType: values.locationType,
+      maxParticipant: Number(values.maxParticipant),
       location: values.location,
       workshopLink: values.workshopLink,
       price: Number(values.price),
@@ -161,6 +163,16 @@ const ProfessionalEditWorkshop = ({
             placeholder="Select Time"
             disabled={!selectedDate}
           />
+
+          <ReuseInput
+            name="maxParticipant"
+            label="Max Participant"
+            placeholder="Enter Max Participant"
+            type="number"
+            rules={[{ required: true, message: "Max Participant is required" }]}
+            labelClassName="!font-semibold"
+          />
+
           <ReuseSelect
             name="locationType"
             label="Select Location"
