@@ -3,13 +3,12 @@
 import { cn } from "@/lib/utils";
 import { Form, Input, Typography } from "antd";
 import React from "react";
-import type { Rule } from "antd/es/form";
 
 type TInputProps = {
   Typolevel?: 1 | 2 | 3 | 4 | 5;
   label?: React.ReactNode;
   name: string;
-  rules?: Rule[] | undefined;
+  rules?: any[] | undefined;
   type?: string;
   placeholder: string;
   disabled?: boolean;

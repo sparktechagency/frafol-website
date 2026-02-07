@@ -206,7 +206,7 @@ export default function Footer() {
                     <li>
                       <p
                         className="cursor-pointer"
-                        onClick={() => user?.userId && showReportModal()}
+                        onClick={() => showReportModal()}
                       >
                         Report for a illegal content
                       </p>

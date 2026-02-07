@@ -13,7 +13,7 @@ const AuthSectionLogo = ({
   showLogo?: boolean;
 }) => {
   return (
-    <div className={`${skip ? "hidden" : "block"}`}>
+    <div className={`${skip ? "hidden" : "block"} mt-10`}>
       {showLogo ? (
         <Link href="/">
           <Image
@@ -25,10 +25,12 @@ const AuthSectionLogo = ({
           />
         </Link>
       ) : (
-        <IoIosArrowRoundBack
-          onClick={() => window.history.back()}
-          className="text-3xl text-secondary-color font-extrabold cursor-pointer"
-        />
+        <div className="flex items-center gap-2 justify-center">
+          <IoIosArrowRoundBack
+            onClick={() => window.history.back()}
+            className="text-3xl text-secondary-color font-extrabold cursor-pointer"
+          />
+        </div>
       )}
     </div>
   );

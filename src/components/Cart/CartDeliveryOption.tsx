@@ -88,13 +88,15 @@ const otherFields: {
     },
     {
       name: "ico",
-      label: "IČO (Optional)",
+      label: "IČO",
       placeholder: "Placeholder",
+      rules: [{ required: true, message: "IČO is required" }],
     },
     {
       name: "dic",
-      label: "DIČ (Optional)",
+      label: "DIČ",
       placeholder: "Placeholder",
+      rules: [{ required: true, message: "DIČ is required" }],
     },
     {
       name: "ic_dph",
@@ -103,8 +105,9 @@ const otherFields: {
     },
     {
       name: "companyAddress",
-      label: "Company Address (Optional)",
+      label: "Company Address",
       placeholder: "Placeholder",
+      rules: [{ required: true, message: "Company Address is required" }],
     },
   ];
 
@@ -216,7 +219,13 @@ const CartDeliveryOption = ({
           >
             <div>
               <p className="text-sm">
-                Agree to <Link target="_blank" href="/terms-of-service" className="text-secondary-color!">Terms and Conditions</Link>
+                Agree to <Link href="/terms-of-service" target="_blank" className="text-secondary-color underline">
+                  Terms of Service Conceptural
+                </Link>{" "}
+                and{" "}
+                <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color underline">
+                  Terms of Service Marketplace.
+                </Link>
               </p>
 
             </div>

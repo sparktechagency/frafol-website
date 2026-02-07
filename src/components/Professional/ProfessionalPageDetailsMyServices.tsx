@@ -1,15 +1,18 @@
 import React from "react";
 import SectionHeader from "../ui/SectionHeader";
 import ProfessionalServiceCard from "../shared/ProfessionalServiceCard";
-import { IPackage, IProfile } from "@/types";
+import { IPackage, IProfessionalUser, IProfile } from "@/types";
 import NoResultFound from "../shared/NoResultFound";
 
 const ProfessionalPageDetailsMyServices = ({
   packages,
   myData,
+  professionalUser
 }: {
   packages: IPackage[];
   myData: IProfile;
+  professionalUser: IProfessionalUser;
+
 }) => {
   return (
     <div className="mt-16">
@@ -20,7 +23,7 @@ const ProfessionalPageDetailsMyServices = ({
           suppressHydrationWarning={true}
         >
           {packages?.map((item, index) => (
-            <ProfessionalServiceCard key={index} data={item} myData={myData} />
+            <ProfessionalServiceCard key={index} data={item} myData={myData} professionalUser={professionalUser} />
           ))}
         </div>
       ) : (

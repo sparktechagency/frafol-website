@@ -33,6 +33,8 @@ const BusinessInputStructure = [
     label: "IČO",
     placeholder: "Enter IČO Name",
     labelClassName: "!font-semibold !text-secondary-color",
+    rules: [{ required: true, message: "IČO is required" }],
+
   },
   {
     name: "dic",
@@ -120,15 +122,13 @@ const LegalInvoiceDetails = () => {
     router.push("/sign-up/professional/review-details");
   };
   return (
-    <div className=" flex flex-col justify-center gap-3 h-full w-full sm:w-3/4 mx-auto mt-32">
+    <div className=" flex flex-col justify-center gap-3 h-full w-full sm:w-3/4 mx-auto">
       <div className="mb-3">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-secondary-color mb-5">
           Legal & Invoice Details
         </h2>
         <p className="text-base sm:text-lg lg:text-xl text-base-color">
-          Please provide your details for seamless invoicing. This information
-          is required for future transactions and will only appear on your final
-          invoice.
+          Please provide your details for seamless invoicing.
         </p>
       </div>
       <ReusableForm handleFinish={onFinish} form={form}>

@@ -118,7 +118,7 @@ const ReviewDetailsAndSubmit = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center gap-3 h-full w-full sm:w-3/4 mx-auto pb-10">
+    <div className="flex flex-col justify-center gap-3 h-full w-full sm:w-3/4 mx-auto ">
       <div className="mb-3">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-secondary-color mb-5">
           Review & Submit
@@ -225,7 +225,7 @@ const ReviewDetailsAndSubmit = () => {
         <div className="flex justify-end items-end w-full mt-5">
           <ReuseButton
             variant="secondary"
-            className="!w-fit !text-[10px] sm:!text-xs lg:!text-sm !px-5 !py-2.5"
+            className="!w-fit !text-[10px] sm:!text-xs lg:!text-sm !px-5 !py-2.5 mb-5!"
             htmlType="submit"
           >
             Create Account

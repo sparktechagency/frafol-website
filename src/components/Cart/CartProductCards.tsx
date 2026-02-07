@@ -7,6 +7,7 @@ import { getServerUrl } from "@/helpers/config/envConfig";
 import { IGear } from "@/types";
 import { useAppDispatch } from "@/redux/hooks";
 import { removeFromCart } from "@/redux/features/cart/cartSlice";
+import Link from "next/link";
 
 const CartCard = ({ product }: { product: IGear }) => {
   const dispatch = useAppDispatch();
@@ -15,6 +16,8 @@ const CartCard = ({ product }: { product: IGear }) => {
   const handleRemove = (id: string) => {
     dispatch(removeFromCart(id));
   };
+
+  console.log(product)
   return (
     <div className="py-2 flex justify-between items-center gap-5 ">
       <div className="flex gap-2 items-center">
@@ -31,9 +34,11 @@ const CartCard = ({ product }: { product: IGear }) => {
           quality={75}
         />
         <div>
-          <h2 className="text-sm sm:text-base lg:text-lg font-semibold mb-2">
-            {product?.name}
-          </h2>
+          <Link href={`/marketplace/${product?._id}`}>
+            <h2 className="text-sm sm:text-base lg:text-lg text-secondary-color font-semibold mb-2">
+              {product?.name}
+            </h2>
+          </Link>
           <div className="flex items-center gap-2">
             <p className="text-xs sm:text-sm lg:text-base font-semibold">
               Condition:

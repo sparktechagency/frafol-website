@@ -12,10 +12,10 @@ const inputStructure = [
     name: "about",
     type: "text",
     inputType: "textarea",
-    label: "About You / Biography",
+    label: "About You / Biography (Min 100 characters, Max 2000 characters)",
     placeholder: "Enter About You / Biography",
     labelClassName: "!font-semibold !text-secondary-color",
-    rules: [{ required: true, message: "Bio is required" }],
+    rules: [{ required: true, type: "string", min: 100, max: 2000 }],
   },
   {
     name: "minHourlyRate",

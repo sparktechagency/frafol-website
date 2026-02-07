@@ -104,6 +104,7 @@ export const companyInputStructure = [
     label: "IČO",
     placeholder: "Enter IČO",
     labelClassName: "!font-semibold",
+    rules: [{ required: true, message: "IČO is required" }],
   },
   {
     name: "DIC",
@@ -138,6 +139,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
   myData,
   professionalUser,
 }) => {
+  console.log(professionalUser)
   const [form] = Form.useForm();
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [type, setType] = useState<"user" | "company">("user");
@@ -258,6 +260,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
               labelClassName="!font-semibold"
               rules={[{ required: true, message: "Date is required" }]}
               placeholder="Select Date"
+              unAllowedDate={professionalUser?.unAvailability}
               format="MM-DD-YYYY"
             />
 

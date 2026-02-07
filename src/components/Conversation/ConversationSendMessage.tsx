@@ -167,19 +167,13 @@ const ConversationSendMessage = ({
                     }, 1000);
                   }}
                   maxCount={5} // Allow multiple files
-                  accept=".jpg,.jpeg,.png,.gif,.zip,.pdf,.svg,.mp4,.mov,.avi,.mkv" // Accept specific file types
+                  accept="image/*" // Accept specific file types
                   beforeUpload={(file) => {
                     const validTypes = [
-                      "image/jpeg",
                       "image/png",
-                      "image/gif",
-                      "application/zip",
-                      "application/pdf",
-                      "image/svg+xml",
-                      "video/mp4",
-                      "video/quicktime", // for .mov
-                      "video/x-msvideo", // for .avi
-                      "video/x-matroska", // for .mkv
+                      "image/jpg",
+                      "image/webp",
+                      "image/jpeg",
                     ];
 
                     // Check if the file is of a valid type

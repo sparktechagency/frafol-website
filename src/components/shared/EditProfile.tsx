@@ -323,6 +323,7 @@ const professionalInputStructure = [
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
+    rules: [{ required: true, message: "IČO is required" }],
   },
   {
     name: "dic",
@@ -346,7 +347,7 @@ const professionalInputStructure = [
     inputClassName: "!py-2 !w-full",
     disable: false,
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "IČ DPH is required" }],
+    rules: [{ required: false, message: "IČ DPH is required" }],
   },
 ];
 

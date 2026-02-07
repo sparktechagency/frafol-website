@@ -37,7 +37,7 @@ const MarketPlaceDetailsPage = ({ data }: { data: IGear }) => {
           {data?.name}
         </h1>
         <h3 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold">
-          ${data?.mainPrice}
+          {data?.mainPrice}€
         </h3>
         <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl mt-4">
           {data?.description}

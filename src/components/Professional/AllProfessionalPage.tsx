@@ -11,9 +11,11 @@ import "swiper/css/navigation";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
 import { IProfessional } from "@/types";
-import PhotographyPageSearch from "../Photography/PhotographyPageSearch";
 import PaginationSection from "../shared/PaginationSection";
 import NoResultFound from "../shared/NoResultFound";
+import PhotographyCategorySeacrhFiltre from "../Photography/PhotographyCategorySeacrhFiltre";
+import ReuseButton from "../ui/Button/ReuseButton";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const params = await searchParams;
@@ -50,8 +52,30 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
           title="Our Professionals"
           description="Discover our top-rated Professionals"
         />
-        <div className="mt-16">
-          <PhotographyPageSearch />
+        <div className="mt-16 flex justify-between mb-10">
+          {
+            role === "videographer" ? (
+              <ReuseButton
+                url="/videography"
+                variant="secondary"
+                className="w-fit !text-sm sm:!text-base lg:!text-xl  !flex !items-center gap-2"
+              >
+                <FaArrowLeftLong className="!mt-1" />
+                Back To Categories
+              </ReuseButton>
+            ) : role === "photographer" ? (
+              <ReuseButton
+                url="/photography"
+                variant="secondary"
+                className="w-fit !text-sm sm:!text-base lg:!text-xl  !flex !items-center gap-2"
+              >
+                <FaArrowLeftLong className="!mt-1" />
+                Back To Categories
+              </ReuseButton>
+            ) : <div></div>
+          }
+
+          <PhotographyCategorySeacrhFiltre />
         </div>
         {professionals?.length > 0 ? (
           <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">

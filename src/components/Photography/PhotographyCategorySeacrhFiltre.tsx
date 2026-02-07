@@ -9,6 +9,7 @@ import { Form, Typography } from "antd";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ReusableForm from "../ui/Form/ReuseForm";
+import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
 
 const PhotographyCategorySeacrhFiltre = () => {
   const [form] = Form.useForm();
@@ -27,6 +28,7 @@ const PhotographyCategorySeacrhFiltre = () => {
   };
 
   useEffect(() => {
+    console.log(searchParams?.get("availity"))
     form.setFieldsValue({
       min: searchParams.get("min"),
       max: searchParams.get("max"),
@@ -34,6 +36,8 @@ const PhotographyCategorySeacrhFiltre = () => {
       search: searchParams.get("search"),
     });
   }, [searchParams, form]);
+
+
 
   const debounceSearch = debounce((value: string) => {
     const text = value;
@@ -79,11 +83,12 @@ const PhotographyCategorySeacrhFiltre = () => {
     } else {
       params.delete("max");
     }
-    // if (values.condition) {
-    //   params.set("condition", values.condition);
-    // } else {
-    //   params.delete("condition");
-    // }
+    console.log(values?.date?.format("DD-MM-YYYY"));
+    if (values?.date) {
+      params.set("availity", values?.date?.format("DD-MM-YYYY"));
+    } else {
+      params.delete("availity");
+    }
     replace(`${pathName}?${params.toString()}`, { scroll: false });
 
     setFilter(false);
@@ -96,14 +101,16 @@ const PhotographyCategorySeacrhFiltre = () => {
     params.delete("search");
     params.delete("min");
     params.delete("max");
+    params.delete("availity");
     // params.delete("condition");
 
     replace(`${pathName}?${params.toString()}`, { scroll: false });
 
     setFilter(false);
   };
+
   return (
-    <div>
+    <div className="">
       <ReuseInput
         prefix={<FiSearch className="text-base-color size-5" />}
         suffix={
@@ -118,7 +125,7 @@ const PhotographyCategorySeacrhFiltre = () => {
         placeholder="Search"
         type="text"
       />
-      <div className="relative z-10! -mt-5">
+      <div className="relative z-20! -mt-5">
         <div
           ref={inputRef}
           style={{
@@ -146,7 +153,9 @@ const PhotographyCategorySeacrhFiltre = () => {
                 <ReuseInput name="min" placeholder="Min" type="text" />
                 <ReuseInput name="max" placeholder="Max" type="text" />
               </div>
-              {/* <ReuseDatePicker name="date" label="Available From" /> */}
+              <ReuseDatePicker name="date" label="Available Date" />
+
+
               <p
                 className="cursor-pointer text-secondary-color text-end mb-5 font-semibold !text-sm sm:!text-sm lg:!text-base"
                 onClick={HandleReset}

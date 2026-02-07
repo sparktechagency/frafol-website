@@ -174,7 +174,7 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
             onMouseLeave={handleVideoLeave}>
             {/* Frafol Choice Badge */}
             {item?.hasActiveSubscription && (
-                <div className="absolute top-2 left-2 flex items-center gap-1 bg-secondary-color px-2 py-1 rounded-full z-20 shadow-md">
+                <div className="absolute top-2 left-2 flex items-center gap-1 bg-secondary-color px-2 py-1 rounded-full z-10 shadow-md">
                     <Image
                         src={AllImages?.batch}
                         width={16}

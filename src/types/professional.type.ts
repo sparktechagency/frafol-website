@@ -39,11 +39,13 @@ interface IProfessionalUser {
   averageRating: number;
   starCounts: IStarCounts;
   package: IPackage[];
+  unAvailability: string[]; // You can specify a more specific type for gallery if needed
   gallery: string[]; // You can specify a more specific type for gallery if needed
   introVideo: string;
   bannerImages: string[];
   country: string;
   town: string;
+  zipCode: string;
 }
 
 interface IProfessional {

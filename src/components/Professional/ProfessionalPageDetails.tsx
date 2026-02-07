@@ -143,6 +143,7 @@ const ProfessionalPageDetails = async ({
         <ProfessionalPageDetailsMyServices
           packages={professionalUser?.package}
           myData={myData}
+          professionalUser={professionalUser}
         />
         <ProfessionalReviews
           professionalUser={professionalUser}

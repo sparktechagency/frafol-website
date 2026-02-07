@@ -253,7 +253,13 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                         >
                             <div>
                                 <p className="text-sm">
-                                    Agree to <Link target="_blank" href="/terms-of-service" className="text-secondary-color!">Terms and Conditions</Link>
+                                    Agree to <Link href="/terms-of-service" target="_blank" className="text-secondary-color underline">
+                                        Terms of Service Conceptural
+                                    </Link>{" "}
+                                    and{" "}
+                                    <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color underline">
+                                        Terms of Service Marketplace.
+                                    </Link>
                                 </p>
 
                             </div>

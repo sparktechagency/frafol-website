@@ -17,6 +17,7 @@ import { IMessage } from "@/types/conversation.type";
 import { ISignInUser } from "@/types";
 import { AllImages } from "../../../public/assets/AllImages";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import SpinLoader from "../ui/SpinLoader";
 
 const ConversationMessage = ({
   allMessages,
@@ -49,9 +50,9 @@ const ConversationMessage = ({
   const selectedConversation = useSelector(selectSelectedChatUser);
   const messagesContainerRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const [isInitialLoading, setIsInitialLoading] = useState(true); // Changed
+  const [isLoadingMore, setIsLoadingMore] = useState(false); // Added for pagination
   const [messages, setMessages] = useState<any[]>([]);
-
-  console.log(allMessages)
 
   const handleBack = () => {
     const params = new URLSearchParams(searchParams);
@@ -61,11 +62,15 @@ const ConversationMessage = ({
     dispatch(setSelectedChatUser(null));
   };
 
+
+
+
   // Reset on conversation change
   useEffect(() => {
     if (!selectedConversation?.chat?._id) return;
     setMessages([]);
-    setTimeout(() => { }, 0);
+    setIsInitialLoading(true);
+    setIsLoadingMore(false);
   }, [selectedConversation?.chat?._id]);
 
   // Scroll to bottom when new messages loaded on first page
@@ -99,18 +104,21 @@ const ConversationMessage = ({
         const newScrollHeight = container.scrollHeight;
         container.scrollTop = newScrollHeight - prevScrollHeight;
       }
+      setIsInitialLoading(false);
+      setIsLoadingMore(false);
     }, 100);
   }, [allMessages, page]);
 
-  // // Infinite scroll handler
+  // Infinite scroll handler
   useEffect(() => {
     const handleScroll = () => {
       const container = messagesContainerRef.current;
-      if (!container) return;
+      if (!container || isLoadingMore) return; // Prevent multiple requests
 
       if (container.scrollTop === 0) {
         if (room === selectedConversation?.chat?._id) {
           if (totalMessages?.totalPage && page < totalMessages?.totalPage) {
+            setIsLoadingMore(true); // Set loading state
             const curentPage = page;
             const params = new URLSearchParams(searchParams);
             if (curentPage) {
@@ -129,7 +137,7 @@ const ConversationMessage = ({
     container?.addEventListener("scroll", handleScroll);
     return () => container?.removeEventListener("scroll", handleScroll);
   }, [
-    allMessages,
+    isLoadingMore, // Added dependency
     page,
     pathName,
     replace,
@@ -149,6 +157,7 @@ const ConversationMessage = ({
     }, 100);
   }, []);
 
+  // Socket connection
   useEffect(() => {
     const roomId = selectedConversation?.chat?._id;
     if (!roomId || !socket) return;
@@ -217,22 +226,39 @@ const ConversationMessage = ({
             </div>
           </div>
 
-          {/* Message List */}
+          {/* Message List - ALWAYS RENDER CONTENT */}
           <Content className="bg-white flex flex-col gap-5 !relative">
             <div className="h-full flex flex-col justify-end !relative ">
               <Card
                 className="!border-0 !pb-5 !relative overflow-y-auto border-none h-full overflow-x-hidden  !mb-5"
                 ref={messagesContainerRef}
               >
-                {convertnewMessageFirst.map((msg: IMessage) => (
-                  <ConversationMessageCard
-                    key={msg._id}
-                    msg={msg}
-                    userData={userData}
-                    imageUrl={imageUrl as string}
-                  />
-                ))}
-                <div ref={messagesEndRef} />
+                {/* Show initial loading OR messages */}
+                {isInitialLoading && messages.length === 0 ? (
+                  <div className="flex items-center justify-center h-full">
+                    <SpinLoader />
+                  </div>
+                ) : (
+                  <>
+                    {/* Pagination loading indicator at top */}
+                    {isLoadingMore && (
+                      <div className="flex items-center justify-center h-full">
+                        <SpinLoader />
+                      </div>
+                    )}
+
+                    {/* Messages */}
+                    {convertnewMessageFirst.map((msg: IMessage) => (
+                      <ConversationMessageCard
+                        key={msg._id}
+                        msg={msg}
+                        userData={userData}
+                        imageUrl={imageUrl as string}
+                      />
+                    ))}
+                    <div ref={messagesEndRef} />
+                  </>
+                )}
               </Card>
             </div>
 

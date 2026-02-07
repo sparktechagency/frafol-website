@@ -6,6 +6,7 @@ import { Typography, Form } from "antd";
 import { Rule } from "antd/es/form";
 import { cn } from "@/lib/utils";
 import { CiCalendarDate } from "react-icons/ci";
+import dayjs from "dayjs";
 
 interface ReuseDatePickerProps {
   label?: React.ReactNode;
@@ -20,6 +21,7 @@ interface ReuseDatePickerProps {
   placeholder?: string;
   labelClassName?: string;
   wrapperClassName?: string;
+  unAllowedDate?: string[];
 }
 
 const ReuseDatePicker = ({
@@ -34,10 +36,21 @@ const ReuseDatePicker = ({
   placeholder = "Select date",
   labelClassName,
   wrapperClassName,
+  unAllowedDate,
+
 }: ReuseDatePickerProps) => {
   const disabledDate = (current: any) => {
-    // Disable all dates before today (including past months and years)
-    return current && current < new Date().setHours(0, 0, 0, 0); // Disable past dates
+    if (!current) return false;
+
+    // Disable all dates before today
+    const isPastDate = current.isBefore(dayjs().startOf('day'));
+
+    // Disable unavailable dates from the array
+    const isUnavailable = unAllowedDate?.some((dateStr) => {
+      return current.isSame(dayjs(dateStr), 'day');
+    });
+
+    return isPastDate || isUnavailable;
   };
 
   return (

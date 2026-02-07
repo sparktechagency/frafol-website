@@ -8,7 +8,7 @@ import ReuseInput from "../../Form/ReuseInput";
 import ReuseButton from "../../Button/ReuseButton";
 import ReuseDatePicker from "../../Form/ReuseDatePicker";
 import ReuseTimePicker from "../../Form/ReuseTimePicker";
-import { ICreateEventOrder, IPackage, IProfile } from "@/types";
+import { ICreateEventOrder, IPackage, IProfessionalUser, IProfile } from "@/types";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { createEventOrder } from "@/services/EventOrderService/EventOrderServiceApi";
 import { companyInputStructure, userInputStructure } from "./ProfessionalBookingModal";
@@ -26,11 +26,12 @@ interface ProfessionalServiceBookingModalProps {
   handleCancel: () => void;
   packageData: IPackage;
   myData: IProfile;
+  professionalUser: IProfessionalUser;
 }
 
 const ProfessionalServiceBookingModal: React.FC<
   ProfessionalServiceBookingModalProps
-> = ({ isModalVisible, handleCancel, packageData, myData }) => {
+> = ({ isModalVisible, handleCancel, packageData, myData, professionalUser }) => {
   const serverUrl = getServerUrl();
 
   const [form] = Form.useForm();
@@ -200,6 +201,7 @@ const ProfessionalServiceBookingModal: React.FC<
               labelClassName="!font-semibold"
               rules={[{ required: true, message: "Date is required" }]}
               placeholder="Select Date"
+              unAllowedDate={professionalUser?.unAvailability}
               format="MM-DD-YYYY"
             />
 

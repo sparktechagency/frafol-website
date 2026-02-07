@@ -4,16 +4,19 @@ import { AllImages } from "../../../public/assets/AllImages";
 import { IoCalendarOutline } from "react-icons/io5";
 import { BsCurrencyDollar } from "react-icons/bs";
 import ServiceCardBookNow from "../Professional/ServiceCardBookNow";
-import { IPackage, IProfile } from "@/types";
+import { IPackage, IProfessionalUser, IProfile } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { LuClock } from "react-icons/lu";
 
 const ProfessionalServiceCard = ({
   data,
   myData,
+  professionalUser
 }: {
   data: IPackage;
   myData: IProfile;
+  professionalUser: IProfessionalUser;
+
 }) => {
   const serverUrl = getServerUrl();
 
@@ -88,16 +91,16 @@ const ProfessionalServiceCard = ({
 
       {myData?.role === "user" ? (
         <div className="flex items-center gap-2 mt-5 justify-between">
-          <ServiceCardBookNow myData={myData} packageData={data} />
+          <ServiceCardBookNow myData={myData} packageData={data} professionalUser={professionalUser} />
         </div>
       ) : myData?.role === "company" ? (
         <div className="flex items-center gap-2 mt-5 justify-between">
-          <ServiceCardBookNow myData={myData} packageData={data} />
+          <ServiceCardBookNow myData={myData} packageData={data} professionalUser={professionalUser} />
         </div>
       ) : (
         !myData?._id && (
           <div className="flex items-center gap-2 mt-5 justify-between">
-            <ServiceCardBookNow myData={myData} packageData={data} />
+            <ServiceCardBookNow myData={myData} packageData={data} professionalUser={professionalUser} />
           </div>
         )
       )}

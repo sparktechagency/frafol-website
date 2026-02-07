@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AllImages } from "../../../public/assets/AllImages";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button, Dropdown, MenuProps } from "antd";
 import * as motion from "motion/react-client";
 import { useScroll, useMotionValueEvent } from "motion/react";
@@ -39,6 +39,7 @@ const NavItems = [
 
 
 const Navbar = ({ notifications }: { notifications: INotification[] }) => {
+  const router = useRouter();
   const serverUrl = getServerUrl();
   const token = Cookies.get("frafolMainAccessToken");
   const userData: ISignInUser | null = decodedToken(token || "");
@@ -147,6 +148,9 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
 
   const handleLogOut = () => {
     logout();
+    setTimeout(() => {
+      router.push("/");
+    })
     // setIsLoading(true);
     // if (protectedRoutes.some((route) => pathname.match(route))) {
     //   router.push("/");

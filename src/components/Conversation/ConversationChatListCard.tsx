@@ -10,7 +10,6 @@ import Image from "next/image";
 import { IConversation } from "@/types/conversation.type";
 import { AllImages } from "../../../public/assets/AllImages";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 
 interface IConversationChatListCardProps {
   conversation: IConversation;
@@ -31,18 +30,7 @@ const ConversationChatListCard = ({
   const dispatch = useAppDispatch();
   const selectedConversation = useAppSelector(selectSelectedChatUser);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-
-    if (params.has("room") || params.has("page")) {
-      // params.delete("room");
-      params.delete("page");
-
-      // Replace URL without these params, scroll false keeps scroll position
-      replace(`${pathName}?${params.toString()}`, { scroll: false });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // REMOVED the useEffect - no longer needed since we handle it in ConversationPage
 
   const handleConversationSelect = (conversation: IConversation) => {
     const conversationId = conversation?.chat?._id;
@@ -50,15 +38,14 @@ const ConversationChatListCard = ({
     // Create a new URLSearchParams object to modify search params
     const params = new URLSearchParams(searchParams);
 
-    // Set the room and page params
+    // Set the room and DELETE page params (don't set to "1")
     if (conversationId) {
       params.set("room", conversationId);
-      params.set("page", "1");
+      params.delete("page"); // ← CHANGED: Delete instead of set to "1"
     } else {
       params.delete("room");
       params.delete("page");
     }
-    // Log the parameters to verify they are being set correctly
 
     // Replace the URL with the new params
     replace(`${pathName}?${params.toString()}`, { scroll: false });
@@ -95,13 +82,6 @@ const ConversationChatListCard = ({
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1">
                   <p>
-                    {/* {conversation?.users?.[0]?._id === userData?._id
-                      ? conversation?.users?.[1]?.petName.length > 10
-                        ? `${conversation?.users?.[1]?.petName.slice(0, 10)}...`
-                        : conversation?.users?.[1]?.petName
-                      : conversation?.users?.[0]?.petName.length > 10
-                      ? `${conversation?.users?.[0]?.petName.slice(0, 10)}...`
-                      : conversation?.users?.[0]?.petName} */}
                     {conversation?.chat?.users?.[0]?.name?.length > 15
                       ? `${conversation?.chat?.users?.[0]?.name.slice(
                         0,

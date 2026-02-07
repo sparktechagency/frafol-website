@@ -15,8 +15,8 @@ const AuthSectionTemplate = ({
   showLogo?: boolean;
 }) => {
   return (
-    <div className="w-full h-screen grid grid-cols-1 lg:grid-cols-3 overflow-hidden">
-      <div className="lg:col-span-2 py-5 overflow-y-auto">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-3 relative">
+      <div className="lg:col-span-2">
         <Container className="h-full">
           <div className="flex flex-col gap-5 h-full">
             <AuthSectionLogo skip={skip} showLogo={showLogo} />
@@ -24,14 +24,17 @@ const AuthSectionTemplate = ({
           </div>
         </Container>
       </div>
-      <Image
-        src={imageScr}
-        alt="Auth Background"
-        width={2000}
-        height={2000}
-        className="hidden lg:block w-full h-screen object-cover "
-      />
+      <div className="lg:col-span-1 w-full">
+        <Image
+          src={imageScr}
+          alt="Auth Background"
+          width={2000}
+          height={2000}
+          className="hidden lg:block w-1/3 h-screen fixed top-0  object-cover"
+        />
+      </div>
     </div>
+
   );
 };
 
