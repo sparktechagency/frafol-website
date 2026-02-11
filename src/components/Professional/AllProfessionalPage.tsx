@@ -21,6 +21,9 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const params = await searchParams;
   const search = params?.search || "";
   const type = params?.type || null;
+  const minPrice = (params?.min as string) || null;
+  const maxPrice = (params?.max as string) || null;
+  const availity = (params?.availity as string) || null;
   console.log(type)
 
   const role =
@@ -34,7 +37,7 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const limit = 12;
 
   const res = await fetchWithAuth(
-    `/users/professionals?page=${page}&limit=${limit}&role=${role}&searchTerm=${search}${type ? `&hasActiveSubscription=true` : ''}`,
+    `/users/professionals?page=${page}&limit=${limit}&role=${role}&searchTerm=${search}${type ? `&hasActiveSubscription=true` : ''}&minPrice=${minPrice || ""}&maxPrice=${maxPrice || ""}&availableDate=${availity || ""}`,
     {
       next: {
         tags: [TagTypes.prfessional],

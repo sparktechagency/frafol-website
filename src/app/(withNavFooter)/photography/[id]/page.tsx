@@ -22,7 +22,8 @@ const PhotographyCategoryDetailsPage = async ({
   const search = (paramsData?.search as string) || "";
   const minPrice = (paramsData?.min as string) || null;
   const maxPrice = (paramsData?.max as string) || null;
-
+  const availity = (paramsData?.availity as string) || null;
+  console.log(availity)
   const data: {
     id: string;
     role: string;
@@ -36,7 +37,7 @@ const PhotographyCategoryDetailsPage = async ({
   };
 
   const res = await fetchWithAuth(
-    `/users/professionalsByCategory?role=${role}&categoryType=${title}&searchTerm=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}`,
+    `/users/professionalsByCategory?role=${role}&categoryType=${title}&searchTerm=${search}&minPrice=${minPrice || ""}&maxPrice=${maxPrice || ""}&availableDate=${availity || ""}`,
     {
       next: {
         tags: [TagTypes.category],
@@ -46,6 +47,7 @@ const PhotographyCategoryDetailsPage = async ({
   );
   const resdata = await res.json();
   const categories: any[] = resdata?.data?.result;
+  console.log(resdata);
   return (
     <div>
       <PhotographyCategoryDetails categories={categories} data={data} />

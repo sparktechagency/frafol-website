@@ -4,10 +4,10 @@ import ReusableForm from "../../Form/ReuseForm";
 import ReuseInput from "../../Form/ReuseInput";
 import ReuseButton from "../../Button/ReuseButton";
 import ReuseUpload from "../../Form/ReuseUpload";
-import { useRef, useState } from "react";
-import JoditEditor from "jodit-react";
+import { useState } from "react";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { addNewCommunityPost } from "@/services/CommunityForumService/CommunityForumServiceApi";
+import RichTextEditor from "@/components/shared/RichTextEditor";
 
 interface AddNewForumMoidalProps {
   isAddModalVisible: boolean;
@@ -19,7 +19,6 @@ const AddNewForumMoidal: React.FC<AddNewForumMoidalProps> = ({
   handleCancel,
 }) => {
   const [form] = Form.useForm();
-  const editor = useRef(null);
   const [content, setContent] = useState("");
 
   const onSubmit = async (values: any) => {
@@ -86,59 +85,13 @@ const AddNewForumMoidal: React.FC<AddNewForumMoidalProps> = ({
           /> */}
 
           <div className="my-10">
-            <JoditEditor
-              ref={editor}
-              value={content}
-              config={{
-                height: 500,
-                theme: "light",
-                readonly: false,
-                toolbarAdaptive: false,
-                toolbarSticky: false,
-
-                // 🔒 Remove image, video, file, voice, and print options
-                removeButtons: [
-                  "image",
-                  "file",
-                  "video",
-                  "audio",
-                  "voice",
-                  "print",
-                  "fullsize",
-                  "about",
-                  "source", // hide HTML source
-                  // "hr",
-                  "speechRecognize",
-                  "spellcheck",
-
-                  "superscript",
-                  "subscript",
-                  // "link",
-                  // "unlink",
-                  "strike",
-                  "indent",
-                  "outdent",
-                  // "fontsize",
-                  // "font",
-                  "brush",
-                  // "undo",
-                  // "redo",
-                  // "align",
-                  "cut",
-                  "copy",
-                  "paste",
-                  "selectall",
-                  "find",
-                  "ai",
-                  "aiassistant",
-                  "specialchars",
-                  "insertClassName",
-                ],
-
-                hidePoweredByJodit: true,
-              }}
-              onBlur={(newContent) => setContent(newContent)}
+            <RichTextEditor
+              content={content}
+              setContent={setContent}
+              placeholder="Type something amazing..."
+              minHeight="500px"
             />
+
           </div>
           <ReuseUpload
             label="Upload Image (Optional)"

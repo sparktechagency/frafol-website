@@ -10,6 +10,7 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ReusableForm from "../ui/Form/ReuseForm";
 import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
+import dayjs from "dayjs";
 
 const PhotographyCategorySeacrhFiltre = () => {
   const [form] = Form.useForm();
@@ -34,6 +35,7 @@ const PhotographyCategorySeacrhFiltre = () => {
       max: searchParams.get("max"),
       // category: searchParams.get("category"),
       search: searchParams.get("search"),
+      date: dayjs(searchParams.get("availity"), "YYYY-MM-DD"),
     });
   }, [searchParams, form]);
 
@@ -83,9 +85,8 @@ const PhotographyCategorySeacrhFiltre = () => {
     } else {
       params.delete("max");
     }
-    console.log(values?.date?.format("DD-MM-YYYY"));
     if (values?.date) {
-      params.set("availity", values?.date?.format("DD-MM-YYYY"));
+      params.set("availity", values?.date?.format("YYYY-MM-DD"));
     } else {
       params.delete("availity");
     }

@@ -4,14 +4,14 @@ import ReusableForm from "../../Form/ReuseForm";
 import ReuseInput from "../../Form/ReuseInput";
 import ReuseButton from "../../Button/ReuseButton";
 import ReuseUpload from "../../Form/ReuseUpload";
-import { useEffect, useRef, useState } from "react";
-import JoditEditor from "jodit-react";
+import { useEffect, useState } from "react";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { updateCommunityPost } from "@/services/CommunityForumService/CommunityForumServiceApi";
 import { ICommunityPost } from "@/types";
 import Image from "next/image";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { AllImages } from "../../../../../public/assets/AllImages";
+import RichTextEditor from "@/components/shared/RichTextEditor";
 
 interface EditForumModalProps {
   isAddModalVisible: boolean;
@@ -26,7 +26,6 @@ const EditForumModal: React.FC<EditForumModalProps> = ({
 }) => {
   const serveUrl = getServerUrl();
   const [form] = Form.useForm();
-  const editor = useRef(null);
   const [content, setContent] = useState("");
 
   useEffect(() => {
@@ -102,31 +101,11 @@ const EditForumModal: React.FC<EditForumModalProps> = ({
           /> */}
 
           <div className="my-10">
-            <JoditEditor
-              ref={editor}
-              value={content}
-              config={{
-                height: 500,
-                theme: "light",
-                readonly: false,
-                toolbarAdaptive: false,
-                toolbarSticky: false,
-
-                // 🔒 Remove image, video, file, voice, and print options
-                removeButtons: [
-                  "image",
-                  "file",
-                  "video",
-                  "audio",
-                  "voice",
-                  "print",
-                  "fullsize",
-                  // "preview",
-                  "about",
-                ],
-                hidePoweredByJodit: true,
-              }}
-              onBlur={(newContent) => setContent(newContent)}
+            <RichTextEditor
+              content={content}
+              setContent={setContent}
+              placeholder="Type something amazing..."
+              minHeight="500px"
             />
           </div>
           <ReuseUpload

@@ -38,6 +38,7 @@ const MarketPlace = async ({ searchParams }: { searchParams: any }) => {
   const data = await res.json();
   const gear: IGear[] = data?.data?.result;
   const totalData = data?.data?.meta?.total;
+  console.log(gear)
 
   const categoryRes = await fetchWithAuth(`/category/type/gear`, {
     next: {

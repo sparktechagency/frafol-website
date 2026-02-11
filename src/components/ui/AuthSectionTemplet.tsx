@@ -16,7 +16,7 @@ const AuthSectionTemplate = ({
 }) => {
   return (
     <div className="w-full grid grid-cols-1 lg:grid-cols-3 relative">
-      <div className="lg:col-span-2">
+      <div className="lg:col-span-2 min-h-[94vh] flex flex-col justify-center items-center">
         <Container className="h-full">
           <div className="flex flex-col gap-5 h-full">
             <AuthSectionLogo skip={skip} showLogo={showLogo} />

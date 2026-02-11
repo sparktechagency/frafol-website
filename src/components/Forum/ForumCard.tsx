@@ -9,6 +9,7 @@ import { getServerUrl } from "@/helpers/config/envConfig";
 import { AllImages } from "../../../public/assets/AllImages";
 import { formatDateTime } from "@/utils/dateFormet";
 import { Tooltip } from "antd";
+import { stripHtmlTags } from "@/utils/stripHtmlTags";
 
 const ForumCard = ({
   item,
@@ -23,11 +24,6 @@ const ForumCard = ({
 }) => {
   const serverUrl = getServerUrl();
 
-  const plainText = item?.text.replace(/<[^>]+>/g, " ");
-
-  // 2️⃣ Trim to 200 characters
-  const shortText =
-    plainText.length > 200 ? plainText.substring(0, 200) + "..." : plainText;
 
   const showEditAndDeleteOptions = () => {
     return (
@@ -86,8 +82,8 @@ const ForumCard = ({
           {item?.title}
         </h1>
       </Link>
-      <p className="text-base-color text-sm sm:text-xs lg:text-base xl:text-lg font-medium mb-1">
-        {shortText}
+      <p className="text-base-color text-sm sm:text-xs lg:text-base xl:text-lg font-medium mb-1 line-clamp-2">
+        {stripHtmlTags(item?.text || "")}
       </p>
       <div className="flex items-center gap-3 mt-5 text-sm sm:text-base lg:text-lg font-semibold">
         <div className="flex items-center gap-2">

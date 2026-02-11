@@ -25,7 +25,7 @@ const AuthSectionLogo = ({
           />
         </Link>
       ) : (
-        <div className="flex items-center gap-2 justify-center">
+        <div className="">
           <IoIosArrowRoundBack
             onClick={() => window.history.back()}
             className="text-3xl text-secondary-color font-extrabold cursor-pointer"

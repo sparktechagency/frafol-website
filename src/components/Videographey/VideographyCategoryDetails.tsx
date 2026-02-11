@@ -5,9 +5,9 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import FeaturedProfessionalsCard from "../shared/FeaturedProfessionalsCard";
 import { AllImages } from "../../../public/assets/AllImages";
-import VideographyCategorySeacrhFiltre from "./VideographyCategorySeacrhFiltre";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import NoResultFound from "../shared/NoResultFound";
+import PhotographyCategorySeacrhFiltre from "../Photography/PhotographyCategorySeacrhFiltre";
 
 const VideographyCategoryDetails = ({
   categories,
@@ -34,7 +34,7 @@ const VideographyCategoryDetails = ({
             <FaArrowLeftLong className="!mt-1" />
             Back To Categories
           </ReuseButton>
-          <VideographyCategorySeacrhFiltre />
+          <PhotographyCategorySeacrhFiltre />
         </div>
         {categories?.length > 0 ? (
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
