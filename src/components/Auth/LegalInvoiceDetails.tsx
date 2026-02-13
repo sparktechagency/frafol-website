@@ -7,6 +7,8 @@ import ReuseButton from "../ui/Button/ReuseButton";
 import { Form, Typography } from "antd";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
+import dayjs from "dayjs";
 
 const BusinessInputStructure = [
   {
@@ -19,7 +21,7 @@ const BusinessInputStructure = [
     rules: [{ required: true, message: "Company Name is required" }],
   },
   {
-    name: "phoneNumber",
+    name: "phone",
     type: "number",
     inputType: "normal",
     label: "Phone number",
@@ -101,10 +103,11 @@ const LegalInvoiceDetails = () => {
   const storedInformation = Cookies.get("information");
 
   const parseData = JSON.parse(storedInformation || "{}");
+  console.log(parseData)
 
   form.setFieldsValue({
     companyName: parseData.companyName,
-    phoneNumber: parseData.phoneNumber,
+    phone: parseData.phone,
     ico: parseData.ico || "",
     dic: parseData.dic,
     ic_dph: parseData.ic_dph,
@@ -112,6 +115,7 @@ const LegalInvoiceDetails = () => {
     zipCode: parseData.zipCode,
     town: parseData.town,
     country: parseData.country,
+    dateOfBirth: dayjs(parseData.dateOfBirth),
   });
 
   const onFinish = (values: any) => {
@@ -152,6 +156,13 @@ const LegalInvoiceDetails = () => {
             rules={input.rules}
           />
         ))}
+        <ReuseDatePicker
+          name="dateOfBirth"
+          label="Date of Birth"
+          rules={[{ required: true, message: "Date of Birth is required" }]}
+          labelClassName="!font-semibold !text-secondary-color"
+          shouldDisableDate={false}
+        />
         <Typography.Title
           level={3}
           className="!text-secondary-color !font-semibold !mt-5"

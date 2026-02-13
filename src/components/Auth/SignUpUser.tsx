@@ -17,6 +17,7 @@ import { IoMdMail } from "react-icons/io";
 import { useState } from "react";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { registerUser } from "@/services/AuthService";
+import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
 
 const userInputStructure = [
   {
@@ -60,6 +61,15 @@ const userInputStructure = [
     rules: [{ required: true, message: "Country is required" }],
   },
   {
+    name: "zipCode",
+    type: "text",
+    inputType: "normal",
+    label: "Zip Code",
+    placeholder: "Enter Zip Code Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    rules: [{ required: true, message: "Zip Code is required" }],
+  },
+  {
     name: "email",
     type: "email",
     inputType: "normal",
@@ -70,42 +80,12 @@ const userInputStructure = [
     rules: [{ required: true, message: "Email is required" }],
   },
   {
-    name: "password",
-    type: "password",
-    inputType: "password",
-    label: "Password",
-    placeholder: "Enter your password",
-    prefix: <RiLockPasswordFill className="mr-1 !text-secondary-color" />,
-    labelClassName: "!font-bold !text-secondary-color",
-    rules: [{ required: true, message: "Password is required" }, { min: 8, message: "Password must be at least 8 characters" },
-    {
-      pattern: /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/,
-      message: "Password must include at least one uppercase letter and one special character",
-    },],
-  },
-  {
-    name: "confirmPassword",
-    type: "password",
-    inputType: "password",
-    label: "Confirm Password",
-    placeholder: "Confirm your password",
-    prefix: <RiLockPasswordFill className="mr-1 !text-secondary-color" />,
-    labelClassName: "!font-bold !text-secondary-color",
-    rules: [
-      { required: true, message: "Confirm Password is required" },
-      ({
-        getFieldValue,
-      }: {
-        getFieldValue: FormInstance["getFieldValue"];
-      }) => ({
-        validator(_: unknown, value: string) {
-          if (!value || getFieldValue("password") === value) {
-            return Promise.resolve();
-          }
-          return Promise.reject(new Error("Password does not match!"));
-        },
-      }),
-    ],
+    name: "phone",
+    type: "number",
+    inputType: "normal",
+    label: "Phone number",
+    placeholder: "Enter Phone number Name",
+    labelClassName: "!font-semibold !text-secondary-color",
   },
 ];
 const companyInputStructure = [
@@ -128,6 +108,14 @@ const companyInputStructure = [
     labelClassName: "!font-semibold !text-secondary-color",
     prefix: <IoMdMail className="mr-1 !text-secondary-color" />,
     rules: [{ required: true, message: "Email is required" }],
+  },
+  {
+    name: "phone",
+    type: "number",
+    inputType: "normal",
+    label: "Phone number",
+    placeholder: "Enter Phone number Name",
+    labelClassName: "!font-semibold !text-secondary-color",
   },
   {
     name: "address",
@@ -160,6 +148,15 @@ const companyInputStructure = [
     rules: [{ required: true, message: "Country is required" }],
   },
   {
+    name: "zipCode",
+    type: "text",
+    inputType: "normal",
+    label: "Zip Code",
+    placeholder: "Enter Zip Code Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    rules: [{ required: true, message: "Zip Code is required" }],
+  },
+  {
     name: "ico",
     type: "text",
     inputType: "normal",
@@ -190,6 +187,9 @@ const companyInputStructure = [
     rules: [{ required: false, message: "IČ DPH is required" }],
   },
 
+
+];
+const passwordInputStructure = [
   {
     name: "password",
     type: "password",
@@ -315,6 +315,31 @@ const SignUpUser = () => {
               rules={input.rules}
             />
           ))}
+
+        <ReuseDatePicker
+          name="dateOfBirth"
+          label="Date of Birth"
+          rules={[{ required: true, message: "Date of Birth is required" }]}
+          labelClassName="!font-semibold !text-secondary-color"
+          shouldDisableDate={false}
+        />
+
+        {passwordInputStructure.map((input, index) => (
+          <ReuseInput
+            key={index}
+            name={input.name}
+            Typolevel={5}
+            inputType={input.inputType}
+            type={input.type}
+            prefix={input.prefix}
+            label={input.label}
+            placeholder={input.placeholder}
+            labelClassName={input.labelClassName}
+            inputClassName="!py-2.5"
+            rules={input.rules}
+          />
+        ))}
+
         {/* Agree to GDPR contract Checkbox */}
         <Form.Item
           name="acceptTerms"
@@ -336,7 +361,7 @@ const SignUpUser = () => {
             <div>
               <p className="text-sm sm:text-base lg:text-lg font-semibold">
                 Agree to{" "}
-                <Link href="/data-protection" className="text-secondary-color! underline">
+                <Link href="/data-protection" target="_blank" className="text-secondary-color! underline">
                   GDPR
                 </Link>{" "}
                 contract

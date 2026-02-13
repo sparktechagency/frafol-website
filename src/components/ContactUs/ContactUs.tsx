@@ -3,6 +3,7 @@ import { TfiEmail } from "react-icons/tfi";
 import { FiPhone } from "react-icons/fi";
 import { TfiLocationPin } from "react-icons/tfi";
 import ContactUsForm from "./ContactUsFrom";
+import { PiIdentificationBadge } from "react-icons/pi";
 
 const ContactUs = () => {
   return (
@@ -27,13 +28,25 @@ const ContactUs = () => {
             <div className="flex items-center gap-3">
               <FiPhone className="text-secondary-color text-base sm:text-lg lg:text-xl" />
               <p className="text-base-color sm:text-lg lg:text-xl">
-                0123456789
+                0917 174 707
               </p>
             </div>
             <div className="flex items-center gap-3">
               <TfiLocationPin className="text-secondary-color text-lg  sm:text-xl lg:text-2xl" />
               <p className="text-base-color sm:text-lg lg:text-xl">
-                456 Example Road, London SW1A 1AA, UK
+                Vysokoškolákov 8556/33B 010 08 Žilina
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <PiIdentificationBadge className="text-secondary-color text-lg  sm:text-xl lg:text-2xl" />
+              <p className="text-base-color sm:text-lg lg:text-xl">
+                IČO: 57113904
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <PiIdentificationBadge className="text-secondary-color text-lg  sm:text-xl lg:text-2xl" />
+              <p className="text-base-color sm:text-lg lg:text-xl">
+                DIČ: 2122571286
               </p>
             </div>
           </div>

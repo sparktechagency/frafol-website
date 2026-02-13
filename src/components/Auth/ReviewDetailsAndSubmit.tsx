@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { registerUser } from "@/services/AuthService";
 import Link from "next/link";
+import { formatDate } from "@/utils/dateFormet";
 
 const ReviewDetailsAndSubmit = () => {
   const router = useRouter();
@@ -33,7 +34,11 @@ const ReviewDetailsAndSubmit = () => {
     },
     {
       label: "Phone Number",
-      value: parseData.phoneNumber || "N/A",
+      value: parseData.phone || "N/A",
+    },
+    {
+      label: "Date of Birth",
+      value: formatDate(parseData.dateOfBirth) || "N/A",
     },
     {
       label: "Address",
@@ -132,8 +137,7 @@ const ReviewDetailsAndSubmit = () => {
         {details.map((detail, index) => (
           <div
             key={index}
-            className={`flex flex-col justify-start items-start gap-1 ${index === 4 ? "sm:col-span-2" : ""
-              }`}
+            className={`flex flex-col justify-start items-start gap-1 `}
           >
             <p className="text-xs sm:text-sm lg:text-base font-semibold">
               {detail.label}

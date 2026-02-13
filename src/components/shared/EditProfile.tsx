@@ -14,6 +14,8 @@ import { HiLocationMarker } from "react-icons/hi";
 import { IoMdMail } from "react-icons/io";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { updateProfile } from "@/services/ProfileService/ProfileServiceApi";
+import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
+import dayjs from "dayjs";
 
 const userInputStructure = [
   {
@@ -83,6 +85,15 @@ const userInputStructure = [
     inputClassName: "!py-2 !w-full",
     rules: [{ required: true, message: "Country is required" }],
     disable: false,
+  },
+  {
+    name: "zipCode",
+    type: "text",
+    inputType: "normal",
+    label: "Zip Code",
+    placeholder: "Enter Zip Code Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    rules: [{ required: true, message: "Zip Code is required" }],
   },
 ];
 const companyInputStructure = [
@@ -253,18 +264,7 @@ const professionalInputStructure = [
     prefix: <FaUser className="mr-1 !text-secondary-color" />,
     rules: [{ required: true, message: "Company Name is required" }],
   },
-  {
-    name: "address",
-    type: "text",
-    inputType: "normal",
-    label: "Street Address",
-    placeholder: "Enter Street Address",
-    labelClassName: "!font-semibold !text-secondary-color",
-    inputClassName: "!py-2 !w-full",
-    disable: false,
-    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Street Address is required" }],
-  },
+
   {
     name: "minHourlyRate",
     type: "number",
@@ -288,6 +288,27 @@ const professionalInputStructure = [
     disable: false,
     prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
     rules: [{ required: true, message: "Street Address is required" }],
+  },
+  {
+    name: "address",
+    type: "text",
+    inputType: "normal",
+    label: "Street Address",
+    placeholder: "Enter Street Address",
+    labelClassName: "!font-semibold !text-secondary-color",
+    inputClassName: "!py-2 !w-full",
+    disable: false,
+    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
+    rules: [{ required: true, message: "Street Address is required" }],
+  },
+  {
+    name: "zipCode",
+    type: "text",
+    inputType: "normal",
+    label: "Zip Code",
+    placeholder: "Enter Zip Code Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    rules: [{ required: true, message: "Zip Code is required" }],
   },
   {
     name: "town",
@@ -352,6 +373,7 @@ const professionalInputStructure = [
 ];
 
 const EditProfile = ({ myData }: { myData: IProfile }) => {
+  console.log(myData)
   const serverUrl = getServerUrl() || "";
   const [form] = Form.useForm();
 
@@ -388,11 +410,14 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
       minHourlyRate: myData?.minHourlyRate,
       maxHourlyRate: myData?.maxHourlyRate,
       address: myData?.address,
+      zipCode: myData?.zipCode,
       town: myData?.town,
       country: myData?.country,
       ico: myData?.ico,
       dic: myData?.dic,
       ic_dph: myData?.ic_dph,
+      dateOfBirth: dayjs(myData?.dateOfBirth) || null,
+
     });
 
     if (myData?.profileImage?.length > 0) {
@@ -403,6 +428,7 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
   }, [form, myData]);
 
   const onFinish = async (values: any) => {
+    console.log(values)
     const formData = new FormData();
 
     formData.append("data", JSON.stringify(values));
@@ -508,7 +534,13 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
                 disabled={input.disable}
               />
             ))}
-
+            <ReuseDatePicker
+              name="dateOfBirth"
+              label="Date of Birth"
+              rules={[{ required: true, message: "Date of Birth is required" }]}
+              labelClassName="!font-semibold !text-secondary-color"
+              shouldDisableDate={false}
+            />
 
           </div>
 

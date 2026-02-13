@@ -40,10 +40,10 @@ const inputFields: {
     },
     {
       name: "postCode",
-      label: "Post code",
+      label: "Zip Code",
       placeholder: "Placeholder",
       required: true,
-      rules: [{ required: true, message: "Post code is required" }] as Rule[],
+      rules: [{ required: true, message: "Zip Code is required" }] as Rule[],
     },
     {
       name: "town",
@@ -54,10 +54,10 @@ const inputFields: {
     },
     {
       name: "mobileNumber",
-      label: "Mobile Number",
+      label: "Phone Number",
       placeholder: "Placeholder",
       required: true,
-      rules: [{ required: true, message: "Mobile Number is required" }] as Rule[],
+      rules: [{ required: true, message: "Phone Number is required" }] as Rule[],
     },
     {
       name: "email",
@@ -129,12 +129,13 @@ const CartDeliveryOption = ({
       email: myData?.email || "",
       mobileNumber: myData?.phone || "",
       shippingAddress: myData?.address || "",
-      postCode: "",
+      postCode: myData?.zipCode || "",
       town: myData?.town || "",
       ico: myData?.ico || "",
       dic: myData?.dic || "",
       ic_dph: myData?.ic_dph || "",
       companyAddress: myData?.address || "",
+      companyName: myData?.companyName || "",
       deliveryNote: "",
     });
   }, [myData, form]);
@@ -219,13 +220,63 @@ const CartDeliveryOption = ({
           >
             <div>
               <p className="text-sm">
-                Agree to <Link href="/terms-of-service" target="_blank" className="text-secondary-color underline">
+                Agree to <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
                   Terms of Service Conceptural
                 </Link>{" "}
                 and{" "}
-                <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color underline">
+                <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color! underline">
                   Terms of Service Marketplace.
                 </Link>
+              </p>
+
+            </div>
+          </Checkbox>
+        </Form.Item>
+        <Form.Item
+          name="výslovneSúhlasím"
+          valuePropName="checked"
+          rules={[
+            {
+              validator: (_, value) =>
+                value
+                  ? Promise.resolve()
+                  : Promise.reject(
+                    new Error("Should accept with this conditions")
+                  ),
+            },
+          ]}
+        >
+          <Checkbox
+          // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+          >
+            <div>
+              <p className="text-sm">
+                Výslovne súhlasím so začatím poskytovania služby alebo so začatím dodávania digitálneho obsahu pred uplynutím lehoty na odstúpenie od zmluvy v súlade s § 17 ods. 10 písm. c zákona č. 108/2024 Z.z. o ochrane spotrebiteľa a o zmene a doplnení niektorých zákonov.
+              </p>
+
+            </div>
+          </Checkbox>
+        </Form.Item>
+        <Form.Item
+          name="bolSom"
+          valuePropName="checked"
+          rules={[
+            {
+              validator: (_, value) =>
+                value
+                  ? Promise.resolve()
+                  : Promise.reject(
+                    new Error("Should accept with this conditions")
+                  ),
+            },
+          ]}
+        >
+          <Checkbox
+          // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+          >
+            <div>
+              <p className="text-sm">
+                Bol som riadne poučený o tom, že udelením tohto súhlasu so začatím poskytovania služieb pred uplynutím lehoty na odstúpenie od zmluvy strácam po úplnom poskytnutí služby právo na odstúpenie od zmluvy (§ 17 ods. 10 písm. b) zákona č. 108/2024 Z.z. o ochrane spotrebiteľa a o zmene a doplnení niektorých zákonov.
               </p>
 
             </div>

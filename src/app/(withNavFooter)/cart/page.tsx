@@ -14,6 +14,8 @@ const page = async () => {
   const data = await res.json();
 
   const myData: IProfile = data?.data;
+
+  console.log(myData)
   return (
     <main className="py-10">
       <CartSection myData={myData} />

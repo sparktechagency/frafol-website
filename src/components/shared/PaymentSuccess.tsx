@@ -225,7 +225,7 @@ const PaymentSuccess = () => {
         <p>
           Need help? Contact{" "}
           <span className="font-semibold text-secondary-color">
-            support@example.com
+            cvak@frafol.sk
           </span>
         </p>
       </motion.div>

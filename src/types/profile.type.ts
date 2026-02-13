@@ -32,6 +32,8 @@ interface IProfile {
   minHourlyRate: number;
   ico: string;
   dic: string;
+  zipCode: string;
+  dateOfBirth: string;
   ic_dph?: string;
   rating: number;
   photographerSpecializations: string[];

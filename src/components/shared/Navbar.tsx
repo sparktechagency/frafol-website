@@ -90,6 +90,8 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
     }
   }, [mobileMenuOpen]);
 
+  console.log(userData)
+
   const isProfessional = userData?.role === "both" ||
     userData?.role === "videographer" ||
     userData?.role === "photographer";
