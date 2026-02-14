@@ -109,8 +109,8 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
   };
 
 
-  const serviceFeeAmount: number = (currentRecord as any)?.priceWithServiceFee - (currentRecord as any)?.price
-  console.log(currentRecord)
+  const serviceFeeAmount: number = Number((currentRecord as any)?.priceWithServiceFee) - Number((currentRecord as any)?.price)
+  console.log(currentRecord?.priceWithServiceFee, currentRecord?.price, serviceFeeAmount)
   return (
     <Modal
       open={isViewModalVisible}
@@ -256,7 +256,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
                   <span className="font-semibold">
                     Amount Without Service Fee:
                   </span>{" "}
-                  {currentRecord?.totalPrice - serviceFeeAmount}
+                  {Number(currentRecord?.totalPrice) - Number(serviceFeeAmount)}
                 </p>
                 <p className="text-xs sm:text-sm lg:text-base xl:text-lg mt-2">
                   <span className="font-semibold">
@@ -395,7 +395,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           user?.userId !== currentRecord?.cancelRequestedBy ? (
           <div className="mt-5 flex gap-3 items-center justify-center flex-wrap">
             <ReuseButton
-              onClick={() => showCancelAcceptModal({ record: currentRecord })}
+              onClick={() => showCancelAcceptModal(currentRecord)}
               variant="secondary"
               className="!text-white !bg-success !border-success !w-fit"
             >

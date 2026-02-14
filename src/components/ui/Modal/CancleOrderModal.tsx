@@ -24,6 +24,7 @@ const CancleOrderModal: React.FC<CancleOrderModalProps<any>> = ({
 
   const submit = async (values: any) => {
     handleCancelOrder(values, currentRecord);
+    form.resetFields();
   };
 
   return (

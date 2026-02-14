@@ -261,14 +261,14 @@ const GearMarketPlaceEditNewGear = ({
                 </div>
               ))}
             </div>
-            <ReuseInput
+            {/* <ReuseInput
               inputType="textarea"
               rows={4}
               name="extraInformation"
               label="Extra Information (Optional)"
               placeholder="Enter Extra Information"
               labelClassName="!font-semibold mt-4"
-            />
+            /> */}
           </div>
         </div>
 

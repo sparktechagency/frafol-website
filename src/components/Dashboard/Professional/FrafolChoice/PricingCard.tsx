@@ -79,6 +79,8 @@ export default function PricingCard({
                     </li>
                 ))}
             </ul> */}
+
+
             <p className="text-lg text-[#99A1AF] my-5">{plan?.description}</p>
             {/* Subscription Status */}
             {isSubscribed && (

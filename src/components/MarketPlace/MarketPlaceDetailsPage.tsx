@@ -7,10 +7,6 @@ import AddToCardButton from "../ui/AddToCardButton";
 const MarketPlaceDetailsPage = ({ data }: { data: IGear }) => {
   const generalData = [
     {
-      title: "Details",
-      content: data?.extraInformation,
-    },
-    {
       title: "Shipping",
       content: (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">

@@ -1,4 +1,5 @@
 interface Client {
+  companyName: string;
   _id: string;
   name: string;
   email: string;

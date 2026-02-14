@@ -7,16 +7,10 @@ import {
   View,
   StyleSheet,
   Image,
-  // Font,
 } from "@react-pdf/renderer";
-import { formatDate, formetTime } from "@/utils/dateFormet";
+import { formatDate } from "@/utils/dateFormet";
 import { IGearOrder } from "@/types";
 import { AllImages } from "../../public/assets/AllImages";
-
-// Font.register({
-//   family: "Roboto",
-//   src: "https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap",
-// });
 
 const styles = StyleSheet.create({
   page: {
@@ -26,13 +20,13 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 18,
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 30,
     color: "#ad2b08",
   },
   headerSection: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 30,
+    marginBottom: 20,
   },
   section: {
     marginBottom: 10,
@@ -45,12 +39,12 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 10,
-    color: "#333",
-    marginBottom: 2,
+    color: "#2c2c2c",
   },
-  image: {
-    width: 150,
-    height: 50,
+  textBold: {
+    fontSize: 10,
+    color: "#2c2c2c",
+    fontWeight: "bold",
   },
   table: {
     width: "100%",
@@ -59,17 +53,29 @@ const styles = StyleSheet.create({
   tableRow: {
     flexDirection: "row",
     borderBottom: "1px solid #ddd",
-    padding: "6px 0",
+    padding: "5px 0",
   },
   tableCell: {
     width: "25%",
     textAlign: "center",
     fontSize: 10,
+    color: "white",
+  },
+  tableCellDark: {
+    width: "25%",
+    textAlign: "center",
+    fontSize: 10,
+    color: "#2c2c2c",
   },
   highlightText: {
     fontSize: 12,
     fontWeight: "bold",
     color: "#ad2b08",
+  },
+  image: {
+    width: 200,
+    height: "auto",
+    objectFit: "cover",
   },
 });
 
@@ -78,147 +84,175 @@ const InvoiceGearFromClientSide = ({
 }: {
   currentRecord: IGearOrder;
 }) => {
+  // Calculate values
+  const gearPrice = currentRecord.gearMarketplaceId.price || 0;
+  const shippingPrice = currentRecord.gearMarketplaceId.shippingCompany.price || 0;
+  const vatAmount = currentRecord.gearMarketplaceId.vatAmount || 0;
+  const subtotal = gearPrice + shippingPrice;
+  const vatPercentage = gearPrice > 0 ? Math.round((vatAmount / gearPrice) * 100) : 0;
+  const total = subtotal + vatAmount;
+
+
+  console.log(currentRecord)
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Main Header */}
-        <Text style={styles.header}>I N V O I C E</Text>
-
-        {/* Invoice Top Section */}
-        <View style={styles.headerSection}>
+        {/* Invoice Header */}
+        <Text style={styles.header}>F A K T Ú R A / I N V O I C E</Text>
+        <View style={{ ...styles.headerSection, alignItems: "center" }}>
           <Image src={AllImages.logo.src} style={styles.image} />
-          <View>
-            <Text style={styles.text}>Invoice No: {currentRecord.orderId}</Text>
-            <Text style={styles.text}>
-              Invoice Date: {formatDate(currentRecord.createdAt)} at{" "}
-              {formetTime(currentRecord.createdAt)}
-            </Text>
-            <Text style={styles.text}>
-              Delivery Date:{"--"}
-              {/* {currentRecord.statusTimestamps.deliveredAt
-              ? formatDate(currentRecord.statusTimestamps.deliveredAt)
-              : "Pending"} */}
-            </Text>
-          </View>
-        </View>
-
-        {/* Seller Information */}
-        <View
-          style={{
-            marginBottom: 10,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-          }}
-        >
           <View style={styles.section}>
-            <Text style={styles.subHeader}>S E L L E R</Text>
-            <Text style={styles.text}>Name: {currentRecord.sellerId.name}</Text>
             <Text style={styles.text}>
-              Email: {currentRecord.sellerId.email}
+              <Text style={styles.textBold}>Číslo faktúry / Invoice number:</Text> [{currentRecord.orderId}]
             </Text>
-            <Text style={styles.text}>Phone: Not Provided</Text>
+            <Text style={styles.text}>
+              <Text style={styles.textBold}>Dátum vystavenia / Issue date:</Text> {formatDate(currentRecord.createdAt)}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textBold}>Dátum dodania služby / Date of service delivery:</Text>{" "}
+              {/* {currentRecord.statusTimestamps.deliveredAt
+                ? formatDate(currentRecord.statusTimestamps.deliveredAt)
+                : "[dd.mm.yyyy]"} */}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.headerSection}>
+          {/* Supplier Information (Seller) */}
+          <View style={styles.section}>
+            <Text style={styles.subHeader}>
+              DODÁVATEĽ / SUPPLIER (Photographer / Videographer)
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textBold}>Meno / Name:</Text> {currentRecord.sellerId.name}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textBold}>Názov firmy / Company name:</Text> ____
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textBold}>Adresa sídla / Company address:</Text> __
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textBold}>IČO / Company ID:</Text> __________
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textBold}>DIČ / Tax ID (if company):</Text> __________
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textBold}>IČ DPH / VAT ID (if VAT payer):</Text> ____
+            </Text>
           </View>
 
-          {/* Client Information */}
-          <View style={{ ...styles.section }}>
-            <Text style={styles.subHeader}>B U Y E R</Text>
-            <Text style={styles.text}>Name: {currentRecord.clientId.name}</Text>
+          {/* Client Information (Buyer) */}
+          <View style={styles.section}>
+            <Text style={styles.subHeader}>OBERATE / CLIENT</Text>
             <Text style={styles.text}>
-              Email: {currentRecord.clientId.email}
+              <Text style={styles.textBold}>Meno / Name or company name:</Text>{" "}
+              {currentRecord?.clientId?.companyName || currentRecord.clientId.name || "___"}
             </Text>
             <Text style={styles.text}>
-              Address: {currentRecord.shippingAddress}
+              <Text style={styles.textBold}>Adresa sídla / Address:</Text>{" "}
+              {currentRecord.companyAddress || "__________"}
             </Text>
-            <Text style={styles.text}>Town: {currentRecord.town}</Text>
-            <Text style={styles.text}>Post Code: {currentRecord.postCode}</Text>
             <Text style={styles.text}>
-              Mobile: {currentRecord.mobileNumber}
+              <Text style={styles.textBold}>IČO / Company ID (if company):</Text> {currentRecord.ico || "__"}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textBold}>DIČ / Tax ID (if company):</Text> {currentRecord.dic || "____"}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.textBold}>IČ DPH / VAT ID (if VAT payer):</Text> {currentRecord.ic_dph || "____"}
             </Text>
           </View>
         </View>
 
-        {/* Product Details */}
-        <View style={styles.section}>
-          <Text style={styles.subHeader}>G E A R D E T A I L S</Text>
+        {/* Delivery Address */}
+        <View style={{ ...styles.section, marginBottom: 20 }}>
           <Text style={styles.text}>
-            Product: {currentRecord.gearMarketplaceId.name}
+            <Text style={styles.textBold}>
+              Dodacia adresa / Delivery address (if different from billing for marketplace):
+            </Text>
           </Text>
           <Text style={styles.text}>
-            Condition: {currentRecord.gearMarketplaceId.condition}
-          </Text>
-          <Text style={styles.text}>
-            Description: {currentRecord.gearMarketplaceId.description}
-          </Text>
-          <Text style={styles.text}>
-            Shipping Company:{" "}
-            {currentRecord.gearMarketplaceId.shippingCompany.name} ( €
-            {currentRecord.gearMarketplaceId.shippingCompany.price})
+            {currentRecord.shippingAddress}, {currentRecord.town}, {currentRecord.postCode}
           </Text>
         </View>
 
-        {/* Table */}
+        {/* Product/Service Table */}
         <View style={styles.table}>
           <View
             style={{
               ...styles.tableRow,
               backgroundColor: "#ad2b08",
               color: "white",
-              fontWeight: "bold",
             }}
           >
-            <Text style={styles.tableCell}>Product</Text>
-            <Text style={styles.tableCell}>Qty</Text>
-            <Text style={styles.tableCell}>Price</Text>
-            <Text style={styles.tableCell}>Total</Text>
+            <Text style={styles.tableCell}>PRODUKT / PRODUCT</Text>
+            <Text style={styles.tableCell}>MNOŽSTVO / QTY</Text>
+            <Text style={styles.tableCell}>CENA / PRICE</Text>
+            <Text style={styles.tableCell}>SPOLU / TOTAL</Text>
           </View>
 
+          {/* Gear Product */}
           <View style={styles.tableRow}>
-            <Text style={styles.tableCell}>
-              {currentRecord.gearMarketplaceId.name}
+            <Text style={styles.tableCellDark}>
+              {currentRecord.gearMarketplaceId.name} / Gear Product
             </Text>
-            <Text style={styles.tableCell}>1 pc</Text>
-            <Text style={styles.tableCell}>
-              €{currentRecord.gearMarketplaceId.price}
-            </Text>
-            <Text style={styles.tableCell}>
-              €{currentRecord.gearMarketplaceId.price}
-            </Text>
+            <Text style={styles.tableCellDark}>1 ks/pc</Text>
+            <Text style={styles.tableCellDark}>€{gearPrice.toFixed(2)}</Text>
+            <Text style={styles.tableCellDark}>€{gearPrice.toFixed(2)}</Text>
           </View>
 
           {/* Shipping */}
           <View style={styles.tableRow}>
-            <Text style={styles.tableCell}>Shipping</Text>
-            <Text style={styles.tableCell}>1</Text>
-            <Text style={styles.tableCell}>
-              €{currentRecord.gearMarketplaceId.shippingCompany.price}
+            <Text style={styles.tableCellDark}>
+              Preprava / Shipping ({currentRecord.gearMarketplaceId.shippingCompany.name})
             </Text>
-            <Text style={styles.tableCell}>
-              €{currentRecord.gearMarketplaceId.shippingCompany.price}
-            </Text>
+            <Text style={styles.tableCellDark}>1 ks / pc</Text>
+            <Text style={styles.tableCellDark}>€{shippingPrice.toFixed(2)}</Text>
+            <Text style={styles.tableCellDark}>€{shippingPrice.toFixed(2)}</Text>
           </View>
         </View>
 
-        {/* Totals */}
-        <View style={{ marginTop: 40 }}>
-          <Text style={styles.highlightText}>
-            SUBTOTAL: €
-            {currentRecord.gearMarketplaceId.price +
-              currentRecord.gearMarketplaceId.shippingCompany.price}
+        {/* Subtotal and Total */}
+        <View style={{ ...styles.section, marginTop: 50, alignItems: "flex-end" }}>
+          <Text style={{ ...styles.text, marginBottom: 5 }}>
+            <Text style={{ fontWeight: "bold", color: "#000000" }}>MEDZISÚČET / </Text>
+            <Text style={{ fontWeight: "bold", color: "#ad2b08" }}>SUBTOTAL: </Text>
+            <Text style={{ fontWeight: "bold", color: "#ad2b08" }}>€{subtotal.toFixed(2)}</Text>
           </Text>
-
-          <Text style={styles.highlightText}>
-            TOTAL: €
-            {currentRecord.gearMarketplaceId.price +
-              currentRecord.gearMarketplaceId.shippingCompany.price}
+          {vatAmount > 0 && (
+            <Text style={{ ...styles.text, marginBottom: 5 }}>
+              <Text style={{ fontWeight: "bold", color: "#000000" }}>DPH ({vatPercentage}%) / </Text>
+              <Text style={{ fontWeight: "bold", color: "#ad2b08" }}>VAT ({vatPercentage}%): </Text>
+              <Text style={{ fontWeight: "bold", color: "#ad2b08" }}>€{vatAmount.toFixed(2)}</Text>
+            </Text>
+          )}
+          <Text
+            style={{
+              ...styles.text,
+              backgroundColor: "#ad2b08",
+              color: "white",
+              padding: 8,
+              paddingLeft: 15,
+              paddingRight: 15,
+              marginTop: 5,
+              fontWeight: "bold",
+              fontSize: 12,
+            }}
+          >
+            <Text>SPOLU / TOTAL: </Text>
+            <Text>€{total.toFixed(2)}</Text>
           </Text>
         </View>
 
         {/* Footer */}
-        <View style={{ marginTop: 60, textAlign: "center" }}>
+        <View style={{ ...styles.section, textAlign: "center", marginTop: 80 }}>
           <Text style={styles.text}>
-            This invoice was auto generated by the marketplace system.
+            Táto faktúra bola automaticky vygenerovaná prostredníctvom platformy frafol.sk.
+          </Text>
+          <Text style={{ ...styles.text, color: "#ad2b08" }}>
+            This invoice was automatically generated via the platform frafol.sk.
           </Text>
         </View>
       </Page>

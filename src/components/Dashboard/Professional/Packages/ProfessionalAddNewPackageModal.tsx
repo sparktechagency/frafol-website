@@ -87,6 +87,8 @@ const ProfessionalAddNewPackageModal = ({
       duration: `${Number(values.durationUnit)} ${values.durationType}`,
     };
 
+    console.log(data)
+
     formData.append("data", JSON.stringify(data));
 
     if (values?.image?.[0]?.originFileObj) {
@@ -206,10 +208,8 @@ const ProfessionalAddNewPackageModal = ({
             placeholder="Select Duration Type"
             rules={[{ required: true, message: "Duration Type is required" }]}
             options={[
-              { label: "Weeks", value: "Weeks" },
-              { label: "Days", value: "Days" },
               { label: "Hours", value: "Hours" },
-              { label: "Months", value: "Months" },
+              { label: "Days", value: "Days" },
             ]}
           />
         </div>

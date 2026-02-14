@@ -93,6 +93,16 @@ const companyInputStructure = [
     name: "name",
     type: "text",
     inputType: "normal",
+    label: " Name",
+    placeholder: "Enter Full Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    prefix: <FaUser className="mr-1 !text-secondary-color" />,
+    rules: [{ required: true, message: "Name is required" }],
+  },
+  {
+    name: "companyName",
+    type: "text",
+    inputType: "normal",
     label: " Company Name",
     placeholder: "Enter Full Company Name",
     labelClassName: "!font-semibold !text-secondary-color",
@@ -236,6 +246,7 @@ const SignUpUser = () => {
 
   const [type, setType] = useState<"user" | "company">("user");
 
+
   const onFinish = async (values: any) => {
     const data = {
       ...values,
@@ -276,8 +287,10 @@ const SignUpUser = () => {
             onChange={(e) => {
               if (e.target.checked) {
                 setType("company");
+                form.resetFields();
               } else {
                 setType("user");
+                form.resetFields();
               }
             }}
           >

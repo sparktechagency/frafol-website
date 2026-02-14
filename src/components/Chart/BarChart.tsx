@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import { useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -17,6 +18,27 @@ interface ChartData {
 }
 
 const Bar_Chart = ({ data }: { data: ChartData[] }) => {
+
+
+  const maxEarnings = useMemo(() => {
+    if (!data?.length) return 0;
+    return Math.max(...data.map((d) => d.totalEarnings ?? 0));
+  }, [data]);
+
+  // ✅ Reference line positions: 20%, 40%, 60%, 80% of max
+  const referenceLines = useMemo(() => {
+    const percents = [0.2, 0.4, 0.6, 0.8];
+
+    // If max is 0, no need to draw lines
+    if (maxEarnings <= 0) return [];
+
+    return percents.map((p) => ({
+      percent: Math.round(p * 100),
+      y: maxEarnings * p,
+    }));
+  }, [maxEarnings]);
+
+
   // Custom tooltip to display the information
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -68,12 +90,14 @@ const Bar_Chart = ({ data }: { data: ChartData[] }) => {
             tickMargin={16}
           />
           {/* Add several horizontal black lines using ReferenceLine */}
-          <ReferenceLine y={100} stroke="#20202055" />
-          <ReferenceLine y={200} stroke="#20202055" />
-          <ReferenceLine y={300} stroke="#20202055" />
-          <ReferenceLine y={400} stroke="#20202055" />
-          <ReferenceLine y={500} stroke="#20202055" />
-          <ReferenceLine y={600} stroke="#20202055" />
+          {referenceLines.map((line) => (
+            <ReferenceLine
+              key={line.percent}
+              y={line.y}
+              stroke="#20202055"
+              strokeDasharray="6 6"
+            />
+          ))}
 
           <Bar
             dataKey="totalEarnings" // Make sure this matches your data key

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Upload } from "antd";
 import { useEffect, useState } from "react";
-import { IoCameraOutline } from "react-icons/io5";
+import { IoCamera, IoCameraOutline } from "react-icons/io5";
 import { AllImages } from "../../../public/assets/AllImages";
 import ReusableForm from "../ui/Form/ReuseForm";
 import Image from "next/image";
 import ReuseInput from "../ui/Form/ReuseInput";
 import ReuseButton from "../ui/Button/ReuseButton";
-import { IProfile } from "@/types";
+import { ICategory, IProfile } from "@/types";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import { FaAddressCard, FaUser } from "react-icons/fa6";
 import { HiLocationMarker } from "react-icons/hi";
@@ -16,6 +16,8 @@ import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { updateProfile } from "@/services/ProfileService/ProfileServiceApi";
 import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
 import dayjs from "dayjs";
+import ReuseSelect from "../ui/Form/ReuseSelect";
+import { LuUser } from "react-icons/lu";
 
 const userInputStructure = [
   {
@@ -372,17 +374,25 @@ const professionalInputStructure = [
   },
 ];
 
-const EditProfile = ({ myData }: { myData: IProfile }) => {
-  console.log(myData)
+const EditProfile = ({ myData, categories }: { myData: IProfile, categories: ICategory[] }) => {
+
   const serverUrl = getServerUrl() || "";
   const [form] = Form.useForm();
+  const [selectedPhotographySpecializations, setSelectedPhotographySpecializations] = useState<string[]>([]);
+  const [selectedVideographySpecializations, setSelectedVideographySpecializations] = useState<string[]>([]);
+
+  const selectedRole = Form.useWatch("role", form);
+
+  // Filter categories by type
+  const photographyCategories = categories?.filter(cat => cat.type === "photoGraphy") || [];
+  const videographyCategories = categories?.filter(cat => cat.type === "videoGraphy") || [];
 
   const inputStructure =
     myData?.role === "user"
       ? userInputStructure
       : myData?.role === "company"
         ? companyInputStructure
-        : myData?.role === "photographer" || "videographer" || "both"
+        : myData?.role === "photographer" || myData?.role === "videographer" || myData?.role === "both"
           ? professionalInputStructure
           : [];
 
@@ -390,12 +400,11 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
 
   const handleImageUpload = (info: any) => {
     if (info.file.status === "removed") {
-      setImageUrl(AllImages.dummyProfile?.src); // Reset to null or fallback image
+      setImageUrl(AllImages.dummyProfile?.src);
     } else {
-      const file = info.file.originFileObj || info.file; // Handle the file object safely
+      const file = info.file.originFileObj || info.file;
       if (file) {
-        setImageUrl(URL.createObjectURL(file)); // Set the preview URL of the selected image
-      } else {
+        setImageUrl(URL.createObjectURL(file));
       }
     }
   };
@@ -417,8 +426,16 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
       dic: myData?.dic,
       ic_dph: myData?.ic_dph,
       dateOfBirth: dayjs(myData?.dateOfBirth) || null,
-
+      role: myData?.role, // This sets the default role
     });
+
+    // Initialize specializations from myData
+    if (myData?.photographerSpecializations) {
+      setSelectedPhotographySpecializations(myData.photographerSpecializations);
+    }
+    if (myData?.videographerSpecializations) {
+      setSelectedVideographySpecializations(myData.videographerSpecializations);
+    }
 
     if (myData?.profileImage?.length > 0) {
       setImageUrl(myData?.profileImage);
@@ -427,11 +444,41 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
     }
   }, [form, myData]);
 
-  const onFinish = async (values: any) => {
-    console.log(values)
-    const formData = new FormData();
+  const handleSpecializationClick = (
+    specialization: string,
+    type: "photography" | "videography"
+  ) => {
+    if (type === "photography") {
+      setSelectedPhotographySpecializations((prev) =>
+        prev.includes(specialization)
+          ? prev.filter((item) => item !== specialization)
+          : [...prev, specialization]
+      );
+    } else if (type === "videography") {
+      setSelectedVideographySpecializations((prev) =>
+        prev.includes(specialization)
+          ? prev.filter((item) => item !== specialization)
+          : [...prev, specialization]
+      );
+    }
+  };
 
-    formData.append("data", JSON.stringify(values));
+  const onFinish = async (values: any) => {
+
+    const submissionData = {
+      ...values,
+      photographerSpecializations:
+        values.role === "photographer" || values.role === "both"
+          ? selectedPhotographySpecializations
+          : [],
+      videographerSpecializations:
+        values.role === "videographer" || values.role === "both"
+          ? selectedVideographySpecializations
+          : [],
+    };
+
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(submissionData));
 
     if (values?.image?.file?.originFileObj) {
       formData.append("image", values?.image?.file?.originFileObj);
@@ -447,39 +494,37 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
       }
     );
 
-    console.log(res)
-
     if (res?.success) {
-      form.resetFields();
+      // Don't reset fields after successful update
+      // The page should refresh or refetch data instead
     }
   };
 
-  // if (isFetching)
-  //   return (
-  //     <div className="w-full h-[70vh] flex justify-center items-center">
-  //       <FadeLoader color="#ed9388" />
-  //     </div>
-  //   );
+  // Determine which specializations to show based on selected role OR default role
+  const currentRole = selectedRole || myData?.role;
+  const showPhotography = currentRole === "photographer" || currentRole === "both";
+  const showVideography = currentRole === "videographer" || currentRole === "both";
 
   return (
-    <div className=" mt-10  rounded-xl">
-      <div className=" flex justify-start items-center">
+    <div className="mt-10 rounded-xl">
+      <div className="flex justify-start items-center">
         <ReusableForm
           form={form}
           handleFinish={onFinish}
           className="p-10 w-full lg:w-[80%]"
         >
+          {/* Image Upload Section */}
           <div className="mt-5 flex flex-col justify-center items-start gap-x-4">
-            <div className=" relative">
+            <div className="relative">
               <Image
                 width={1000}
                 height={1000}
-                className="h-40 w-40 relative rounded-full border border-secondary-color object-contain "
+                className="h-40 w-40 relative rounded-full border border-secondary-color object-contain"
                 src={
                   imageUrl.startsWith("/uploads")
                     ? serverUrl + imageUrl
                     : imageUrl
-                } // Check if imageUrl starts with 'http', use default if not
+                }
                 alt=""
               />
               <Form.Item name="image">
@@ -494,7 +539,7 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
                   onChange={handleImageUpload}
                   maxCount={1}
                   accept="image/*"
-                  className=" text-start"
+                  className="text-start"
                   style={{
                     width: "100%",
                     height: "100%",
@@ -505,9 +550,7 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
                 >
                   <button
                     type="button"
-                    style={{
-                      zIndex: 1,
-                    }}
+                    style={{ zIndex: 1 }}
                     className="bg-base-color/70 p-2 w-fit h-fit !border-none absolute -top-12 left-[115px] rounded-full cursor-pointer shadow-lg"
                   >
                     <IoCameraOutline className="w-6 h-6 text-secondary-color" />
@@ -517,8 +560,8 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
-
+          {/* Basic Info Inputs */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 w-full">
             {inputStructure?.map((input, index) => (
               <ReuseInput
                 key={index}
@@ -541,7 +584,83 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
               labelClassName="!font-semibold !text-secondary-color"
               shouldDisableDate={false}
             />
+          </div>
 
+          {/* Role Select */}
+          <ReuseSelect
+            name="role"
+            label="Professional Role"
+            placeholder="Select your role"
+            labelClassName="!text-secondary-color !font-semibold"
+            rules={[{ required: true, message: "Please select your role" }]}
+            options={[
+              {
+                value: "photographer",
+                label: "Photographer",
+                icon: <LuUser />,
+              },
+              {
+                value: "videographer",
+                label: "Videographer",
+                icon: <IoCamera />,
+              },
+              {
+                value: "both",
+                label: "Both",
+                icon: <IoCamera />,
+              },
+            ]}
+          />
+
+          {/* Specializations Section */}
+          <div className="my-6 space-y-6">
+            {showPhotography && (
+              <div>
+                <h3 className="text-2xl font-semibold text-secondary-color mt-12 mb-6">
+                  Photography Specializations
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {photographyCategories.map((category, index) => (
+                    <div
+                      key={category._id || index}
+                      className={`text-xl sm:text-sm lg:text-base w-full font-medium py-1.5 px-3 rounded cursor-pointer ${selectedPhotographySpecializations.includes(category.title)
+                        ? "bg-background-color border border-secondary-color text-secondary-color"
+                        : "bg-background-color border border-transparent text-base-color"
+                        }`}
+                      onClick={() =>
+                        handleSpecializationClick(category.title, "photography")
+                      }
+                    >
+                      {category.title}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {showVideography && (
+              <div>
+                <h3 className="text-2xl font-semibold text-secondary-color mt-12 mb-6">
+                  Videography Specializations
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {videographyCategories.map((category, index) => (
+                    <div
+                      key={category._id || index}
+                      className={`text-xl sm:text-sm lg:text-base w-full font-medium py-1.5 px-3 rounded cursor-pointer ${selectedVideographySpecializations.includes(category.title)
+                        ? "bg-background-color border border-secondary-color text-secondary-color"
+                        : "bg-background-color border border-transparent text-base-color"
+                        }`}
+                      onClick={() =>
+                        handleSpecializationClick(category.title, "videography")
+                      }
+                    >
+                      {category.title}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <ReuseButton
@@ -551,8 +670,6 @@ const EditProfile = ({ myData }: { myData: IProfile }) => {
           >
             Submit
           </ReuseButton>
-
-          <div className=" text-white mt-5"></div>
         </ReusableForm>
       </div>
     </div>

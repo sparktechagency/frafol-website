@@ -69,7 +69,7 @@ const YearOption: React.FC<YearOptionProps> = ({ currentYear }) => {
       }}
     >
       <Select
-        defaultValue={currentYear >= 2025 ? "2025" : currentYear.toString()}
+        defaultValue={currentYear.toString()}
         style={{ width: 100 }}
         options={yearOptions}
         onChange={(value) => setThisYear(value)}

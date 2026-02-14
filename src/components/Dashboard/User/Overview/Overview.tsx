@@ -26,6 +26,8 @@ export interface NotificationItem {
 }
 
 const Overview = ({ overview }: { overview: IDashboardStats }) => {
+
+  console.log(overview)
   return (
     <div>
       <div className="mb-10">

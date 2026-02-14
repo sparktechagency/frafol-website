@@ -137,7 +137,7 @@ const ReviewDetailsAndSubmit = () => {
         {details.map((detail, index) => (
           <div
             key={index}
-            className={`flex flex-col justify-start items-start gap-1 `}
+            className={`flex flex-col justify-start items-start gap-1 ${index === 7 ? "col-span-2" : ""} `}
           >
             <p className="text-xs sm:text-sm lg:text-base font-semibold">
               {detail.label}

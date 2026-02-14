@@ -15,7 +15,7 @@ const page = async () => {
 
   const myData: IProfile = data?.data;
 
-  console.log(myData)
+  console.log(data)
   return (
     <main className="py-10">
       <CartSection myData={myData} />

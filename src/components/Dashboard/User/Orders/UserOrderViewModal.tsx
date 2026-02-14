@@ -12,6 +12,7 @@ import { getServerUrl } from "@/helpers/config/envConfig";
 import InvoiceDocumentFromClientSide from "@/utils/InvoiceDocumentFromClientSide";
 import { saveAs } from "file-saver";
 import { pdf } from "@react-pdf/renderer"; // Import pdf function from @react-pdf/renderer
+import { toast } from "sonner";
 
 interface UserOrderViewModalProps {
   isViewModalVisible: boolean;
@@ -31,6 +32,9 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
   const serverUrl = getServerUrl();
 
   const handleDownload = (currentRecord: IEventOrder) => {
+    const toastId = toast.loading("Downloading...", {
+      duration: 2000,
+    });
     // Generate the PDF using @react-pdf/renderer's pdf function
     pdf(
       <InvoiceDocumentFromClientSide
@@ -41,9 +45,13 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
       .then((blob: any) => {
         // Use file-saver to trigger the download
         saveAs(blob, `${currentRecord.orderId}-invoice.pdf`);
+        toast.success("Downloaded successfully!", { id: toastId });
+
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .catch((error: any) => { });
+      .catch((error: any) => {
+        toast.error("Download failed", { id: toastId });
+      });
   };
 
   return (

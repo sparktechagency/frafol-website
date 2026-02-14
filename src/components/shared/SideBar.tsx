@@ -24,8 +24,7 @@ const SideBar = () => {
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
-  const defaultUrl =
-    userData?.role === "user" ? "/my-account" : "/professional";
+  const defaultUrl = (userData?.role === "user" || userData?.role === "company") ? "/my-account" : "/professional";
 
   const normalizedPath = pathname.replace(defaultUrl, "");
 
@@ -33,7 +32,7 @@ const SideBar = () => {
   const professionalPath = useProfessionalPaths();
 
   const activeKeys = getActiveKeys(normalizedPath);
-  const menuItems = userData?.role === "user" ? adminPaths : professionalPath;
+  const menuItems = (userData?.role === "user" || userData?.role === "company") ? adminPaths : professionalPath;
 
   useOutsideClick(sidebarRef as React.RefObject<HTMLElement>, () => {
     if (!isCollapsed) {

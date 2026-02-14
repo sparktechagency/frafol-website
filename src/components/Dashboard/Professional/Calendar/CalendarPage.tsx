@@ -17,6 +17,7 @@ interface AppCalendarProps {
   calander: {
     date: string;
     events: {
+      title?: string;
       eventName: string;
       eventDate: string;
       status: "delivered" | "cancelled" | "pending" | "inProgress";
@@ -35,12 +36,14 @@ const statusMap: Record<string, Event["type"]> = {
 };
 
 export default function AppCalendar({ calander }: AppCalendarProps) {
+
+  console.log(calander)
   // Transform API data into a lookup object
   const events: Record<string, Event[]> = {};
   calander?.forEach((day) => {
     events[day?.date] = day?.events?.map((e) => ({
       type: statusMap[e?.status] || "default",
-      content: e?.eventName,
+      content: e?.title || e?.eventName,
       time: formetTime(e?.eventTime),
     }));
   });

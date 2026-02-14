@@ -58,6 +58,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
     };
   }
 
+
   useEffect(() => {
     const text = searchParams.get("search");
     if (text) {

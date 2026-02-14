@@ -35,14 +35,14 @@ const PortfolioIntroVideo = ({ myData }: { myData: IProfile }) => {
             </div>
             <div>
 
-                <div className="relative group w-full ">
+                {myData?.introVideo && <div className="relative group w-full ">
                     <video
                         src={`${serverUrl}${myData?.introVideo}`}
                         className="w-full max-w-[768px] aspect-video object-cover rounded-lg"
                         controls
                         controlsList="nodownload noplaybackrate"
                     />
-                </div>
+                </div>}
 
             </div>
 

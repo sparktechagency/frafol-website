@@ -18,6 +18,7 @@ import { LuClock } from "react-icons/lu";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import { getServerUrl } from "@/helpers/config/envConfig";
+import Link from "next/link";
 
 
 
@@ -33,7 +34,7 @@ const ProfessionalServiceBookingModal: React.FC<
   ProfessionalServiceBookingModalProps
 > = ({ isModalVisible, handleCancel, packageData, myData, professionalUser }) => {
   const serverUrl = getServerUrl();
-
+  console.log(myData)
   const [form] = Form.useForm();
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [type, setType] = useState<"user" | "company">("user");
@@ -46,9 +47,9 @@ const ProfessionalServiceBookingModal: React.FC<
       streetAddress: myData?.address,
       town: myData?.town,
       country: myData?.country,
-      ico: myData?.ico,
-      dic: myData?.dic,
-      ic_dph: myData?.ic_dph,
+      ICO: myData?.ico,
+      DIC: myData?.dic,
+      IC_DPH: myData?.ic_dph,
     });
   }, [form, myData]);
 
@@ -259,7 +260,87 @@ const ProfessionalServiceBookingModal: React.FC<
                   rules={input.rules}
                 />
               ))}
+            <Form.Item
+              name="acceptTerms"
+              valuePropName="checked"
+              rules={[
+                {
+                  validator: (_, value) =>
+                    value
+                      ? Promise.resolve()
+                      : Promise.reject(
+                        new Error("Should accept with terms and conditions")
+                      ),
+                },
+              ]}
+            >
+              <Checkbox
+              // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+              >
+                <div>
+                  <p className="text-sm">
+                    Agree to <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
+                      Terms of Service Conceptural
+                    </Link>{" "}
+                    and{" "}
+                    <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color! underline">
+                      Terms of Service Marketplace.
+                    </Link>
+                  </p>
 
+                </div>
+              </Checkbox>
+            </Form.Item>
+            <Form.Item
+              name="výslovneSúhlasím"
+              valuePropName="checked"
+              rules={[
+                {
+                  validator: (_, value) =>
+                    value
+                      ? Promise.resolve()
+                      : Promise.reject(
+                        new Error("Should accept with this conditions")
+                      ),
+                },
+              ]}
+            >
+              <Checkbox
+              // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+              >
+                <div>
+                  <p className="text-sm">
+                    Výslovne súhlasím so začatím poskytovania služby alebo so začatím dodávania digitálneho obsahu pred uplynutím lehoty na odstúpenie od zmluvy v súlade s § 17 ods. 10 písm. c zákona č. 108/2024 Z.z. o ochrane spotrebiteľa a o zmene a doplnení niektorých zákonov.
+                  </p>
+
+                </div>
+              </Checkbox>
+            </Form.Item>
+            <Form.Item
+              name="bolSom"
+              valuePropName="checked"
+              rules={[
+                {
+                  validator: (_, value) =>
+                    value
+                      ? Promise.resolve()
+                      : Promise.reject(
+                        new Error("Should accept with terms and conditions")
+                      ),
+                },
+              ]}
+            >
+              <Checkbox
+              // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+              >
+                <div>
+                  <p className="text-sm">
+                    Bol som riadne poučený o tom, že udelením tohto súhlasu so začatím poskytovania služieb pred uplynutím lehoty na odstúpenie od zmluvy strácam po úplnom poskytnutí služby právo na odstúpenie od zmluvy (§ 17 ods. 10 písm. b) zákona č. 108/2024 Z.z. o ochrane spotrebiteľa a o zmene a doplnení niektorých zákonov.
+                  </p>
+
+                </div>
+              </Checkbox>
+            </Form.Item>
 
             <ReuseButton htmlType="submit" variant="secondary" className="mt-2">
               Send Booking Request

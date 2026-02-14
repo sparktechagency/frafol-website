@@ -22,9 +22,9 @@ const MarketPlace = async ({ searchParams }: { searchParams: any }) => {
   const page = params?.page || 1;
   const category = params?.category === "all" ? "" : params?.category || "";
   const condition =
-    params?.condition === "all" ? null : params?.condition || null;
-  const minPrice = params?.min || null;
-  const maxPrice = params?.max || null;
+    params?.condition === "all" ? "" : params?.condition || "";
+  const minPrice = params?.min || "";
+  const maxPrice = params?.max || "";
   const limit = 12;
 
   const res = await fetchWithAuth(

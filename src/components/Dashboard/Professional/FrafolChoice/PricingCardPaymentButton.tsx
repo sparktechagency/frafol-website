@@ -5,8 +5,14 @@ import tryCatchWrapper from '@/utils/tryCatchWrapper';
 import React from 'react';
 import { IPricingPlan } from './PricingCard';
 import { ISubscription } from '@/app/(withDashboardLayout)/dashboard/professional/frafol-choice/page';
+import { Checkbox, Form } from 'antd';
+import Link from 'next/link';
+import ReusableForm from '@/components/ui/Form/ReuseForm';
 
 const PricingCardPaymentButton = ({ plan, pack }: { plan: IPricingPlan, pack: ISubscription }) => {
+
+    const [form] = Form.useForm();
+
     const handlePayment = async (data: { period: number, price: number }) => {
         const value = {
             paymentType: "subscription",
@@ -28,9 +34,47 @@ const PricingCardPaymentButton = ({ plan, pack }: { plan: IPricingPlan, pack: IS
             window.location.replace(res?.data?.checkoutUrl); // Opens in a new tab
         }
     };
+
+
+    const onSubmit = async () => {
+        handlePayment({ period: plan.period, price: pack.price })
+    }
     return (
         <div>
-            <ReuseButton variant="secondary" className="cursor-pointer" onClick={() => handlePayment({ period: plan.period, price: pack.price })}> €{pack.price}</ReuseButton>
+            <ReusableForm form={form} handleFinish={onSubmit}>
+                <Form.Item
+                    name="acceptTerms"
+                    valuePropName="checked"
+                    rules={[
+                        {
+                            validator: (_, value) =>
+                                value
+                                    ? Promise.resolve()
+                                    : Promise.reject(
+                                        new Error("Should accept with terms and conditions")
+                                    ),
+                        },
+                    ]}
+                >
+                    <Checkbox
+                    // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+                    >
+                        <div>
+                            <p className="text-sm">
+                                Agree to <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
+                                    Terms of Service Conceptural
+                                </Link>{" "}
+                                and{" "}
+                                <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color! underline">
+                                    Terms of Service Marketplace.
+                                </Link>
+                            </p>
+
+                        </div>
+                    </Checkbox>
+                </Form.Item>
+                <ReuseButton htmlType="submit" variant="secondary" className="cursor-pointer" > €{pack.price}</ReuseButton>
+            </ReusableForm>
         </div>
     );
 };

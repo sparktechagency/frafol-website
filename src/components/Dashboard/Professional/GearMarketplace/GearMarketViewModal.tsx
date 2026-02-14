@@ -84,14 +84,14 @@ const GearMarketViewModal: React.FC<GearMarketViewModalProps> = ({
             </div>
             <div className="p-2 rounded border border-[#E1E1E1]">
               <MarketPlaceImageTab images={currentRecord?.gallery || []} />
-              <div>
+              {/* <div>
                 <h4 className="text-xs sm:text-sm lg:text-base font-medium mb-1 mt-5">
                   Extra Information
                 </h4>
                 <p className="text-xs sm:text-sm lg:text-base bg-zinc-100 p-2 rounded mb-5">
                   {currentRecord?.extraInformation}
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

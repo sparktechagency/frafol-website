@@ -1,7 +1,7 @@
 import ProfileSettingsPage from "@/components/Dashboard/User/ProfileSettings/ProfileSettingsPage";
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
-import { IProfile } from "@/types";
+import { ICategory, IProfile } from "@/types";
 import React from "react";
 
 const page = async ({
@@ -28,8 +28,25 @@ const page = async ({
   const data = await res.json();
 
   const myData: IProfile = data?.data;
-  console.log(myData)
-  return <ProfileSettingsPage activeTab={tab} portfolio={portfolio} myData={myData} />;
+
+  // const role = params?.sRol;
+
+  // console.log(role)
+  // const activeRole = (role === "videographer" ? "videoGraphy" : role === "photographer" ? "photoGraphy" : "") as
+  //   | "photoGraphy"
+  //   | "videoGraphy";
+
+  const resRole = await fetchWithAuth(`/category`, {
+    next: {
+      tags: [TagTypes.category],
+    },
+  });
+  const dataRole = await resRole.json();
+  const categories: ICategory[] = dataRole?.data || [];
+
+  console.log(categories)
+
+  return <ProfileSettingsPage activeTab={tab} portfolio={portfolio} myData={myData} categories={categories} />;
 };
 
 export default page;

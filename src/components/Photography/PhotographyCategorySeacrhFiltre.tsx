@@ -35,7 +35,7 @@ const PhotographyCategorySeacrhFiltre = () => {
       max: searchParams.get("max"),
       // category: searchParams.get("category"),
       search: searchParams.get("search"),
-      date: dayjs(searchParams.get("availity"), "YYYY-MM-DD"),
+      date: searchParams.get("availity") ? dayjs(searchParams.get("availity"), "YYYY-MM-DD") : null,
     });
   }, [searchParams, form]);
 

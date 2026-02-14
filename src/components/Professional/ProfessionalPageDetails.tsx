@@ -96,7 +96,7 @@ const ProfessionalPageDetails = async ({
           </Link>
           <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium flex items-center gap-2 mb-3">
             <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg -mt-0.5" />{" "}
-            <span>{professionalUser?.address}</span>
+            <span>{professionalUser?.town}</span>
           </p>
           {myData?.role === "user" ? (
             <div className="flex items-center gap-2">

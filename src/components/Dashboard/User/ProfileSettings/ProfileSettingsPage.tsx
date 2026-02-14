@@ -6,12 +6,13 @@ import React from "react";
 import PortfolioPage from "./PortfolioPage";
 import AccountCredentialPage from "./AccountCredentialPage";
 import OtherInformationPage from "./OtherInformationPage";
-import { IProfile } from "@/types";
+import { ICategory, IProfile } from "@/types";
 
 const ProfileSettingsPage = ({
   activeTab,
   myData,
-  portfolio
+  portfolio,
+  categories
 }: {
   activeTab:
   | "profile"
@@ -21,6 +22,7 @@ const ProfileSettingsPage = ({
   | "changePassword";
   myData: IProfile;
   portfolio: "introVideo" | "bannerImage" | "galleryImage";
+  categories: ICategory[];
 }) => {
   return (
     <div>
@@ -32,7 +34,7 @@ const ProfileSettingsPage = ({
             {
               label: "Edit Profile",
               value: "profile",
-              content: <EditProfile myData={myData} />,
+              content: <EditProfile myData={myData} categories={categories} />,
             },
             {
               label: "Portfolio",

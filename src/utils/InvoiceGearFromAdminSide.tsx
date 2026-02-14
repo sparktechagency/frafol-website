@@ -55,6 +55,8 @@ const InvoiceGearFromAdminSide = ({
 }: {
   currentRecord: IGearOrder;
 }) => {
+
+  console.log(currentRecord)
   const subtotal = currentRecord.gearMarketplaceId.mainPrice;
   const vatAmount = Number(currentRecord.gearMarketplaceId.vatAmount);
   const total =

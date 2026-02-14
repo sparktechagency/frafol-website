@@ -221,3 +221,10 @@ body {
 .ant-modal-wrap {
   z-index: 9999999 !important;
 } */
+
+.playwrite-sk-<uniquifier > {
+  font-family: "Playwrite SK", cursive;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
