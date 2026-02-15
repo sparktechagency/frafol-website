@@ -111,7 +111,7 @@ const InvoiceDocumentFromAdminSide = ({
           <Image src={AllImages.logo.src} style={styles.image} />
           <View style={styles.section}>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>Číslo faktúry / Invoice number:</Text> [{currentRecord.orderId}]
+              <Text style={styles.textBold}>Císlo faktúry / Invoice number:</Text> [{currentRecord.orderId}]
             </Text>
             <Text style={styles.text}>
               <Text style={styles.textBold}>Dátum vystavenia / Issue date:</Text> {formatDate(currentRecord.createdAt)}
@@ -133,10 +133,10 @@ const InvoiceDocumentFromAdminSide = ({
               <Text style={styles.textBold}>Adresa sídla / Company address:</Text> Vysokoškolákov 8556/33B, Žilina 010 08
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>IČO / Company ID:</Text>  57 113 904
+              <Text style={styles.textBold}>ICO / Company ID:</Text>  57 113 904
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>DIČ / Tax ID:</Text> 2122571286
+              <Text style={styles.textBold}>DIC / Tax ID:</Text> 2122571286
             </Text>
             <Text style={styles.text}>
               <Text style={styles.textBold}>IBAN:</Text> SK2383300000002403278954
@@ -166,14 +166,14 @@ const InvoiceDocumentFromAdminSide = ({
               {currentRecord.serviceProviderId.address || "__________"}
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>IČO / Company ID:</Text>{" "}
+              <Text style={styles.textBold}>ICO / Company ID:</Text>{" "}
               {currentRecord.serviceProviderId.ico || "__"}
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>DIČ / Tax ID:</Text> {currentRecord.serviceProviderId.dic || "____"}
+              <Text style={styles.textBold}>DIC / Tax ID:</Text> {currentRecord.serviceProviderId.dic || "____"}
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>IČ DPH / VAT ID (if VAT payer):</Text>{" "}
+              <Text style={styles.textBold}>IC DPH / VAT ID (if VAT payer):</Text>{" "}
               {currentRecord.serviceProviderId.ic_dph || "____"}
             </Text>
           </View>
@@ -210,7 +210,7 @@ const InvoiceDocumentFromAdminSide = ({
         {/* Subtotal and Total */}
         <View style={{ ...styles.section, marginTop: 50, alignItems: "flex-end" }}>
           <Text style={{ ...styles.text, marginBottom: 5 }}>
-            <Text style={{ fontWeight: "bold", color: "#000000" }}>MEDZISÚČET / </Text>
+            <Text style={{ fontWeight: "bold", color: "#000000" }}>MEDZISÚCET / </Text>
             <Text style={{ fontWeight: "bold", color: "#ad2b08" }}>SUBTOTAL: </Text>
             <Text style={{ fontWeight: "bold", color: "#ad2b08" }}>
               €{serviceFee.toFixed(2)}

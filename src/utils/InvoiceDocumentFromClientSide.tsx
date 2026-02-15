@@ -113,7 +113,7 @@ const InvoiceDocumentFromClientSide = ({
           <Image src={AllImages.logo.src} style={styles.image} />
           <View style={styles.section}>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>Číslo faktúry / Invoice number:</Text> {currentRecord.orderId}
+              <Text style={styles.textBold}>Císlo faktúry / Invoice number:</Text> {currentRecord.orderId}
             </Text>
             <Text style={styles.text}>
               <Text style={styles.textBold}>Dátum vystavenia / Issue date:</Text> {formatDate(currentRecord.createdAt)}
@@ -149,14 +149,14 @@ const InvoiceDocumentFromClientSide = ({
               {currentRecord.serviceProviderId.address || "__"}
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>IČO / Company ID:</Text> {currentRecord.serviceProviderId.ico || "__________"}
+              <Text style={styles.textBold}>ICO / Company ID:</Text> {currentRecord.serviceProviderId.ico || "__________"}
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>DIČ / Tax ID (if company):</Text>{" "}
+              <Text style={styles.textBold}>DIC / Tax ID (if company):</Text>{" "}
               {currentRecord.serviceProviderId.dic || "__________"}
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>IČ DPH / VAT ID (if VAT payer):</Text>{" "}
+              <Text style={styles.textBold}>IC DPH / VAT ID (if VAT payer):</Text>{" "}
               {currentRecord.serviceProviderId.ic_dph || "____"}
             </Text>
           </View>
@@ -172,13 +172,13 @@ const InvoiceDocumentFromClientSide = ({
               <Text style={styles.textBold}>Adresa sídla / Address:</Text> {currentRecord.userId.address || "__________"}
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>IČO / Company ID (if company):</Text> {currentRecord.userId.ico || "__"}
+              <Text style={styles.textBold}>ICO / Company ID (if company):</Text> {currentRecord.userId.ico || "__"}
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>DIČ / Tax ID (if company):</Text> {currentRecord.userId.dic || "____"}
+              <Text style={styles.textBold}>DIC / Tax ID (if company):</Text> {currentRecord.userId.dic || "____"}
             </Text>
             <Text style={styles.text}>
-              <Text style={styles.textBold}>IČ DPH / VAT ID (if VAT payer):</Text> {currentRecord.userId.ic_dph || "____"}
+              <Text style={styles.textBold}>IC DPH / VAT ID (if VAT payer):</Text> {currentRecord.userId.ic_dph || "____"}
             </Text>
           </View>
         </View>
@@ -241,7 +241,7 @@ const InvoiceDocumentFromClientSide = ({
         {/* Subtotal and Total */}
         <View style={{ ...styles.section, marginTop: 50, alignItems: "flex-end" }}>
           <Text style={{ ...styles.text, marginBottom: 5 }}>
-            <Text style={{ fontWeight: "bold", color: "#000000" }}>MEDZISÚČET / </Text>
+            <Text style={{ fontWeight: "bold", color: "#000000" }}>MEDZISÚCET / </Text>
             <Text style={{ fontWeight: "bold", color: "#ad2b08" }}>SUBTOTAL: </Text>
             <Text style={{ fontWeight: "bold", color: "#ad2b08" }}>
               €{(currentRecord.priceWithServiceFee || subtotal).toFixed(2)}

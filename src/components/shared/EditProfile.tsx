@@ -101,6 +101,17 @@ const userInputStructure = [
 ];
 const companyInputStructure = [
   {
+    name: "name",
+    type: "text",
+    inputType: "text",
+    label: "Full name",
+    placeholder: "Enter your full name",
+    labelClassName: "!font-medium  !text-secondary-color",
+    inputClassName: "!py-2 !w-full",
+    rules: [{ required: true, message: "Full name is required" }],
+    disable: false,
+  },
+  {
     name: "companyName",
     type: "text",
     inputType: "normal",
