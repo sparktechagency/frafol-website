@@ -18,6 +18,8 @@ import { useState } from "react";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
 import { registerUser } from "@/services/AuthService";
 import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
+import ReuseSelect from "../ui/Form/ReuseSelect";
+import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
 const userInputStructure = [
   {
@@ -31,6 +33,24 @@ const userInputStructure = [
     rules: [{ required: true, message: "Name is required" }],
   },
   {
+    name: "email",
+    type: "email",
+    inputType: "normal",
+    label: "Email",
+    placeholder: "Enter Email Name",
+    labelClassName: "!font-bold !text-secondary-color",
+    prefix: <IoMdMail className="mr-1 !text-secondary-color" />,
+    rules: [{ required: true, message: "Email is required" }],
+  },
+  {
+    name: "phone",
+    type: "number",
+    inputType: "normal",
+    label: "Phone number",
+    placeholder: "Enter Phone number Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+  },
+  {
     name: "address",
     type: "text",
     inputType: "normal",
@@ -39,16 +59,6 @@ const userInputStructure = [
     labelClassName: "!font-semibold !text-secondary-color",
     prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
     rules: [{ required: true, message: "Street Address is required" }],
-  },
-  {
-    name: "town",
-    type: "text",
-    inputType: "normal",
-    label: "Town",
-    placeholder: "Enter Town Name",
-    labelClassName: "!font-semibold !text-secondary-color",
-    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Town is required" }],
   },
   {
     name: "country",
@@ -68,24 +78,6 @@ const userInputStructure = [
     placeholder: "Enter Zip Code Name",
     labelClassName: "!font-semibold !text-secondary-color",
     rules: [{ required: true, message: "Zip Code is required" }],
-  },
-  {
-    name: "email",
-    type: "email",
-    inputType: "normal",
-    label: "Email",
-    placeholder: "Enter Email Name",
-    labelClassName: "!font-bold !text-secondary-color",
-    prefix: <IoMdMail className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Email is required" }],
-  },
-  {
-    name: "phone",
-    type: "number",
-    inputType: "normal",
-    label: "Phone number",
-    placeholder: "Enter Phone number Name",
-    labelClassName: "!font-semibold !text-secondary-color",
   },
 ];
 const companyInputStructure = [
@@ -128,45 +120,6 @@ const companyInputStructure = [
     labelClassName: "!font-semibold !text-secondary-color",
   },
   {
-    name: "address",
-    type: "text",
-    inputType: "normal",
-    label: "Street Address",
-    placeholder: "Enter Street Address",
-    labelClassName: "!font-semibold !text-secondary-color",
-    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Street Address is required" }],
-  },
-  {
-    name: "town",
-    type: "text",
-    inputType: "normal",
-    label: "Town",
-    placeholder: "Enter Town Name",
-    labelClassName: "!font-semibold !text-secondary-color",
-    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Town is required" }],
-  },
-  {
-    name: "country",
-    type: "text",
-    inputType: "normal",
-    label: "Country",
-    placeholder: "Enter Country Name",
-    labelClassName: "!font-semibold !text-secondary-color",
-    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Country is required" }],
-  },
-  {
-    name: "zipCode",
-    type: "text",
-    inputType: "normal",
-    label: "Zip Code",
-    placeholder: "Enter Zip Code Name",
-    labelClassName: "!font-semibold !text-secondary-color",
-    rules: [{ required: true, message: "Zip Code is required" }],
-  },
-  {
     name: "ico",
     type: "text",
     inputType: "normal",
@@ -196,8 +149,35 @@ const companyInputStructure = [
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
     rules: [{ required: false, message: "IČ DPH is required" }],
   },
-
-
+  {
+    name: "address",
+    type: "text",
+    inputType: "normal",
+    label: "Street Address",
+    placeholder: "Enter Street Address",
+    labelClassName: "!font-semibold !text-secondary-color",
+    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
+    rules: [{ required: true, message: "Street Address is required" }],
+  },
+  {
+    name: "country",
+    type: "text",
+    inputType: "normal",
+    label: "Country",
+    placeholder: "Enter Country Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
+    rules: [{ required: true, message: "Country is required" }],
+  },
+  {
+    name: "zipCode",
+    type: "text",
+    inputType: "normal",
+    label: "Zip Code",
+    placeholder: "Enter Zip Code Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    rules: [{ required: true, message: "Zip Code is required" }],
+  },
 ];
 const passwordInputStructure = [
   {
@@ -240,7 +220,7 @@ const passwordInputStructure = [
   },
 ];
 
-const SignUpUser = () => {
+const SignUpUser = ({ townData }: { townData: ITown[] }) => {
   const router = useRouter();
   const [form] = Form.useForm();
 
@@ -328,6 +308,20 @@ const SignUpUser = () => {
               rules={input.rules}
             />
           ))}
+        <ReuseSelect
+          showSearch={true}
+          name="town"
+          label="Town"
+          placeholder="Select your town"
+          labelClassName="!text-secondary-color !font-semibold"
+          rules={[{ required: true, message: "Please select your role" }]}
+          options={
+            townData?.map((town) => ({
+              value: town.name,
+              label: town.name,
+            }))
+          }
+        />
 
         <ReuseDatePicker
           name="dateOfBirth"

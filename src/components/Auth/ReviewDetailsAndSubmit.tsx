@@ -51,6 +51,14 @@ const ReviewDetailsAndSubmit = () => {
       value: parseData.zipCode || "N/A",
     },
     {
+      label: "Town",
+      value: parseData.town || "N/A",
+    },
+    {
+      label: "Country",
+      value: parseData.country || "N/A",
+    },
+    {
       label: "About",
       value: parseData.about || "N/A",
     },
@@ -137,7 +145,7 @@ const ReviewDetailsAndSubmit = () => {
         {details.map((detail, index) => (
           <div
             key={index}
-            className={`flex flex-col justify-start items-start gap-1 ${index === 7 ? "col-span-2" : ""} `}
+            className={`flex flex-col justify-start items-start gap-1 ${index === 9 ? "col-span-2" : ""} `}
           >
             <p className="text-xs sm:text-sm lg:text-base font-semibold">
               {detail.label}
@@ -173,11 +181,11 @@ const ReviewDetailsAndSubmit = () => {
               </p>
               <p className="text-xs sm:text-sm lg:text-base">
                 By creating an account, you agree to our{" "}
-                <Link href="/terms-of-service" target="_blank" className="text-secondary-color underline">
+                <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
                   Terms of Service Conceptural
                 </Link>{" "}
                 and{" "}
-                <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color underline">
+                <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color! underline">
                   Terms of Service Marketplace.
                 </Link>
               </p>
@@ -206,7 +214,7 @@ const ReviewDetailsAndSubmit = () => {
             <div>
               <p className="text-sm sm:text-base lg:text-lg font-semibold">
                 Agree to{" "}
-                <Link href="/data-protection" target="_blank" className="text-secondary-color underline">
+                <Link href="/data-protection" target="_blank" className="text-secondary-color! underline">
                   GDPR
                 </Link>{" "}
                 contract

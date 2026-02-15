@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
 import dayjs from "dayjs";
+import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
+import ReuseSelect from "../ui/Form/ReuseSelect";
 
 const BusinessInputStructure = [
   {
@@ -68,15 +70,6 @@ const AddressInputStructure = [
     rules: [{ required: true, message: "Street Address is required" }],
   },
   {
-    name: "town",
-    type: "text",
-    inputType: "normal",
-    label: "Town",
-    placeholder: "Enter Town Name",
-    labelClassName: "!font-semibold !text-secondary-color",
-    rules: [{ required: true, message: "Town is required" }],
-  },
-  {
     name: "zipCode",
     type: "text",
     inputType: "normal",
@@ -96,14 +89,14 @@ const AddressInputStructure = [
   },
 ];
 
-const LegalInvoiceDetails = () => {
+const LegalInvoiceDetails = ({ townData }: { townData: ITown[] }) => {
   const router = useRouter();
   const [form] = Form.useForm();
 
   const storedInformation = Cookies.get("information");
 
   const parseData = JSON.parse(storedInformation || "{}");
-  console.log(parseData)
+  console.log(townData);
 
   form.setFieldsValue({
     companyName: parseData.companyName,
@@ -183,6 +176,20 @@ const LegalInvoiceDetails = () => {
             rules={input.rules}
           />
         ))}
+        <ReuseSelect
+          showSearch={true}
+          name="town"
+          label="Town"
+          placeholder="Select your town"
+          labelClassName="!text-secondary-color !font-semibold"
+          rules={[{ required: true, message: "Please select your role" }]}
+          options={
+            townData?.map((town) => ({
+              value: town.name,
+              label: town.name,
+            }))
+          }
+        />
         <div className="flex justify-end items-end w-full mt-5 mb-10">
           <ReuseButton
             htmlType="submit"

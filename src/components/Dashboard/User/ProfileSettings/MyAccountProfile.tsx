@@ -6,13 +6,16 @@ import ReusableTabs from "@/components/ui/ReusableTabs";
 import React, { useState } from "react";
 import DeleteModal from "@/components/ui/Modal/DeleteModal";
 import { IProfile } from "@/types";
+import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
 const MyAccountProfile = ({
   activeTab,
   myData,
+  townData,
 }: {
   activeTab: "profile" | "changePassword";
   myData: IProfile;
+  townData: ITown[];
 }) => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any>(null);
@@ -32,7 +35,7 @@ const MyAccountProfile = ({
             {
               label: "Edit Profile",
               value: "profile",
-              content: <EditProfile myData={myData} />,
+              content: <EditProfile myData={myData} towns={townData} />,
             },
             {
               label: "Change Password",

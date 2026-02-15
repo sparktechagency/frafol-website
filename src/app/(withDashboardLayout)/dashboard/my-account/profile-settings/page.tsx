@@ -1,3 +1,4 @@
+import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 import MyAccountProfile from "@/components/Dashboard/User/ProfileSettings/MyAccountProfile";
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
@@ -22,7 +23,19 @@ const page = async ({
 
   const myData: IProfile = data?.data;
 
-  return <MyAccountProfile activeTab={tab} myData={myData} />;
+  const townres = await fetchWithAuth(
+    `/town`,
+    {
+      next: {
+        tags: [TagTypes.town],
+      },
+    }
+  );
+
+  const towns = await townres.json();
+  const townData: ITown[] = towns?.data || [];
+
+  return <MyAccountProfile activeTab={tab} myData={myData} townData={townData} />;
 };
 
 export default page;

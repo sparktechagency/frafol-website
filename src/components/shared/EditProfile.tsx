@@ -18,6 +18,7 @@ import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
 import dayjs from "dayjs";
 import ReuseSelect from "../ui/Form/ReuseSelect";
 import { LuUser } from "react-icons/lu";
+import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
 const userInputStructure = [
   {
@@ -291,51 +292,7 @@ const professionalInputStructure = [
     prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
     rules: [{ required: true, message: "Street Address is required" }],
   },
-  {
-    name: "address",
-    type: "text",
-    inputType: "normal",
-    label: "Street Address",
-    placeholder: "Enter Street Address",
-    labelClassName: "!font-semibold !text-secondary-color",
-    inputClassName: "!py-2 !w-full",
-    disable: false,
-    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Street Address is required" }],
-  },
-  {
-    name: "zipCode",
-    type: "text",
-    inputType: "normal",
-    label: "Zip Code",
-    placeholder: "Enter Zip Code Name",
-    labelClassName: "!font-semibold !text-secondary-color",
-    rules: [{ required: true, message: "Zip Code is required" }],
-  },
-  {
-    name: "town",
-    type: "text",
-    inputType: "normal",
-    label: "Town",
-    placeholder: "Enter Town Name",
-    labelClassName: "!font-semibold !text-secondary-color",
-    inputClassName: "!py-2 !w-full",
-    disable: false,
-    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Town is required" }],
-  },
-  {
-    name: "country",
-    type: "text",
-    inputType: "normal",
-    label: "Country",
-    placeholder: "Enter Country Name",
-    labelClassName: "!font-semibold !text-secondary-color",
-    inputClassName: "!py-2 !w-full",
-    disable: false,
-    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
-    rules: [{ required: true, message: "Country is required" }],
-  },
+
   {
     name: "ico",
     type: "text",
@@ -372,9 +329,43 @@ const professionalInputStructure = [
     prefix: <FaAddressCard className="mr-1 !text-secondary-color" />,
     rules: [{ required: false, message: "IČ DPH is required" }],
   },
+
+  {
+    name: "address",
+    type: "text",
+    inputType: "normal",
+    label: "Street Address",
+    placeholder: "Enter Street Address",
+    labelClassName: "!font-semibold !text-secondary-color",
+    inputClassName: "!py-2 !w-full",
+    disable: false,
+    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
+    rules: [{ required: true, message: "Street Address is required" }],
+  },
+  {
+    name: "zipCode",
+    type: "text",
+    inputType: "normal",
+    label: "Zip Code",
+    placeholder: "Enter Zip Code Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    rules: [{ required: true, message: "Zip Code is required" }],
+  },
+  {
+    name: "country",
+    type: "text",
+    inputType: "normal",
+    label: "Country",
+    placeholder: "Enter Country Name",
+    labelClassName: "!font-semibold !text-secondary-color",
+    inputClassName: "!py-2 !w-full",
+    disable: false,
+    prefix: <HiLocationMarker className="mr-1 !text-secondary-color" />,
+    rules: [{ required: true, message: "Country is required" }],
+  },
 ];
 
-const EditProfile = ({ myData, categories }: { myData: IProfile, categories: ICategory[] }) => {
+const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categories?: ICategory[], towns: ITown[] }) => {
 
   const serverUrl = getServerUrl() || "";
   const [form] = Form.useForm();
@@ -577,6 +568,20 @@ const EditProfile = ({ myData, categories }: { myData: IProfile, categories: ICa
                 disabled={input.disable}
               />
             ))}
+            <ReuseSelect
+              showSearch={true}
+              name="town"
+              label="Town"
+              placeholder="Select your town"
+              labelClassName="!text-secondary-color !font-semibold"
+              rules={[{ required: true, message: "Please select your role" }]}
+              options={
+                towns?.map((town) => ({
+                  value: town.name,
+                  label: town.name,
+                }))
+              }
+            />
             <ReuseDatePicker
               name="dateOfBirth"
               label="Date of Birth"
@@ -586,82 +591,88 @@ const EditProfile = ({ myData, categories }: { myData: IProfile, categories: ICa
             />
           </div>
 
-          {/* Role Select */}
-          <ReuseSelect
-            name="role"
-            label="Professional Role"
-            placeholder="Select your role"
-            labelClassName="!text-secondary-color !font-semibold"
-            rules={[{ required: true, message: "Please select your role" }]}
-            options={[
-              {
-                value: "photographer",
-                label: "Photographer",
-                icon: <LuUser />,
-              },
-              {
-                value: "videographer",
-                label: "Videographer",
-                icon: <IoCamera />,
-              },
-              {
-                value: "both",
-                label: "Both",
-                icon: <IoCamera />,
-              },
-            ]}
-          />
+          {(myData?.role === "photographer" || myData?.role === "videographer" || myData?.role === "both") && (
+            <>
+              {/* Role Select */}
+              <ReuseSelect
+                name="role"
+                label="Professional Role"
+                placeholder="Select your role"
+                labelClassName="!text-secondary-color !font-semibold"
+                rules={[{ required: true, message: "Please select your role" }]}
+                options={[
+                  {
+                    value: "photographer",
+                    label: "Photographer",
+                    icon: <LuUser />,
+                  },
+                  {
+                    value: "videographer",
+                    label: "Videographer",
+                    icon: <IoCamera />,
+                  },
+                  {
+                    value: "both",
+                    label: "Both",
+                    icon: <IoCamera />,
+                  },
+                ]}
+              />
 
-          {/* Specializations Section */}
-          <div className="my-6 space-y-6">
-            {showPhotography && (
-              <div>
-                <h3 className="text-2xl font-semibold text-secondary-color mt-12 mb-6">
-                  Photography Specializations
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {photographyCategories.map((category, index) => (
-                    <div
-                      key={category._id || index}
-                      className={`text-xl sm:text-sm lg:text-base w-full font-medium py-1.5 px-3 rounded cursor-pointer ${selectedPhotographySpecializations.includes(category.title)
-                        ? "bg-background-color border border-secondary-color text-secondary-color"
-                        : "bg-background-color border border-transparent text-base-color"
-                        }`}
-                      onClick={() =>
-                        handleSpecializationClick(category.title, "photography")
-                      }
-                    >
-                      {category.title}
+              {/* Specializations Section */}
+              <div className="my-6 space-y-6">
+                {showPhotography && (
+                  <div>
+                    <h3 className="text-2xl font-semibold text-secondary-color mt-12 mb-6">
+                      Photography Specializations
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      {photographyCategories.map((category, index) => (
+                        <div
+                          key={category._id || index}
+                          className={`text-xl sm:text-sm lg:text-base w-full font-medium py-1.5 px-3 rounded cursor-pointer ${selectedPhotographySpecializations.includes(category.title)
+                            ? "bg-background-color border border-secondary-color text-secondary-color"
+                            : "bg-background-color border border-transparent text-base-color"
+                            }`}
+                          onClick={() =>
+                            handleSpecializationClick(category.title, "photography")
+                          }
+                        >
+                          {category.title}
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
+                  </div>
+                )}
 
-            {showVideography && (
-              <div>
-                <h3 className="text-2xl font-semibold text-secondary-color mt-12 mb-6">
-                  Videography Specializations
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {videographyCategories.map((category, index) => (
-                    <div
-                      key={category._id || index}
-                      className={`text-xl sm:text-sm lg:text-base w-full font-medium py-1.5 px-3 rounded cursor-pointer ${selectedVideographySpecializations.includes(category.title)
-                        ? "bg-background-color border border-secondary-color text-secondary-color"
-                        : "bg-background-color border border-transparent text-base-color"
-                        }`}
-                      onClick={() =>
-                        handleSpecializationClick(category.title, "videography")
-                      }
-                    >
-                      {category.title}
+                {showVideography && (
+                  <div>
+                    <h3 className="text-2xl font-semibold text-secondary-color mt-12 mb-6">
+                      Videography Specializations
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      {videographyCategories.map((category, index) => (
+                        <div
+                          key={category._id || index}
+                          className={`text-xl sm:text-sm lg:text-base w-full font-medium py-1.5 px-3 rounded cursor-pointer ${selectedVideographySpecializations.includes(category.title)
+                            ? "bg-background-color border border-secondary-color text-secondary-color"
+                            : "bg-background-color border border-transparent text-base-color"
+                            }`}
+                          onClick={() =>
+                            handleSpecializationClick(category.title, "videography")
+                          }
+                        >
+                          {category.title}
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </>
+          )}
+
+
 
           <ReuseButton
             htmlType="submit"

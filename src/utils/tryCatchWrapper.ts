@@ -97,7 +97,7 @@ const tryCatchWrapper = async (
       errorMessage.toLowerCase().includes("too large")
     ) {
       displayError =
-        "File size exceeded! Maximum upload size is 25MB. Please upload smaller files.";
+        "File size exceeded! Maximum upload size is 500MB. Please upload smaller files.";
     } else if (errorMessage) {
       displayError = errorMessage;
     }

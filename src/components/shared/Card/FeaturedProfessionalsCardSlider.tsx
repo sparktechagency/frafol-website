@@ -69,7 +69,16 @@ const FeaturedProfessionalsCardSlider = ({ item }: { item: IProfessional }) => {
         (item?.introVideo || (item?.bannerImages && item.bannerImages.length > 0))
             ? []
             : (item?.gallery && item.gallery.length > 0
-                ? item.gallery?.slice(0, 3).map((img) => ({ type: "image", src: img, alt: "Gallery" }))
+                ? item.gallery
+                    .filter((file: string) =>
+                        /\.(jpg|jpeg|png|webp|gif)$/i.test(file)
+                    ) // ✅ only images
+                    .slice(0, 3)
+                    .map((img: string) => ({
+                        type: "image",
+                        src: img,
+                        alt: "Gallery",
+                    }))
                 : []);
 
     const finalGallery = [

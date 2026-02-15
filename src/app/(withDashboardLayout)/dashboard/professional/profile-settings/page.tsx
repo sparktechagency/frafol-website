@@ -1,3 +1,4 @@
+import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 import ProfileSettingsPage from "@/components/Dashboard/User/ProfileSettings/ProfileSettingsPage";
 import TagTypes from "@/helpers/config/TagTypes";
 import { fetchWithAuth } from "@/lib/fetchWraper";
@@ -36,17 +37,16 @@ const page = async ({
   //   | "photoGraphy"
   //   | "videoGraphy";
 
-  const resRole = await fetchWithAuth(`/category`, {
+  const resRole = await fetchWithAuth(`/users/towns/categories`, {
     next: {
       tags: [TagTypes.category],
     },
   });
   const dataRole = await resRole.json();
-  const categories: ICategory[] = dataRole?.data || [];
+  const categories: ICategory[] = dataRole?.data?.categories || [];
+  const towns: ITown[] = dataRole?.data?.towns || [];
 
-  console.log(categories)
-
-  return <ProfileSettingsPage activeTab={tab} portfolio={portfolio} myData={myData} categories={categories} />;
+  return <ProfileSettingsPage activeTab={tab} portfolio={portfolio} myData={myData} categories={categories} towns={towns} />;
 };
 
 export default page;

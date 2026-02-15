@@ -3,7 +3,7 @@ import SectionHeader from "../ui/SectionHeader";
 import ImageGallery from "../ui/ImageGallery";
 import ReuseButton from "../ui/Button/ReuseButton";
 import NoResultFound from "../shared/NoResultFound";
-import { getServerUrl } from "@/helpers/config/envConfig";
+import ProfessionalPageVideoWorks from "./ProfessionalPageVideoWorks";
 
 const columnsCountBreakPoints = { 350: 1, 600: 2, 1024: 3, 1440: 4 };
 
@@ -14,7 +14,7 @@ const ProfessionalPageDetailsMyWork = ({
   gallery: string[];
   professionalId: string;
 }) => {
-  const serverUrl = getServerUrl();
+
 
   const { galleryImages, galleryVideos } = useMemo(() => {
     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg', ".avif", ".tiff", ".heic", ".ico"];
@@ -33,6 +33,7 @@ const ProfessionalPageDetailsMyWork = ({
 
     return { galleryImages: images, galleryVideos: videos };
   }, [gallery]);
+
   return (
     <div className="mt-16">
       <SectionHeader title="My Work" className="mb-3" />
@@ -46,21 +47,7 @@ const ProfessionalPageDetailsMyWork = ({
               arrayOfImages={true}
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {galleryVideos?.slice(0, 1)?.map((item, index) => (
-              <div key={index} className="relative group w-full">
-                <video
-                  src={serverUrl + item}
-                  controls
-                  className="w-full h-full object-cover rounded-lg"
-                  preload="metadata"
-                  controlsList="nodownload noplaybackrate"
-                >
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            ))}
-          </div>
+          <ProfessionalPageVideoWorks galleryVideos={galleryVideos} />
           <div className="mt-10 flex justify-center items-center">
             <ReuseButton
               variant="secondary"

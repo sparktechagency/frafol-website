@@ -7,12 +7,14 @@ import PortfolioPage from "./PortfolioPage";
 import AccountCredentialPage from "./AccountCredentialPage";
 import OtherInformationPage from "./OtherInformationPage";
 import { ICategory, IProfile } from "@/types";
+import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
 const ProfileSettingsPage = ({
   activeTab,
   myData,
   portfolio,
-  categories
+  categories,
+  towns
 }: {
   activeTab:
   | "profile"
@@ -23,6 +25,7 @@ const ProfileSettingsPage = ({
   myData: IProfile;
   portfolio: "introVideo" | "bannerImage" | "galleryImage";
   categories: ICategory[];
+  towns: ITown[]
 }) => {
   return (
     <div>
@@ -34,7 +37,7 @@ const ProfileSettingsPage = ({
             {
               label: "Edit Profile",
               value: "profile",
-              content: <EditProfile myData={myData} categories={categories} />,
+              content: <EditProfile myData={myData} categories={categories} towns={towns} />,
             },
             {
               label: "Portfolio",
