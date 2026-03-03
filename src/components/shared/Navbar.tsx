@@ -113,7 +113,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
     ...(isProfessional ? [
       {
         key: "2",
-        label: <Link href="#">Documents</Link>,
+        label: <Link href="/helpful-documents">Documents</Link>,
         icon: (
           <IoDocumentTextOutline className="text-secondary-color !text-base" />
         ),

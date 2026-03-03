@@ -229,51 +229,6 @@ const EventOrdersPage = ({
             align="left"
             tabs={[
               {
-                label: "Delivered",
-                value: "delivered",
-                content: (
-                  <ProfessionalEventOrderTable
-                    data={myEventData}
-                    loading={false}
-                    showViewModal={showViewUserModal}
-                    page={page}
-                    total={totalData}
-                    limit={limit}
-                    activeTab={activeTab}
-                  />
-                ),
-              },
-              {
-                label: "In Progress",
-                value: "inProgress",
-                content: (
-                  <ProfessionalEventOrderTable
-                    data={myEventData}
-                    loading={false}
-                    showViewModal={showViewUserModal}
-                    page={page}
-                    total={totalData}
-                    limit={limit}
-                    activeTab={activeTab}
-                  />
-                ),
-              },
-              {
-                label: "Upcoming Event",
-                value: "upcoming",
-                content: (
-                  <ProfessionalEventOrderTable
-                    data={myEventData}
-                    loading={false}
-                    showViewModal={showViewUserModal}
-                    page={page}
-                    total={totalData}
-                    limit={limit}
-                    activeTab={activeTab}
-                  />
-                ),
-              },
-              {
                 label: "Pending Request",
                 value: "pending",
                 content: (
@@ -303,7 +258,51 @@ const EventOrdersPage = ({
                   />
                 ),
               },
-
+              {
+                label: "Upcoming Event",
+                value: "upcoming",
+                content: (
+                  <ProfessionalEventOrderTable
+                    data={myEventData}
+                    loading={false}
+                    showViewModal={showViewUserModal}
+                    page={page}
+                    total={totalData}
+                    limit={limit}
+                    activeTab={activeTab}
+                  />
+                ),
+              },
+              {
+                label: "In Progress",
+                value: "inProgress",
+                content: (
+                  <ProfessionalEventOrderTable
+                    data={myEventData}
+                    loading={false}
+                    showViewModal={showViewUserModal}
+                    page={page}
+                    total={totalData}
+                    limit={limit}
+                    activeTab={activeTab}
+                  />
+                ),
+              },
+              {
+                label: "Delivered",
+                value: "delivered",
+                content: (
+                  <ProfessionalEventOrderTable
+                    data={myEventData}
+                    loading={false}
+                    showViewModal={showViewUserModal}
+                    page={page}
+                    total={totalData}
+                    limit={limit}
+                    activeTab={activeTab}
+                  />
+                ),
+              },
               {
                 label: "Cancel Confirmation",
                 value: "cancelRequest",
@@ -319,7 +318,6 @@ const EventOrdersPage = ({
                   />
                 ),
               },
-
               {
                 label: "Cancelled",
                 value: "cancelled",

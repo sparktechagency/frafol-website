@@ -3,7 +3,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <main className="py-20">
+    <main className="py-20 min-h-[95vh]">
       <HelpfulDocumentsPage />
     </main>
   );

@@ -17,7 +17,7 @@ const page = async ({
       | "pending"
       | "accepted"
       | "cancelRequest"
-      | "cancelled") || "delivered";
+      | "cancelled") || "pending";
 
   const page = Number(params?.page) || 1;
 

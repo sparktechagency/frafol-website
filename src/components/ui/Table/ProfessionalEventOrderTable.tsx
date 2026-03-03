@@ -4,9 +4,8 @@ import { Space, Tooltip } from "antd";
 import { GoEye } from "react-icons/go";
 import ReuseTable from "@/utils/ReuseTable";
 import { IEventOrder } from "@/types";
-import { formatDate, formetTime } from "@/utils/dateFormet";
-import { budgetLabels, eventOrderStatus } from "@/utils/budgetLabels";
-import { useGetUserData } from "@/context/useGetUserData";
+import { formatDate } from "@/utils/dateFormet";
+import { budgetLabels } from "@/utils/budgetLabels";
 
 // Define the type for the props
 interface ProfessionalEventOrderTableProps {
@@ -22,24 +21,18 @@ interface ProfessionalEventOrderTableProps {
 
 const ProfessionalEventOrderTable: React.FC<
   ProfessionalEventOrderTableProps
-> = ({ data, loading, showViewModal, page, total, limit, activeTab }) => {
-  const user = useGetUserData();
+> = ({ data, loading, showViewModal, page, total, limit }) => {
+  // const user = useGetUserData();
 
-  const checkExtension = (extensionReq: any) => {
-    const extensionLength = extensionReq?.length;
+  // const checkExtension = (extensionReq: any) => {
+  //   const extensionLength = extensionReq?.length;
 
-    const lastExtension = extensionReq[extensionLength - 1];
+  //   const lastExtension = extensionReq[extensionLength - 1];
 
-    return lastExtension;
-  };
+  //   return lastExtension;
+  // };
 
   const columns = [
-    {
-      title: "Order ID",
-      dataIndex: "orderId",
-      key: "orderId",
-      fixed: "left",
-    },
     {
       title: "Client Name",
       dataIndex: "userId",
@@ -47,13 +40,6 @@ const ProfessionalEventOrderTable: React.FC<
       render: (_: unknown, record: IEventOrder) =>
         record?.companyName || record?.name || record?.userId?.name,
       fixed: "left",
-    },
-    {
-      title: "User Type",
-      dataIndex: "isRegisterAsCompany",
-      key: "isRegisterAsCompany",
-      render: (_: unknown, record: IEventOrder) =>
-        record?.isRegisterAsCompany ? "Company" : "Personal",
     },
     {
       title: "Service Type",
@@ -76,12 +62,16 @@ const ProfessionalEventOrderTable: React.FC<
       ),
     },
     {
-      title: "Order Type",
-      dataIndex: "orderType",
-      key: "orderType",
-      render: (text: string) => (
-        <span className="capitalize">{text} Order</span>
-      ),
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+      width: 300,
+    },
+    {
+      title: "Event Date",
+      dataIndex: "date",
+      key: "date",
+      render: (text: string) => formatDate(text),
     },
     {
       title: "Price",
@@ -100,88 +90,65 @@ const ProfessionalEventOrderTable: React.FC<
         </div>
       ),
     },
-    {
-      title: "Event Date",
-      dataIndex: "date",
-      key: "date",
-      render: (text: string) => formatDate(text),
-    },
-    {
-      title: "Expected Delivery Date",
-      dataIndex: "deliveryDate",
-      key: "deliveryDate",
-      render: (text: string) => formatDate(text),
-    },
-    {
-      title: "Time",
-      dataIndex: "time",
-      key: "time",
-      render: (text: string) => formetTime(text),
-    },
-    {
-      title: "Location",
-      dataIndex: "location",
-      key: "location",
-      width: 300,
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status: string, record: IEventOrder) => (
-        <span className=" font-semibold capitalize">
-          {eventOrderStatus[record?.status as string] || record?.status}
-        </span>
-      ),
-    },
-    ...(activeTab === "inProgress"
-      ? [
-        {
-          title: "Extension Status",
-          dataIndex: "status",
-          key: "status",
-          render: (_: unknown, record: IEventOrder) => (
-            <span className="font-semibold capitalize">
-              {record?.extensionRequests?.length < 1
-                ? "Request Not Sent"
-                : checkExtension(record?.extensionRequests)?.status ===
-                  "pending"
-                  ? "Request On Pending"
-                  : checkExtension(record?.extensionRequests)?.status ===
-                    "accepted"
-                    ? " Request Approved"
-                    : " Request Decline"}
-            </span>
-          ),
-        },
-      ]
-      : []),
-    ...(activeTab === "cancelRequest"
-      ? [
-        {
-          title: "Reason",
-          dataIndex: "cancelReason",
-          key: "cancelReason",
-          width: 300,
-        },
-      ]
-      : []),
-    ...(activeTab === "cancelRequest"
-      ? [
-        {
-          title: "Canceled By",
-          dataIndex: "cancelRequestedBy",
-          key: "cancelRequestedBy",
-          render: (_: unknown, record: IEventOrder) => (
-            <span className="font-semibold capitalize">
-              {record?.cancelRequestedBy === user?.userId
-                ? "Me"
-                : record?.userId?.name}
-            </span>
-          ),
-        },
-      ]
-      : []),
+
+    // {
+    //   title: "Status",
+    //   dataIndex: "status",
+    //   key: "status",
+    //   render: (status: string, record: IEventOrder) => (
+    //     <span className=" font-semibold capitalize">
+    //       {eventOrderStatus[record?.status as string] || record?.status}
+    //     </span>
+    //   ),
+    // },
+    // ...(activeTab === "inProgress"
+    //   ? [
+    //     {
+    //       title: "Extension Status",
+    //       dataIndex: "status",
+    //       key: "status",
+    //       render: (_: unknown, record: IEventOrder) => (
+    //         <span className="font-semibold capitalize">
+    //           {record?.extensionRequests?.length < 1
+    //             ? "Request Not Sent"
+    //             : checkExtension(record?.extensionRequests)?.status ===
+    //               "pending"
+    //               ? "Request On Pending"
+    //               : checkExtension(record?.extensionRequests)?.status ===
+    //                 "accepted"
+    //                 ? " Request Approved"
+    //                 : " Request Decline"}
+    //         </span>
+    //       ),
+    //     },
+    //   ]
+    //   : []),
+    // ...(activeTab === "cancelRequest"
+    //   ? [
+    //     {
+    //       title: "Reason",
+    //       dataIndex: "cancelReason",
+    //       key: "cancelReason",
+    //       width: 300,
+    //     },
+    //   ]
+    //   : []),
+    // ...(activeTab === "cancelRequest"
+    //   ? [
+    //     {
+    //       title: "Canceled By",
+    //       dataIndex: "cancelRequestedBy",
+    //       key: "cancelRequestedBy",
+    //       render: (_: unknown, record: IEventOrder) => (
+    //         <span className="font-semibold capitalize">
+    //           {record?.cancelRequestedBy === user?.userId
+    //             ? "Me"
+    //             : record?.userId?.name}
+    //         </span>
+    //       ),
+    //     },
+    //   ]
+    //   : []),
     {
       title: "Action",
       key: "action",

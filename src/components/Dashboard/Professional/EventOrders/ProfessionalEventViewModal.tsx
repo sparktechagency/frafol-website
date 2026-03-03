@@ -10,7 +10,7 @@ import { getServerUrl } from "@/helpers/config/envConfig";
 import { formatDate, formetTime } from "@/utils/dateFormet";
 import { acceptDirectOrder } from "@/services/EventOrderService/EventOrderServiceApi";
 import tryCatchWrapper from "@/utils/tryCatchWrapper";
-import { budgetLabels } from "@/utils/budgetLabels";
+import { budgetLabels, eventOrderStatus } from "@/utils/budgetLabels";
 import InvoiceDocumentFromClientSide from "@/utils/InvoiceDocumentFromClientSide";
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
@@ -219,6 +219,26 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
                 {`${formatDate(currentRecord?.deliveryDate)}`}
               </p>
             )}
+            <p className="text-xs sm:text-sm lg:text-base mt-1">
+              <span className="font-semibold">Status :</span>{" "}
+              <span className="capitalize font-semibold text-secondary-color">
+                {eventOrderStatus[currentRecord?.status as string] || currentRecord?.status}
+              </span>
+            </p>
+            {activeTab === "inProgress" && (
+              <p className="text-xs sm:text-sm lg:text-base mt-1">
+                <span className="font-semibold">Extension Status :</span>{" "}
+                <span className="font-semibold capitalize">
+                  {(currentRecord?.extensionRequests?.length ?? 0) < 1
+                    ? "Request Not Sent"
+                    : currentRecord?.extensionRequests?.[extensionLength - 1]?.status === "pending"
+                    ? "Request On Pending"
+                    : currentRecord?.extensionRequests?.[extensionLength - 1]?.status === "accepted"
+                    ? "Request Approved"
+                    : "Request Declined"}
+                </span>
+              </p>
+            )}
           </div>
         </div>
 
@@ -278,17 +298,26 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
 
         </div>
 
-        {activeTab === "cancelled" && (
+        {(activeTab === "cancelled" || activeTab === "cancelRequest") && (
           <div className="mb-4">
             <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
               Cancel Reason
             </h4>
             <div className="mt-2">
-              {" "}
               <p className="text-xs sm:text-sm lg:text-base">
                 <span className="font-semibold">Reason :</span>{" "}
                 {currentRecord?.cancelReason}
               </p>
+              {activeTab === "cancelRequest" && (
+                <p className="text-xs sm:text-sm lg:text-base mt-1">
+                  <span className="font-semibold">Canceled By :</span>{" "}
+                  <span className="capitalize font-semibold">
+                    {currentRecord?.cancelRequestedBy === user?.userId
+                      ? "Me"
+                      : currentRecord?.userId?.name}
+                  </span>
+                </p>
+              )}
             </div>
           </div>
         )}
