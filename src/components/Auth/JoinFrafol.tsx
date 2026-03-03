@@ -24,7 +24,7 @@ const JoinFrafol = () => {
   const [userType, setUserType] = React.useState<string | null>(null);
 
   return (
-    <div className=" flex flex-col items-center justify-center gap-3 h-full">
+    <div className=" flex flex-col items-center justify-center gap-3 py-10 h-full">
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-secondary-color">
         Join Frafol
       </h2>
@@ -38,11 +38,10 @@ const JoinFrafol = () => {
             <div
               key={id}
               onClick={() => setUserType(id)}
-              className={`${
-                userType === id
-                  ? "border border-secondary-color"
-                  : "border border-[#E1E1E1]"
-              } w-72 p-5 bg-primary-color  rounded-lg cursor-pointer flex flex-col justify-center items-center text-center gap-3`}
+              className={`${userType === id
+                ? "border border-secondary-color"
+                : "border border-[#E1E1E1]"
+                } w-72 p-5 bg-primary-color  rounded-lg cursor-pointer flex flex-col justify-center items-center text-center gap-3`}
             >
               <div className="w-fit p-2 bg-secondary-color rounded-full">
                 {icon}
@@ -50,20 +49,19 @@ const JoinFrafol = () => {
               <p className="text-sm sm:text-base lg:text-lg font-bold">
                 {title}
               </p>
-              <p className="text-[10px] sm:text-xs lg:text-sm font-bold text-[#6B7280]">
+              <p className=" sm:text-sm lg:text-sm font-bold text-[#6B7280]">
                 {description}
               </p>
             </div>
           ))}
         </div>
         <div
-          className={`${
-            !userType ? "hidden" : "flex"
-          }  justify-end items-end w-full mt-5`}
+          className={`${!userType ? "hidden" : "flex"
+            }  justify-end items-end w-full mt-5`}
         >
           <ReuseButton
             variant="secondary"
-            className="!w-fit !text-[10px] sm:!text-xs lg:!text-sm !px-5 !py-2.5"
+            className="!w-fit !text-sm lg:!text-sm !px-5 !py-2.5"
             url={
               userType === "photographer-videographer"
                 ? "/sign-up/professional/choose-role"

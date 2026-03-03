@@ -68,7 +68,7 @@ const ProfessionalReviewsFiltre = () => {
           <button
             key={star}
             onClick={() => handleRatingClick(star)}
-            className={`flex items-center gap-1 px-3 py-1 rounded-full border text-xs sm:text-sm lg:text-base font-medium cursor-pointer
+            className={`flex items-center gap-1 px-3 py-1 rounded-full border text-sm sm:text-sm lg:text-base font-medium cursor-pointer
               ${Number(rating) === star
                 ? "bg-yellow-400 text-white border-yellow-400"
                 : "bg-white text-gray-700 border-gray-300 hover:border-gray-400"

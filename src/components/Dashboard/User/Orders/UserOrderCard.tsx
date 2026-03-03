@@ -87,7 +87,7 @@ const UserOrderCard = ({
       className={`p-4 rounded-md border border-[#E1E1E1] shadow-xs hover:shadow-md transition-all duration-200`}
     >
       <div>
-        <div className="flex items-center gap-2 text-xs">
+        <div className="flex items-center gap-2 text-sm">
           <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mb-1">
             {data?.packageId?.title || data?.title}
           </h3>{" "}
@@ -106,7 +106,7 @@ const UserOrderCard = ({
             </p>
           )}
         </div>
-        <h4 className="text-xs sm:text-sm lg:text-base xl:text-lg font-bold mb-1 capitalize">
+        <h4 className="text-sm sm:text-sm lg:text-base xl:text-lg font-bold mb-1 capitalize">
           {data?.serviceType === "both" ? "Photography & Videography" : data?.serviceType}
         </h4>
         <div className="text-sm sm:text-base lg:text-lg text-gray-700 flex items-center my-3 gap-1">
@@ -125,16 +125,16 @@ const UserOrderCard = ({
         </div>
 
         <div className="flex items-center gap-5">
-          <div className="text-xs sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-1">
+          <div className="text-sm sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-1">
             <IoCalendarOutline />
             <span>{formatDate(data?.date)}</span>
           </div>
-          <div className="text-xs sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-1">
+          <div className="text-sm sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-1">
             <IoTimeOutline />
             <span>{formetTime(data?.time)}</span>
           </div>
         </div>
-        <p className="text-xs sm:text-sm text-[#5D5D5D] flex items-start gap-2 my-1">
+        <p className="text-sm sm:text-sm text-[#5D5D5D] flex items-start gap-2 my-1">
           <div className="flex items-center text-nowrap  gap-1">
             <FaMapMarkerAlt /> <span>Location : </span>
           </div>
@@ -143,13 +143,13 @@ const UserOrderCard = ({
         {activeTab === "extension" && (
           <div className="my-5">
             {" "}
-            <p className="text-xs sm:text-sm lg:text-base font-bold text-secondary-color flex items-start gap-2 my-1">
+            <p className="text-sm sm:text-sm lg:text-base font-bold text-secondary-color flex items-start gap-2 my-1">
               <div className="flex items-center text-nowrap gap-1">
                 <FaClock /> <span>Delivery Date : </span>
               </div>
               {formatDate(data?.deliveryDate)}
             </p>
-            <p className="text-xs sm:text-sm lg:text-base font-bold text-green-800 flex items-start gap-2 my-1">
+            <p className="text-sm sm:text-sm lg:text-base font-bold text-green-800 flex items-start gap-2 my-1">
               <div className="flex items-center text-nowrap gap-1">
                 <FaClock /> <span>Extended Date : </span>
               </div>

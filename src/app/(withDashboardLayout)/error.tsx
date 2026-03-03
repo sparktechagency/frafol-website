@@ -67,12 +67,12 @@ export default function Error({
             {/* Error Details (for development) */}
             {process.env.NODE_ENV === "development" && (
               <div className="bg-gray-50 rounded-lg p-3 mb-6 text-left">
-                <p className="text-xs text-gray-500 mb-1">Error Details:</p>
+                <p className="text-sm text-gray-500 mb-1">Error Details:</p>
                 <p className="text-sm text-gray-700 font-mono break-all">
                   {error.message}
                 </p>
                 {error.digest && (
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-sm text-gray-500 mt-1">
                     Digest: {error.digest}
                   </p>
                 )}

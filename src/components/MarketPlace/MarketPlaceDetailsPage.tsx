@@ -11,7 +11,7 @@ const MarketPlaceDetailsPage = ({ data }: { data: IGear }) => {
       content: (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="bg-zinc-200 p-4 rounded-lg">
-            <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl ">
+            <p className="text-sm sm:text-sm md:text-base lg:text-lg xl:text-xl ">
               {data?.shippingCompany?.name}
               {" - "}
               <span className="text-secondary-color font-bold">
@@ -35,13 +35,13 @@ const MarketPlaceDetailsPage = ({ data }: { data: IGear }) => {
         <h3 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold">
           {data?.mainPrice}€
         </h3>
-        <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl mt-4">
+        <p className="text-sm sm:text-sm md:text-base lg:text-lg xl:text-xl mt-4">
           {data?.description}
         </p>
-        <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold mt-4">
+        <p className="text-sm sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold mt-4">
           Seller: <span className="font-bold"> {data?.authorId?.name}</span>
         </p>
-        <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold mt-4">
+        <p className="text-sm sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold mt-4">
           Condition:{" "}
           <span className="font-bold capitalize"> {data?.condition}</span>
         </p>

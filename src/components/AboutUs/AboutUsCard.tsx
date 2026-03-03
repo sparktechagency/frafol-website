@@ -37,7 +37,7 @@ const AboutUsCard = ({ data }: AboutUsCardProps) => {
           <ReuseButton
             variant="secondary"
             url={data?.redirectUrl}
-            className="mt-4 !w-fit !text-xs sm:!text-sm lg:!text-base"
+            className="mt-4 !w-fit !text-sm sm:!text-sm lg:!text-base"
           >
             {data?.buttonText}
           </ReuseButton>

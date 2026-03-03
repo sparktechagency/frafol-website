@@ -103,7 +103,7 @@ const EventCreateOrderModal = ({
       <h3 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold mb-2">
         Create Order for Lívia Nováková
       </h3>
-      <h3 className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium mb-5">
+      <h3 className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mb-5">
         Fill in the pricing and delivery details for this booking.
       </h3>
 

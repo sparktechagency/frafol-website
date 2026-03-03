@@ -7,7 +7,7 @@ const ProfessionalShowMoreSection = ({ professionalUser }: { professionalUser: I
     console.log(professionalUser)
     return (
         <div className="text-gray-300 mt-20">
-            <h4 onClick={() => setIsVisible((prev) => !prev)} className="text-gray-400 text-lg underline cursor-pointer!">
+            <h4 onClick={() => setIsVisible((prev) => !prev)} className="text-gray-400 text-sm sm:text-base lg:text-lg underline cursor-pointer!">
                 Show More Information
             </h4>
             <div className={`${isVisible ? "block" : "hidden"}`}>

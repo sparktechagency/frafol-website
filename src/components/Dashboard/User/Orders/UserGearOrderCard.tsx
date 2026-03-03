@@ -9,8 +9,8 @@ import { formatDate } from "@/utils/dateFormet";
 const UserGearOrderCard = ({
   activeTab,
   data,
-  openModal = () => {},
-  showAcceptDeliverModal = () => {},
+  openModal = () => { },
+  showAcceptDeliverModal = () => { },
 }: {
   activeTab: string;
   data: IGearOrder;
@@ -35,13 +35,13 @@ const UserGearOrderCard = ({
         <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mb-1">
           {data?.gearMarketplaceId?.name || "Product Name"}
         </h3>
-        <h4 className="text-xs sm:text-sm lg:text-base xl:text-lg font-bold mb-1">
+        <h4 className="text-sm sm:text-sm lg:text-base xl:text-lg font-bold mb-1">
           Seller: {data?.sellerId?.name || "Unknown Seller"}
         </h4>
-        <p className="text-xs sm:text-sm lg:text-base text-gray-700 capitalize">
+        <p className="text-sm sm:text-sm lg:text-base text-gray-700 capitalize">
           Condition : {data?.gearMarketplaceId?.condition || "N/A"}
         </p>
-        <div className="text-xs sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-1">
+        <div className="text-sm sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-1">
           <IoCalendarOutline />
           <span>{formatDate(data?.createdAt) || "Unknown Date"}</span>
         </div>

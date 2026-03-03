@@ -71,7 +71,7 @@ const Accordion: React.FC<AccordionProps> = ({
           transition: "height 0.5s ease",
         }}
       >
-        <div className="p-2 w-[98%] ml-auto duration-500 text-xs md:text-sm lg:text-base text-[#3C3C43D9] font-medium">
+        <div className="p-2 w-[98%] ml-auto duration-500 text-sm md:text-sm lg:text-base text-[#3C3C43D9] font-medium">
           {content}
         </div>
       </div>

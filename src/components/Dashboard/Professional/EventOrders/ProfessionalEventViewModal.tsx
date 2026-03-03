@@ -132,7 +132,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
             <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
               {currentRecord?.packageId?.title || currentRecord?.title}
             </p>
-            <p className={`text-xs sm:text-sm font-bold border w-fit rounded-2xl py-0.5 px-2 mt-1 ${currentRecord?.orderType === "custom" ? "text-secondary-color" : "border-base-color text-base-color"}`}>
+            <p className={`text-sm sm:text-sm font-bold border w-fit rounded-2xl py-0.5 px-2 mt-1 ${currentRecord?.orderType === "custom" ? "text-secondary-color" : "border-base-color text-base-color"}`}>
               {currentRecord?.orderType === "custom" ? "Custom" : "Direct"}
             </p>
           </div>
@@ -140,10 +140,10 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           <p className="text-sm sm:text-base lg:text-kg xl:text-xl font-medium">
             {currentRecord?.serviceType === "both" ? "Photography & Videography" : currentRecord?.serviceType}
           </p>
-          <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
+          <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
             By {currentRecord?.serviceProviderId?.name}
           </p>
-          <p className="text-xs sm:text-sm lg:text-base text-base-color/80 mt-2">
+          <p className="text-sm sm:text-sm lg:text-base text-base-color/80 mt-2">
             {currentRecord?.description || currentRecord?.packageId?.description}
           </p>
         </div>
@@ -207,35 +207,35 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           </h4>
           <div className="mt-2">
             {" "}
-            <p className="text-xs sm:text-sm lg:text-base">
+            <p className="text-sm sm:text-sm lg:text-base">
               <span className="font-semibold">Order Date :</span>{" "}
               {`${formatDate(currentRecord?.createdAt)} - ${formetTime(
                 currentRecord?.createdAt
               )}`}
             </p>
             {currentRecord?.status !== "pending" && (
-              <p className="text-xs sm:text-sm lg:text-base">
+              <p className="text-sm sm:text-sm lg:text-base">
                 <span className="font-semibold">Delivery Date :</span>{" "}
                 {`${formatDate(currentRecord?.deliveryDate)}`}
               </p>
             )}
-            <p className="text-xs sm:text-sm lg:text-base mt-1">
+            <p className="text-sm sm:text-sm lg:text-base mt-1">
               <span className="font-semibold">Status :</span>{" "}
               <span className="capitalize font-semibold text-secondary-color">
                 {eventOrderStatus[currentRecord?.status as string] || currentRecord?.status}
               </span>
             </p>
             {activeTab === "inProgress" && (
-              <p className="text-xs sm:text-sm lg:text-base mt-1">
+              <p className="text-sm sm:text-sm lg:text-base mt-1">
                 <span className="font-semibold">Extension Status :</span>{" "}
                 <span className="font-semibold capitalize">
                   {(currentRecord?.extensionRequests?.length ?? 0) < 1
                     ? "Request Not Sent"
                     : currentRecord?.extensionRequests?.[extensionLength - 1]?.status === "pending"
-                    ? "Request On Pending"
-                    : currentRecord?.extensionRequests?.[extensionLength - 1]?.status === "accepted"
-                    ? "Request Approved"
-                    : "Request Declined"}
+                      ? "Request On Pending"
+                      : currentRecord?.extensionRequests?.[extensionLength - 1]?.status === "accepted"
+                        ? "Request Approved"
+                        : "Request Declined"}
                 </span>
               </p>
             )}
@@ -247,17 +247,17 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold mb-2">
             Event Details
           </h4>
-          <p className="text-xs sm:text-sm lg:text-base mt-1 flex items-center gap-1 mb-2">
+          <p className="text-sm sm:text-sm lg:text-base mt-1 flex items-center gap-1 mb-2">
             <FaCalendarAlt /> <span>Event Date : </span>
             {formatDate(currentRecord?.date)}
           </p>
-          <p className="text-xs sm:text-sm lg:text-base flex items-start gap-2 mb-2">
+          <p className="text-sm sm:text-sm lg:text-base flex items-start gap-2 mb-2">
             <div className="flex items-center text-nowrap">
               <FaMapMarkerAlt /> <span>Location : </span>
             </div>
             {currentRecord?.location}
           </p>
-          <p className="text-xs sm:text-sm lg:text-base flex items-center gap-2 mb-2">
+          <p className="text-sm sm:text-sm lg:text-base flex items-center gap-2 mb-2">
             <FaClock /> <span>Time : </span>
             {formetTime(currentRecord?.time)}
           </p>
@@ -272,13 +272,13 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           {
             currentRecord?.totalPrice && (
               <>
-                <p className="text-xs sm:text-sm lg:text-base xl:text-lg mt-2">
+                <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
                   <span className="font-semibold">
                     Amount Without Service Fee:
                   </span>{" "}
                   {Number(currentRecord?.totalPrice) - Number(serviceFeeAmount)}
                 </p>
-                <p className="text-xs sm:text-sm lg:text-base xl:text-lg mt-2">
+                <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
                   <span className="font-semibold">
                     Service Fee Amount:
                   </span>{" "}
@@ -287,7 +287,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               </>
             )
           }
-          <p className="text-xs sm:text-sm lg:text-base xl:text-lg mt-2">
+          <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
             <span className="font-semibold">
               {currentRecord?.totalPrice ? "Total Amount" : "Budget Range"} :
             </span>{" "}
@@ -304,12 +304,12 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               Cancel Reason
             </h4>
             <div className="mt-2">
-              <p className="text-xs sm:text-sm lg:text-base">
+              <p className="text-sm sm:text-sm lg:text-base">
                 <span className="font-semibold">Reason :</span>{" "}
                 {currentRecord?.cancelReason}
               </p>
               {activeTab === "cancelRequest" && (
-                <p className="text-xs sm:text-sm lg:text-base mt-1">
+                <p className="text-sm sm:text-sm lg:text-base mt-1">
                   <span className="font-semibold">Canceled By :</span>{" "}
                   <span className="capitalize font-semibold">
                     {currentRecord?.cancelRequestedBy === user?.userId
@@ -329,7 +329,7 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               </h4>
               <div className="mt-2">
                 {" "}
-                <p className="text-xs sm:text-sm lg:text-base">
+                <p className="text-sm sm:text-sm lg:text-base">
                   <span className="font-semibold">Reason :</span>{" "}
                   {currentRecord?.deliveryRequestDeclinedReason}
                 </p>

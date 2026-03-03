@@ -60,32 +60,32 @@ const UserWorkshopPage = ({
                   alt={workshop?.workshop?.authorId?.name || "Profile Image"}
                   className="w-8 h-8 object-cover rounded-full "
                 />
-                <p className="text-xs sm:text-sm lg:text-base font-bold">
+                <p className="text-sm sm:text-sm lg:text-base font-bold">
                   {workshop?.workshop?.authorId?.name}
                 </p>
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                <p className="text-sm sm:text-sm lg:text-base font-semibold">
                   {formatDate(workshop?.workshop?.date)}
                 </p>
               </div>
               <div className="flex items-center gap-2 mt-1">
                 <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                <p className="text-sm sm:text-sm lg:text-base font-semibold">
                   {formetTime(workshop?.workshop?.time)}
                 </p>
               </div>
               <div className="flex items-center gap-2 mt-1">
                 <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                <p className="text-xs sm:text-sm lg:text-base font-semibold capitalize">
+                <p className="text-sm sm:text-sm lg:text-base font-semibold capitalize">
                   {workshop?.workshop?.locationType}
                 </p>
               </div>
               {workshop?.workshop?.locationType !== "online" ? (
                 <div className="flex items-center gap-2 mt-1">
                   <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                  <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                  <p className="text-sm sm:text-sm lg:text-base font-semibold">
                     {workshop?.workshop?.location}
                   </p>
                 </div>
@@ -95,7 +95,7 @@ const UserWorkshopPage = ({
                   <Link
                     href={workshop?.workshop?.workshopLink}
                     target="_blank"
-                    className="text-xs sm:text-sm lg:text-base font-semibold"
+                    className="text-sm sm:text-sm lg:text-base font-semibold"
                   >
                     {workshop?.workshop?.workshopLink}
                   </Link>
@@ -104,7 +104,7 @@ const UserWorkshopPage = ({
 
               <div className="flex items-center gap-2 mt-1">
                 <FaEuroSign className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                <p className="text-sm sm:text-sm lg:text-base font-semibold">
                   {workshop?.workshop?.mainPrice}
                 </p>
               </div>

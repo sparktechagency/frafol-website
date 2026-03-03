@@ -27,10 +27,10 @@ const HelpfulDocumentsCards = ({
         <p className="text-base-color text-base sm:text-lg lg:text-xl  font-bold ">
           {title}
         </p>
-        <p className="text-[#4B5563] text-xs sm:text-sm lg:text-base font-medium">
+        <p className="text-[#4B5563] text-sm sm:text-sm lg:text-base font-medium">
           {description}
         </p>
-        <p className="text-[#4B5563] text-xs sm:text-sm lg:text-base font-medium">
+        <p className="text-[#4B5563] text-sm sm:text-sm lg:text-base font-medium">
           {fileInfo}
         </p>
         <a href={downloadUrl} download={fileName}>

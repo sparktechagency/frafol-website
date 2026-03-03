@@ -40,22 +40,22 @@ const CartCard = ({ product }: { product: IGear }) => {
             </h2>
           </Link>
           <div className="flex items-center gap-2">
-            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+            <p className="text-sm sm:text-sm lg:text-base font-semibold">
               Condition:
             </p>
-            <p className="text-xs sm:text-sm lg:text-base">
+            <p className="text-sm sm:text-sm lg:text-base">
               {product?.condition}
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+            <p className="text-sm sm:text-sm lg:text-base font-semibold">
               Seller:
             </p>
-            <p className="text-xs sm:text-sm lg:text-base">
+            <p className="text-sm sm:text-sm lg:text-base">
               {product?.authorId?.name}
             </p>
           </div>
-          <h2 className="text-xs sm:text-sm lg:text-base mb-2">
+          <h2 className="text-sm sm:text-sm lg:text-base mb-2">
             Price: <span className="font-semibold">{product?.mainPrice}€</span>
           </h2>
         </div>

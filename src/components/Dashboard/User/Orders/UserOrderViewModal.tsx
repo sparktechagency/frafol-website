@@ -76,20 +76,20 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
             <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
               {currentRecord?.packageId?.title || currentRecord?.title}
             </p>
-            <p className={`text-xs sm:text-sm font-bold border w-fit rounded-2xl py-0.5 px-2 mt-1 ${currentRecord?.orderType === "custom" ? "text-secondary-color" : "border-base-color text-base-color"}`}>
+            <p className={`text-sm sm:text-sm font-bold border w-fit rounded-2xl py-0.5 px-2 mt-1 ${currentRecord?.orderType === "custom" ? "text-secondary-color" : "border-base-color text-base-color"}`}>
               {currentRecord?.orderType === "custom" ? "Custom" : "Direct"}
             </p>
           </div>
           <p className="text-sm sm:text-base lg:text-kg xl:text-xl font-medium">
             {currentRecord?.serviceType === "both" ? "Photography & Videography" : currentRecord?.serviceType}
           </p>
-          <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
+          <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
             By {currentRecord?.serviceProviderId?.name}
           </p>
-          <p className="text-xs lg:text-sm text-gray-500 mt-1 flex items-center gap-1">
+          <p className="text-sm lg:text-sm text-gray-500 mt-1 flex items-center gap-1">
             <FaCalendarAlt /> {formatDate(currentRecord?.date)}
           </p>
-          <p className="text-xs lg:text-sm text-gray-500 mt-1 flex items-center gap-1">
+          <p className="text-sm lg:text-sm text-gray-500 mt-1 flex items-center gap-1">
             <FaClock /> {formetTime(currentRecord?.time)}
           </p>
         </div>
@@ -101,17 +101,17 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
           </h4>
           <div className="mt-2">
             {" "}
-            <p className="text-xs sm:text-sm lg:text-base">
+            <p className="text-sm sm:text-sm lg:text-base">
               <span className="font-semibold">Order Date :</span>{" "}
               {formatDate(currentRecord?.statusTimestamps?.createdAt)} -{" "}
               {formetTime(currentRecord?.statusTimestamps?.createdAt)}
             </p>
-            <p className="text-xs sm:text-sm lg:text-base">
+            <p className="text-sm sm:text-sm lg:text-base">
               <span className="font-semibold">Event Date :</span>{" "}
               {formatDate(currentRecord?.date)}
             </p>
             {currentRecord?.status !== "cancelled" && (
-              <p className="text-xs sm:text-sm lg:text-base">
+              <p className="text-sm sm:text-sm lg:text-base">
                 <span className="font-semibold">Expected Delivery Date :</span>{" "}
                 {formatDate(currentRecord?.deliveryDate)}
               </p>
@@ -150,13 +150,13 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold mb-2">
             Event Details
           </h4>
-          <p className="text-xs sm:text-sm lg:text-base flex items-start gap-2 mb-2">
+          <p className="text-sm sm:text-sm lg:text-base flex items-start gap-2 mb-2">
             <div className="flex items-center text-nowrap">
               <FaMapMarkerAlt /> <span>Location : </span>
             </div>
             {currentRecord?.location}
           </p>
-          <p className="text-xs sm:text-sm lg:text-base flex items-center gap-2 mb-2">
+          <p className="text-sm sm:text-sm lg:text-base flex items-center gap-2 mb-2">
             <FaClock /> <span>Time : </span>
             {formetTime(currentRecord?.time)}
           </p>
@@ -167,7 +167,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
             Payment Details
           </h4>
-          <p className="text-xs sm:text-sm lg:text-base xl:text-lg mt-2">
+          <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
             <span className="font-semibold">
               {currentRecord?.totalPrice ? "Total Amount" : "Budget Range"} :
             </span>{" "}
@@ -186,7 +186,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
             </h4>
             <div className="mt-2">
               {" "}
-              <p className="text-xs sm:text-sm lg:text-base">
+              <p className="text-sm sm:text-sm lg:text-base">
                 <span className="font-semibold">Reason :</span>{" "}
                 {currentRecord?.cancelReason}
               </p>
@@ -200,7 +200,7 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
             </h4>
             <div className="mt-2">
               {" "}
-              <p className="text-xs sm:text-sm lg:text-base">
+              <p className="text-sm sm:text-sm lg:text-base">
                 {currentRecord?.description}
               </p>
             </div>

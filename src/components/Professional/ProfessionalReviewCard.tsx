@@ -35,10 +35,10 @@ const ReviewCard = ({ review }: { review: IReview }) => {
                 : serverUrl + review?.userId?.profileImage
             }
           />
-          <div className="text-xs sm:text-sm lg:text-base xl:text-lg font-semibold">
+          <div className="text-sm sm:text-sm lg:text-base xl:text-lg font-semibold">
             {review?.isAnonymous ? "Anonymous" : review?.userId?.name}
           </div>
-          <span className="text-xs sm:text-sm lg:text-base font-light">
+          <span className="text-sm sm:text-sm lg:text-base font-light">
             · {formatDateTime(review?.createdAt)}
           </span>
         </div>
@@ -46,7 +46,7 @@ const ReviewCard = ({ review }: { review: IReview }) => {
       </div>
 
       {/* Content */}
-      <div className="text-xs sm:text-sm lg:text-base mb-2">
+      <div className="text-sm sm:text-sm lg:text-base mb-2">
         {displayText}
         {isLong && (
           <button

@@ -123,7 +123,7 @@ const ProfessionalAddNewPackageModal = ({
       </h3>
 
       <ReusableForm form={form} handleFinish={onSubmit}>
-        <h3 className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium mb-5">
+        <h3 className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mb-5">
           Package Information
         </h3>
         <ReuseInput

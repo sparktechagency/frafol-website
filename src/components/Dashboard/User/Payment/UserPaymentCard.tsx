@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FaHourglassEnd } from "react-icons/fa6";
-import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import { RiMoneyEuroCircleFill } from "react-icons/ri";
 
 const UserPaymentCard = ({
   myPaymnetStatesData,
@@ -12,7 +12,7 @@ const UserPaymentCard = ({
       id: 3,
       background: "#ffffff",
       name: "Total Spent",
-      icon: <RiMoneyDollarCircleFill className="size-6 text-secondary-color" />,
+      icon: <RiMoneyEuroCircleFill className="size-6 text-secondary-color" />,
       count: `${myPaymnetStatesData?.totalSpent}€`,
     },
     {

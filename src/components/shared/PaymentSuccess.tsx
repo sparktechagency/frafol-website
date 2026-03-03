@@ -186,7 +186,7 @@ const PaymentSuccess = () => {
                 >
                   <div className="flex-shrink-0">{item.icon}</div>
                   <div className="flex flex-col">
-                    <span className="text-xs text-[#262621]">{item.label}</span>
+                    <span className="text-sm text-[#262621]">{item.label}</span>
                     <span className="text-sm font-medium text-secondary-color">
                       {item.value}
                     </span>

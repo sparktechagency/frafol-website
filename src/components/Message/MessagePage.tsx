@@ -682,36 +682,32 @@ const MessagePage = () => {
                       {selectedConversation?.messages.map((msg: any) => (
                         <div key={msg.id}>
                           <p
-                            className={`py-1 px-3 my-2 rounded-md ${
-                              msg.sender === "You"
+                            className={`py-1 px-3 my-2 rounded-md ${msg.sender === "You"
                                 ? "w-fit ml-auto text-right  text-white bg-secondary-color"
                                 : "w-fit text-left text-base-color bg-[#F1F1F1]"
-                            }`}
+                              }`}
                           >
                             {msg.text}
                           </p>
                           <div
-                            className={`flex items-center gap-2 w-full ${
-                              msg.sender === "You"
+                            className={`flex items-center gap-2 w-full ${msg.sender === "You"
                                 ? "justify-end"
                                 : "justify-start"
-                            }`}
+                              }`}
                           >
                             <p
-                              className={`font-bold text-xs ${
-                                msg.sender === "You"
+                              className={`font-bold text-sm ${msg.sender === "You"
                                   ? "text-right"
                                   : "text-left"
-                              }`}
+                                }`}
                             >
                               {msg.sender}
                             </p>
                             <p
-                              className={`font-bold text-xs text-secondary-color ${
-                                msg.sender === "You"
+                              className={`font-bold text-sm text-secondary-color ${msg.sender === "You"
                                   ? "text-right"
                                   : "text-left"
-                              }`}
+                                }`}
                             >
                               10:40 AM
                             </p>

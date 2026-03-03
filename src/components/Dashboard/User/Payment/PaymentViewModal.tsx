@@ -27,7 +27,7 @@ const PaymenViewModal: React.FC<PaymenViewModalProps> = ({
             Transaction Details
           </h3>
 
-          <div className="text-xs sm:text-sm lg:text-base mt-3">
+          <div className="text-sm sm:text-sm lg:text-base mt-3">
             {/* Date */}
             <div className="flex items-center justify-between border-b border-[#E1E1E1] pb-2 mb-2 gap-2">
               <span className="font-semibold">Date:</span>

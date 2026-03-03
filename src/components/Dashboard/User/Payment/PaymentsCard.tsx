@@ -28,13 +28,13 @@ const PaymentsCard = ({
 
         {/* User or Seller Info */}
         {data.paymentType === "event" && data.userId && (
-          <p className="text-xs sm:text-sm lg:text-base text-gray-700">
+          <p className="text-sm sm:text-sm lg:text-base text-gray-700">
             User: {data.userId.name}
           </p>
         )}
 
         {data.paymentType === "gear" && data?.gearOrderIds?.length > 0 && (
-          <div className="text-xs sm:text-sm lg:text-base text-gray-700">
+          <div className="text-sm sm:text-sm lg:text-base text-gray-700">
             {data.gearOrderIds.map((gear) => (
               <div key={gear._id} className="mb-1">
                 <p>
@@ -52,12 +52,12 @@ const PaymentsCard = ({
         )}
 
         {data.paymentType === "workshop" && data.workshopId && (
-          <p className="text-xs sm:text-sm lg:text-base text-gray-700">
+          <p className="text-sm sm:text-sm lg:text-base text-gray-700">
             Workshop: {data.workshopId.title}
           </p>
         )}
 
-        <div className="text-xs sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-1">
+        <div className="text-sm sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-1">
           <IoCalendarOutline />
           <span>{formatDate(data?.createdAt)}</span>
         </div>

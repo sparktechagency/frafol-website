@@ -132,7 +132,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                         <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3">
                             {currentRecord?.title}
                         </p>
-                        <p className="text-xs sm:text-sm lg:text-base mt-1">
+                        <p className="text-sm sm:text-sm lg:text-base mt-1">
                             {currentRecord?.description}
                         </p>
                         <div className="flex items-center gap-2 mt-3">
@@ -147,32 +147,32 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                                 alt={currentRecord?.authorId?.name || "Profile Image"}
                                 className="w-8 h-8 object-cover rounded-full "
                             />
-                            <p className="text-xs sm:text-sm lg:text-base font-bold">
+                            <p className="text-sm sm:text-sm lg:text-base font-bold">
                                 {currentRecord?.authorId?.name}
                             </p>
                         </div>
                         <div className="flex items-center gap-2 mt-2">
                             <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                            <p className="text-sm sm:text-sm lg:text-base font-semibold">
                                 {formatDate(currentRecord?.date)}
                             </p>
                         </div>
                         <div className="flex items-center gap-2 mt-1">
                             <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                            <p className="text-sm sm:text-sm lg:text-base font-semibold">
                                 {formetTime(currentRecord?.time)}
                             </p>
                         </div>
                         <div className="flex items-center gap-2 mt-1">
                             <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                            <p className="text-xs sm:text-sm lg:text-base font-semibold capitalize">
+                            <p className="text-sm sm:text-sm lg:text-base font-semibold capitalize">
                                 {currentRecord?.locationType}
                             </p>
                         </div>
                         {currentRecord?.locationType !== "online" && (
                             <div className="flex items-center gap-2 mt-1">
                                 <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                                <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                                <p className="text-sm sm:text-sm lg:text-base font-semibold">
                                     {currentRecord?.location}
                                 </p>
                             </div>
@@ -180,7 +180,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
 
                         <div className="flex items-center gap-2 mt-1">
                             <LuUsers className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                            <p className="text-sm sm:text-sm lg:text-base font-semibold">
                                 {currentRecord?.maxParticipant} participants
                             </p>
                         </div>
@@ -338,7 +338,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                         {userData?.userId !== currentRecord?.authorId?._id && (
                             <ReuseButton
                                 variant="secondary"
-                                className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
+                                className="!text-sm sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
                                 htmlType="submit"
                             >
                                 Register Now

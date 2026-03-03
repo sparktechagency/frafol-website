@@ -58,8 +58,8 @@ const ConversationChatListCard = ({
     <div
       onClick={() => handleConversationSelect(conversation)}
       className={`m-1 rounded  border-b border-secondary-color/10 bg-secondary-color/10 text-black ${conversation?.chat?._id === selectedConversation?.chat?._id
-          ? "!bg-secondary-color text-white"
-          : ""
+        ? "!bg-secondary-color text-white"
+        : ""
         }`}
     >
       <div className="py-4 px-2 cursor-pointer">
@@ -101,7 +101,7 @@ const ConversationChatListCard = ({
                   ? `${conversation?.lastMessage?.slice(0, 10)}...`
                   : ""}
               </div>
-              <div className="text-xs">
+              <div className="text-sm">
                 {conversation?.lastMessageCreatedAt
                   ? formatDateTime(conversation?.lastMessageCreatedAt)
                   : ""}

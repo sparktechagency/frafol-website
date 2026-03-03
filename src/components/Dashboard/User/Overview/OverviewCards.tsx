@@ -1,6 +1,6 @@
 import { FaHourglassEnd } from "react-icons/fa6";
 import { LuShoppingBag } from "react-icons/lu";
-import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import { RiMoneyEuroCircleFill } from "react-icons/ri";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { IDashboardStats } from "./Overview";
 
@@ -24,7 +24,7 @@ const OverviewCard = ({ overview }: { overview: IDashboardStats }) => {
       id: 3,
       background: "#ffffff",
       name: "Total Spent",
-      icon: <RiMoneyDollarCircleFill className="size-6 text-secondary-color" />,
+      icon: <RiMoneyEuroCircleFill className="size-6 text-secondary-color" />,
       count: `$${overview.totalSpent}`,
     },
     {

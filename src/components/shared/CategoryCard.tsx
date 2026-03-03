@@ -27,7 +27,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ item }) => {
         <p className="text-primary-color !text-base sm:!text-lg lg:!text-xl !font-bold !mb-1 cursor-pointer">
           {item?.title || "Category Title"}
         </p>
-        <p className="text-primary-color text-xs sm:text-sm lg:text-base font-medium !mb-1 cursor-pointer">
+        <p className="text-primary-color text-sm sm:text-sm lg:text-base font-medium !mb-1 cursor-pointer">
           {item?.subTitle || "Category Sub Title"}
         </p>
       </div>

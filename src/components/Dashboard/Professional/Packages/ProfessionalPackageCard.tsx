@@ -47,7 +47,7 @@ const ProfessionalPackageCard = ({
         />
         <div className="flex items-center justify-between gap-2 absolute top-2  w-full px-2">
           {item?.vatAmount > 0 ? (
-            <span className="text-xs sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full ">
+            <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full ">
               VAT Included: {item?.vatAmount}%
             </span>
           ) : (
@@ -62,14 +62,14 @@ const ProfessionalPackageCard = ({
         </div>
       </div>
       <div className="px-1  mt-3">
-        <span className="text-xs sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full capitalize">
+        <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full capitalize">
           {item?.category}
         </span>
         <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-1.5">
           {item?.title}
         </p>
 
-        <p className="text-xs sm:text-sm lg:text-base mt-1.5">
+        <p className="text-sm sm:text-sm lg:text-base mt-1.5">
           {item?.description}
         </p>
 
@@ -77,53 +77,53 @@ const ProfessionalPackageCard = ({
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
               <BsCurrencyDollar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-              <p className="text-xs sm:text-sm lg:text-base font-semibold">
+              <p className="text-sm sm:text-sm lg:text-base font-semibold">
                 Price Without Service Fee:
               </p>
             </div>
-            <p className="text-xs sm:text-sm lg:text-base">
+            <p className="text-sm sm:text-sm lg:text-base">
               {priceWithoutServiceFee}€
             </p>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
               <BsCurrencyDollar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-              <p className="text-xs sm:text-sm lg:text-base font-semibold">
+              <p className="text-sm sm:text-sm lg:text-base font-semibold">
                 Service Fee:
               </p>
             </div>
-            <p className="text-xs sm:text-sm lg:text-base">
+            <p className="text-sm sm:text-sm lg:text-base">
               {serviceFee}€
             </p>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
               <BsCurrencyDollar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-              <p className="text-xs sm:text-sm lg:text-base font-semibold">
+              <p className="text-sm sm:text-sm lg:text-base font-semibold">
                 Total Price:
               </p>
             </div>
-            <p className="text-xs sm:text-sm lg:text-base">
+            <p className="text-sm sm:text-sm lg:text-base">
               {item?.mainPrice}€
             </p>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
               <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-              <p className="text-xs sm:text-sm lg:text-base font-semibold">
+              <p className="text-sm sm:text-sm lg:text-base font-semibold">
                 Duration:
               </p>
             </div>
-            <p className="text-xs sm:text-sm lg:text-base">{item?.duration}</p>
+            <p className="text-sm sm:text-sm lg:text-base">{item?.duration}</p>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
               <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-              <p className="text-xs sm:text-sm lg:text-base font-semibold">
+              <p className="text-sm sm:text-sm lg:text-base font-semibold">
                 Delivery Time:
               </p>
             </div>
-            <p className="text-xs sm:text-sm lg:text-base">
+            <p className="text-sm sm:text-sm lg:text-base">
               {item?.deliveryTime / 7} Week
             </p>
           </div>

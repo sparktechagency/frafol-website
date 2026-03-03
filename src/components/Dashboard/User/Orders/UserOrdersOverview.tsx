@@ -1,7 +1,7 @@
 import { IUserEventOrderStats } from "@/app/(withDashboardLayout)/dashboard/my-account/orders/page";
 import { FaHourglassEnd } from "react-icons/fa6";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
-import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import { RiMoneyEuroCircleFill } from "react-icons/ri";
 
 const UserOrdersOverview = ({ states }: { states: IUserEventOrderStats }) => {
 
@@ -10,7 +10,7 @@ const UserOrdersOverview = ({ states }: { states: IUserEventOrderStats }) => {
       id: 3,
       background: "#ffffff",
       name: "Current Order",
-      icon: <RiMoneyDollarCircleFill className="size-6 text-secondary-color" />,
+      icon: <RiMoneyEuroCircleFill className="size-6 text-secondary-color" />,
       count: states?.totalCurrentOrders,
     },
     {

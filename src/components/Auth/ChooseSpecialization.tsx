@@ -75,15 +75,15 @@ const ChooseSpecialization = ({ categories }: { categories: ICategory[] }) => {
     const updatedInformation =
       parseData.role === "photographer"
         ? {
-            photographerSpecializations: selectedPhotographySpecializations,
-            videographerSpecializations: [],
-          }
+          photographerSpecializations: selectedPhotographySpecializations,
+          videographerSpecializations: [],
+        }
         : parseData.role === "videographer"
-        ? {
+          ? {
             photographerSpecializations: [],
             videographerSpecializations: selectedVideographySpecializations,
           }
-        : {
+          : {
             photographerSpecializations: selectedPhotographySpecializations,
             videographerSpecializations: selectedVideographySpecializations,
           };
@@ -125,11 +125,10 @@ const ChooseSpecialization = ({ categories }: { categories: ICategory[] }) => {
                   {specializationOptions?.photography.map((item, index) => (
                     <div
                       key={index}
-                      className={`text-sm sm:text-base lg:text-lg font-bold w-full py-2 px-3 rounded cursor-pointer ${
-                        selectedPhotographySpecializations.includes(item)
-                          ? "bg-secondary-color text-primary-color"
-                          : "bg-background-color text-base-color"
-                      }`}
+                      className={`text-sm sm:text-base lg:text-lg font-bold w-full py-2 px-3 rounded cursor-pointer ${selectedPhotographySpecializations.includes(item)
+                        ? "bg-secondary-color text-primary-color"
+                        : "bg-background-color text-base-color"
+                        }`}
                       onClick={() =>
                         handleSpecializationClick(item, "photography")
                       }
@@ -149,11 +148,10 @@ const ChooseSpecialization = ({ categories }: { categories: ICategory[] }) => {
                   {specializationOptions?.videography.map((item, index) => (
                     <div
                       key={index}
-                      className={`text-sm sm:text-base lg:text-lg font-bold w-full py-2 px-3 rounded cursor-pointer ${
-                        selectedVideographySpecializations.includes(item)
-                          ? "bg-secondary-color text-primary-color"
-                          : "bg-background-color text-base-color"
-                      }`}
+                      className={`text-sm sm:text-base lg:text-lg font-bold w-full py-2 px-3 rounded cursor-pointer ${selectedVideographySpecializations.includes(item)
+                        ? "bg-secondary-color text-primary-color"
+                        : "bg-background-color text-base-color"
+                        }`}
                       onClick={() =>
                         handleSpecializationClick(item, "videography")
                       }
@@ -171,7 +169,7 @@ const ChooseSpecialization = ({ categories }: { categories: ICategory[] }) => {
       <div className="flex justify-end items-end w-full mt-5">
         <ReuseButton
           variant="secondary"
-          className="!w-fit !text-[10px] sm:!text-xs lg:!text-sm !px-5 !py-2.5"
+          className="!w-fit  sm:!text-sm lg:!text-sm !px-5 !py-2.5"
           disabled={
             selectedPhotographySpecializations.length === 0 &&
             selectedVideographySpecializations.length === 0

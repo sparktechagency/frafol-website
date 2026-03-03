@@ -35,10 +35,10 @@ const ForumDetailsPage = ({
               {communityPosts?.title}
             </h1>
             <div className="flex items-center gap-5">
-              <p className="text-xs sm:text-sm lg:text-base  mt-4">
+              <p className="text-sm sm:text-sm lg:text-base  mt-4">
                 Posted {formatDateTime(communityPosts?.createdAt)}
               </p>
-              <p className="text-xs sm:text-sm lg:text-base  mt-4">
+              <p className="text-sm sm:text-sm lg:text-base  mt-4">
                 {communityPosts?.totalViewers} views
               </p>
             </div>
@@ -46,7 +46,7 @@ const ForumDetailsPage = ({
           <ForumPostLikeSection communityPosts={communityPosts} id={id} />
         </div>
         <div className="flex flex-col lg:flex-row items-start gap-2 ">
-          <div className="text-xs sm:text-sm lg:text-base p-1 flex flex-col items-center gap-2 min-w-28">
+          <div className="text-sm sm:text-sm lg:text-base p-1 flex flex-col items-center gap-2 min-w-28">
             <Image
               width={1000}
               height={1000}
@@ -59,7 +59,7 @@ const ForumDetailsPage = ({
               alt="user"
               className="w-10 h-10 object-cover rounded-full "
             />
-            <p className="text-xs sm:text-sm lg:text-base font-bold">
+            <p className="text-sm sm:text-sm lg:text-base font-bold">
               {communityPosts?.authorId?.name}
             </p>
           </div>

@@ -217,7 +217,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
         <h1 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2">
           Contact Zuzana Králiková
         </h1>
-        <p className="text-xs sm:text-sm lg:text-base xl:text-lg mb-5 font-medium">
+        <p className="text-sm sm:text-sm lg:text-base xl:text-lg mb-5 font-medium">
           Fill out the form below to request a quote and book your session.
         </p>
 

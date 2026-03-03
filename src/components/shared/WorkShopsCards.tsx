@@ -32,7 +32,7 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
           <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3">
             {data?.title}
           </p>
-          <p className="text-xs sm:text-sm lg:text-base mt-1">
+          <p className="text-sm sm:text-sm lg:text-base mt-1">
             {data?.description?.length > 100
               ? (
                 <>
@@ -56,32 +56,32 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
               alt={data?.authorId?.name || "Profile Image"}
               className="w-8 h-8 object-cover rounded-full "
             />
-            <p className="text-xs sm:text-sm lg:text-base font-bold">
+            <p className="text-sm sm:text-sm lg:text-base font-bold">
               {data?.authorId?.name}
             </p>
           </div>
           <div className="flex items-center gap-2 mt-2">
             <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+            <p className="text-sm sm:text-sm lg:text-base font-semibold">
               {formatDate(data?.date)}
             </p>
           </div>
           <div className="flex items-center gap-2 mt-1">
             <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+            <p className="text-sm sm:text-sm lg:text-base font-semibold">
               {formetTime(data?.time)}
             </p>
           </div>
           <div className="flex items-center gap-2 mt-1">
             <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-            <p className="text-xs sm:text-sm lg:text-base font-semibold capitalize">
+            <p className="text-sm sm:text-sm lg:text-base font-semibold capitalize">
               {data?.locationType}
             </p>
           </div>
           {data?.locationType !== "online" && (
             <div className="flex items-center gap-2 mt-1">
               <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-              <p className="text-xs sm:text-sm lg:text-base font-semibold">
+              <p className="text-sm sm:text-sm lg:text-base font-semibold">
                 {data?.location}
               </p>
             </div>
@@ -89,7 +89,7 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
 
           <div className="flex items-center gap-2 mt-1">
             <LuUsers className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+            <p className="text-sm sm:text-sm lg:text-base font-semibold">
               {data?.totalParticipants} / {data?.maxParticipant} participants
             </p>
           </div>
@@ -103,7 +103,7 @@ const WorkShopsCards = ({ data, handleModalOpen }: { data: IWorkshop, handleModa
         {(userData?.userId && userData?.userId !== data?.authorId?._id) && (
           <ReuseButton
             variant="secondary"
-            className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
+            className="!text-sm sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
             onClick={() => handleModalOpen(data)}
           >
             Register Now

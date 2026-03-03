@@ -59,10 +59,10 @@ const ForumCard = ({
             className="w-10 h-10 object-cover rounded-full "
           />
           <div>
-            <p className="text-base-color text-xs sm:text-sm lg:text-base font-medium cursor-pointer">
+            <p className="text-base-color text-sm sm:text-sm lg:text-base font-medium cursor-pointer">
               {item?.authorId?.name}
             </p>
-            <p className="text-base-color text-xs sm:text-sm lg:text-base font-medium  cursor-pointer">
+            <p className="text-base-color text-sm sm:text-sm lg:text-base font-medium  cursor-pointer">
               {formatDateTime(item?.createdAt)}
             </p>
           </div>
@@ -82,7 +82,7 @@ const ForumCard = ({
           {item?.title}
         </h1>
       </Link>
-      <p className="text-base-color text-sm sm:text-xs lg:text-base xl:text-lg font-medium mb-1 line-clamp-2">
+      <p className="text-base-color text-sm sm:text-sm lg:text-base xl:text-lg font-medium mb-1 line-clamp-2">
         {stripHtmlTags(item?.text || "")}
       </p>
       <div className="flex items-center gap-3 mt-5 text-sm sm:text-base lg:text-lg font-semibold">

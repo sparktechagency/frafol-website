@@ -65,7 +65,7 @@ const ProfessionalPageDetails = async ({
                 alt={professionalUser?.name || "item Image"}
                 className="size-3 sm:size-4 lg:size-5"
               />
-              <p className="text-white text-xs sm:text-sm font-bold">Frafol Choice</p>
+              <p className="text-white text-sm sm:text-sm font-bold">Frafol Choice</p>
             </div>
           }
           <h2 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-secondary-color mt-1">
@@ -76,7 +76,7 @@ const ProfessionalPageDetails = async ({
             Average price: {professionalUser?.minHourlyRate}€ -{" "}
             {professionalUser?.maxHourlyRate}€
           </p>
-          <p className=" text-xs sm:text-sm lg:text-base xl:text-lg text-secondary-color font-medium mt-0">
+          <p className=" text-sm sm:text-sm lg:text-base xl:text-lg text-secondary-color font-medium mt-0">
             {professionalUser?.role === "both"
               ? "Videographer & Photographer"
               : professionalUser?.role === "photographer"
@@ -85,7 +85,7 @@ const ProfessionalPageDetails = async ({
           </p>
           <Link href="#reviews">
             {" "}
-            <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium flex items-center gap-2">
+            <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium flex items-center gap-2">
               <FaStar className="text-[#FFD700] text-sm sm:text-base lg:text-lg -mt-0.5" />{" "}
               <span>
                 {" "}
@@ -94,7 +94,7 @@ const ProfessionalPageDetails = async ({
               </span>
             </p>{" "}
           </Link>
-          <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium flex items-center gap-2 mb-3">
+          <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium flex items-center gap-2 mb-3">
             <FaLocationDot className="text-secondary-color text-sm sm:text-base lg:text-lg -mt-0.5" />{" "}
             <span>{professionalUser?.town}</span>
           </p>
@@ -132,7 +132,7 @@ const ProfessionalPageDetails = async ({
         </div>
         <div className="mt-16">
           <SectionHeader title="About Me" className="mb-3" />
-          <p className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium">
+          <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium">
             {professionalUser?.profileId?.about}
           </p>
         </div>

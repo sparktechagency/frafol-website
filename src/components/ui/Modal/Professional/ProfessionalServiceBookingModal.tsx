@@ -118,7 +118,7 @@ const ProfessionalServiceBookingModal: React.FC<
           />
           <div className="flex items-center justify-start gap-2 absolute top-3 w-full px-2">
             {packageData?.vatAmount > 0 ? (
-              <span className="text-xs sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full ">
+              <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full ">
                 VAT Included: {packageData?.vatAmount}%
               </span>
             ) : (
@@ -126,43 +126,43 @@ const ProfessionalServiceBookingModal: React.FC<
             )}
           </div>
           <div className="px-1  mt-3">
-            <span className="text-xs sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full capitalize">
+            <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full capitalize">
               {packageData?.category}
             </span>
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold mt-3">
               {packageData?.title}
             </p>
-            <p className="text-xs sm:text-sm lg:text-base mt-1.5">
+            <p className="text-sm sm:text-sm lg:text-base mt-1.5">
               {packageData?.description}
             </p>
             <div className="flex flex-col gap-1 mt-3">
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2">
                   <BsCurrencyDollar className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                  <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                  <p className="text-sm sm:text-sm lg:text-base font-semibold">
                     Price:
                   </p>
                 </div>
-                <p className="text-xs sm:text-sm lg:text-base">{packageData?.mainPrice} </p>
+                <p className="text-sm sm:text-sm lg:text-base">{packageData?.mainPrice} </p>
               </div>
 
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1">
                   <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                  <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                  <p className="text-sm sm:text-sm lg:text-base font-semibold">
                     Duration:
                   </p>
                 </div>
-                <p className="text-xs sm:text-sm lg:text-base">{packageData?.duration}</p>
+                <p className="text-sm sm:text-sm lg:text-base">{packageData?.duration}</p>
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1">
                   <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-                  <p className="text-xs sm:text-sm lg:text-base font-semibold">
+                  <p className="text-sm sm:text-sm lg:text-base font-semibold">
                     Delivery Time:
                   </p>
                 </div>
-                <p className="text-xs sm:text-sm lg:text-base">
+                <p className="text-sm sm:text-sm lg:text-base">
                   {packageData?.deliveryTime / 7} Week
                 </p>
               </div>

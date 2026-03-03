@@ -147,7 +147,7 @@ const ReviewDetailsAndSubmit = () => {
             key={index}
             className={`flex flex-col justify-start items-start gap-1 ${index === 9 ? "col-span-2" : ""} `}
           >
-            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+            <p className="text-sm sm:text-sm lg:text-base font-semibold">
               {detail.label}
             </p>
             <p className="text-base sm:text-lg lg:text-xl font-semibold text-secondary-color">
@@ -179,7 +179,7 @@ const ReviewDetailsAndSubmit = () => {
               <p className="text-sm sm:text-base lg:text-lg font-semibold">
                 Agree to terms and conditions
               </p>
-              <p className="text-xs sm:text-sm lg:text-base">
+              <p className="text-sm sm:text-sm lg:text-base">
                 By creating an account, you agree to our{" "}
                 <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
                   Terms of Service Conceptural
@@ -237,7 +237,7 @@ const ReviewDetailsAndSubmit = () => {
         <div className="flex justify-end items-end w-full mt-5">
           <ReuseButton
             variant="secondary"
-            className="!w-fit !text-[10px] sm:!text-xs lg:!text-sm !px-5 !py-2.5 mb-5!"
+            className="!w-fit  sm:!text-sm lg:!text-sm !px-5 !py-2.5 mb-5!"
             htmlType="submit"
           >
             Create Account

@@ -7,23 +7,21 @@ const ExploreCategoryTab = () => {
   return (
     <div>
       <div className="bg-background-color p-1.5 rounded-lg w-fit mx-auto">
-        <div className="flex justify-center items-center gap-2 font-semibold text-xs sm:text-sm lg:text-base xl:text-lg">
+        <div className="flex justify-center items-center gap-2 font-semibold text-sm sm:text-sm lg:text-base xl:text-lg">
           <button
-            className={`${
-              activeTab === "photography"
+            className={`${activeTab === "photography"
                 ? "bg-secondary-color text-white"
                 : "bg-transparent text-secondary-color"
-            } px-3 py-1 cursor-pointer rounded-lg transition-all duration-500 relative group`}
+              } px-3 py-1 cursor-pointer rounded-lg transition-all duration-500 relative group`}
             onClick={() => setActiveTab("photography")}
           >
             Photography
           </button>
           <button
-            className={`${
-              activeTab === "videography"
+            className={`${activeTab === "videography"
                 ? "bg-secondary-color text-white"
                 : "bg-transparent text-secondary-color"
-            } px-3 py-1 cursor-pointer rounded-lg transition-all duration-500 relative group`}
+              } px-3 py-1 cursor-pointer rounded-lg transition-all duration-500 relative group`}
             onClick={() => setActiveTab("videography")}
           >
             Videography

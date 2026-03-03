@@ -13,13 +13,12 @@ interface SectionBannerProps {
 
 const SectionBanner: React.FC<SectionBannerProps> = ({
   image,
-  title,
   description = "",
 }) => {
   return (
     <section>
       {" "}
-      <motion.div className="relative h-[55vh] object-cover flex items-center justify-center select-none">
+      <motion.div className="relative h-[55vh] object-cover  hidden md:flex items-center justify-center select-none">
         <Image
           width={2000}
           height={2000}
@@ -36,9 +35,9 @@ const SectionBanner: React.FC<SectionBannerProps> = ({
               <div className="flex justify-between items-center gap-2 mb-[4%]">
                 <div className="">
                   <Revel>
-                    <h1 className="lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-extrabold text-start text-primary-color tracking-wider">
+                    {/* <h1 className="lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-extrabold text-start text-primary-color tracking-wider">
                       {title}
-                    </h1>
+                    </h1> */}
                     <p className="text-primary-color mt-2">{description}</p>
                   </Revel>
                 </div>

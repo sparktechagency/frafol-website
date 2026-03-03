@@ -32,7 +32,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
           <p className=" text-sm sm:text-base lg:text-lg text-secondary-color font-semibold ">
             {testimonial?.userId?.name}
           </p>
-          <p className=" text-xs sm:text-sm lg:text-base text-lighter-color">
+          <p className=" text-sm sm:text-sm lg:text-base text-lighter-color">
             {testimonial?.userId?.switchRole}
           </p>
         </div>

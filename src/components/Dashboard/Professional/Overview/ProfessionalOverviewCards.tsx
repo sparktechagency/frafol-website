@@ -1,6 +1,6 @@
 import { FaStar } from "react-icons/fa6";
 import { LuShoppingBag } from "react-icons/lu";
-import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import { RiMoneyEuroCircleFill } from "react-icons/ri";
 import { IoCameraSharp } from "react-icons/io5";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
@@ -44,7 +44,7 @@ const ProfessionalOverviewCards = async () => {
       id: 3,
       background: "#ffffff",
       name: "May Earnings",
-      icon: <RiMoneyDollarCircleFill className="size-6 text-secondary-color" />,
+      icon: <RiMoneyEuroCircleFill className="size-6 text-secondary-color" />,
       count: `${overview?.totalOverallEarnings}`,
     },
     {

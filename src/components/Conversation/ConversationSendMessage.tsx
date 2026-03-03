@@ -124,7 +124,7 @@ const ConversationSendMessage = ({
                     <Tooltip title={fileName}>
                       <div className="w-16 h-16 flex flex-col gap-1 justify-center items-center bg-white rounded">
                         <FaFileAlt className="text-xl text-red-600" />
-                        <span className="text-xs text-gray-600 truncate">
+                        <span className="text-sm text-gray-600 truncate">
                           {fileName?.slice(0, 5) + "..."}
                         </span>
                       </div>

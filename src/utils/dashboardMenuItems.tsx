@@ -227,60 +227,6 @@ export const useProfessionalPaths = () => {
       ),
     },
     {
-      key: "calendar",
-      label: <Link onClick={handleToggleCollapse}
-        href="/dashboard/professional/calendar">Calendar</Link>,
-      icon: (
-        <Image
-          src={calendar}
-          alt="icon"
-          width={20}
-          className="mr-2"
-          style={{
-            filter: pathname.includes("/calendar")
-              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
-              : undefined,
-          }}
-        />
-      ),
-    },
-    {
-      key: "earning",
-      label: <Link onClick={handleToggleCollapse}
-        href="/dashboard/professional/earning">Earning</Link>,
-      icon: (
-        <Image
-          src={earning}
-          alt="icon"
-          width={20}
-          className="mr-2"
-          style={{
-            filter: pathname.includes("/earning")
-              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
-              : undefined,
-          }}
-        />
-      ),
-    },
-    {
-      key: "review",
-      label: <Link onClick={handleToggleCollapse}
-        href="/dashboard/professional/review">Review</Link>,
-      icon: (
-        <Image
-          src={review}
-          alt="icon"
-          width={20}
-          className="mr-2"
-          style={{
-            filter: pathname.includes("/review")
-              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
-              : undefined,
-          }}
-        />
-      ),
-    },
-    {
       key: "gear-order",
       label: <Link onClick={handleToggleCollapse}
         href="/dashboard/professional/gear-order">Gear Order</Link>,
@@ -292,6 +238,46 @@ export const useProfessionalPaths = () => {
           className="mr-2"
           style={{
             filter: pathname.includes("/gear-order")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "gear-marketPlace",
+      label: (
+        <Link onClick={handleToggleCollapse}
+          href="/dashboard/professional/gear-marketPlace">
+          MarketPlace
+        </Link>
+      ),
+      icon: (
+        <Image
+          src={gearMarketplace}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/gear-marketPlace")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "workshop",
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/professional/workshop">Workshop</Link>,
+      icon: (
+        <Image
+          src={workshop}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/workshop")
               ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
               : undefined,
           }}
@@ -319,28 +305,6 @@ export const useProfessionalPaths = () => {
       ),
     },
     {
-      key: "gear-marketPlace",
-      label: (
-        <Link onClick={handleToggleCollapse}
-          href="/dashboard/professional/gear-marketPlace">
-          Gear MarketPlace
-        </Link>
-      ),
-      icon: (
-        <Image
-          src={gearMarketplace}
-          alt="icon"
-          width={20}
-          className="mr-2"
-          style={{
-            filter: pathname.includes("/gear-marketPlace")
-              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
-              : undefined,
-          }}
-        />
-      ),
-    },
-    {
       key: "packages",
       label: <Link onClick={handleToggleCollapse}
         href="/dashboard/professional/packages">Packages</Link>,
@@ -359,17 +323,17 @@ export const useProfessionalPaths = () => {
       ),
     },
     {
-      key: "frafol-choice",
+      key: "calendar",
       label: <Link onClick={handleToggleCollapse}
-        href="/dashboard/professional/frafol-choice">Frafol Choice</Link>,
+        href="/dashboard/professional/calendar">Calendar</Link>,
       icon: (
         <Image
-          src={packages}
+          src={calendar}
           alt="icon"
           width={20}
           className="mr-2"
           style={{
-            filter: pathname.includes("/frafol-choice")
+            filter: pathname.includes("/calendar")
               ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
               : undefined,
           }}
@@ -377,17 +341,17 @@ export const useProfessionalPaths = () => {
       ),
     },
     {
-      key: "workshop",
+      key: "review",
       label: <Link onClick={handleToggleCollapse}
-        href="/dashboard/professional/workshop">Workshop</Link>,
+        href="/dashboard/professional/review">Review</Link>,
       icon: (
         <Image
-          src={workshop}
+          src={review}
           alt="icon"
           width={20}
           className="mr-2"
           style={{
-            filter: pathname.includes("/workshop")
+            filter: pathname.includes("/review")
               ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
               : undefined,
           }}
@@ -415,6 +379,49 @@ export const useProfessionalPaths = () => {
         </Link>
       ),
     },
+    {
+      key: "frafol-choice",
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/professional/frafol-choice">Frafol Choice</Link>,
+      icon: (
+        <Image
+          src={packages}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/frafol-choice")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+    {
+      key: "earning",
+      label: <Link onClick={handleToggleCollapse}
+        href="/dashboard/professional/earning">Earning</Link>,
+      icon: (
+        <Image
+          src={earning}
+          alt="icon"
+          width={20}
+          className="mr-2"
+          style={{
+            filter: pathname.includes("/earning")
+              ? "invert(1) sepia(1) saturate(0) brightness(200%) contrast(100%)"
+              : undefined,
+          }}
+        />
+      ),
+    },
+
+
+
+
+
+
+
     {
       key: "profile-settings",
       icon: (

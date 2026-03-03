@@ -57,7 +57,7 @@ const PhotographyPageSearch = () => {
           prefix={<FiSearch className="text-base-color size-4.5" />}
           name="search"
           onChange={handleSearch}
-          inputClassName="!bg-background-color !rounded-lg !text-base-color !border-none !shadow-none text-lg font-semibold !w-96 !py-2.5"
+          inputClassName="!bg-background-color !rounded-lg !text-base-color !border-none !shadow-none text-lg font-semibold w-80! sm:w-96! !py-2.5"
           placeholder="Search"
           type="text"
         />

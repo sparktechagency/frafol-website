@@ -34,7 +34,7 @@ const CreateConversionButton = ({
   return (
     <ReuseButton
       variant="secondary"
-      className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base flex items-center"
+      className="!py-4.5 !px-4 !text-sm sm:!text-sm lg:!text-base flex items-center"
       onClick={() => createChat(professionalUser)}
     >
       <AiFillMessage /> Contact

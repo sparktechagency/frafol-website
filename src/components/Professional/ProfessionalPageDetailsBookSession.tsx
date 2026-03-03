@@ -23,7 +23,7 @@ const ProfessionalPageDetailsBookSession = ({
     <>
       <ReuseButton
         variant="outline"
-        className="!py-4.5 !px-4 !text-xs sm:!text-sm lg:!text-base !text-secondary-color !border-secondary-color flex items-center"
+        className="!py-4.5 !px-4 !text-sm sm:!text-sm lg:!text-base !text-secondary-color !border-secondary-color flex items-center"
         onClick={myData?._id ? openBookModal : () => router.push("/sign-in")}
       >
         <IoCameraOutline className="" /> Book a Session

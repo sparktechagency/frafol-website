@@ -591,7 +591,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
                     {/* Line Height Control */}
                     <div className="flex items-center gap-2 px-3 border-r border-gray-300">
-                        <span className="text-xs font-semibold text-gray-600">Line:</span>
+                        <span className="text-sm font-semibold text-gray-600">Line:</span>
                         <select
                             onChange={(e) => applyLineHeight(e.target.value)}
                             className="px-3 py-2.5 border border-gray-300 rounded-md bg-white hover:border-[#ad2b08] focus:outline-none focus:ring-2 focus:ring-[#ad2b08] text-sm font-medium text-[#2c2c2c]"
@@ -658,7 +658,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     </div>
 
                     <div className="flex items-center gap-2 px-3 border-r border-gray-300">
-                        <span className="text-xs font-semibold text-gray-600">Table Align:</span>
+                        <span className="text-sm font-semibold text-gray-600">Table Align:</span>
                         <ToolbarButton onClick={() => setTableAlign("left")} icon={<AlignLeft size={18} />} title="Table Start" />
                         <ToolbarButton onClick={() => setTableAlign("center")} icon={<AlignCenter size={18} />} title="Table Center" />
                         <ToolbarButton onClick={() => setTableAlign("right")} icon={<AlignRight size={18} />} title="Table End" />
@@ -773,7 +773,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                         </div>
                         <div className="p-5 text-sm text-gray-700">
                             Choose how you want to paste:
-                            <div className="mt-3 p-3 rounded-xl bg-gray-50 border text-xs text-gray-600">
+                            <div className="mt-3 p-3 rounded-xl bg-gray-50 border text-sm text-gray-600">
                                 &quot;Keep formatting&quot; will keep Google Docs styles (bold, headings, lists, links, tables, etc.)
                             </div>
                         </div>

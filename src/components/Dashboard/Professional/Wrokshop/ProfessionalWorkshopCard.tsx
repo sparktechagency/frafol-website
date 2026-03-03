@@ -38,7 +38,7 @@ const ProfessionalWorkshopCard = ({
         />
         <div className="flex items-center justify-between gap-2 absolute top-2  w-full px-2">
           {workshop?.vatAmount > 0 ? (
-            <span className="text-xs sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full ">
+            <span className="text-sm sm:text-sm bg-secondary-color text-primary-color py-0.5 px-1.5 rounded-full ">
               VAT Included: {workshop?.vatAmount}%
             </span>
           ) : (
@@ -77,19 +77,19 @@ const ProfessionalWorkshopCard = ({
             alt="user"
             className="w-8 h-8 object-cover rounded-full "
           />
-          <p className="text-xs sm:text-sm lg:text-base font-bold">
+          <p className="text-sm sm:text-sm lg:text-base font-bold">
             {workshop?.authorId?.name}
           </p>
         </div>
         <div className="flex items-center gap-2 mt-2">
           <IoCalendarOutline className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-          <p className="text-xs sm:text-sm lg:text-base font-semibold">
+          <p className="text-sm sm:text-sm lg:text-base font-semibold">
             {formatDate(workshop?.date)}
           </p>
         </div>
         <div className="flex items-center gap-2 mt-1">
           <LuClock className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-          <p className="text-xs sm:text-sm lg:text-base font-semibold">
+          <p className="text-sm sm:text-sm lg:text-base font-semibold">
             {formetTime(workshop?.time)}
           </p>
         </div>
@@ -99,7 +99,7 @@ const ProfessionalWorkshopCard = ({
             <Link
               href={workshop?.workshopLink}
               target="_blank"
-              className="text-xs sm:text-sm lg:text-base font-semibold !text-secondary-color"
+              className="text-sm sm:text-sm lg:text-base font-semibold !text-secondary-color"
             >
               {workshop?.workshopLink}
             </Link>
@@ -107,14 +107,14 @@ const ProfessionalWorkshopCard = ({
         ) : (
           <div className="flex items-center gap-2 mt-1">
             <MdLocationPin className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+            <p className="text-sm sm:text-sm lg:text-base font-semibold">
               {workshop?.location}
             </p>
           </div>
         )}
         <div className="flex items-center gap-2 mt-1">
           <LuUsers className="text-secondary-color text-sm sm:text-base lg:text-lg" />
-          <p className="text-xs sm:text-sm lg:text-base font-semibold">
+          <p className="text-sm sm:text-sm lg:text-base font-semibold">
             {workshop?.totalParticipants || 0} / {workshop?.maxParticipant || 0}
           </p>
         </div>
@@ -125,7 +125,7 @@ const ProfessionalWorkshopCard = ({
           <ReuseButton
             onClick={() => showViewParticipantModal(workshop)}
             variant="secondary"
-            className="!text-xs sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
+            className="!text-sm sm:!text-sm lg:!text-base w-fit !px-2 !py-1"
           >
             View Participants
           </ReuseButton>

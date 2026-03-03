@@ -41,7 +41,7 @@ const FrafolChoiceSection = ({ subscriptionData, allPacks }: { subscriptionData:
                         alt="Frafol Choice Badge"
                         className="size-2.5 sm:size-3 lg:size-4"
                     />
-                    <p className="text-white text-[8px] sm:text-[10px] lg:text-xs font-bold">
+                    <p className="text-white text-[8px] sm: lg:text-sm font-bold">
                         Frafol Choice
                     </p>
                 </div></div>, included: true

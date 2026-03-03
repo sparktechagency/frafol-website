@@ -19,7 +19,7 @@ export default function Banner() {
                 className="w-fit"
               />
               <Link href="/photography">
-                <button className="mt-2 bg-secondary-color text-white text-xs sm:text-sm px-3 py-1 rounded-md cursor-pointer">
+                <button className="mt-2 bg-secondary-color text-white text-sm sm:text-sm px-3 py-1 rounded-md cursor-pointer">
                   Photographers
                 </button>
               </Link>
@@ -49,7 +49,7 @@ export default function Banner() {
                 className="w-fit"
               />
               <Link href="/videography">
-                <button className="mt-2 bg-secondary-color text-white text-xs sm:text-sm px-3 py-1 rounded-md cursor-pointer">
+                <button className="mt-2 bg-secondary-color text-white text-sm sm:text-sm px-3 py-1 rounded-md cursor-pointer">
                   Videographers
                 </button>
               </Link>

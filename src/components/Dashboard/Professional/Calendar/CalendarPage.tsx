@@ -63,7 +63,7 @@ export default function AppCalendar({ calander }: AppCalendarProps) {
               status={item?.type}
               className="!flex !p-1 !bg-neutral-100 !rounded-lg !w-full mx-0.5"
               text={
-                <div className=" !text-xs">
+                <div className=" !text-sm">
                   <p>{item?.content}</p>
                   <p className=" text-gray-400 !text-[11px]">{item?.time}</p>
                 </div>

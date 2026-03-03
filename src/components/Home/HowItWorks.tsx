@@ -43,7 +43,7 @@ const HowItWorks = () => {
         />
 
         <div className="mt-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8 lg:gap-5">
             {data.map((item, i) => (
               <div
                 key={i}
@@ -55,7 +55,7 @@ const HowItWorks = () => {
                 <h3 className="text-secondary-color text-base sm:text-lg lg:text-xl font-semibold ">
                   {item.name}
                 </h3>
-                <p className="text-xs sm:text-sm font-medium text-base-color">
+                <p className="text-sm sm:text-sm font-medium text-base-color">
                   {item.description}
                 </p>
               </div>

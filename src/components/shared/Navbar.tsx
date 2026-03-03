@@ -134,7 +134,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
             </div>
             <div className="flex flex-col items-start">
               <p className="text-sm!">{notification?.message?.text}</p>
-              <p className="text-xs! mt-0.5 text-gray-400">{formatDateTime(notification?.createdAt)}</p>
+              <p className="text-sm! mt-0.5 text-gray-400">{formatDateTime(notification?.createdAt)}</p>
             </div>
           </div>
         </div>
@@ -296,27 +296,29 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
                   </li>
                 ))}
                 {userData ? (
-                  <Button className="group flex items-center !py-4 !px-1 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full">
+                  <Button
+                    onClick={() => { setMobileMenuOpen(!mobileMenuOpen); handleLogOut() }}
+                    className="group flex items-center !py-4 !px-1 gap-1 border-2 !border-secondary-color !bg-secondary-color !text-primary-color rounded-full">
                     <p className="font-semibold">Logout</p>
                     <div className="bg-primary-color p-1 rounded-full">
                       <TbLogout2 className=" text-lg text-secondary-color" />
                     </div>
                   </Button>
                 ) : (
-                  <div className="flex flex-col items-center space-y-3">
+                  <div className="flex flex-col items-center gap-3 space-y-3">
                     <Link
                       onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                       href="/sign-in"
-                      className=" px-2 py-1 text-primary-color rounded-full border-2 border-secondary-color mb-1"
+                      className="px-4 py-1 text-primary-color font-semibold rounded-full border-2 border-primary-color mb-1"
                     >
                       Sign In
                     </Link>
                     <Link
                       onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                      href="/sign-up"
-                      className=" px-2 py-1 rounded-full border-2 border-secondary-color bg-secondary-color text-primary-color"
+                      href="/join"
+                      className="px-4 py-1 rounded-full border-2 border-primary-color bg-primary-color text-secondary-color font-semibold"
                     >
-                      Sign Up
+                      Join
                     </Link>
                   </div>
                 )}
@@ -341,14 +343,14 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
                 >
                   <div className="relative">
                     <GoBellFill className="text-2xl cursor-pointer" />
-                    <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-xs font-semibold flex justify-center items-center">{notificationCount}</div>
+                    <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-sm font-semibold flex justify-center items-center">{notificationCount}</div>
                   </div>
                 </Dropdown>
                 <div className="relative">
                   <Link href="/cart">
                     <IoMdCart className="text-2xl cursor-pointer" />
                   </Link>
-                  <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-xs font-semibold flex justify-center items-center">{totalCart}</div>
+                  <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-sm font-semibold flex justify-center items-center">{totalCart}</div>
                 </div>
                 <Dropdown
                   menu={{ items }}
@@ -429,14 +431,14 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
                 >
                   <div className="relative">
                     <GoBellFill className="text-2xl cursor-pointer" />
-                    <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-xs font-semibold flex justify-center items-center">{notificationCount}</div>
+                    <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-sm font-semibold flex justify-center items-center">{notificationCount}</div>
                   </div>
                 </Dropdown>
                 <div className="relative">
                   <Link href="/cart">
                     <IoMdCart className="text-2xl cursor-pointer" />
                   </Link>
-                  <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-xs font-semibold flex justify-center items-center">{totalCart}</div>
+                  <div className="absolute -top-2 -right-2 bg-third-color text-secondary-color rounded-full w-4 h-4 text-sm font-semibold flex justify-center items-center">{totalCart}</div>
                 </div>
                 <Dropdown
                   menu={{ items }}

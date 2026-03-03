@@ -26,11 +26,11 @@ const ReviewCard = ({
                   ? data?.eventOrderId?.packageId?.title
                   : "Custom Order"}{" "}
               </h3>{" "}
-              <p className="px-2 py-0.5 rounded-full bg-secondary-color text-primary-color w-fit capitalize text-xs">
+              <p className="px-2 py-0.5 rounded-full bg-secondary-color text-primary-color w-fit capitalize text-sm">
                 {data?.eventOrderId?.orderType}
               </p>
               {activeTab !== "extension" && (
-                <p className="px-2 py-0.5 rounded-full bg-yellow-500 text-primary-color w-fit capitalize text-xs">
+                <p className="px-2 py-0.5 rounded-full bg-yellow-500 text-primary-color w-fit capitalize text-sm">
                   {data?.status === "accepted"
                     ? "Payment Required"
                     : data?.status === "inProgress"
@@ -41,7 +41,7 @@ const ReviewCard = ({
                 </p>
               )}
             </div>
-            <p className="text-xs sm:text-sm lg:text-base font-semibold">
+            <p className="text-sm sm:text-sm lg:text-base font-semibold">
               By {data?.serviceProviderId?.name}{" "}
             </p>
             <div className="flex items-center text-nowrap gap-1 my-2">
@@ -53,7 +53,7 @@ const ReviewCard = ({
               Completed on:{" "}
               {formatDate(data?.eventOrderId?.statusTimestamps?.deliveredAt)}
             </div>
-            <p className="text-xs sm:text-sm text-[#5D5D5D] flex items-start gap-2 my-2">
+            <p className="text-sm sm:text-sm text-[#5D5D5D] flex items-start gap-2 my-2">
               <div className="flex items-center text-nowrap  gap-1">
                 <FaMapMarkerAlt /> <span>Location : </span>
               </div>
@@ -64,10 +64,10 @@ const ReviewCard = ({
             </p>
             {activeTab === "allReviews" && (
               <div>
-                <div className="text-xs sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-2">
+                <div className="text-sm sm:text-sm text-[#5D5D5D] flex items-center gap-1 mt-2">
                   <Rate disabled value={data?.rating} allowHalf />
                 </div>
-                <p className="ttext-xs sm:text-sm lg:text-base flex items-center gap-1 mt-2">
+                <p className="ttext-sm sm:text-sm lg:text-base flex items-center gap-1 mt-2">
                   {data?.message}
                 </p>
               </div>

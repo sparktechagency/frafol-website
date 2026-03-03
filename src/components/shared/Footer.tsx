@@ -72,7 +72,7 @@ export default function Footer() {
                   />
                 </div>
                 <div>
-                  <h4 className="font-bold mb-2 text-base sm:text-lg lg:text-xl xl:text-2xl">
+                  <h4 className="font-bold mb-2 text-lg sm:text-xl lg:text-2xl xl:text-2xl">
                     Join our
                   </h4>
                   <ReusableForm form={form} handleFinish={submit} className="">
@@ -123,25 +123,25 @@ export default function Footer() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 text-white">
                 {/* Privacy & Terms */}
                 <div>
-                  <h4 className="font-bold mb-2 text-base sm:text-lg lg:text-xl">
+                  <h4 className="font-bold mb-2 text-lg sm:text-xl lg:text-2xl">
                     Privacy & Terms
                   </h4>
-                  <ul className="space-y-1">
-                    <li>
+                  <ul className="space-y-3 lg:space-y-2">
+                    <li className="focus:underline underline-offset-2">
                       <Link href="/terms-of-service-marketplace">Terms of Service Marketplace</Link>
                     </li>
-                    <li>
+                    <li className="focus:underline underline-offset-2">
                       <Link href="/data-protection">GDPR</Link>
                     </li>
-                    <li>
+                    <li className="focus:underline underline-offset-2">
                       <Link href="/terms-of-service">Terms of Service Conceptural</Link>
                     </li>
-                    <li>
+                    <li className="focus:underline underline-offset-2">
                       <Link href="/website-functionality-compatibility">
                         Funkčnosť a kompatibilita webu{" "}
                       </Link>
                     </li>
-                    <li>
+                    <li className="focus:underline underline-offset-2">
                       <Link href="/search-algorithm">
                         Algoritmus vyhľadávania
                       </Link>
@@ -151,11 +151,11 @@ export default function Footer() {
 
                 {/* For Clients */}
                 <div>
-                  <h4 className="font-bold mb-2 text-base sm:text-lg lg:text-xl">
+                  <h4 className="font-bold mb-2 text-lg sm:text-xl lg:text-2xl">
                     For Clients
                   </h4>
-                  <ul className="space-y-1">
-                    <li>
+                  <ul className="space-y-3 lg:space-y-2">
+                    <li className="focus:underline underline-offset-2">
                       <Link href="/how-ordering-works">How Ordering Works</Link>
                     </li>
                   </ul>
@@ -163,20 +163,20 @@ export default function Footer() {
 
                 {/* Company */}
                 <div>
-                  <h4 className="font-bold mb-2 text-base sm:text-lg lg:text-xl">
+                  <h4 className="font-bold mb-2 text-lg sm:text-xl lg:text-2xl">
                     Company
                   </h4>
-                  <ul className="space-y-1">
-                    <li>
+                  <ul className="space-y-3 lg:space-y-2">
+                    <li className="focus:underline underline-offset-2">
                       <Link href="/about-us">About Us</Link>
                     </li>
-                    {/* <li>
+                    {/* <li className="focus:underline underline-offset-2">
                       <Link href="/helpful-documents">Helpful Documents</Link>
                     </li> */}
-                    <li>
+                    <li className="focus:underline underline-offset-2">
                       <Link href="/photography">Explore Photography</Link>
                     </li>
-                    <li>
+                    <li className="focus:underline underline-offset-2">
                       <Link href="/videography">Explore Videography</Link>
                     </li>
                   </ul>
@@ -184,11 +184,11 @@ export default function Footer() {
 
                 {/* For Creators */}
                 <div>
-                  <h4 className="font-bold mb-2 text-base sm:text-lg lg:text-xl">
+                  <h4 className="font-bold mb-2 text-lg sm:text-xl lg:text-2xl">
                     For Creators
                   </h4>
-                  <ul className="space-y-1">
-                    <li>
+                  <ul className="space-y-3 lg:space-y-2">
+                    <li className="focus:underline underline-offset-2">
                       <Link href="/how-it-works">How It Works</Link>
                     </li>
                   </ul>
@@ -196,14 +196,14 @@ export default function Footer() {
 
                 {/* Support & Info */}
                 <div>
-                  <h4 className="font-bold mb-2 text-base sm:text-lg lg:text-xl">
+                  <h4 className="font-bold mb-2 text-lg sm:text-xl lg:text-2xl">
                     Support & Info
                   </h4>
-                  <ul className="space-y-1">
-                    <li>
+                  <ul className="space-y-3 lg:space-y-2">
+                    <li className="focus:underline underline-offset-2">
                       <Link href="/contact-us">Contact Us</Link>
                     </li>
-                    <li>
+                    <li className="focus:underline underline-offset-2">
                       <p
                         className="cursor-pointer"
                         onClick={() => showReportModal()}
@@ -211,7 +211,7 @@ export default function Footer() {
                         Report for a illegal content
                       </p>
                     </li>
-                    <li>
+                    <li className="focus:underline underline-offset-2">
                       <p
                         className="cursor-pointer"
                         onClick={() =>
@@ -227,8 +227,8 @@ export default function Footer() {
             </div>
 
             {/* Bottom Footer */}
-            <div className="flex flex-col md:flex-row justify-between items-center mt-6 text-xs gap-4">
-              <p className="text-xs sm:text-sm lg:text-base  text-primary-color ">
+            <div className="flex flex-col md:flex-row justify-between items-center mt-6 text-sm gap-4">
+              <p className="text-sm sm:text-sm lg:text-base  text-primary-color ">
                 © {currentYear} FRAFOL. All rights reserved.
               </p>
               <div className="flex gap-4 text-lg">

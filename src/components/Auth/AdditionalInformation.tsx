@@ -12,7 +12,7 @@ const inputStructure = [
     name: "about",
     type: "text",
     inputType: "textarea",
-    label: "About You / Biography (Min 100 characters, Max 2000 characters)",
+    label: "About You / Biography",
     placeholder: "Enter About You / Biography",
     labelClassName: "!font-semibold !text-secondary-color",
     rules: [{ required: true, type: "string", min: 100, max: 2000 }],
@@ -99,7 +99,7 @@ const AdditionalInformation = () => {
           <ReuseButton
             htmlType="submit"
             variant="secondary"
-            className="!w-fit !text-[10px] sm:!text-xs lg:!text-sm !px-5 !py-2.5"
+            className="!w-fit  sm:!text-sm lg:!text-sm !px-5 !py-2.5"
           >
             Continue
           </ReuseButton>

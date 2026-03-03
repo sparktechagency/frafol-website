@@ -25,7 +25,7 @@ const ServiceCardBookNow = ({
     <>
       <ReuseButton
         variant="secondary"
-        className="!text-xs sm:!text-sm lg:!text-base !px-2 !py-1 w-fit"
+        className="!text-sm sm:!text-sm lg:!text-base !px-2 !py-1 w-fit"
         onClick={myData?._id ? openModal : () => router.push("/sign-in")}
       >
         Book Now

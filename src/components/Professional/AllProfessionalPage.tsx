@@ -55,7 +55,7 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
           title="Our Professionals"
           description="Discover our top-rated Professionals"
         />
-        <div className="mt-16 flex justify-between mb-10">
+        <div className="mt-16 flex flex-col md:flex-row gap-y-5 md:gap-y-0 justify-between mb-10">
           {
             role === "videographer" ? (
               <ReuseButton

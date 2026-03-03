@@ -131,7 +131,7 @@ const GearMarketPlaceEditNewGear = ({
       <ReusableForm form={form} handleFinish={onSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="p-2 rounded border border-[#E1E1E1]">
-            <h3 className="text-xs sm:text-sm lg:text-base xl:text-lg font-medium mb-5">
+            <h3 className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mb-5">
               Gear Information
             </h3>
             <ReuseInput

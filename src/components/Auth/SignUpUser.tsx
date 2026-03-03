@@ -391,7 +391,7 @@ const SignUpUser = ({ townData }: { townData: ITown[] }) => {
           <ReuseButton
             htmlType="submit"
             variant="secondary"
-            className="!w-fit !text-[10px] sm:!text-xs lg:!text-sm !px-5 !py-2.5"
+            className="!w-fit  sm:!text-sm lg:!text-sm !px-5 !py-2.5"
           >
             Create account
           </ReuseButton>
