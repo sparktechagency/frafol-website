@@ -24,6 +24,16 @@ export const userInputStructure = [
     labelClassName: "!font-semibold",
     rules: [{ required: true, message: "Name is required" }],
   },
+  {
+    name: "email",
+    type: "email",
+    inputType: "normal",
+    label: "Email",
+    placeholder: "",
+    labelClassName: "!font-semibold",
+    rules: [],
+    disabled: true,
+  },
   // {
   //   name: "sureName",
   //   type: "text",
@@ -70,6 +80,16 @@ export const companyInputStructure = [
     placeholder: "Enter Full Company Name",
     labelClassName: "!font-semibold",
     rules: [{ required: true, message: "Company Name is required" }],
+  },
+  {
+    name: "email",
+    type: "email",
+    inputType: "normal",
+    label: "Email",
+    placeholder: "",
+    labelClassName: "!font-semibold",
+    rules: [],
+    disabled: true,
   },
   {
     name: "streetAddress",
@@ -145,9 +165,12 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [type, setType] = useState<"user" | "company">("user");
 
+  console.log(myData)
+
   useEffect(() => {
     form.setFieldsValue({
       name: myData?.name,
+      email: myData?.email,
       sureName: myData?.sureName,
       companyName: myData?.companyName,
       streetAddress: myData?.address,
@@ -365,6 +388,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
                 labelClassName={input.labelClassName}
                 inputClassName="!py-2.5"
                 rules={input.rules}
+                disabled={input.disabled}
               />
             ))
             : companyInputStructure.map((input, index) => (
@@ -379,6 +403,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
                 labelClassName={input.labelClassName}
                 inputClassName="!py-2.5"
                 rules={input.rules}
+                disabled={input.disabled}
               />
             ))}
           <Form.Item

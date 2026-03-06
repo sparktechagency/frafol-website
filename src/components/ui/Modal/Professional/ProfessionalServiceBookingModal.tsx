@@ -42,6 +42,7 @@ const ProfessionalServiceBookingModal: React.FC<
   useEffect(() => {
     form.setFieldsValue({
       name: myData?.name,
+      email: myData?.email,
       sureName: myData?.sureName,
       companyName: myData?.companyName,
       streetAddress: myData?.address,
@@ -244,6 +245,7 @@ const ProfessionalServiceBookingModal: React.FC<
                   labelClassName={input.labelClassName}
                   inputClassName="!py-2.5"
                   rules={input.rules}
+                  disabled={input.disabled}
                 />
               ))
               : companyInputStructure?.map((input, index) => (
@@ -258,6 +260,7 @@ const ProfessionalServiceBookingModal: React.FC<
                   labelClassName={input.labelClassName}
                   inputClassName="!py-2.5"
                   rules={input.rules}
+                  disabled={input.disabled}
                 />
               ))}
             <Form.Item

@@ -50,6 +50,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
     useEffect(() => {
         form.setFieldsValue({
             name: myData?.name,
+            email: myData?.email,
             sureName: myData?.sureName,
             companyName: myData?.companyName,
             streetAddress: myData?.address,
@@ -218,6 +219,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                                 labelClassName={input.labelClassName}
                                 inputClassName="!py-2.5"
                                 rules={input.rules}
+                                disabled={input.disabled}
                             />
                         ))
                         : companyInputStructure?.map((input, index) => (
@@ -232,6 +234,7 @@ const RegisterWrokshopModal: React.FC<RegisterWrokshopModalProps<any>> = ({
                                 labelClassName={input.labelClassName}
                                 inputClassName="!py-2.5"
                                 rules={input.rules}
+                                disabled={input.disabled}
                             />
                         ))}
                     <Form.Item
