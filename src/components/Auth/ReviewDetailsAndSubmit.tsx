@@ -55,6 +55,12 @@ const ReviewDetailsAndSubmit = () => {
       value: parseData.town || "N/A",
     },
     {
+      label: "Towns I Can Travel To",
+      value: Array.isArray(parseData.travelTowns) && parseData.travelTowns.length > 0
+        ? parseData.travelTowns.join(", ")
+        : "N/A",
+    },
+    {
       label: "Country",
       value: parseData.country || "N/A",
     },
@@ -110,6 +116,7 @@ const ReviewDetailsAndSubmit = () => {
       const values = await form.validateFields();
 
       const data = { ...parseData, ...values };
+      console.log(data)
 
       const res = await tryCatchWrapper(
         registerUser,
@@ -141,16 +148,16 @@ const ReviewDetailsAndSubmit = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
         {details.map((detail, index) => (
           <div
             key={index}
-            className={`flex flex-col justify-start items-start gap-1 ${index === 9 ? "md:col-span-2" : ""} `}
+            className={`flex flex-col justify-start items-start gap-1 ${index === 8 || index === 10 ? "md:col-span-2" : ""} `}
           >
-            <p className="text-sm sm:text-sm lg:text-base font-semibold">
+            <p className="text-sm sm:text-sm lg:text-base font-bold text-secondary-color">
               {detail.label}
             </p>
-            <p className="text-base sm:text-lg lg:text-xl font-semibold text-secondary-color">
+            <p className="text-base sm:text-lg lg:text-xl font-medium ">
               {detail.value}
             </p>
           </div>

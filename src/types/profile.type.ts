@@ -38,6 +38,7 @@ interface IProfile {
   rating: number;
   photographerSpecializations: string[];
   videographerSpecializations: string[];
+  travelTowns: string[];
   gallery: string[];
   unAvailability: string[];
   newsLetterSub: boolean;

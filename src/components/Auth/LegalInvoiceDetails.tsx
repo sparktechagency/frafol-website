@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReusableForm from "../ui/Form/ReuseForm";
 import ReuseInput from "../ui/Form/ReuseInput";
 import ReuseButton from "../ui/Button/ReuseButton";
@@ -94,27 +94,45 @@ const LegalInvoiceDetails = ({ townData }: { townData: ITown[] }) => {
   const [form] = Form.useForm();
 
   const storedInformation = Cookies.get("information");
-
   const parseData = JSON.parse(storedInformation || "{}");
-  console.log(townData);
 
-  form.setFieldsValue({
-    companyName: parseData.companyName,
-    phone: parseData.phone,
-    ico: parseData.ico || "",
-    dic: parseData.dic,
-    ic_dph: parseData.ic_dph,
-    address: parseData.address,
-    zipCode: parseData.zipCode,
-    town: parseData.town,
-    country: parseData.country,
-    dateOfBirth: dayjs(parseData.dateOfBirth),
-  });
+  const allTownValues = townData?.map((t) => t.name) ?? [];
+  const [selectedTravelTowns, setSelectedTravelTowns] = useState<string[]>(
+    parseData.travelTowns ?? []
+  );
+
+  useEffect(() => {
+    form.setFieldsValue({
+      companyName: parseData.companyName,
+      phone: parseData.phone,
+      ico: parseData.ico || "",
+      dic: parseData.dic,
+      ic_dph: parseData.ic_dph,
+      address: parseData.address,
+      zipCode: parseData.zipCode,
+      town: parseData.town,
+      country: parseData.country,
+      dateOfBirth: dayjs(parseData.dateOfBirth),
+      travelTowns: parseData.travelTowns ?? [],
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleTravelTownsChange = (values: string[]) => {
+    if (values.includes("__all__")) {
+      setSelectedTravelTowns(allTownValues);
+      form.setFieldValue("travelTowns", allTownValues);
+    } else {
+      setSelectedTravelTowns(values);
+    }
+  };
 
   const onFinish = (values: any) => {
-    Cookies.set("information", JSON.stringify({ ...parseData, ...values }), {
-      expires: 1,
-    });
+    Cookies.set(
+      "information",
+      JSON.stringify({ ...parseData, ...values, travelTowns: selectedTravelTowns }),
+      { expires: 1 }
+    );
     form.resetFields();
     router.push("/sign-up/professional/review-details");
   };
@@ -182,13 +200,32 @@ const LegalInvoiceDetails = ({ townData }: { townData: ITown[] }) => {
           label="Town"
           placeholder="Select your town"
           labelClassName="!text-secondary-color !font-semibold"
-          rules={[{ required: true, message: "Please select your role" }]}
+          rules={[{ required: true, message: "Please select your town" }]}
           options={
             townData?.map((town) => ({
               value: town.name,
               label: town.name,
             }))
           }
+        />
+        <ReuseSelect
+          showSearch={true}
+          mode="multiple"
+          name="travelTowns"
+          label="Towns I Can Travel To"
+          placeholder="Select towns you can travel to"
+          labelClassName="!text-secondary-color !font-semibold"
+          rules={[{ required: true, message: "Please select at least one travel town" }]}
+          allowClear={true}
+          onChange={handleTravelTownsChange}
+          selectClassName="!h-auto !min-h-10"
+          options={[
+            { value: "__all__", label: "Select All Towns" },
+            ...townData?.map((town) => ({
+              value: town.name,
+              label: town.name,
+            })),
+          ]}
         />
         <div className="flex justify-end items-end w-full mt-5 mb-10">
           <ReuseButton

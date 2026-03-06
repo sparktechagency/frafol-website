@@ -378,10 +378,24 @@ const professionalInputStructure = [
 
 const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categories?: ICategory[], towns: ITown[] }) => {
 
+  console.log(myData)
+
   const serverUrl = getServerUrl() || "";
   const [form] = Form.useForm();
   const [selectedPhotographySpecializations, setSelectedPhotographySpecializations] = useState<string[]>([]);
   const [selectedVideographySpecializations, setSelectedVideographySpecializations] = useState<string[]>([]);
+  const [selectedTravelTowns, setSelectedTravelTowns] = useState<string[]>(myData?.travelTowns ?? []);
+
+  const allTownValues = towns?.map((t) => t.name) ?? [];
+
+  const handleTravelTownsChange = (values: string[]) => {
+    if (values.includes("__all__")) {
+      setSelectedTravelTowns(allTownValues);
+      form.setFieldValue("travelTowns", allTownValues);
+    } else {
+      setSelectedTravelTowns(values);
+    }
+  };
 
   const selectedRole = Form.useWatch("role", form);
 
@@ -429,6 +443,7 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
       ic_dph: myData?.ic_dph,
       dateOfBirth: dayjs(myData?.dateOfBirth) || null,
       role: myData?.role, // This sets the default role
+      travelTowns: myData?.travelTowns ?? [],
     });
 
     // Initialize specializations from myData
@@ -477,6 +492,7 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
         values.role === "videographer" || values.role === "both"
           ? selectedVideographySpecializations
           : [],
+      travelTowns: selectedTravelTowns,
     };
 
     const formData = new FormData();
@@ -604,6 +620,26 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
 
           {(myData?.role === "photographer" || myData?.role === "videographer" || myData?.role === "both") && (
             <>
+              {/* Travel Towns */}
+              <ReuseSelect
+                showSearch={true}
+                mode="multiple"
+                name="travelTowns"
+                label="Towns I Can Travel To"
+                placeholder="Select towns you can travel to"
+                labelClassName="!text-secondary-color !font-semibold"
+                rules={[{ required: true, message: "Please select at least one travel town" }]}
+                allowClear={true}
+                onChange={handleTravelTownsChange}
+                selectClassName="!h-auto !min-h-10"
+                options={[
+                  { value: "__all__", label: "Select All Towns" },
+                  ...towns?.map((town) => ({
+                    value: town.name,
+                    label: town.name,
+                  })),
+                ]}
+              />
               {/* Role Select */}
               <ReuseSelect
                 name="role"
@@ -629,6 +665,8 @@ const EditProfile = ({ myData, categories, towns }: { myData: IProfile, categori
                   },
                 ]}
               />
+
+
 
               {/* Specializations Section */}
               <div className="my-6 space-y-6">
