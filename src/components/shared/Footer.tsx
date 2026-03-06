@@ -55,7 +55,7 @@ export default function Footer() {
   };
   return (
     <div
-      className="relative  lg:h-[500px]"
+      className="relative  lg:h-[530px]"
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
       <div className="lg:fixed lg:bottom-0 h-auto w-full">
@@ -211,16 +211,20 @@ export default function Footer() {
                         Report for a illegal content
                       </p>
                     </li>
-                    <li className="focus:underline underline-offset-2">
-                      <p
-                        className="cursor-pointer"
-                        onClick={() =>
-                          user?.userId && showFeedbackModal()
-                        }
-                      >
-                        Give Feedback
-                      </p>
-                    </li>
+                    {
+                      user?.userId && (
+                        <li className="focus:underline underline-offset-2">
+                          <p
+                            className="cursor-pointer"
+                            onClick={() =>
+                              showFeedbackModal()
+                            }
+                          >
+                            Give Feedback
+                          </p>
+                        </li>
+                      )
+                    }
                   </ul>
                 </div>
               </div>

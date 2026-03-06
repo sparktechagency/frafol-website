@@ -3,6 +3,7 @@ import { Modal } from "antd";
 import { FaMapMarkerAlt, FaClock, FaCalendarAlt } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import Image from "next/image";
+import { useState } from "react";
 import { AllImages } from "../../../../../public/assets/AllImages";
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { IEventOrder } from "@/types";
@@ -30,6 +31,9 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
   showCancelModal,
 }) => {
   const serverUrl = getServerUrl();
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
+
+  console.log(currentRecord)
 
   const handleDownload = (currentRecord: IEventOrder) => {
     const toastId = toast.loading("Downloading...", {
@@ -86,12 +90,32 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
           <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
             By {currentRecord?.serviceProviderId?.name}
           </p>
-          <p className="text-sm lg:text-sm text-gray-500 mt-1 flex items-center gap-1">
-            <FaCalendarAlt /> {formatDate(currentRecord?.date)}
+          <p className="text-sm lg:text-sm text-gray-500 mt-1 flex items-center gap-2">
+            <FaCalendarAlt className="shrink-0" /> {formatDate(currentRecord?.date)}
           </p>
-          <p className="text-sm lg:text-sm text-gray-500 mt-1 flex items-center gap-1">
-            <FaClock /> {formetTime(currentRecord?.time)}
+          <p className="text-sm lg:text-sm text-gray-500 mt-1 flex items-center gap-2">
+            <FaClock className="shrink-0" /> {formetTime(currentRecord?.time)}
           </p>
+          {(() => {
+            const desc = currentRecord?.description || currentRecord?.packageId?.description;
+            const LIMIT = 150;
+            if (!desc) return null;
+            return (
+              <div className="mt-2">
+                <p className="text-sm sm:text-sm lg:text-base text-base-color/80">
+                  {descriptionExpanded || desc.length <= LIMIT ? desc : `${desc.slice(0, LIMIT)}...`}
+                </p>
+                {desc.length > LIMIT && (
+                  <button
+                    onClick={() => setDescriptionExpanded((prev) => !prev)}
+                    className="text-secondary-color text-sm font-semibold mt-1 hover:underline"
+                  >
+                    {descriptionExpanded ? "Show less" : "Show more"}
+                  </button>
+                )}
+              </div>
+            );
+          })()}
         </div>
 
         {/* Order Info */}
@@ -100,7 +124,6 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
             Order Information
           </h4>
           <div className="mt-2">
-            {" "}
             <p className="text-sm sm:text-sm lg:text-base">
               <span className="font-semibold">Order Date :</span>{" "}
               {formatDate(currentRecord?.statusTimestamps?.createdAt)} -{" "}
@@ -116,6 +139,19 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
                 {formatDate(currentRecord?.deliveryDate)}
               </p>
             )}
+
+            {currentRecord?.duration && (
+              <p className="text-sm sm:text-sm lg:text-base mt-1">
+                <span className="font-semibold">Duration :</span>{" "}
+                <span className="capitalize">{currentRecord?.duration}</span>
+              </p>
+            )}
+            <p className="text-sm sm:text-sm lg:text-base mt-1">
+              <span className="font-semibold">Status :</span>{" "}
+              <span className="capitalize font-semibold text-secondary-color">
+                {currentRecord?.status}
+              </span>
+            </p>
           </div>
         </div>
 
@@ -134,16 +170,69 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               alt="photographer"
               width={50}
               height={50}
-              className="rounded-full h-7 w-7 object-cover"
+              className="rounded-full h-7 w-7 object-cover border border-secondary-color"
             />
             <div>
               <p className="font-bold text-base">
                 {currentRecord?.serviceProviderId?.name}
               </p>
-              {/* <p className="text-sm text-gray-600">Wedding Photographer</p> */}
             </div>
           </div>
         </div>
+
+        {/* Billing Info */}
+        {(currentRecord?.streetAddress || currentRecord?.town || currentRecord?.zipCode || currentRecord?.country) && (
+          <div className="mb-4">
+            <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
+              Billing Information
+            </h4>
+            <div className="mt-2 flex flex-col gap-1">
+
+              {currentRecord?.streetAddress && (
+                <p className="text-sm font-semibold">
+                  Street Address :{" "}
+                  <span className="text-secondary-color">{currentRecord?.streetAddress}</span>
+                </p>
+              )}
+              {currentRecord?.town && (
+                <p className="text-sm font-semibold">
+                  Town :{" "}
+                  <span className="text-secondary-color">{currentRecord?.town}</span>
+                </p>
+              )}
+              {currentRecord?.zipCode && (
+                <p className="text-sm font-semibold">
+                  ZIP Code :{" "}
+                  <span className="text-secondary-color">{currentRecord?.zipCode}</span>
+                </p>
+              )}
+              {currentRecord?.country && (
+                <p className="text-sm font-semibold">
+                  Country :{" "}
+                  <span className="text-secondary-color">{currentRecord?.country}</span>
+                </p>
+              )}
+              {currentRecord?.ICO && (
+                <p className="text-sm font-semibold">
+                  ICO :{" "}
+                  <span className="text-secondary-color">{currentRecord?.ICO}</span>
+                </p>
+              )}
+              {currentRecord?.DIC && (
+                <p className="text-sm font-semibold">
+                  DIC :{" "}
+                  <span className="text-secondary-color">{currentRecord?.DIC}</span>
+                </p>
+              )}
+              {currentRecord?.IC_DPH && (
+                <p className="text-sm font-semibold">
+                  IC DPH :{" "}
+                  <span className="text-secondary-color">{currentRecord?.IC_DPH}</span>
+                </p>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Event Details */}
         <div className="mb-4">
@@ -151,13 +240,16 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
             Event Details
           </h4>
           <p className="text-sm sm:text-sm lg:text-base flex items-start gap-2 mb-2">
-            <div className="flex items-center text-nowrap">
-              <FaMapMarkerAlt /> <span>Location : </span>
+            <div className="flex items-center gap-2 text-nowrap">
+              <FaMapMarkerAlt className="shrink-0" /> <span>Location : </span>
             </div>
             {currentRecord?.location}
           </p>
           <p className="text-sm sm:text-sm lg:text-base flex items-center gap-2 mb-2">
-            <FaClock /> <span>Time : </span>
+            <FaCalendarAlt className="shrink-0" /> <span>Date : </span> {formatDate(currentRecord?.date)}
+          </p>
+          <p className="text-sm sm:text-sm lg:text-base flex items-center gap-2 mb-2">
+            <FaClock className="shrink-0" /> <span>Time : </span>
             {formetTime(currentRecord?.time)}
           </p>
         </div>
@@ -167,6 +259,12 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
             Payment Details
           </h4>
+          {currentRecord?.vatAmount ? (
+            <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
+              <span className="font-semibold">VAT Amount :</span>{" "}
+              {currentRecord?.vatAmount}
+            </p>
+          ) : null}
           <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
             <span className="font-semibold">
               {currentRecord?.totalPrice ? "Total Amount" : "Budget Range"} :
@@ -175,9 +273,15 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               budgetLabels[currentRecord?.budget_range as string] ||
               currentRecord?.budget_range}
           </p>
+          {currentRecord?.paymentStatus && (
+            <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
+              <span className="font-semibold">Payment Status :</span>{" "}
+              <span className="capitalize font-semibold text-secondary-color">
+                {currentRecord?.paymentStatus}
+              </span>
+            </p>
+          )}
         </div>
-
-
 
         {activeModal === "cancelled" && (
           <div className="mb-4">
@@ -185,23 +289,9 @@ const UserOrderViewModal: React.FC<UserOrderViewModalProps> = ({
               Cancel Reason
             </h4>
             <div className="mt-2">
-              {" "}
               <p className="text-sm sm:text-sm lg:text-base">
                 <span className="font-semibold">Reason :</span>{" "}
                 {currentRecord?.cancelReason}
-              </p>
-            </div>
-          </div>
-        )}
-        {activeModal === "orderOffer" && (
-          <div className="mb-4">
-            <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold">
-              Description
-            </h4>
-            <div className="mt-2">
-              {" "}
-              <p className="text-sm sm:text-sm lg:text-base">
-                {currentRecord?.description}
               </p>
             </div>
           </div>

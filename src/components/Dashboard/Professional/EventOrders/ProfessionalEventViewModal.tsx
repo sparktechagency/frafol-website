@@ -2,6 +2,7 @@
 import ReuseButton from "@/components/ui/Button/ReuseButton";
 import { Modal } from "antd";
 import Image from "next/image";
+import { useState } from "react";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { FaClock } from "react-icons/fa6";
 import { AllImages } from "../../../../../public/assets/AllImages";
@@ -44,6 +45,9 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
 }) => {
   const serverUrl = getServerUrl();
   const user = useGetUserData();
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
+
+  console.log(currentRecord)
 
   const extensionLength = currentRecord?.extensionRequests?.length || 0;
 
@@ -143,9 +147,26 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           <p className="text-sm sm:text-sm lg:text-base xl:text-lg font-medium mt-2">
             By {currentRecord?.serviceProviderId?.name}
           </p>
-          <p className="text-sm sm:text-sm lg:text-base text-base-color/80 mt-2">
-            {currentRecord?.description || currentRecord?.packageId?.description}
-          </p>
+          {(() => {
+            const desc = currentRecord?.description || currentRecord?.packageId?.description;
+            const LIMIT = 150;
+            if (!desc) return null;
+            return (
+              <div className="mt-2">
+                <p className="text-sm sm:text-sm lg:text-base text-base-color/80">
+                  {descriptionExpanded || desc.length <= LIMIT ? desc : `${desc.slice(0, LIMIT)}...`}
+                </p>
+                {desc.length > LIMIT && (
+                  <button
+                    onClick={() => setDescriptionExpanded((prev) => !prev)}
+                    className="text-secondary-color text-sm font-semibold mt-1 hover:underline"
+                  >
+                    {descriptionExpanded ? "Show less" : "Show more"}
+                  </button>
+                )}
+              </div>
+            );
+          })()}
         </div>
 
         {/* Client Info */}
@@ -178,6 +199,36 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
               {/* <p className="text-sm text-gray-600">Wedding Photographer</p> */}
             </div>
           </div>
+          {currentRecord?.userId?.email ? (
+            <p className="text-sm font-semibold">
+              Email :{" "}
+              <span className="text-secondary-color">{currentRecord?.userId?.email}</span>
+            </p>
+          ) : null}
+          {currentRecord?.streetAddress ? (
+            <p className="text-sm font-semibold">
+              Street Address :{" "}
+              <span className="text-secondary-color">{currentRecord?.streetAddress}</span>
+            </p>
+          ) : null}
+          {currentRecord?.town ? (
+            <p className="text-sm font-semibold">
+              Town :{" "}
+              <span className="text-secondary-color">{currentRecord?.town}</span>
+            </p>
+          ) : null}
+          {currentRecord?.zipCode ? (
+            <p className="text-sm font-semibold">
+              ZIP Code :{" "}
+              <span className="text-secondary-color">{currentRecord?.zipCode}</span>
+            </p>
+          ) : null}
+          {currentRecord?.country ? (
+            <p className="text-sm font-semibold">
+              Country :{" "}
+              <span className="text-secondary-color">{currentRecord?.country}</span>
+            </p>
+          ) : null}
           {currentRecord?.ICO ? (
             <p className="text-sm font-semibold">
               ICO :{" "}
@@ -247,18 +298,18 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
           <h4 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-secondary-color font-bold mb-2">
             Event Details
           </h4>
-          <p className="text-sm sm:text-sm lg:text-base mt-1 flex items-center gap-1 mb-2">
-            <FaCalendarAlt /> <span>Event Date : </span>
+          <p className="text-sm sm:text-sm lg:text-base mt-1 flex items-center gap-2 mb-2">
+            <FaCalendarAlt className="shrink-0" /> <span>Event Date : </span>
             {formatDate(currentRecord?.date)}
           </p>
           <p className="text-sm sm:text-sm lg:text-base flex items-start gap-2 mb-2">
-            <div className="flex items-center text-nowrap">
-              <FaMapMarkerAlt /> <span>Location : </span>
+            <div className="flex items-center gap-2 text-nowrap">
+              <FaMapMarkerAlt className="shrink-0" /> <span>Location : </span>
             </div>
             {currentRecord?.location}
           </p>
           <p className="text-sm sm:text-sm lg:text-base flex items-center gap-2 mb-2">
-            <FaClock /> <span>Time : </span>
+            <FaClock className="shrink-0" /> <span>Time : </span>
             {formetTime(currentRecord?.time)}
           </p>
         </div>
@@ -276,26 +327,39 @@ const ProfessionalEventViewModal: React.FC<ProfessionalEventViewModalProps> = ({
                   <span className="font-semibold">
                     Amount Without Service Fee:
                   </span>{" "}
-                  {Number(currentRecord?.totalPrice) - Number(serviceFeeAmount)}
+                  {Number(currentRecord?.totalPrice?.toFixed(2)) - Number(serviceFeeAmount?.toFixed(2))}
                 </p>
                 <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
                   <span className="font-semibold">
                     Service Fee Amount:
                   </span>{" "}
-                  {serviceFeeAmount}
+                  {serviceFeeAmount?.toFixed(2)}
                 </p>
               </>
             )
           }
+          {currentRecord?.vatAmount ? (
+            <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
+              <span className="font-semibold">VAT Amount :</span>{" "}
+              {currentRecord?.vatAmount?.toFixed(2)}
+            </p>
+          ) : null}
           <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
             <span className="font-semibold">
               {currentRecord?.totalPrice ? "Total Amount" : "Budget Range"} :
             </span>{" "}
-            {currentRecord?.totalPrice ||
+            {currentRecord?.totalPrice?.toFixed(2) ||
               budgetLabels[currentRecord?.budget_range as string] ||
               currentRecord?.budget_range}
           </p>
-
+          {currentRecord?.paymentStatus ? (
+            <p className="text-sm sm:text-sm lg:text-base xl:text-lg mt-2">
+              <span className="font-semibold">Payment Status :</span>{" "}
+              <span className="capitalize font-semibold text-secondary-color">
+                {currentRecord?.paymentStatus}
+              </span>
+            </p>
+          ) : null}
         </div>
 
         {(activeTab === "cancelled" || activeTab === "cancelRequest") && (

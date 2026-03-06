@@ -87,24 +87,26 @@ const UserOrderCard = ({
       className={`p-4 rounded-md border border-[#E1E1E1] shadow-xs hover:shadow-md transition-all duration-200`}
     >
       <div>
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex flex-col md:flex-row md:items-center gap-2 text-sm mb-5 md:mb-0">
           <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-secondary-color mb-1">
             {data?.packageId?.title || data?.title}
           </h3>{" "}
-          <p className="px-2 py-0.5 rounded-full bg-secondary-color text-primary-color w-fit capitalize">
-            {data?.orderType}
-          </p>
-          {activeTab !== "extension" && (
-            <p className="px-2 py-0.5 rounded-full bg-yellow-500 text-primary-color w-fit capitalize">
-              {data?.status === "accepted"
-                ? "Payment Required"
-                : data?.status === "inProgress"
-                  ? "In Progress"
-                  : data?.status === "cancelRequest"
-                    ? "Cancel Requested"
-                    : data?.status}
+          <div className="flex items-center gap-2">
+            <p className="px-2 py-0.5 rounded-full bg-secondary-color text-primary-color w-fit capitalize">
+              {data?.orderType}
             </p>
-          )}
+            {activeTab !== "extension" && (
+              <p className="px-2 py-0.5 rounded-full bg-yellow-500 text-primary-color w-fit capitalize">
+                {data?.status === "accepted"
+                  ? "Payment Required"
+                  : data?.status === "inProgress"
+                    ? "In Progress"
+                    : data?.status === "cancelRequest"
+                      ? "Cancel Requested"
+                      : data?.status}
+              </p>
+            )}
+          </div>
         </div>
         <h4 className="text-sm sm:text-sm lg:text-base xl:text-lg font-bold mb-1 capitalize">
           {data?.serviceType === "both" ? "Photography & Videography" : data?.serviceType}

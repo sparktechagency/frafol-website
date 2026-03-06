@@ -141,11 +141,11 @@ const ReviewDetailsAndSubmit = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-10">
         {details.map((detail, index) => (
           <div
             key={index}
-            className={`flex flex-col justify-start items-start gap-1 ${index === 9 ? "col-span-2" : ""} `}
+            className={`flex flex-col justify-start items-start gap-1 ${index === 9 ? "md:col-span-2" : ""} `}
           >
             <p className="text-sm sm:text-sm lg:text-base font-semibold">
               {detail.label}
@@ -224,7 +224,7 @@ const ReviewDetailsAndSubmit = () => {
         </Form.Item>
 
         {/* Subscribe to newsletter Checkbox */}
-        <Form.Item name="newsLetterSub" valuePropName="checked">
+        {/* <Form.Item name="newsLetterSub" valuePropName="checked">
           <Checkbox>
             <div>
               <p className="text-sm sm:text-base lg:text-lg font-semibold">
@@ -232,7 +232,7 @@ const ReviewDetailsAndSubmit = () => {
               </p>
             </div>
           </Checkbox>
-        </Form.Item>
+        </Form.Item> */}
 
         <div className="flex justify-end items-end w-full mt-5">
           <ReuseButton

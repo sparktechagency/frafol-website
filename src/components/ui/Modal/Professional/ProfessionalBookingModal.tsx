@@ -62,6 +62,15 @@ export const userInputStructure = [
     rules: [{ required: true, message: "Town is required" }],
   },
   {
+    name: "zipCode",
+    type: "text",
+    inputType: "normal",
+    label: "ZIP Code",
+    placeholder: "Enter ZIP Code",
+    labelClassName: "!font-semibold",
+    rules: [{ required: true, message: "ZIP Code is required" }],
+  },
+  {
     name: "country",
     type: "text",
     inputType: "normal",
@@ -108,6 +117,15 @@ export const companyInputStructure = [
     placeholder: "Enter Town Name",
     labelClassName: "!font-semibold",
     rules: [{ required: true, message: "Town is required" }],
+  },
+  {
+    name: "zipCode",
+    type: "text",
+    inputType: "normal",
+    label: "ZIP Code",
+    placeholder: "Enter ZIP Code",
+    labelClassName: "!font-semibold",
+    rules: [{ required: true, message: "ZIP Code is required" }],
   },
   {
     name: "country",
@@ -175,6 +193,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
       companyName: myData?.companyName,
       streetAddress: myData?.address,
       town: myData?.town,
+      zipCode: myData?.zipCode,
       country: myData?.country,
       ICO: myData?.ico,
       DIC: myData?.dic,
@@ -201,6 +220,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
       // sureName: values.sureName,
       streetAddress: values.streetAddress,
       town: values.town,
+      zipCode: values.zipCode,
       country: values.country,
 
       companyName: values.companyName,
@@ -214,7 +234,7 @@ const ProfessionalBookingModal: React.FC<ProfessionalBookingModalProps> = ({
       createEventOrder,
       { body: data },
       {
-        toastLoadingMessage: "Adding new package...",
+        toastLoadingMessage: "Adding new Order...",
         toastSuccessMessage: "Order Placed successfully!",
         toastErrorMessage: "Something went wrong! Please try again.",
       }

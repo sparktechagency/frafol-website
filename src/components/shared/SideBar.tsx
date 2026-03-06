@@ -52,11 +52,11 @@ const SideBar = () => {
       style={{
         position: "sticky",
         top: 0,
-        height: "100vh",
+        height: "calc(100vh - 3rem)",
         overflowY: "auto",
         backgroundColor: "#ffffff",
       }}
-      className={`!border-l border-r !border-[#E1E1E1] !fixed !z-[60] !shadow-2xl !top-12  ${isCollapsed ? "!left-[-300px]" : "!left-0"
+      className={`!border-l border-r !border-[#E1E1E1] !fixed !z-[60] !shadow-2xl !top-12 mb-20! ${isCollapsed ? "!left-[-300px]" : "!left-0"
         }`}
     >
       <div className="flex items-center justify-end my-5 px-4">

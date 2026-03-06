@@ -347,9 +347,44 @@ const SignUpUser = ({ townData }: { townData: ITown[] }) => {
           />
         ))}
 
-        {/* Agree to GDPR contract Checkbox */}
         <Form.Item
           name="acceptTerms"
+          valuePropName="checked"
+          rules={[
+            {
+              validator: (_, value) =>
+                value
+                  ? Promise.resolve()
+                  : Promise.reject(
+                    new Error("Should accept with terms and conditions")
+                  ),
+            },
+          ]}
+        >
+          <Checkbox
+          // onChange={(e) => handleCheckboxChange(e, "acceptTerms")}
+          >
+            <div>
+              <p className="text-sm sm:text-base lg:text-lg font-semibold">
+                Agree to terms and conditions
+              </p>
+              <p className="text-sm sm:text-sm lg:text-base">
+                By creating an account, you agree to our{" "}
+                <Link href="/terms-of-service" target="_blank" className="text-secondary-color! underline">
+                  Terms of Service Conceptural
+                </Link>{" "}
+                and{" "}
+                <Link href="/terms-of-service-marketplace" target="_blank" className="text-secondary-color! underline">
+                  Terms of Service Marketplace.
+                </Link>
+              </p>
+            </div>
+          </Checkbox>
+        </Form.Item>
+
+        {/* Agree to GDPR contract Checkbox */}
+        <Form.Item
+          name="contractAgreement"
           valuePropName="checked"
           rules={[
             {

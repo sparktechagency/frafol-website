@@ -5,6 +5,7 @@ import Container from "@/components/ui/Container";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import useOutsideClick from "@/hook/useOutsideClick";
 import { AllImages } from "../../../public/assets/AllImages";
 import { usePathname, useRouter } from "next/navigation";
 import { Button, Dropdown, MenuProps } from "antd";
@@ -52,7 +53,10 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
   const [notificationCount, setNotificationCount] = useState(0);
   const [allNotifications, setAllNotifications] = useState<INotification[]>([]);
   const navbarRef = useRef<HTMLDivElement>(null);
+  const navbarWrapperRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
+
+  useOutsideClick(navbarWrapperRef, () => setMobileMenuOpen(false));
 
   useEffect(() => {
     setAllNotifications(notifications);
@@ -228,6 +232,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
           ? "bg-secondary-color !text-primary-color"
           : "bg-secondary-color !text-primary-color"
         }`}
+      ref={navbarWrapperRef}
     >
       <Container>
         <header className="text-base mx-auto  flex justify-between items-center z-[99999] ">
@@ -277,7 +282,7 @@ const Navbar = ({ notifications }: { notifications: INotification[] }) => {
                 transition: "height 0.3s ease", // Smooth transition effect for height
               }}
               ref={navbarRef}
-              className="block lg:hidden bg-secondary-color w-full lg:static absolute top-[52px] left-0 lg:bg-none transition-all duration-500 lg:z-0 -z-[9999] lg:border-none shadow-md"
+              className={`block lg:hidden bg-secondary-color w-full lg:static absolute top-[52px] left-0 lg:bg-none transition-all duration-500 lg:z-0 -z-[9999] lg:border-none ${mobileMenuOpen ? "shadow-md" : ""}`}
             >
               <ul className="flex justify-end items-center gap-5 lg:flex-row flex-col lg:py-0 py-5">
                 {NavItems.map((navItem, i) => (

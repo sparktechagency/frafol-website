@@ -47,6 +47,7 @@ const ProfessionalServiceBookingModal: React.FC<
       companyName: myData?.companyName,
       streetAddress: myData?.address,
       town: myData?.town,
+      zipCode: myData?.zipCode,
       country: myData?.country,
       ICO: myData?.ico,
       DIC: myData?.dic,
@@ -67,6 +68,7 @@ const ProfessionalServiceBookingModal: React.FC<
       // sureName: values.sureName,
       streetAddress: values.streetAddress,
       town: values.town,
+      zipCode: values.zipCode,
       country: values.country,
 
       companyName: values.companyName,
@@ -79,7 +81,7 @@ const ProfessionalServiceBookingModal: React.FC<
       createEventOrder,
       { body: data },
       {
-        toastLoadingMessage: "Adding new package...",
+        toastLoadingMessage: "Adding new Order...",
         toastSuccessMessage: "Order Placed successfully!",
         toastErrorMessage: "Something went wrong! Please try again.",
       }

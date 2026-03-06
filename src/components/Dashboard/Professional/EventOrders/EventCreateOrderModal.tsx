@@ -111,7 +111,7 @@ const EventCreateOrderModal = ({
         <div className="grid grid-cols-1  gap-1">
           <ReuseInput
             name="price"
-            label="Total Price ($)"
+            label="Total Price (€)"
             placeholder="Enter Total Price"
             rules={[{ required: true, message: "Total Price is required" }]}
             labelClassName="!font-semibold"

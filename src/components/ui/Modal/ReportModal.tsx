@@ -37,14 +37,16 @@ const ReportModal: React.FC<ReportModalProps> = ({
 
     const formData = new FormData();
     console.log(values)
-    const data = {
+    const data: Record<string, unknown> = {
       name: values.name,
-      email: values.email,
       url: values.url,
       reason: values.reason,
       message: values.message,
       agreement: values.agreement
     };
+    if (user?.email) {
+      data.email = values.email;
+    }
     if (values.image) {
       formData.append("image", values.image[0]?.originFileObj);
     }
@@ -85,22 +87,24 @@ const ReportModal: React.FC<ReportModalProps> = ({
         {description}
       </p>
       <ReusableForm handleFinish={submit} form={form}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div className={`grid grid-cols-1 gap-5 ${user ? "lg:grid-cols-2" : ""}`}>
           <ReuseInput
             name="name"
             label="Full Name"
             placeholder="Enter Full Name"
             rules={[{ required: true, message: "Full Name is required" }]}
           />
-          <ReuseInput
-            inputType=""
-            name="email"
-            type="email"
-            label="Email"
-            disabled
-            placeholder="Enter Email"
-            rules={[{ required: true, message: "Email is required" }]}
-          />
+          {user && (
+            <ReuseInput
+              inputType=""
+              name="email"
+              type="email"
+              label="Email"
+              disabled
+              placeholder="Enter Email"
+              rules={[{ required: true, message: "Email is required" }]}
+            />
+          )}
         </div>
         <ReuseInput
           name="url"

@@ -11,6 +11,7 @@ interface ICreateEventOrder {
   duration?: string; // Optional: Only for 'custom' orders
   streetAddress?: string; // Optional: Only for 'custom' orders
   town?: string; // Optional: Only for 'custom' orders
+  zipCode?: string; // Optional: Only for 'custom' orders
   country: string;
   isRegisterAsCompany?: boolean; // Optional: Only for 'custom' orders
   name?: string; // Optional: Only for 'custom' orders
@@ -106,6 +107,7 @@ interface IEventOrder {
   duration?: string; // Optional, duration for custom orders
   streetAddress?: string; // Optional, street address for custom orders
   town?: string; // Optional, town for custom orders
+  zipCode?: string; // Optional, zip code for custom orders
   country?: string; // Optional, country for custom orders
   isRegisterAsCompany?: boolean; // Optional, if registered as a company
   companyName?: string; // Optional, company name if registered as a company

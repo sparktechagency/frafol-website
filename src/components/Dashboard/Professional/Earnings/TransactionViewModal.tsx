@@ -45,7 +45,7 @@ const TransactionViewModal: React.FC<TransactionViewModalProps> = ({
             </div>
             <div className="flex items-center justify-between pb-2 gap-2 mb-2 font-bold">
               <span className=" text-secondary-color">Amount: </span>
-              <span className="text-success">${currentRecord?.amount}</span>
+              <span className="text-success">${currentRecord?.amount?.toFixed(2)}</span>
             </div>
           </div>
         </div>
