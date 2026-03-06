@@ -8,13 +8,16 @@ import { AllImages } from "../../../public/assets/AllImages";
 import { getServerUrl } from "@/helpers/config/envConfig";
 import NoResultFound from "../shared/NoResultFound";
 import PhotographyCategorySeacrhFiltre from "../Photography/PhotographyCategorySeacrhFiltre";
+import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
 const VideographyCategoryDetails = ({
   categories,
   data,
+  townData,
 }: {
   categories: any[];
   data: { id: string; title: string | string[]; src: string | string[] };
+  townData: ITown[];
 }) => {
   const serverUrl: string = getServerUrl() || "";
   return (
@@ -34,7 +37,7 @@ const VideographyCategoryDetails = ({
             <FaArrowLeftLong className="!mt-1" />
             Back To Categories
           </ReuseButton>
-          <PhotographyCategorySeacrhFiltre />
+          <PhotographyCategorySeacrhFiltre townData={townData} />
         </div>
         {categories?.length > 0 ? (
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">

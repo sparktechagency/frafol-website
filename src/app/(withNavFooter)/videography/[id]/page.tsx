@@ -3,6 +3,7 @@ import React from "react";
 import VideographyCategoryDetails from "@/components/Videographey/VideographyCategoryDetails";
 import { fetchWithAuth } from "@/lib/fetchWraper";
 import TagTypes from "@/helpers/config/TagTypes";
+import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
 const VideographyCategoryDetailsPage = async ({
   params,
@@ -21,6 +22,7 @@ const VideographyCategoryDetailsPage = async ({
   const minPrice = (paramsData?.min as string) || null;
   const maxPrice = (paramsData?.max as string) || null;
   const availity = (paramsData?.availity as string) || null;
+  const towns = (paramsData?.towns as string) || null;
 
   const data: {
     id: string;
@@ -35,7 +37,7 @@ const VideographyCategoryDetailsPage = async ({
   };
 
   const res = await fetchWithAuth(
-    `/users/professionalsByCategory?role=${role}&categoryType=${title}&searchTerm=${search}&minPrice=${minPrice || ""}&maxPrice=${maxPrice || ""}&availableDate=${availity || ""}`,
+    `/users/professionalsByCategory?role=${role}&categoryType=${title}&searchTerm=${search}&minPrice=${minPrice || ""}&maxPrice=${maxPrice || ""}&availableDate=${availity || ""}&travelTowns=${towns || ""}`,
     {
       next: {
         tags: [TagTypes.category],
@@ -45,9 +47,21 @@ const VideographyCategoryDetailsPage = async ({
   );
   const resdata = await res.json();
   const categories: any[] = resdata?.data?.result;
+
+  const Townres = await fetchWithAuth(
+    `/town`,
+    {
+      next: {
+        tags: [TagTypes.town],
+      },
+    }
+  );
+
+  const Tdata = await Townres.json();
+  const townData: ITown[] = Tdata?.data || [];
   return (
     <div>
-      <VideographyCategoryDetails categories={categories} data={data} />
+      <VideographyCategoryDetails categories={categories} data={data} townData={townData} />
     </div>
   );
 };

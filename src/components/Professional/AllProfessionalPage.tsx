@@ -16,6 +16,7 @@ import NoResultFound from "../shared/NoResultFound";
 import PhotographyCategorySeacrhFiltre from "../Photography/PhotographyCategorySeacrhFiltre";
 import ReuseButton from "../ui/Button/ReuseButton";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
 const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const params = await searchParams;
@@ -24,7 +25,7 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const minPrice = (params?.min as string) || null;
   const maxPrice = (params?.max as string) || null;
   const availity = (params?.availity as string) || null;
-  console.log(type)
+  const towns = (params?.towns as string) || null;
 
   const role =
     params?.role === "videographer"
@@ -37,7 +38,7 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const limit = 12;
 
   const res = await fetchWithAuth(
-    `/users/professionals?page=${page}&limit=${limit}&role=${role}&searchTerm=${search}${type ? `&hasActiveSubscription=true` : ''}&minPrice=${minPrice || ""}&maxPrice=${maxPrice || ""}&availableDate=${availity || ""}`,
+    `/users/professionals?page=${page}&limit=${limit}&role=${role}&searchTerm=${search}&travelTowns=${towns || ""}${type ? `&hasActiveSubscription=true` : ''}&minPrice=${minPrice || ""}&maxPrice=${maxPrice || ""}&availableDate=${availity || ""}`,
     {
       next: {
         tags: [TagTypes.prfessional],
@@ -47,6 +48,18 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
   const data = await res.json();
   const totalData = data?.data?.meta?.total;
   const professionals: IProfessional[] = data?.data?.result;
+
+  const Townres = await fetchWithAuth(
+    `/town`,
+    {
+      next: {
+        tags: [TagTypes.town],
+      },
+    }
+  );
+
+  const Tdata = await Townres.json();
+  const townData: ITown[] = Tdata?.data || [];
 
   return (
     <section className="py-16">
@@ -78,7 +91,7 @@ const AllProfessionals = async ({ searchParams }: { searchParams: any }) => {
             ) : <div></div>
           }
 
-          <PhotographyCategorySeacrhFiltre />
+          <PhotographyCategorySeacrhFiltre townData={townData} />
         </div>
         {professionals?.length > 0 ? (
           <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">

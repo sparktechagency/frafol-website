@@ -11,8 +11,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ReusableForm from "../ui/Form/ReuseForm";
 import ReuseDatePicker from "../ui/Form/ReuseDatePicker";
 import dayjs from "dayjs";
+import ReuseSelect from "../ui/Form/ReuseSelect";
+import { ITown } from "@/app/(Auth)/sign-up/professional/legal-invoice/page";
 
-const PhotographyCategorySeacrhFiltre = () => {
+const PhotographyCategorySeacrhFiltre = ({ townData }: { townData: ITown[] }) => {
   const [form] = Form.useForm();
   const searchParams = useSearchParams();
   const pathName = usePathname();
@@ -29,13 +31,13 @@ const PhotographyCategorySeacrhFiltre = () => {
   };
 
   useEffect(() => {
-    console.log(searchParams?.get("availity"))
+    const townsParam = searchParams.get("towns");
     form.setFieldsValue({
       min: searchParams.get("min"),
       max: searchParams.get("max"),
-      // category: searchParams.get("category"),
       search: searchParams.get("search"),
       date: searchParams.get("availity") ? dayjs(searchParams.get("availity"), "YYYY-MM-DD") : null,
+      towns: townsParam ? townsParam.split(",") : [],
     });
   }, [searchParams, form]);
 
@@ -90,6 +92,11 @@ const PhotographyCategorySeacrhFiltre = () => {
     } else {
       params.delete("availity");
     }
+    if (values?.towns?.length > 0) {
+      params.set("towns", values.towns.join(","));
+    } else {
+      params.delete("towns");
+    }
     replace(`${pathName}?${params.toString()}`, { scroll: false });
 
     setFilter(false);
@@ -103,6 +110,7 @@ const PhotographyCategorySeacrhFiltre = () => {
     params.delete("min");
     params.delete("max");
     params.delete("availity");
+    params.delete("towns");
     // params.delete("condition");
 
     replace(`${pathName}?${params.toString()}`, { scroll: false });
@@ -156,6 +164,21 @@ const PhotographyCategorySeacrhFiltre = () => {
               </div>
               <ReuseDatePicker name="date" label="Available Date" />
 
+              {townData && townData.length > 0 && (
+                <ReuseSelect
+                  mode="multiple"
+                  name="towns"
+                  label="Towns"
+                  placeholder="Select towns"
+                  labelClassName="!text-base-color !font-normal"
+                  allowClear={true}
+                  selectClassName="!h-auto !min-h-10"
+                  options={townData.map((town) => ({
+                    value: town.name,
+                    label: town.name,
+                  }))}
+                />
+              )}
 
               <p
                 className="cursor-pointer text-secondary-color text-end mb-5 font-semibold !text-sm sm:!text-sm lg:!text-base"
